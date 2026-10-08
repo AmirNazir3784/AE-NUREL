@@ -1,0 +1,7 @@
+import { RelatedTools, ToolHeader, ToolLayout, ToolWorkspace } from "@/components/tools/tool-layout";
+import { SrtTimingAdjuster } from "@/features/srt-timing-adjuster/srt-timing-adjuster";
+import { tools } from "@/lib/tools";
+import { relevantRoutes } from "@/lib/discovery";
+import { pageMetadata } from "@/lib/site-metadata";
+export const metadata = pageMetadata("SRT Timing Adjuster", "Move all SRT subtitles earlier or later by the same number of seconds. Free to use, with no signup required.", "/tools/srt-timing-adjuster");
+export default function ToolPage() { return <ToolLayout title="SRT Timing Adjuster" category="Subtitle Tools" categoryHref="/tools/subtitle-tools"><ToolHeader title="SRT Timing Adjuster" description="Move all SRT subtitles earlier or later by the same number of seconds." toolIcon="srt-timing" /><ToolWorkspace label="SRT Timing Adjuster"><SrtTimingAdjuster /></ToolWorkspace><section className="v1-support"><h2>Use this for a constant delay</h2><p>If subtitles get gradually further out of sync, use the Subtitle Sync Fixer instead. Moving timestamps before zero can shorten subtitles; check the warning before downloading.</p></section><RelatedTools title="Useful next tools" tools={relevantRoutes["/tools/srt-timing-adjuster"].map((href) => tools.find((t) => t.href === href)!)} /></ToolLayout>; }

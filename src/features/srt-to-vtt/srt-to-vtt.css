@@ -1,0 +1,58 @@
+.srt-converter { display: grid; gap: 14px; }
+.conversion-station { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-card); }
+.conversion-station-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; }
+.conversion-eyebrow { display: block; font-size: 14px; font-weight: 650; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.conversion-station h2 { font-size: 23px; margin-top: 5px; }
+.conversion-station-heading h2:first-child { margin-top: 0; }
+.srt-converter .upload-zone.has-file { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 12px 14px; min-height: 0; text-align: left; border-style: solid; }
+.srt-converter .has-file .upload-icon { margin: 0; width: 40px; height: 40px; flex-shrink: 0; }
+.srt-converter .has-file > div[aria-live] { flex: 1; min-width: 130px; }
+.srt-converter .has-file .upload-title { font-size: 16px; overflow-wrap: anywhere; }
+.srt-converter .has-file .upload-note { display: none; }
+.srt-converter .has-file button { margin: 0; }
+.conversion-format-label { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-size: 14px; font-weight: 700; }
+.conversion-download { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+.conversion-download > div { min-width: 0; flex: 1; }
+.conversion-ready { display: flex; align-items: center; gap: 6px; color: var(--success); font-size: 14px; font-weight: 650; }
+.conversion-download h2 { font-size: 20px; margin-top: 5px; }
+.conversion-download p { color: var(--muted); font-size: 14px; margin-top: 4px; overflow-wrap: anywhere; }
+.conversion-download .download-button { width: auto; margin: 0; min-width: 200px; }
+.conversion-checks { display: flex; flex-wrap: wrap; gap: 6px 16px; flex-basis: 100%; list-style: none; padding: 12px 0 0; margin: 0; border-top: 1px solid var(--border); }
+.conversion-checks li { display: inline-flex; align-items: center; gap: 5px; font-size: 14px; color: var(--muted); }
+.conversion-checks svg { color: var(--success); flex-shrink: 0; }
+.conversion-download > .status-message { flex-basis: 100%; font-size: 14px; }
+.conversion-station > .status-message { margin-top: 12px; font-size: 14px; }
+.conversion-reset { display: flex; justify-content: flex-end; margin-top: 4px; }
+.conversion-format-note { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 12px; margin-top: 16px; font-size: 14px; color: var(--muted); }
+.conversion-format-note > span:last-child { display: inline-flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 5px; }
+.conversion-format-note code { font-family: var(--font-code); white-space: nowrap; font-size: 14px; }
+.conversion-punctuation { color: var(--orange-ink); font-weight: 700; }
+.srt-converter .privacy-indicator { padding: 10px 0; }
+.conversion-how, .conversion-faq { margin-top: 26px; }
+.conversion-how h2, .conversion-faq h2 { font-size: 22px; margin-bottom: 10px; }
+.conversion-how ol { display: flex; flex-wrap: wrap; gap: 12px 36px; padding-left: 20px; margin: 0 0 10px; font-size: 14px; }
+.conversion-how p, .conversion-faq p { font-size: 14px; color: var(--muted); }
+.conversion-faq details { border-bottom: 1px solid var(--border); }
+.conversion-faq summary { padding: 14px 4px; min-height: 48px; cursor: pointer; font-size: 14px; font-weight: 650; }
+.conversion-faq summary:hover { color: var(--accent); }
+.conversion-faq p { padding: 0 4px 16px; max-width: 800px; }
+@media (max-width: 700px) {
+  .conversion-station { padding: 18px; }
+  .conversion-download .download-button { width: 100%; }
+}
+@media (max-width: 440px) {
+  .tool-page:has(> .srt-converter) .tool-header { padding: 12px 0; }
+  .tool-page:has(> .srt-converter) .tool-title-line { margin-top: 10px; }
+  .tool-page:has(> .srt-converter) .tool-header h1 { font-size: 30px; }
+  .tool-page:has(> .srt-converter) .tool-header p { font-size: 14px; line-height: 1.5; margin-top: 8px; }
+  .conversion-station { padding: 14px; }
+  .conversion-station h2 { font-size: 20px; }
+  .srt-converter .has-file .upload-icon { display: none; }
+  .srt-converter .has-file > div[aria-live] { flex-basis: 100%; }
+  .srt-converter .has-file button { width: 100%; }
+  .conversion-download { gap: 12px; }
+  .conversion-download .download-button { min-width: 0; }
+}
+
+.tool-frame:has(.srt-converter) { max-width: 720px; }.srt-converter { max-width: none; }.conversion-station { border: 0; padding: 24px; box-shadow: none; }.conversion-format-label { margin-bottom: 16px; }.conversion-download { padding-top: 20px; }.conversion-download h2 { font-size: 20px; }.conversion-reset { margin-top: 16px; }
+@media(max-width:600px) { .conversion-station { padding: 16px; }.conversion-download h2 { font-size: 20px; } }

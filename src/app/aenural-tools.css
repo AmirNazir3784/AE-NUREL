@@ -1,0 +1,166 @@
+/* AENural working surfaces. Shared visual language; seven distinct workflows. */
+body:has(.aen-tool-page) { background: var(--page-surface); }
+.aen-tool-page { padding-block: 20px 48px; }
+.aen-tool-page::before, .aen-tool-page::after { display: none; }
+.aen-tool-page .breadcrumb { gap: 8px; font-size: 14px; color: var(--muted); flex-wrap: wrap; }
+.aen-tool-page .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; border-radius: 8px; padding-inline: 3px; }
+.aen-tool-page .breadcrumb a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+.aen-tool-page .breadcrumb [aria-current="page"] { color: var(--foreground); font-weight: 500; overflow-wrap: anywhere; }
+.aen-tool-heading { padding: 12px 0 24px; }
+.aen-tool-heading .tool-title-line { gap: 12px; margin: 0; align-items: center; }
+.aen-tool-heading h1 { font-family: var(--font-heading); font-weight: 700; font-size: clamp(28px,2.7vw,34px); line-height: 1.15; letter-spacing: -.02em; margin: 0; }
+.aen-tool-heading p { font-size: 16px; color: var(--muted); line-height: 1.6; margin-top: 10px; max-width: 64ch; }
+.aen-tool-heading .icon-tile { width: 40px; height: 40px; border-radius: 11px; background: var(--accent-soft); color: var(--accent); border: 0; box-shadow: none; }
+.aen-tool-heading .icon-tile svg { width: 24px; height: 24px; }
+.aen-workspace { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 16px; box-shadow: 0 8px 24px rgba(20,32,31,.04); overflow: visible; }
+.aen-tool-page .editor-panel { background: var(--surface); padding: 24px; }
+.aen-tool-page :is(.section-label, .field-label, label, legend) { font-family: var(--font-platform); font-size: 14px; font-weight: 600; color: var(--foreground); }
+.aen-tool-page :is(.editor-heading, .download-heading) { gap: 12px; }
+.aen-tool-page :is(.editor-heading, .download-heading) .section-label { font-family: var(--font-heading); font-size: 16px; }
+.aen-tool-page :is(.field-note, .download-help, .upload-description, .upload-note, .merge-file-meta) { color: var(--muted); font-family: var(--font-platform); font-size: 14px; line-height: 1.5; }
+.aen-tool-page .button { min-height: 44px; border-radius: 11px; font-family: var(--font-heading); font-size: 14px; font-weight: 600; line-height: 1.4; padding: 12px 18px; box-shadow: none; }
+.aen-tool-page .button-primary:not(:disabled) { background: var(--action); color: var(--on-action); border-color: var(--action-border); box-shadow: none; }
+.aen-tool-page .button-primary:hover:not(:disabled) { background: var(--action-hover); transform: none; }
+.aen-tool-page .button-primary:active:not(:disabled) { transform: translateY(1px); }
+.aen-tool-page .button-secondary:not(:disabled) { background: var(--surface); color: var(--foreground); border-color: var(--control-border); }
+.aen-tool-page .button-secondary:hover:not(:disabled) { background: var(--surface-soft); border-color: var(--accent); }
+.aen-tool-page .button-danger:not(:disabled), .aen-tool-page .editor-discard .button-primary:not(:disabled) { background: var(--error-fill); color: var(--on-error); border-color: var(--error-fill); }
+.aen-tool-page .button-danger:hover:not(:disabled), .aen-tool-page .editor-discard .button-primary:hover:not(:disabled) { background: var(--error-fill-hover); }
+.aen-tool-page .button:disabled, .aen-tool-page button:disabled { opacity: 1; color: var(--disabled-text); background: var(--disabled); border-color: var(--border); box-shadow: none; }
+.aen-tool-page :is(.text-button, .merge-icon-button, .editor-nudges button, .editor-row-buttons button) { min-height: 44px; border-radius: 9px; font-size: 14px; font-family: var(--font-platform); }
+.aen-tool-page .text-button { color: var(--accent); }
+.aen-tool-page .text-button:hover:not(:disabled) { background: var(--accent-soft); }
+.aen-tool-page input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), .aen-tool-page textarea, .aen-tool-page select { font-family: var(--font-platform); font-size: 16px; min-height: 48px; color: var(--foreground); background: var(--surface); border: 1px solid var(--control-border); border-radius: 11px; padding: 11px 12px; box-shadow: none; }
+.aen-tool-page :is(input, textarea, select):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-color: var(--focus); }
+.aen-tool-page :is(input, textarea, select)[aria-invalid="true"] { border-color: var(--error); background: var(--error-soft); }
+.aen-tool-page input[type="checkbox"], .aen-tool-page input[type="radio"] { accent-color: var(--accent-fill); }
+.aen-tool-page .offset-input { background: var(--surface); border: 1px solid var(--control-border); border-radius: 11px; padding-inline: 14px; gap: 10px; }
+.aen-tool-page .offset-input input:not([type="file"]):not([type="checkbox"]):not([type="radio"]) { border: 0; background: transparent; border-radius: 0; font-family: var(--font-platform); font-size: 28px; padding: 12px 0; }
+.aen-tool-page .offset-input input:focus-visible { outline: 0; }
+.aen-tool-page .offset-input:focus-within { outline: 3px solid var(--focus); outline-offset: 3px; border-color: var(--focus); box-shadow: none; }
+.aen-tool-page .offset-input.invalid { border-color: var(--error); }
+.aen-tool-page .field-error { color: var(--error); font-size: 14px; }
+.aen-tool-page .upload-zone { background: var(--page-surface); border: 1px dashed var(--control-border); border-radius: 14px; padding: 28px 24px; box-shadow: none; }
+.aen-tool-page .upload-icon { width: 48px; height: 48px; border-radius: 12px; border: 0; color: var(--accent); background: var(--accent-soft); box-shadow: none; }
+.aen-tool-page .upload-title { font-family: var(--font-heading); font-weight: 600; font-size: 17px; color: var(--foreground); line-height: 1.5; overflow-wrap: anywhere; }
+.aen-tool-page .upload-zone .button { margin-top: 16px; }
+.aen-tool-page .upload-zone.has-file { border-style: solid; border-color: var(--border-strong); background: var(--surface-soft); padding: 14px 16px; border-radius: 12px; }
+.aen-tool-page .upload-zone.has-file .upload-title { font-family: var(--font-platform); font-size: 15px; font-weight: 600; }
+.aen-tool-page .upload-zone.has-file .upload-icon { width: 36px; height: 36px; border-radius: 10px; }
+.aen-tool-page .upload-zone.has-file .button { margin: 0; }
+.aen-tool-page .upload-zone.dragging { background: var(--accent-soft); border-style: solid; border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 3px; }
+.aen-tool-page .upload-zone.drag-invalid { background: var(--error-soft); border-color: var(--error); }
+.aen-tool-page .upload-zone.drag-invalid .upload-icon { background: var(--error-soft); color: var(--error); }
+.aen-tool-page .badge.accent { border: 0; background: var(--accent-soft); color: var(--accent); border-radius: 8px; font-family: var(--font-platform); font-size: 13px; padding: 4px 9px; }
+.aen-tool-page .status-message { border: 1px solid var(--border); border-left-width: 3px; border-radius: 11px; padding: 12px 14px; font-family: var(--font-platform); font-size: 14px; line-height: 1.6; box-shadow: none; overflow-wrap: anywhere; }
+.aen-tool-page .status-info { background: var(--info-soft); color: var(--info); border-left-color: var(--info); }
+.aen-tool-page .status-success { background: var(--success-soft); color: var(--success); border-left-color: var(--success); }
+.aen-tool-page .status-warning { background: var(--warning-soft); color: var(--warning); border-left-color: var(--warning); }
+.aen-tool-page .status-error { background: var(--error-soft); color: var(--error); border-left-color: var(--error); }
+.aen-tool-page .download-section { background: transparent; border-top: 1px solid var(--border); padding-top: 24px; margin-top: 24px; }
+.aen-tool-page .adjustment-summary { background: transparent; color: var(--foreground); font-size: 14px; }
+.aen-tool-page .tool-support { padding-block: 24px; }
+.aen-tool-page .tool-support h2 { font-size: 20px; line-height: 1.3; margin-bottom: 10px; }
+.aen-tool-page .tool-support p { color: var(--muted); font-size: 15px; line-height: 1.65; max-width: 76ch; }
+.aen-related { border-top: 1px solid var(--border); padding-top: 24px; margin-top: 8px; }
+.aen-related h2 { font-size: 20px; font-family: var(--font-heading); font-weight: 600; margin-bottom: 16px; }
+.aen-related .v1-related-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.aen-related .v1-related-links a { flex: 0 1 auto; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 12px; border: 1px solid var(--border-strong); border-radius: 11px; background: var(--surface); font-family: var(--font-platform); font-size: 14px; }
+.aen-related .v1-related-links a:hover { border-color: var(--accent); background: var(--accent-soft); }
+.aen-related .icon-tile { border: 0; background: var(--surface-soft); color: var(--accent); }
+/* Timing: single control column with a small, quiet before/after check. */
+.aen-tool-page .aen-timing .v1-direction button { min-width: 110px; border-radius: 10px; background: var(--surface); font-size: 14px; font-weight: 600; }
+.aen-tool-page .aen-timing .v1-direction button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.aen-tool-page .aen-timing .v1-timing-check { background: var(--page-surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.aen-tool-page .aen-timing .v1-timing-check h2 { font-size: 16px; font-family: var(--font-heading); }
+.aen-tool-page .aen-timing .v1-timing-check time { font-family: var(--font-code); font-size: 14px; line-height: 1.6; }
+/* Merger: ordered file rows and join boundaries, not marketing cards. */
+.aen-tool-page .aen-merger .merge-file-row { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 12px; padding: 14px; box-shadow: none; }
+.aen-tool-page .aen-merger .merge-order { background: var(--accent-soft); color: var(--accent); border-radius: 9px; font-family: var(--font-heading); }
+.aen-tool-page .aen-merger .merge-file-row.is-invalid { background: var(--error-soft); border-color: var(--error); }
+.aen-tool-page .aen-merger .merge-file-row.drop-target { background: var(--accent-soft); border-color: var(--accent); }
+.aen-tool-page .aen-merger .merge-filename { font-size: 15px; font-family: var(--font-platform); line-height: 1.5; overflow-wrap: anywhere; }
+.aen-tool-page .aen-merger .merge-icon-button { background: var(--surface); color: var(--muted); border: 1px solid var(--border-strong); }
+.aen-tool-page .aen-merger .merge-icon-button:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.aen-tool-page .aen-merger .v1-join { border-radius: 12px; border-color: var(--border); background: var(--page-surface); padding: 16px; box-shadow: none; }
+.aen-tool-page .aen-merger .v1-join-inspection h2 { font-size: 18px; }
+.aen-tool-page .aen-merger .v1-merge-assumption { border-left: 3px solid var(--info); padding: 12px 14px; border-radius: 8px; background: var(--info-soft); color: var(--info); }
+/* Splitter: distinct controls and an output manifest with flat rows. */
+.aen-tool-page .aen-splitter .split-methods { background: var(--page-surface); border: 1px solid var(--border-strong); border-radius: 12px; gap: 6px; padding: 6px; }
+.aen-tool-page .aen-splitter .split-methods button { border-radius: 9px; font-size: 14px; font-weight: 600; }
+.aen-tool-page .aen-splitter .split-methods button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); box-shadow: none; }
+.aen-tool-page .aen-splitter .v1-split-manifest { background: var(--page-surface); border-radius: 0 16px 16px 0; }
+.aen-tool-page .aen-splitter .v1-split-manifest h2 { font-size: 20px; }
+.aen-tool-page .aen-splitter .v1-split-manifest li { padding-block: 18px; background: transparent; }
+/* Editor: a wide editing desk, captions are editable rows rather than preview cards. */
+.aen-tool-page .aen-editor .editor-start { gap: 20px; padding: 24px; background: var(--surface); border-radius: 16px; }
+.aen-tool-page .aen-editor .editor-scratch { border: 1px solid var(--border); background: var(--page-surface); border-radius: 14px; padding: 24px; box-shadow: none; }
+.aen-tool-page .aen-editor .editor-scratch > svg { color: var(--accent); }
+.aen-tool-page .aen-editor .editor-session-summary { padding: 20px 24px; border-bottom: 1px solid var(--border); background: var(--surface); border-radius: 16px 16px 0 0; }
+.aen-tool-page .aen-editor .editor-session-summary strong { font-family: var(--font-platform); font-size: 16px; overflow-wrap: anywhere; }
+.aen-tool-page .aen-editor .editor-unsaved { color: var(--warning); background: var(--warning-soft); border-radius: 6px; font-size: 13px; padding: 3px 8px; }
+.aen-tool-page .aen-editor .editor-toolbar { padding: 20px 24px; background: var(--page-surface); border-bottom: 1px solid var(--border); }
+.aen-tool-page .aen-editor .editor-tools { gap: 16px; }
+.aen-tool-page .aen-editor .editor-tools > fieldset, .aen-editor .editor-tools > div { border-radius: 12px; background: var(--surface); }
+.aen-tool-page .aen-editor .editor-cue-list { padding-inline: 24px; background: var(--surface); border-radius: 0; }
+.aen-tool-page .aen-editor .editor-cue { padding-block: 24px; background: var(--surface); border: 0; border-bottom: 1px solid var(--border); border-radius: 0; box-shadow: none; }
+.aen-tool-page .aen-editor .editor-cue h3 { font-family: var(--font-heading); font-size: 16px; color: var(--foreground); }
+.aen-tool-page .aen-editor .editor-cue.has-errors { border-left: 3px solid var(--error); padding-left: 16px; }
+.aen-tool-page .aen-editor .editor-cue.has-warnings { border-left: 3px solid var(--warning); padding-left: 16px; }
+.aen-tool-page .aen-editor .editor-cue-text textarea { min-height: 104px; line-height: 1.65; }
+.aen-tool-page .aen-editor .editor-cue-times input { font-family: var(--font-code); }
+.aen-tool-page .aen-editor .editor-cps { border-radius: 7px; font-family: var(--font-platform); font-size: 13px; }
+.aen-tool-page .aen-editor .editor-export { background: var(--surface-soft); padding: 18px 24px; border-color: var(--border); box-shadow: none; }
+.aen-tool-page .aen-editor .editor-export-status strong { font-family: var(--font-heading); font-size: 15px; }
+.aen-tool-page .aen-editor .editor-pagination { border-top: 1px solid var(--border); background: var(--surface); padding: 18px 24px; }
+.aen-tool-page .aen-editor .editor-discard { background: var(--warning-soft); color: var(--warning); border-radius: 12px; border: 1px solid var(--warning); padding: 16px; margin: 16px 24px; }
+/* Sync: two reference forms and a meaningful correction strip. */
+.aen-tool-page .aen-sync .sync-point { border: 1px solid var(--border-strong); border-radius: 14px; background: var(--page-surface); padding: 18px; }
+.aen-tool-page .aen-sync .sync-point legend { font-family: var(--font-heading); font-size: 15px; font-weight: 600; }
+.aen-tool-page .aen-sync .sync-cue-picker { border: 1px solid var(--border-strong); background: var(--surface); border-radius: 11px; }
+.aen-tool-page .aen-sync .sync-cue-picker summary { font-family: var(--font-platform); font-size: 14px; }
+.aen-tool-page .aen-sync .sync-picker-results > button { border-radius: 10px; border-color: var(--control-border); }
+.aen-tool-page .aen-sync .v1-sync-summary { background: var(--page-surface); border: 1px solid var(--border); border-radius: 14px; }
+.aen-tool-page .aen-sync .sync-correction-strip > div { border-color: var(--border-strong); border-radius: 11px; background: var(--surface); }
+.aen-tool-page .aen-sync .sync-correction-strip strong { font-family: var(--font-heading); color: var(--accent); }
+/* Overlap: the analysis, repair controls, and targeted review keep their own hierarchy. */
+.aen-tool-page:has(.aen-overlap) .aen-workspace { background: transparent; border: 0; box-shadow: none; }
+.aen-tool-page .aen-overlap :is(.overlap-analysis, .overlap-controls, .overlap-verification) { border-radius: 16px; border: 1px solid var(--border-strong); background: var(--surface); padding: 24px; box-shadow: 0 8px 24px rgba(20,32,31,.04); }
+.aen-tool-page .aen-overlap :is(.overlap-analysis, .overlap-controls, .overlap-verification) h2 { font-family: var(--font-heading); font-size: 20px; }
+.aen-tool-page .aen-overlap .overlap-modes label { background: var(--surface); border-radius: 12px; }
+.aen-tool-page .aen-overlap .overlap-modes .is-selected { background: var(--accent-soft); border-color: var(--accent); }
+.aen-tool-page .aen-overlap .overlap-issue { border-radius: 14px; border-color: var(--border-strong); border-left-color: var(--warning); background: var(--surface); box-shadow: none; padding: 20px; }
+.aen-tool-page .aen-overlap .overlap-issue.is-resolved { border-left-color: var(--success); }
+.aen-tool-page .aen-overlap .overlap-issue h3 { color: var(--foreground); font-family: var(--font-heading); font-size: 15px; text-transform: none; letter-spacing: 0; }
+.aen-tool-page .aen-overlap .overlap-comparison-side { border-radius: 11px; background: var(--page-surface); }
+.aen-tool-page .aen-overlap .overlap-bar { background: var(--accent-fill); }
+.aen-tool-page .aen-overlap .overlap-bar-1 { background: var(--warning); }
+.aen-tool-page .aen-overlap .overlap-bars.is-resolved .overlap-bar-1 { background: var(--success); }
+.aen-tool-page .aen-overlap .overlap-clean { background: var(--surface); border-radius: 16px; border-color: var(--border-strong); }
+/* Converter: one small station, no fabricated cue preview or extra steps. */
+.aen-tool-page .aen-converter .conversion-station { padding: 24px; border: 0; border-radius: 16px; background: var(--surface); box-shadow: none; }
+.aen-tool-page .aen-converter .conversion-format-label { font-family: var(--font-heading); font-size: 14px; background: var(--accent-soft); color: var(--accent); border-radius: 8px; padding: 6px 10px; }
+.aen-tool-page .aen-converter .conversion-download { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px; }
+.aen-tool-page .aen-converter .conversion-download h2 { font-family: var(--font-heading); font-size: 20px; line-height: 1.3; }
+.aen-tool-page .aen-converter .conversion-ready { color: var(--success); font-size: 14px; }
+:root[data-theme="dark"] .aen-workspace, :root[data-theme="dark"] .aen-overlap :is(.overlap-analysis, .overlap-controls, .overlap-verification) { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+@media (max-width: 960px) { .aen-splitter .v1-split-manifest { border-radius: 0 0 16px 16px; } }
+@media (max-width: 767px) {
+  .aen-tool-page { padding-top: 12px; } .aen-tool-heading { padding: 8px 0 20px; } .aen-tool-heading h1 { font-size: 28px; }
+  .aen-tool-page .editor-panel, .aen-converter .conversion-station { padding: 20px; }
+  .aen-related .v1-related-links { flex-direction: column; } .aen-related .v1-related-links a { width: fit-content; max-width: 100%; }
+  .aen-editor .editor-start { padding: 20px; } .aen-editor .editor-session-summary, .aen-editor .editor-toolbar, .aen-editor .editor-cue-list, .aen-editor .editor-pagination, .aen-editor .editor-export { padding-inline: 20px; }
+}
+@media (max-width: 480px) {
+  .aen-tool-heading h1 { font-size: 26px; } .aen-tool-heading p { font-size: 15px; } .aen-tool-heading .icon-tile { width: 36px; height: 36px; }
+  .aen-tool-page .editor-panel, .aen-converter .conversion-station, .aen-splitter .v1-split-manifest { padding: 16px; }
+  .aen-tool-page .upload-zone { padding: 24px 16px; } .aen-tool-page .upload-zone.has-file { padding: 12px; }
+  .aen-tool-page .upload-zone.has-file .button { max-width: 100%; }
+  .aen-tool-page .download-button { max-width: 100%; min-width: 0; }
+  .aen-editor .editor-start { padding: 16px; gap: 16px; } .aen-editor .editor-scratch { padding: 20px; }
+  .aen-editor .editor-session-summary, .aen-editor .editor-toolbar, .aen-editor .editor-cue-list, .aen-editor .editor-pagination, .aen-editor .editor-export { padding-inline: 16px; }
+  .aen-editor .editor-discard { margin-inline: 16px; } .aen-editor .editor-cue-actions { gap: 12px; }
+  .aen-sync .sync-point { padding: 14px; } .aen-overlap :is(.overlap-analysis, .overlap-controls, .overlap-verification), .aen-overlap .overlap-issue { padding: 16px; }
+  .aen-related .v1-related-links a { width: 100%; } .aen-related .v1-related-links a > span { overflow-wrap: anywhere; }
+}
+@media (prefers-reduced-motion: reduce) { .aen-tool-page * { transition: none; } }

@@ -1,0 +1,68 @@
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+import { emptyEditor, parseVtt } from "../src/lib/subtitle-editor.ts";
+import { parseSrt, MAX_TIMESTAMP_MS } from "../src/lib/srt.ts";
+import { detectOverlaps, openOverlapSubtitle, overlapFilename, parseOverlapGap, repairOverlaps, serializeOverlapRepair } from "../src/lib/subtitle-overlap.ts";
+const doc=(ranges=[[5000,8500],[8000,11000]],texts)=>({...emptyEditor(),filename:"movie.srt",cues:ranges.map(([start,end],i)=>({id:`cue-${i}`,start,end,text:texts?.[i]??`Caption ${i+1}`,srtSettings:"",vttSettings:"",identifier:""}))});
+const ranges=(document)=>document.cues.map(c=>[c.start,c.end]);
+const open=(text,name="movie.srt")=>{const bytes=new TextEncoder().encode(text);return openOverlapSubtitle({name,size:bytes.length},bytes.buffer);};
+const srt="18\n00:00:05,000 --> 00:00:08,500\nHello 字幕 مرحبا\nSecond line.\n\n32\n00:00:08,000 --> 00:00:11,000\nFinal subtitle.\n";
+const vtt="WEBVTT Sample\n\nNOTE Preserved note\n\nintro\n00:00:05.000 --> 00:00:08.500 align:start\nHello 字幕 مرحبا\nSecond line.\n\nlast\n00:00:08.000 --> 00:00:11.000\nFinal subtitle.\n";
+
+describe("adjacent overlap detection",()=>{
+  it("finds a basic overlap with duration and source pair index",()=>assert.deepEqual(detectOverlaps(doc()),[{index:0,milliseconds:500}]));
+  it("does not report separated cues",()=>assert.deepEqual(detectOverlaps(doc([[0,1000],[2000,3000]])),[]));
+  it("does not report an exact touching boundary",()=>assert.deepEqual(detectOverlaps(doc([[0,1000],[1000,3000]])),[]));
+  it("finds multiple independent overlaps",()=>assert.deepEqual(detectOverlaps(doc([[0,2000],[1000,3000],[4000,6000],[5000,7000]])).map(x=>x.index),[0,2]));
+  it("finds a chain",()=>assert.deepEqual(detectOverlaps(doc([[0,2000],[1000,3000],[2500,4000]])).map(x=>x.milliseconds),[1000,500]));
+  it("detects a one-millisecond overlap",()=>assert.equal(detectOverlaps(doc([[0,1001],[1000,3000]]))[0].milliseconds,1));
+  it("supports one cue with no empty issue",()=>assert.deepEqual(detectOverlaps(doc([[0,1000]])),[]));
+  it("rejects out-of-order source starts without sorting content",()=>assert.throws(()=>detectOverlaps(doc([[2000,4000],[1000,3000]])),/Cue 2 starts before/));
+  it("allows equal source starts as an overlap",()=>assert.equal(detectOverlaps(doc([[1000,3000],[1000,4000]])).length,1));
+});
+describe("shorten earlier repairs",()=>{
+  it("shortens the earlier end by the required gap",()=>assert.deepEqual(ranges(repairOverlaps(doc(),"shorten",100).document),[[5000,7900],[8000,11000]]));
+  it("supports zero gap",()=>assert.equal(repairOverlaps(doc(),"shorten",0).document.cues[0].end,8000));
+  it("supports a decimal gap in exact milliseconds",()=>assert.equal(repairOverlaps(doc(),"shorten",parseOverlapGap("0.125")).document.cues[0].end,7875));
+  it("retains the exact structural minimum duration",()=>assert.deepEqual(ranges(repairOverlaps(doc([[7900,8500],[8000,11000]]),"shorten",0).document),[[7900,8000],[8000,11000]]));
+  it("leaves an unsafe short cue unchanged and reports needs review",()=>{const d=doc([[7901,8500],[8000,11000]]),r=repairOverlaps(d,"shorten",0);assert.deepEqual(ranges(r.document),ranges(d));assert.equal(r.remaining.length,1);assert.match(r.reasons[0],/too short/);assert.equal(r.fixed,0);});
+  it("does not produce negative timestamps when a gap is too large",()=>{const r=repairOverlaps(doc([[0,1000],[500,2000]]),"shorten",1000);assert.equal(r.document.cues[0].end,1000);assert.equal(r.remaining.length,1);});
+  it("repairs each overlapping pair in a chain",()=>assert.deepEqual(ranges(repairOverlaps(doc([[0,2000],[1000,3000],[2500,4000]]),"shorten",100).document),[[0,900],[1000,2400],[2500,4000]]));
+  it("does not rewrite words, punctuation or line breaks",()=>{const d=doc(undefined,["Hi!\nمرحبا 字幕","Café 🎬"]);assert.deepEqual(repairOverlaps(d,"shorten",100).document.cues.map(c=>c.text),d.cues.map(c=>c.text));});
+  it("does not change already-separated gaps",()=>assert.deepEqual(ranges(repairOverlaps(doc([[0,1000],[1050,2000]]),"shorten",500).document),[[0,1000],[1050,2000]]));
+  it("protects both cues of an excluded neighboring overlap",()=>{const d=doc([[0,2000],[1000,3000],[2500,4000]]),r=repairOverlaps(d,"shorten",100,[1]);assert.deepEqual(r.document.cues.slice(1).map(c=>[c.start,c.end]),[[1000,3000],[2500,4000]]);assert.equal(r.remaining.length,1);assert.equal(r.excluded.length,1);});
+});
+describe("move later repairs and cascades",()=>{
+  it("moves later starts after the updated previous end",()=>assert.deepEqual(ranges(repairOverlaps(doc(),"move",100).document),[[5000,8500],[8600,11600]]));
+  it("preserves the original duration",()=>{const r=repairOverlaps(doc(),"move",500);assert.equal(r.document.cues[1].end-r.document.cues[1].start,3000);});
+  it("uses updated cue timing through an existing chain",()=>assert.deepEqual(ranges(repairOverlaps(doc([[0,2000],[1000,3000],[2500,4000]]),"move",100).document),[[0,2000],[2100,4100],[4200,5700]]));
+  it("repairs new following overlap introduced by an earlier move",()=>{const r=repairOverlaps(doc([[0,3000],[2000,4000],[4500,6500]]),"move",100);assert.deepEqual(ranges(r.document),[[0,3000],[3100,5100],[5200,7200]]);assert.equal(r.original.length,1);assert.equal(r.remaining.length,0);assert.equal(r.changedCues,2);});
+  it("supports exact touching output with zero gap",()=>assert.equal(repairOverlaps(doc(),"move",0).document.cues[1].start,8500));
+  it("protects timestamps from overflow and reports review",()=>{const d=doc([[MAX_TIMESTAMP_MS-5000,MAX_TIMESTAMP_MS-1000],[MAX_TIMESTAMP_MS-2000,MAX_TIMESTAMP_MS]]);const r=repairOverlaps(d,"move",100);assert.deepEqual(ranges(r.document),ranges(d));assert.match(r.reasons[0],/beyond/);assert.equal(r.remaining.length,1);});
+  it("preserves both excluded cue timings during cascade",()=>{const d=doc([[0,3000],[2000,5000],[4000,6000]]),r=repairOverlaps(d,"move",100,[1]);assert.deepEqual(ranges(r.document),ranges(d));assert.equal(r.fixed,0);assert.equal(r.remaining.length,2);assert.match(r.reasons[0],/excluded/);});
+  it("is deterministic and never mutates the uploaded document",()=>{const d=doc(),snapshot=JSON.stringify(d);assert.deepEqual(repairOverlaps(d,"move",100),repairOverlaps(d,"move",100));assert.equal(JSON.stringify(d),snapshot);});
+  it("rolls back a move that would pass a protected following start",()=>{const d=doc([[0,10000],[1000,12000],[2000,14000]]),r=repairOverlaps(d,"move",100,[1]);assert.deepEqual(ranges(r.document),ranges(d));assert.equal(r.remaining.length,2);assert.equal(r.fixed,0);});
+  it("rolls back preceding moves when a cascade cannot complete without overflow",()=>{const d=doc([[MAX_TIMESTAMP_MS-4000,MAX_TIMESTAMP_MS-1500],[MAX_TIMESTAMP_MS-3000,MAX_TIMESTAMP_MS-2000],[MAX_TIMESTAMP_MS-2500,MAX_TIMESTAMP_MS]]),r=repairOverlaps(d,"move",100);assert.deepEqual(ranges(r.document),ranges(d));assert.equal(r.remaining.length,2);assert.match(r.reasons[0],/undone/);});
+  it("reports new unresolved conflicts from a blocked cascade without claiming full repair",()=>{const d=doc([[0,3000],[2000,4000],[4500,6500],[6000,9000],[8500,11000]]),r=repairOverlaps(d,"move",100,[2]);assert.equal(r.original.length,3);assert.equal(r.fixed,2);assert.deepEqual(r.remaining.map(i=>i.index),[1,2]);assert.equal(r.remaining[0].milliseconds,600);assert.deepEqual(r.document.cues.slice(2,4).map(c=>[c.start,c.end]),[[4500,6500],[6000,9000]]);});
+});
+describe("analysis, validation and serialization",()=>{
+  it("reanalyses and accurately reports fully fixed output",()=>{const r=repairOverlaps(doc(),"shorten",100);assert.deepEqual(r.remaining,detectOverlaps(r.document));assert.equal(r.fixed,1);assert.equal(r.changedCues,1);});
+  it("reports an excluded overlap left unchanged",()=>{const d=doc(),r=repairOverlaps(d,"shorten",100,[0]);assert.deepEqual(ranges(r.document),ranges(d));assert.equal(r.remaining.length,1);assert.equal(r.fixed,0);});
+  it("rejects stale exclusion identifiers",()=>assert.throws(()=>repairOverlaps(doc(),"shorten",100,[5]),/no longer available/));
+  for(const [label,value] of [["negative","-0.1"],["text","oops"],["empty",""],["infinite","Infinity"],["large","11"],["precision","0.0001"]])it(`rejects ${label} gap input`,()=>assert.throws(()=>parseOverlapGap(value),/gap/));
+  it("accepts the maximum supported gap",()=>assert.equal(parseOverlapGap("10"),10000));
+  it("rejects invalid internal gap and repair mode",()=>{for(const gap of [-1,10001,NaN,0.5])assert.throws(()=>repairOverlaps(doc(),"move",gap),/gap/);assert.throws(()=>repairOverlaps(doc(),"unknown",100),/Choose how/);});
+  for(const [name,text] of [["empty.srt",""],["bad.srt","1\nnot a timestamp\nCaption"],["bad.vtt","NOT WEBVTT"],["empty.vtt","WEBVTT\n\nNOTE no cues"],["wrong.txt",srt]])it(`rejects ${name} with useful error`,()=>assert.throws(()=>open(text,name),new RegExp(name.replaceAll(".","\\."))));
+  it("rejects zero/negative/overflow source duration",()=>{for(const pair of [[1000,1000],[-1,1000],[1000,MAX_TIMESTAMP_MS+1]])assert.throws(()=>detectOverlaps(doc([pair])),/Cue 1/);});
+  it("serializes corrected SRT and renumbers unusual source numbers",()=>{const d=open(srt),r=repairOverlaps(d,"shorten",100),parsed=parseSrt(serializeOverlapRepair(d,r));assert.deepEqual(parsed.cues.map(c=>c.number),["1","2"]);assert.deepEqual(ranges(parsed),[[5000,7900],[8000,11000]]);assert.equal(parsed.cues[0].text,d.cues[0].text);});
+  it("preserves VTT format, text, identifiers, settings and metadata",()=>{const d=open(vtt,"captions.vtt"),r=repairOverlaps(d,"move",100),output=serializeOverlapRepair(d,r),parsed=parseVtt(output);assert.match(output,/^WEBVTT Sample/);assert.equal(parsed.cues[0].identifier,"intro");assert.equal(parsed.cues[0].vttSettings,"align:start");assert.deepEqual(parsed.vttBlocks,d.vttBlocks);assert.deepEqual(parsed.cues.map(c=>c.text),d.cues.map(c=>c.text));assert.deepEqual(ranges(parsed),ranges(r.document));});
+  it("preserves supported SRT positioning",()=>{const d=open(srt.replace("00:00:08,500","00:00:08,500 X1:10 X2:20 Y1:30 Y2:40"));assert.match(serializeOverlapRepair(d,repairOverlaps(d,"shorten",100)),/X1:10 X2:20 Y1:30 Y2:40/);});
+  it("preserves LF and CRLF in both formats",()=>{for(const [name,text]of[["x.srt",srt],["x.vtt",vtt]])for(const eol of["\n","\r\n"]){const d=open(text.replaceAll("\n",eol),name),out=serializeOverlapRepair(d,repairOverlaps(d,"shorten",100));assert.equal(out.replaceAll("\r\n","").includes("\n"),eol==="\n");}});
+  it("supports UTF-8 BOM and BOM-marked UTF-16 LE/BE",()=>{assert.equal(open("\uFEFF"+srt).cues[0].text,"Hello 字幕 مرحبا\nSecond line.");const le=Buffer.from("\uFEFF"+srt,"utf16le"),be=Buffer.from(le);be.swap16();for(const b of[le,be])assert.equal(openOverlapSubtitle({name:"x.srt",size:b.length},b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength)).cues.length,2);});
+  it("rejects input above established file limit",()=>assert.throws(()=>openOverlapSubtitle({name:"x.srt",size:10*1024*1024+1},new ArrayBuffer(0)),/10 MB/));
+  it("generates source-format filenames",()=>{assert.equal(overlapFilename(doc()),"movie-fixed.srt");assert.equal(overlapFilename(open(vtt,"Captions.VTT")),"Captions-fixed.vtt");});
+  it("allows honest download of structurally valid unresolved output",()=>{const d=doc([[7901,8500],[8000,11000]]),r=repairOverlaps(d,"shorten",100);assert.equal(parseSrt(serializeOverlapRepair(d,r)).cues.length,2);assert.equal(r.remaining.length,1);});
+  it("blocks output when content, format or issue summary was altered",()=>{const d=doc(),r=repairOverlaps(d,"move",100);assert.throws(()=>serializeOverlapRepair(d,{...r,remaining:[{index:0,milliseconds:500}]}),/summary/);assert.throws(()=>serializeOverlapRepair(d,{...r,document:{...r.document,format:"vtt"}}),/format/);assert.throws(()=>serializeOverlapRepair(d,{...r,document:{...r.document,cues:r.document.cues.map(c=>({...c,text:"Changed"}))}}),/content/);});
+  it("leaves VTT inline timing and all caption content untouched",()=>{const d=open(vtt.replace("Hello 字幕", "Hello <00:00:06.000>字幕"),"x.vtt"),r=repairOverlaps(d,"shorten",100);assert.equal(r.document.cues[0].text,d.cues[0].text);assert.equal(r.fixed,1);});
+  it("flags repairs incompatible with existing inline VTT timing",()=>{const d=open(vtt.replace("Final subtitle.","Final <00:00:08.200>subtitle."),"x.vtt"),r=repairOverlaps(d,"move",100);assert.equal(r.fixed,0);assert.match(r.reasons[0],/inline VTT/);assert.deepEqual(r.document.cues.map(c=>c.text),d.cues.map(c=>c.text));});
+});
