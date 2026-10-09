@@ -1,5 +1,10 @@
 // Product identifiers are independent of categories, so each future tool can have its own symbol.
 export const productIcons = {
+  "vtt-to-srt": { tone: "deep" },
+  "srt-to-txt": { tone: "medium" },
+  "ass-to-srt": { tone: "deep" },
+  "srt-to-ass": { tone: "medium" },
+  "srt-to-json": { tone: "deep" },
   "srt-to-vtt": { tone: "deep" },
   "subtitle-overlap": { tone: "medium" },
   "subtitle-sync": { tone: "deep" },

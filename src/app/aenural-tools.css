@@ -1,4 +1,4 @@
-/* AENural working surfaces. Shared visual language; seven distinct workflows. */
+/* AENural working surfaces. Shared visual language; purpose-built workflows. */
 body:has(.aen-tool-page) { background: var(--page-surface); }
 .aen-tool-page { padding-block: 20px 48px; }
 .aen-tool-page::before, .aen-tool-page::after { display: none; }
@@ -164,3 +164,31 @@ body:has(.aen-tool-page) { background: var(--page-surface); }
   .aen-related .v1-related-links a { width: 100%; } .aen-related .v1-related-links a > span { overflow-wrap: anywhere; }
 }
 @media (prefers-reduced-motion: reduce) { .aen-tool-page * { transition: none; } }
+/* Conversion stations share primitives. Transcript/JSON are the outputs themselves. */
+.aen-file-converter { width: 100%; max-width: 760px; margin: 0 auto; }
+.aen-transcript, .aen-json-converter { max-width: 960px; }
+.aen-conversion-panel { padding: 24px; background: var(--surface); border-radius: 16px; min-width: 0; }
+.aen-local-note { color: var(--muted); font-size: 14px; margin: 14px 0; }
+.aen-conversion-ready { border-top: 1px solid var(--border); padding-top: 20px; margin: 20px 0 16px; }
+.aen-conversion-ready h2 { color: var(--success); font-size: 20px; font-family: var(--font-heading); }
+.aen-conversion-ready p { overflow-wrap: anywhere; margin-top: 8px; }
+.aen-compatibility-label { font-size: 15px; margin: 16px 0 12px; }
+.aen-conversion-reset { margin-top: 20px; }
+.aen-conversion-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.aen-output-format { border: 0; padding: 0; margin: 16px 0; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.aen-output-format legend { font-weight: 600; margin-bottom: 8px; }
+.aen-output-format label { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; }
+.aen-output-format input[type="radio"] { min-height: 0; width: 18px; height: 18px; accent-color: var(--accent); }
+.aen-output-label { display: block; font-weight: 600; margin: 16px 0 8px; }
+.aen-video-settings { display: flex; flex-wrap: wrap; gap: 16px; margin: 20px 0; }
+.aen-video-settings label { display: flex; flex: 1 1 220px; min-width: 0; flex-direction: column; gap: 8px; font-weight: 600; }
+.aen-video-settings select { width: 100%; min-width: 0; min-height: 44px; padding: 10px; border: 1px solid var(--control-border); border-radius: 10px; color: var(--foreground); background: var(--page-surface); font: inherit; }
+.aen-video-converter video { display: block; width: 100%; aspect-ratio: 16 / 9; margin: 16px 0; background: #000; border-radius: 10px; }
+.aen-video-converter progress { display: block; width: 100%; margin: 12px 0; accent-color: var(--teal); }
+.aen-tool-page .aen-text-output { display: block; width: 100%; min-width: 0; min-height: 240px; max-height: 560px; resize: vertical; font-family: var(--font-platform); font-size: 16px; line-height: 1.6; padding: 16px; border: 1px solid var(--control-border); border-radius: 10px; background: var(--page-surface); color: var(--foreground); overflow: auto; }
+.aen-tool-page .aen-code-output { font-family: ui-monospace, Consolas, monospace; }
+@media (max-width: 600px) {
+  .aen-conversion-panel { padding: 16px; }
+  .aen-conversion-actions { flex-direction: column; }
+  .aen-conversion-actions .button, .aen-conversion-panel > .download-button { width: 100%; }
+}

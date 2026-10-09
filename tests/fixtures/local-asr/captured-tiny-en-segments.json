@@ -1,0 +1,59 @@
+{
+  "provenance": "Actual Transformers.js 4.3.1 native CPU output on owned synthetic speech; golden pipeline fixture, not a browser or human accuracy benchmark",
+  "duration": 27.694875283446713,
+  "filename": "original-speech.wav",
+  "output": {
+    "text": " This is an original synthetic test recording for subtitle research. A small orange boat crosses a quiet lake. The pilot checks the weather before leaving the shore. Here is the useful lesson, a short checklist prevents a long delay. First check the battery, then inspect the map, and finally tell a friend when you expect to return. Clear captions should preserve the sentence and the final word, Lighthouse.",
+    "chunks": [
+      {
+        "timestamp": [
+          0,
+          3.6
+        ],
+        "text": " This is an original synthetic test recording for subtitle research."
+      },
+      {
+        "timestamp": [
+          4.56,
+          6.96
+        ],
+        "text": " A small orange boat crosses a quiet lake."
+      },
+      {
+        "timestamp": [
+          7.84,
+          12.88
+        ],
+        "text": " The pilot checks the weather before leaving the shore. Here is the useful lesson,"
+      },
+      {
+        "timestamp": [
+          12.88,
+          17.6
+        ],
+        "text": " a short checklist prevents a long delay. First check the battery,"
+      },
+      {
+        "timestamp": [
+          17.6,
+          21.76
+        ],
+        "text": " then inspect the map, and finally tell a friend when you expect to return."
+      },
+      {
+        "timestamp": [
+          22.72,
+          26.24
+        ],
+        "text": " Clear captions should preserve the sentence and the final word,"
+      },
+      {
+        "timestamp": [
+          26.24,
+          27.24
+        ],
+        "text": " Lighthouse."
+      }
+    ]
+  }
+}

@@ -3,12 +3,12 @@ import assert from "node:assert/strict";
 import { categories, tools, toolsInCategory, searchTools, relatedTools } from "../src/lib/tools.ts";
 
 describe("released tool discovery", () => {
-  it("lists only the seven released subtitle tools, without invented future tools", () => {
-    assert.deepEqual(tools.map((tool) => tool.href), ["/tools/srt-timing-adjuster", "/tools/srt-merger", "/tools/srt-splitter", "/tools/srt-editor", "/tools/subtitle-sync-fixer", "/tools/subtitle-overlap-fixer", "/tools/srt-to-vtt"]);
+  it("lists the sixteen released subtitle tools, without invented future tools", () => {
+    assert.deepEqual(tools.map((tool) => tool.href), ["/tools/srt-timing-adjuster", "/tools/srt-merger", "/tools/srt-splitter", "/tools/srt-editor", "/tools/subtitle-sync-fixer", "/tools/subtitle-overlap-fixer", "/tools/srt-to-vtt", "/tools/vtt-to-srt", "/tools/srt-to-txt", "/tools/ass-to-srt", "/tools/srt-to-ass", "/tools/srt-to-json", "/tools/vtt-to-txt", "/tools/sbv-to-srt", "/tools/srt-to-sbv", "/tools/srt-to-mp4"]);
     assert.ok(tools.every((tool) => tool.processing === "local"));
   });
   it("derives category availability from released tools", () => {
-    assert.equal(toolsInCategory("subtitle-tools").length, 7);
+    assert.equal(toolsInCategory("subtitle-tools").length, 16);
     for (const category of categories.filter((category) => category.id !== "subtitle-tools")) {
       assert.deepEqual(toolsInCategory(category.id), []);
     }
@@ -22,7 +22,7 @@ describe("released tool discovery", () => {
     assert.deepEqual(searchTools("subtitle editor"), [tools[3]]);
     assert.deepEqual(searchTools("sync fixer"), [tools[4]]);
     assert.deepEqual(searchTools("overlap fixer"), [tools[5]]);
-    assert.deepEqual(searchTools("srt vtt converter"), [tools[6]]);
+    assert.deepEqual(searchTools("srt vtt converter"), [tools[6], tools[7]]);
     assert.equal(tools[6].group, "Format Conversion");
     assert.deepEqual(searchTools("  "), tools);
   });

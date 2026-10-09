@@ -4,6 +4,11 @@ import type { ProductIconName } from "@/lib/icons";
 // All product symbols share a 24px grid, rounded frames, and one small accent.
 // The accent inherits currentColor in ordinary UI; branded tiles supply orange.
 const productPaths = {
+  "vtt-to-srt": <><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4m6-18h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M6 8h3m6 8h3" /><path className="icon-accent" d="M7 12h10m-7-3-3 3 3 3" /></>,
+  "srt-to-txt": <><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M7 7h10M7 12h10M7 17h6" /><path className="icon-accent" d="M16 17h1" /></>,
+  "ass-to-srt": <><rect x="3" y="3" width="18" height="18" rx="3" /><path d="m7 12 3-6 3 6M8 10h4M7 17h10" /><path className="icon-accent" d="m15 7 2 2-2 2" /></>,
+  "srt-to-ass": <><rect x="3" y="3" width="18" height="18" rx="3" /><path d="m8 17 4-10 4 10M10 13h4" /><path className="icon-accent" d="M7 5h10" /></>,
+  "srt-to-json": <><path d="M8 3H6v6l-3 3 3 3v6h2m8-18h2v6l3 3-3 3v6h-2" /><path className="icon-accent" d="M10 9h4m-4 6h4" /></>,
   "srt-to-vtt": <><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4m6-18h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M6 8h3m6 8h3" /><path className="icon-accent" d="M7 12h10m-3-3 3 3-3 3" /></>,
   "subtitle-overlap": <><rect x="2" y="4" width="14" height="10" rx="2" /><rect x="8" y="10" width="14" height="10" rx="2" /><path d="M5 8h6m1 8h6" /><path className="icon-accent" d="M10 10h5v4h-5z" /></>,
   "subtitle-sync": <><rect x="2" y="4" width="20" height="16" rx="3" /><path d="M6 9h8M6 13h3" /><path className="icon-accent" d="m13 13 2-2 2 2m-2-2v7m3-2 2 2 2-2m-2 2v-7" /></>,

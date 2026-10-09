@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Unpacked third-party research fixture; never application source.
+    "artifacts/captionx-research-fixtures/package/**",
   ]),
 ]);
 

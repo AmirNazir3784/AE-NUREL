@@ -1,0 +1,93 @@
+{
+  "scope": "Native ONNX CPU, NOT browser execution",
+  "modelSha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+  "results": [
+    {
+      "name": "silence",
+      "duration": 10,
+      "ms": 472.36120000000005,
+      "regions": [],
+      "frames": 313,
+      "peakProbability": 0.008910685777664185,
+      "speechSeconds": 0
+    },
+    {
+      "name": "tones",
+      "duration": 30,
+      "ms": 757.8803,
+      "regions": [],
+      "frames": 938,
+      "peakProbability": 0.23138287663459778,
+      "speechSeconds": 0
+    },
+    {
+      "name": "noise",
+      "duration": 30,
+      "ms": 414.0792000000001,
+      "regions": [],
+      "frames": 938,
+      "peakProbability": 0.04376867413520813,
+      "speechSeconds": 0
+    },
+    {
+      "name": "clear",
+      "duration": 27.6949375,
+      "ms": 346.1385,
+      "regions": [
+        {
+          "start": 0,
+          "end": 27.276
+        }
+      ],
+      "frames": 866,
+      "peakProbability": 0.9999996423721313,
+      "speechSeconds": 22.49600000000001
+    },
+    {
+      "name": "quiet",
+      "duration": 27.6949375,
+      "ms": 336.3526999999999,
+      "regions": [
+        {
+          "start": 0,
+          "end": 27.276
+        }
+      ],
+      "frames": 866,
+      "peakProbability": 0.999997079372406,
+      "speechSeconds": 22.432000000000002
+    },
+    {
+      "name": "separated",
+      "duration": 32.6949375,
+      "ms": 381.8118000000004,
+      "regions": [
+        {
+          "start": 0,
+          "end": 7.436
+        },
+        {
+          "start": 12.692,
+          "end": 32.3
+        }
+      ],
+      "frames": 1022,
+      "peakProbability": 0.9999996423721313,
+      "speechSeconds": 22.527999999999995
+    },
+    {
+      "name": "noisy",
+      "duration": 27.6949375,
+      "ms": 335.18439999999964,
+      "regions": [
+        {
+          "start": 0,
+          "end": 27.276
+        }
+      ],
+      "frames": 866,
+      "peakProbability": 0.999998927116394,
+      "speechSeconds": 22.464000000000006
+    }
+  ]
+}

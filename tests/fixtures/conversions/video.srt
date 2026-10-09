@@ -1,0 +1,9 @@
+1
+00:00:00,503 --> 00:00:02,507
+AENural caption video
+Hello 字幕 مرحبا
+
+2
+00:00:03,003 --> 00:00:05,500
+Second caption wraps a longer sentence across the available video width.
+Second line stays readable.

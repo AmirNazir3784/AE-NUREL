@@ -2,9 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { guardedDestination } from "@/lib/editor-navigation";
+import { initializeHistory } from "@/lib/history-navigation";
 export function UnsavedNavigation({ dirty }: { dirty: boolean }) {
   const router = useRouter(), dialog = useRef<HTMLDialogElement>(null), previousFocus = useRef<HTMLElement | null>(null), leaving = useRef(false);
   const [destination, setDestination] = useState<string | null>(null);
+  const historyResume = useRef<(() => void) | null>(null), prompted = useRef(false);
+  function rememberFocus() { previousFocus.current = window.document.activeElement instanceof HTMLElement ? window.document.activeElement : null; }
   useEffect(() => {
     if (!dirty) return;
     function beforeUnload(event: BeforeUnloadEvent) { if (leaving.current) return; event.preventDefault(); event.returnValue = ""; }
@@ -15,21 +18,29 @@ export function UnsavedNavigation({ dirty }: { dirty: boolean }) {
       const next = guardedDestination({ href: link.href, currentHref: window.location.href, target: link.target, download: link.hasAttribute("download"), button: event.button, modified: event.metaKey || event.ctrlKey || event.shiftKey || event.altKey, prevented: event.defaultPrevented });
       if (!next) return;
       event.preventDefault(); event.stopPropagation();
+      if (prompted.current) return;
+      prompted.current = true;
       previousFocus.current = window.document.activeElement instanceof HTMLElement ? window.document.activeElement : null;
       setDestination(next);
     }
     window.addEventListener("beforeunload", beforeUnload);
     window.document.addEventListener("click", click, true);
-    return () => { window.removeEventListener("beforeunload", beforeUnload); window.document.removeEventListener("click", click, true); };
+    const unblock = initializeHistory().block((resume) => {
+      if (leaving.current || prompted.current) return;
+      prompted.current = true; rememberFocus(); historyResume.current = resume;
+      setDestination("history");
+    });
+    return () => { unblock(); window.removeEventListener("beforeunload", beforeUnload); window.document.removeEventListener("click", click, true); };
   }, [dirty]);
   useEffect(() => { if (destination && !dialog.current?.open) dialog.current?.showModal(); }, [destination]);
-  function keepEditing() { dialog.current?.close(); setDestination(null); previousFocus.current?.focus(); }
+  function keepEditing() { initializeHistory().cancel(); historyResume.current = null; prompted.current = false; dialog.current?.close(); setDestination(null); previousFocus.current?.focus(); }
   function leave() {
     if (!destination) return;
     leaving.current = true; dialog.current?.close();
     // Search and navigation live outside this page and persist across client routes.
     window.document.querySelectorAll<HTMLDialogElement>("dialog[open]").forEach((el) => el.close());
     window.document.querySelectorAll<HTMLDetailsElement>("details[data-site-menu][open]").forEach((el) => { el.open = false; });
+    if (historyResume.current) { historyResume.current(); historyResume.current = null; return; }
     const next = new URL(destination);
     if (next.origin === window.location.origin) router.push(next.pathname + next.search + next.hash);
     else window.location.assign(destination);

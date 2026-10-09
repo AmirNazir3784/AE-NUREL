@@ -3,6 +3,7 @@ import { pageMetadata } from "@/lib/site-metadata";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { themeInitializationScript } from "@/lib/theme";
+import { historyInitializationScript } from "@/lib/history-navigation";
 import "./globals.css";
 import "./aenural.css";
 import "./aenural-tools.css";
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* A native, parser-blocking script is intentional: Next's queued scripts run too late to guarantee no theme flash. Only trusted application code is serialized. */}
         <script id="aenural-theme-init" dangerouslySetInnerHTML={{ __html: themeInitializationScript }} />
+        <script id="aenural-history-init" dangerouslySetInnerHTML={{ __html: historyInitializationScript }} />
       </head>
       <body className="min-h-full flex flex-col"><a href="#main-content" className="skip-link">Skip to content</a><Header />{children}<Footer /></body>
     </html>

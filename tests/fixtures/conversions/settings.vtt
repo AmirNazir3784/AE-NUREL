@@ -1,0 +1,15 @@
+WEBVTT AENural fixture
+Kind: captions
+
+STYLE
+::cue { color: lime; }
+
+REGION
+id:bottom
+width:80%
+
+NOTE Original note
+
+intro
+00:00:01.000 --> 00:00:04.000 align:start position:20% region:bottom
+<v Alice><c.green>Hello</c> <00:00:02.000>world</v>

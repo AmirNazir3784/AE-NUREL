@@ -88,6 +88,15 @@ export const tools: readonly Tool[] = [
     icon: "srt-to-vtt",
     processing: "local",
   },
+  { title: "VTT to SRT Converter", description: "Convert VTT subtitles to SRT.", href: "/tools/vtt-to-srt", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "vtt-to-srt", processing: "local" },
+  { title: "SRT to TXT Converter", description: "Extract a readable transcript from SRT subtitles.", href: "/tools/srt-to-txt", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "srt-to-txt", processing: "local" },
+  { title: "ASS / SSA to SRT Converter", description: "Convert ASS or SSA dialogue into SRT subtitles.", href: "/tools/ass-to-srt", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "ass-to-srt", processing: "local" },
+  { title: "SRT to ASS Converter", description: "Convert SRT subtitles to ASS with a default style.", href: "/tools/srt-to-ass", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "srt-to-ass", processing: "local" },
+  { title: "SRT to JSON Converter", description: "Convert SRT cues into a structured JSON array.", href: "/tools/srt-to-json", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "srt-to-json", processing: "local" },
+  { title: "VTT to TXT Converter", description: "Extract a readable transcript from VTT subtitles.", href: "/tools/vtt-to-txt", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "srt-to-txt", processing: "local" },
+  { title: "SBV to SRT Converter", description: "Convert YouTube SBV captions to standard SRT subtitles.", href: "/tools/sbv-to-srt", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "vtt-to-srt", processing: "local" },
+  { title: "SRT to SBV Converter", description: "Convert SRT subtitles to basic YouTube SBV captions.", href: "/tools/srt-to-sbv", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "srt-to-vtt", processing: "local" },
+  { title: "SRT to MP4 Converter", description: "Render subtitle text as a silent MP4 video, in your browser.", href: "/tools/srt-to-mp4", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "video", processing: "local" },
 ];
 
 export function relatedTools(href: string): readonly Tool[] {
