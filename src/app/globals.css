@@ -1085,8 +1085,20 @@ h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; line-height
 .editor-discard .button-primary:not(:disabled) { background: var(--error-fill); color: var(--on-error); border-color: var(--error-fill); }
 .editor-discard .button-primary:hover:not(:disabled) { background: var(--error-fill-hover); }
 .editor-discard .button-primary:active:not(:disabled) { background: var(--error-fill-pressed); }
-:is(.editor-row-buttons, .merge-row-actions) button:is([aria-label^="Delete "], [aria-label^="Remove "]):not(:disabled) { color: var(--error); }
-:is(.editor-row-buttons, .merge-row-actions) button:is([aria-label^="Delete "], [aria-label^="Remove "]):hover:not(:disabled) { background: var(--error-soft); border-color: var(--error); }
+.editor-row-buttons button[aria-label^="Delete "]:not(:disabled),
+.editor-row-buttons button[aria-label^="Remove "]:not(:disabled),
+.merge-row-actions button[aria-label^="Delete "]:not(:disabled),
+.merge-row-actions button[aria-label^="Remove "]:not(:disabled) {
+  color: var(--error);
+}
+
+.editor-row-buttons button[aria-label^="Delete "]:hover:not(:disabled),
+.editor-row-buttons button[aria-label^="Remove "]:hover:not(:disabled),
+.merge-row-actions button[aria-label^="Delete "]:hover:not(:disabled),
+.merge-row-actions button[aria-label^="Remove "]:hover:not(:disabled) {
+  background: var(--error-soft);
+  border-color: var(--error);
+}
 
 /* V1 product presentation: one token system, task-specific working surfaces. */
 html { scroll-padding-top: 90px; }
