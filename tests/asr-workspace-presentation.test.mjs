@@ -6,6 +6,7 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 import { asrBusy, initialAsrSession } from "../src/features/local-asr/asr-session.ts";
+import { processingReviewNotes } from "../src/features/local-asr/caption-review-hints.ts";
 
 const require = createRequire(import.meta.url);
 const source = readFileSync(new URL("../src/features/local-asr/transcription-workspace.tsx", import.meta.url), "utf8");
@@ -19,6 +20,7 @@ function render(kind, session = initialAsrSession) {
     "./asr-core": { ASR_CACHE: "test-cache" },
     "./asr-session": { asrBusy, initialAsrSession },
     "./caption-review": { CaptionReview: () => null },
+    "./caption-review-hints": { processingReviewNotes },
     "./transcription.module.css": { default: {} },
   };
   new Function("require", "module", "exports", compiled)(id => dependencies[id] ?? require(id), evaluated, evaluated.exports);

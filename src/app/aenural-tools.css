@@ -143,7 +143,7 @@ body:has(.aen-tool-page) { background: var(--page-surface); }
 .aen-tool-page .aen-converter .conversion-download { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px; }
 .aen-tool-page .aen-converter .conversion-download h2 { font-family: var(--font-heading); font-size: 20px; line-height: 1.3; }
 .aen-tool-page .aen-converter .conversion-ready { color: var(--success); font-size: 14px; }
-:root[data-theme="dark"] .aen-workspace, :root[data-theme="dark"] .aen-overlap :is(.overlap-analysis, .overlap-controls, .overlap-verification) { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+@media (prefers-color-scheme: dark) { .aen-workspace, .aen-overlap :is(.overlap-analysis, .overlap-controls, .overlap-verification) { box-shadow: 0 8px 24px rgba(0,0,0,.12); } }
 @media (max-width: 960px) { .aen-splitter .v1-split-manifest { border-radius: 0 0 16px 16px; } }
 @media (max-width: 767px) {
   .aen-tool-page { padding-top: 12px; } .aen-tool-heading { padding: 8px 0 20px; } .aen-tool-heading h1 { font-size: 28px; }

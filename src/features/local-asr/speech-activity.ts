@@ -1,3 +1,4 @@
+import { SECTION_MAX_SECONDS } from "./subtitle-capabilities.ts";
 export const VAD_REVISION = "5cd7945676eb32225748052e2e6a0580e4686a08"; // Silero VAD 6.2.3
 export const VAD_URL = "https://raw.githubusercontent.com/snakers4/silero-vad/" + VAD_REVISION + "/src/silero_vad/data/silero_vad.onnx";
 export const VAD_SHA256 = "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3";
@@ -10,7 +11,7 @@ export type VadRunner = (input: Float32Array, state: Float32Array) => Promise<{ 
 // Hysteresis, minimum duration, hangover and padding operate on probabilities,
 // never on recognized words or an amplitude cutoff. Times stay on the source timeline.
 export function speechRegions(probabilities: readonly number[], samples: number): SpeechActivity {
-  if (!Number.isInteger(samples) || samples <= 0 || samples > SAMPLE_RATE * 60 || probabilities.length !== Math.ceil(samples / VAD_FRAME)) throw new Error("Invalid speech activity timeline.");
+  if (!Number.isInteger(samples) || samples <= 0 || samples > SAMPLE_RATE * SECTION_MAX_SECONDS || probabilities.length !== Math.ceil(samples / VAD_FRAME)) throw new Error("Invalid speech activity timeline.");
   const raw: SpeechRegion[] = [];
   let start = -1, negative = -1, peakProbability = 0;
   const finish = (end: number) => { if (start >= 0 && end - start >= SAMPLE_RATE * .25) raw.push({ start: start / SAMPLE_RATE, end: Math.min(end, samples) / SAMPLE_RATE }); start = -1; negative = -1; };
@@ -37,7 +38,7 @@ export function speechRegions(probabilities: readonly number[], samples: number)
 }
 
 export async function detectSpeech(samples: Float32Array, run: VadRunner, signal?: AbortSignal, onFrame?: (completed: number, total: number) => void): Promise<SpeechActivity> {
-  if (!samples.length || samples.length > SAMPLE_RATE * 60 || samples.some(value => !Number.isFinite(value))) throw new Error("Invalid audio for speech detection.");
+  if (!samples.length || samples.length > SAMPLE_RATE * SECTION_MAX_SECONDS || samples.some(value => !Number.isFinite(value))) throw new Error("Invalid audio for speech detection.");
   let state: Float32Array = new Float32Array(256);
   const context = new Float32Array(64), probabilities: number[] = [], total = Math.ceil(samples.length / VAD_FRAME);
   for (let offset = 0; offset < samples.length; offset += VAD_FRAME) {

@@ -1,108 +1,35 @@
+import { readFileSync, existsSync } from "node:fs";
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import vm from "node:vm";
-import { THEME_STORAGE_KEY, themeInitializationScript } from "../src/lib/theme.ts";
 
-function page({ stored = null, systemDark = false, blocked = false } = {}) {
-  const root = { dataset: {} };
-  const writes = [];
-  const windowEvents = new Map();
-  const documentEvents = new Map();
-  const mediaEvents = new Map();
-  const listen = (events, name, callback) => events.set(name, [...(events.get(name) ?? []), callback]);
-  const emit = (events, name, event) => events.get(name)?.forEach((callback) => callback(event));
-  const media = { matches: systemDark, addEventListener: (name, callback) => listen(mediaEvents, name, callback) };
-  const window = {
-    matchMedia: () => media,
-    localStorage: {
-      getItem: (key) => { assert.equal(key, THEME_STORAGE_KEY); if (blocked) throw new Error("Storage unavailable"); return stored; },
-      setItem: (key, value) => { if (blocked) throw new Error("Storage unavailable"); writes.push([key, value]); },
-    },
-    addEventListener: (name, callback) => listen(windowEvents, name, callback),
-  };
-  const document = { documentElement: root, addEventListener: (name, callback) => listen(documentEvents, name, callback) };
-  // Exercise the exact script emitted into HTML, without a browser or an added DOM dependency.
-  vm.runInNewContext(themeInitializationScript, { window, document });
-  return {
-    theme: () => root.dataset.theme,
-    writes,
-    toggle: () => emit(documentEvents, "toolsuite:toggle-theme"),
-    system: (dark) => { media.matches = dark; emit(mediaEvents, "change"); },
-    storage: (key, newValue) => emit(windowEvents, "storage", { key, newValue }),
-    initializeAgain: () => vm.runInNewContext(themeInitializationScript, { window, document }),
-  };
-}
+const read = file => readFileSync(new URL("../" + file, import.meta.url), "utf8");
+const css = read("src/app/globals.css");
+const layout = read("src/app/layout.tsx");
+const header = read("src/components/site/header.tsx");
 
-describe("shared theme initialization and preference", () => {
-  it("sets the system theme synchronously without persisting a first-visit choice", () => {
-    for (const systemDark of [false, true]) {
-      const current = page({ systemDark });
-      assert.equal(current.theme(), systemDark ? "dark" : "light");
-      assert.deepEqual(current.writes, []);
-    }
+describe("native automatic system theme", () => {
+  it("provides the approved light default and dark preference palette in render-blocking CSS", () => {
+    assert.match(css, /:root\s*\{\s*color-scheme: light;/);
+    assert.match(css, /@media \(prefers-color-scheme: dark\)\s*\{\s*:root\s*\{\s*color-scheme: dark;/);
+    assert.match(css, /--background: #ffffff/);
+    assert.match(css, /--background: #0f1716/);
+    assert.match(layout, /import "\.\/globals.css"/);
   });
-  it("honors stored light and dark preferences over the system, including on a fresh page", () => {
-    for (const stored of ["light", "dark"]) {
-      const current = page({ stored, systemDark: stored === "light" });
-      assert.equal(current.theme(), stored);
-      current.system(stored === "dark");
-      assert.equal(current.theme(), stored);
-      assert.equal(page({ stored }).theme(), stored);
-    }
+  it("needs no theme DOM mutation or preference storage at initial load, refresh or live media changes", () => {
+    for (const file of ["src/app/globals.css", "src/app/aenural.css", "src/app/aenural-tools.css", "src/app/layout.tsx", "src/components/site/header.tsx"])
+      assert.doesNotMatch(read(file), /data-theme|themeInitialization|toolsuite-theme|toggleTheme|matchMedia|theme-toggle/);
+    assert.doesNotMatch(layout, /aenural-theme-init|suppressHydrationWarning/);
+    assert.equal(existsSync(new URL("../src/lib/theme.ts", import.meta.url)), false);
   });
-  it("ignores invalid storage values and follows subsequent system changes", () => {
-    for (const stored of [null, "system", "DARK", "", "<script>"]) {
-      const current = page({ stored });
-      assert.equal(current.theme(), "light");
-      current.system(true);
-      assert.equal(current.theme(), "dark");
-      current.system(false);
-      assert.equal(current.theme(), "light");
-    }
+  it("removes public switching controls while retaining header search, mobile navigation and focus restoration", () => {
+    assert.doesNotMatch(header, /ThemeToggle|Switch to (?:light|dark)/);
+    assert.match(header, /aria-label="Search tools"/);
+    assert.match(header, /aria-label="Mobile navigation"/);
+    assert.match(header, /onClose=\{\(\) => searchTrigger.current\?\.focus\(\)\}/);
+    assert.match(header, /const results = searchTools\(query\)/);
   });
-  it("toggles immediately, saves only the UI preference, and stops following the system", () => {
-    const current = page();
-    current.toggle();
-    assert.equal(current.theme(), "dark");
-    current.system(false);
-    assert.equal(current.theme(), "dark");
-    assert.deepEqual(current.writes, [[THEME_STORAGE_KEY, "dark"]]);
-    current.toggle();
-    assert.equal(current.theme(), "light");
-    assert.deepEqual(current.writes[1], [THEME_STORAGE_KEY, "light"]);
-  });
-  it("still applies and retains a manual choice when storage reads and writes fail", () => {
-    const current = page({ blocked: true, systemDark: true });
-    assert.equal(current.theme(), "dark");
-    current.toggle();
-    assert.equal(current.theme(), "light");
-    current.system(true);
-    assert.equal(current.theme(), "light");
-    assert.deepEqual(current.writes, []);
-  });
-  it("syncs preference changes from another tab and resumes system mode after removal", () => {
-    const current = page({ stored: "light", systemDark: true });
-    current.storage("unrelated", "dark");
-    assert.equal(current.theme(), "light");
-    current.storage(THEME_STORAGE_KEY, "dark");
-    assert.equal(current.theme(), "dark");
-    current.storage(THEME_STORAGE_KEY, null);
-    assert.equal(current.theme(), "dark");
-    current.system(false);
-    assert.equal(current.theme(), "light");
-    current.storage(THEME_STORAGE_KEY, "dark");
-    current.storage(null, null);
-    assert.equal(current.theme(), "light");
-  });
-  it("registers handlers once even when initialization is replayed", () => {
-    const current = page();
-    current.initializeAgain();
-    current.toggle();
-    assert.equal(current.theme(), "dark");
-    assert.deepEqual(current.writes, [[THEME_STORAGE_KEY, "dark"]]);
-    current.initializeAgain();
-    current.toggle();
-    assert.equal(current.theme(), "light");
-    assert.equal(current.writes.length, 2);
+  it("keeps brand accents and workspace shadows responsive to the same native preference", () => {
+    assert.match(read("src/app/aenural.css"), /@media \(prefers-color-scheme: dark\) \{ \.aen-hero h1 > span, \.aen-brand-accent/);
+    assert.match(read("src/app/aenural-tools.css"), /@media \(prefers-color-scheme: dark\) \{ \.aen-workspace/);
   });
 });

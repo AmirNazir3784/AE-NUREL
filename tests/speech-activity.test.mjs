@@ -69,6 +69,11 @@ describe('recurrent detector lifecycle and timestamped transcription',()=>{
   await assert.rejects(transcribeSpeech(new Float32Array(16000),[{start:0,end:2}],()=>assert.fail('no run')),/timeline/);
   await assert.rejects(transcribeSpeech(new Float32Array(16000),[{start:0,end:1}],async()=>({text:'word',chunks:[]})),/usable timestamps/);
  });
+ it('keeps guarded long-section contexts on the real timeline without concatenating silence',async()=>{
+  const calls=[];
+  const output=await transcribeSpeech(new Float32Array(125*16000),[{start:5,end:10},{start:105,end:120}],async samples=>{calls.push(samples.length/16000);return {text:'measured',chunks:[{text:'measured',timestamp:[1,2]}]}},true);
+  assert.deepEqual(calls,[7,17]);assert.deepEqual(output.chunks.map(c=>c.timestamp),[[5,6],[105,106]]);
+ });
 });
 
 describe('integrity-checked local speech assets',()=>{

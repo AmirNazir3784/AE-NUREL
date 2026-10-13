@@ -2,9 +2,10 @@
 .workspace p { color: var(--muted); overflow-wrap: anywhere; }
 .row, .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .row { justify-content: space-between; }
+.actions :global(.download-button) { width: auto; }
 .workspace button, .workspace select, .workspace input { min-height: 44px; }
 .workspace select, .times input, .cue textarea { color: var(--foreground); background: var(--surface); border: 1px solid var(--control-border); border-radius: 10px; padding: 10px 12px; font: inherit; width: 100%; min-width: 0; }
-.processing { display: grid; gap: 6px; max-width: 320px; }
+.processing { display: grid; gap: 6px; max-width: 320px; min-width: 0; flex: 1 1 200px; }
 .progress { display: grid; gap: 8px; padding: 16px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--surface-soft); overflow-wrap: anywhere; }
 .progress progress { width: 100%; accent-color: var(--accent-fill); }
 .audio { width: 100%; }
@@ -14,6 +15,15 @@
 .times { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; max-width: 480px; }
 .cue label, .processing label { display: block; font-weight: 600; margin-bottom: 4px; }
 .cue textarea { resize: vertical; }
+.cue textarea { min-height: 96px; line-height: 1.65; }
+.cue { scroll-margin-top: 100px; }
+.hint { font-size: .875rem; color: var(--muted); }
+.ready { font-weight: 600; color: var(--accent) !important; }
+.suggestions { border-top: 1px solid var(--border); padding-top: 12px; font-size: .875rem; color: var(--muted); }
+.suggestions summary, .sourceComparison summary { cursor: pointer; min-height: 44px; padding-block: 10px; }
+.suggestions ul { padding-inline-start: 20px; display: grid; gap: 8px; }
+.sourceComparison { background: var(--surface-soft); padding: 0 12px 8px; border-radius: var(--radius-small); }
+.workspace :is(button, summary, a, input, select, textarea):focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .cueErrors { color: var(--error, #b42318); }
 .details { border-top: 1px solid var(--border-strong); padding-top: 16px; overflow-wrap: anywhere; }
 .details summary { cursor: pointer; min-height: 44px; display: list-item; }

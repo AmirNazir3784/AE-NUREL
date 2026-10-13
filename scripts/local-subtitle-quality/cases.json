@@ -1,0 +1,14 @@
+[
+ {"id":"judge-ur","source":"en","target":"ur","parts":["We'll see,","and in the end,","you're going to be the judge, right?"],"meaning":"Viewer will decide; not a courtroom occupation. Conversational rhetorical question."},
+ {"id":"judge-es","source":"en","target":"es","parts":["We'll see,","and in the end,","you're going to be the judge, right?"],"meaning":"Viewer will decide."},
+ {"id":"judge-de","source":"en","target":"de","parts":["We'll see,","and in the end,","you're going to be the judge, right?"],"meaning":"Viewer will decide."},
+ {"id":"judge-ar","source":"en","target":"ar","parts":["We'll see,","and in the end,","you're going to be the judge, right?"],"meaning":"Viewer will decide."},
+ {"id":"judge-ja","source":"en","target":"ja","parts":["We'll see,","and in the end,","you're going to be the judge, right?"],"meaning":"Viewer will decide."},
+ {"id":"idiom-es","source":"en","target":"es","parts":["Don't spill the beans.","The launch is still a secret."],"meaning":"Do not reveal a secret, not literal beans."},
+ {"id":"technical-de","source":"en","target":"de","parts":["Maya uses Adobe Premiere Pro and After Effects.","Do not delete the 12 clips dated 2026-10-10."],"meaning":"Keep Maya, Adobe Premiere Pro, After Effects, 12, 2026-10-10 and the negative instruction."},
+ {"id":"informal-en","source":"es","target":"en","parts":["Ya veremos,","al final tú decides,","¿no?"],"meaning":"Conversational; you decide."},
+ {"id":"formal-es","source":"de","target":"es","parts":["Bitte prüfen Sie den Bericht.","Sie müssen ihn nicht heute abschicken."],"meaning":"Formal request; do not turn need not into must not."},
+ {"id":"word-order-en","source":"ja","target":"en","parts":["まだ決めていません。","最後に判断するのはあなたです。"],"meaning":"I/we have not decided yet. You decide in the end."},
+ {"id":"pronouns-fr","source":"ar","target":"fr","parts":["هي مهندسة،","وليست طبيبة.","سيقررون غدًا."],"meaning":"She is an engineer, not a doctor. They will decide tomorrow. Gender, pronouns and negation."},
+ {"id":"urdu-en","source":"ur","target":"en","parts":["دیکھتے ہیں،","آخر میں فیصلہ آپ ہی نے کرنا ہے، ہے نا؟"],"meaning":"Conversational rhetorical question; you decide."}
+]

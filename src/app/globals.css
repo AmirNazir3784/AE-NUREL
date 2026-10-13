@@ -108,7 +108,8 @@
   --font-code: "Cascadia Code", Consolas, monospace;
 }
 
-:root[data-theme="dark"] {
+@media (prefers-color-scheme: dark) {
+:root {
   color-scheme: dark;
   --background: #0f1716;
   --page-surface: #121d1a;
@@ -154,6 +155,8 @@
   --shadow-button-hover: 0 4px 10px #00000030;
   --shadow-overlay: 0 16px 48px #00000066;
   --backdrop: #0f1716b3;
+}
+
 }
 
 /* Three levels: branded products (48px), features (36px), and standalone UI SVGs. */
@@ -217,12 +220,6 @@ h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; line-height
 .search-button { display: flex; align-items: center; gap: 10px; color: var(--muted); background: var(--surface-soft); border: 1px solid var(--border); padding: 11px 16px; border-radius: 10px; font-size: 14px; font-weight: 550; white-space: nowrap; min-height: 44px; min-width: 44px; }
 .search-button:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
 .header-utilities { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.theme-toggle { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--muted); }
-.theme-toggle:hover { background: var(--accent-soft); border-color: var(--accent-border); color: var(--accent); }
-.theme-toggle:active { background: var(--surface-soft); transform: translateY(1px); }
-.theme-action-light, .theme-action-dark { display: inline-flex; }
-.theme-action-dark, :root[data-theme="dark"] .theme-action-light { display: none; }
-:root[data-theme="dark"] .theme-action-dark { display: inline-flex; }
 .site-footer { margin-top: auto; background: var(--footer); color: var(--footer-text); border-top: 1px solid var(--dark-border); }
 .footer-inner { min-height: 112px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .footer-brand { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: 22px; letter-spacing: -.7px; }
@@ -1102,8 +1099,8 @@ html { scroll-padding-top: 90px; }
 .v1-tools-menu > summary::-webkit-details-marker, .v1-mobile-menu > summary::-webkit-details-marker { display: none; }
 .v1-desktop-nav > a:hover, .v1-tools-menu[open] > summary { color: var(--nav-text); }
 .v1-header .header-utilities { margin-left: auto; gap: 8px; }
-.v1-header .search-button, .v1-header .theme-toggle { color: var(--nav-text); background: transparent; border: 1px solid transparent; min-width: 44px; min-height: 44px; border-radius: var(--radius-control); }
-.v1-header .search-button:hover, .v1-header .theme-toggle:hover { background: var(--dark-surface); border-color: var(--dark-border); }
+.v1-header .search-button { color: var(--nav-text); background: transparent; border: 1px solid transparent; min-width: 44px; min-height: 44px; border-radius: var(--radius-control); }
+.v1-header .search-button:hover { background: var(--dark-surface); border-color: var(--dark-border); }
 .v1-header :focus-visible { outline-color: var(--focus-on-dark); }
 .v1-tools-menu { position: relative; }
 .v1-mega { position: absolute; top: calc(100% + 16px); left: -120px; width: min(670px, calc(100vw - 48px)); background: var(--surface-elevated); color: var(--foreground); border: 1px solid var(--border-strong); border-radius: var(--radius); box-shadow: var(--shadow-overlay); overflow: hidden; }
@@ -1189,10 +1186,6 @@ html { scroll-padding-top: 90px; }
 .v1-page-intro h1 { font-size: 40px; line-height: 1.2; letter-spacing: -1px; }
 .v1-page-intro p { color: var(--muted); margin-top: 12px; max-width: 680px; }
 .v1-page-intro .eyebrow { margin-bottom: 12px; display: block; }
-.v1-directory-search { display: grid; gap: 8px; max-width: 640px; }
-.v1-directory-search label { font-size: 15px; font-weight: 600; }
-.v1-directory-search input { width: 100%; min-height: 52px; padding: 12px 16px; border: 1px solid var(--control-border); border-radius: 12px; background: var(--surface); color: var(--foreground); font-size: 16px; }
-.v1-directory-search > span { color: var(--muted); font-size: 14px; }
 .v1-group-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
 .v1-group-links a { padding: 8px 14px; min-height: 44px; border: 1px solid var(--border-strong); border-radius: var(--radius-control); font-size: 14px; }
 .v1-group-links a:hover { color: var(--accent); background: var(--accent-soft); }

@@ -4,7 +4,7 @@ export const categories = [
   { id: "subtitle-tools", title: "Subtitle Tools", icon: "subtitle", description: "Get your words in sync and ready to watch." },
 ] as const;
 
-export type CategoryId = (typeof categories)[number]["id"];
+export type CategoryId = (typeof categories)[number]["id"] | "caption-generation";
 export type Tool = {
   title: string;
   description: string;
@@ -12,7 +12,7 @@ export type Tool = {
   category: string;
   categoryId: CategoryId;
   icon: ProductIconName;
-  group?: "Timing & Editing" | "Format Conversion";
+  group?: "Timing & Editing" | "Format Conversion" | "Caption Generation";
   processing: "local" | "cloud";
 };
 
@@ -108,9 +108,9 @@ export function toolsInCategory(categoryId: CategoryId): readonly Tool[] {
   return tools.filter((tool) => tool.categoryId === categoryId);
 }
 
-export function searchTools(query: string): readonly Tool[] {
+export function searchTools(query: string, collection: readonly Tool[] = tools): readonly Tool[] {
   const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
-  return tools.filter((tool) => {
+  return collection.filter((tool) => {
     const text = `${tool.title} ${tool.description} ${tool.category}`.toLowerCase();
     return terms.every((term) => text.includes(term));
   });

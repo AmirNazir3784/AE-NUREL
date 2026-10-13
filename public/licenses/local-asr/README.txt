@@ -7,6 +7,28 @@ Model conversion: onnx-community/whisper-tiny.en, immutable revision
 2575352d61be1bf7225cf8f8b268a4678025fc58, derived from openai/whisper-tiny.en.
 Selected precision: fp32 encoder and q8 merged decoder.
 
+Local subtitle upgrade: short, explicit-English recordings retain that original
+model. Word-timed long English uses onnx-community/whisper-tiny.en_timestamped,
+revision aeaa13760958b03fac5062f457d317d3319c3168. Multilingual/Auto Detect uses
+onnx-community/whisper-tiny_timestamped, revision
+517244293732ee2d58139af5814231b7e6830a0d, derived from openai/whisper-tiny.
+Both use the existing Whisper MIT notice and fp32 encoder/q8 merged decoder.
+
+Accurate subtitle transcription uses timestamp-enabled Whisper Small, with q8
+encoder and q8 merged decoder. English: onnx-community/whisper-small.en_timestamped,
+revision 8085393831131554ad978a4e438295a734d3d2c0. Multilingual:
+onnx-community/whisper-small_timestamped, revision
+65caa70f294b46e1c33ff820aae6b16d048ab818. Derived from the corresponding OpenAI
+Whisper Small models; the existing Whisper MIT notice applies. Verify export
+provenance/notices under the same production release hold.
+
+Optional local text translation: Xenova/m2m100_418M, revision
+9c374f0b7aca709787cea97b047bfbbd1559d177, derived from facebook/m2m100_418M.
+Upstream model card identifies MIT licensing. Quantized encoder and merged
+decoder run on-device via ONNX Runtime Web; no translation service is called.
+The upstream fairseq MIT notice is included as m2m100-mit.txt. Verify conversion
+provenance and all notices as part of the existing production release hold.
+
 Speech activity detector: Silero VAD 6.2.3, MIT, Silero Team.
 Official model/source revision: 5cd7945676eb32225748052e2e6a0580e4686a08.
 Model size: 2,327,524 bytes. SHA-256:
@@ -44,6 +66,12 @@ cache, CSP and CORS configuration before making this preview public.
 Upstream references:
 https://github.com/openai/whisper/blob/main/LICENSE
 https://huggingface.co/onnx-community/whisper-tiny.en
+https://huggingface.co/onnx-community/whisper-tiny.en_timestamped
+https://huggingface.co/onnx-community/whisper-tiny_timestamped
+https://huggingface.co/onnx-community/whisper-small.en_timestamped
+https://huggingface.co/onnx-community/whisper-small_timestamped
+https://huggingface.co/Xenova/m2m100_418M
+https://huggingface.co/facebook/m2m100_418M
 https://github.com/huggingface/transformers.js
 https://github.com/microsoft/onnxruntime
 https://github.com/snakers4/silero-vad/tree/5cd7945676eb32225748052e2e6a0580e4686a08

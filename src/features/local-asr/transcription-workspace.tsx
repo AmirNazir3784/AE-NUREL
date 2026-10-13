@@ -9,6 +9,7 @@ import type { AsrClient } from "./asr-client";
 import type { PreparedAudio } from "./decode-audio";
 import { CaptionReview } from "./caption-review";
 import styles from "./transcription.module.css";
+import { processingReviewNotes } from "./caption-review-hints";
 
 type Source = PreparedAudio & { file: File; url: string };
 export function TranscriptionWorkspace({ kind }: { kind: "podcast" | "subtitle" }) {
@@ -68,6 +69,7 @@ export function TranscriptionWorkspace({ kind }: { kind: "podcast" | "subtitle" 
     catch { dispatch({ type: "error", message: "This browser did not allow cache access. You can manage site storage in browser settings." }); }
   }
   const progress = session.progress;
+  const notes = processingReviewNotes(session.warnings);
   const phase = session.stage === "checking" ? "Checking your recording" : session.stage === "download" ? "Downloading processing files" : session.stage === "loading" ? "Preparing caption generation" : session.stage === "detecting" ? "Checking for speech on your device" : session.stage === "transcribing" ? "Transcribing on your device" : "";
   return <div ref={root} className={styles.workspace}>
     <FileUpload accept=".mp3,.wav" title={kind === "podcast" ? "Choose your speech recording" : "Choose audio for subtitles"} buttonLabel={source ? "Replace recording" : "Choose audio"} description="MP3 or PCM WAV · English speech" hint="Up to 60 seconds · 25 MB" filename={source?.file.name} detail={source ? source.duration.toFixed(1) + " seconds" : undefined} validateFile={validateAsrFile} onFile={file => requestAction(file)} onError={message => dispatch({ type: "error", message })} />
@@ -76,7 +78,7 @@ export function TranscriptionWorkspace({ kind }: { kind: "podcast" | "subtitle" 
     {pending && <div className={styles.progress} role="alert"><strong>Replace the current captions?</strong><p>Download any corrections you want to keep before continuing.</p><div className={styles.actions}><button className="button button-secondary" onClick={() => setPending(null)}>Keep reviewing</button><button className="button button-primary" onClick={() => { const action = pending; setPending(null); if (action === "reset") reset(); else if (action === "generate") void generate(); else void choose(action); }}>Continue</button></div></div>}
     {busy && <div className={styles.progress} aria-busy="true"><p role="status" aria-atomic="true">{phase} · {elapsed} seconds elapsed</p>{progress?.loaded !== undefined && <><span>Current download: {(progress.loaded / 1e6).toFixed(2)} MB{progress.total ? " of " + (progress.total / 1e6).toFixed(2) + " MB" : " (total unavailable)"}</span>{!!progress.total && <progress aria-label="Current processing file download" max={progress.total} value={progress.loaded} />}</>}</div>}
     {session.error && <StatusMessage tone="error">{session.error}{source && " Your previous recording and review remain available."}</StatusMessage>}
-    {session.warnings.map(warning => <StatusMessage key={warning} tone="warning">{warning}</StatusMessage>)}
+    {notes.length > 0 && <details className={styles.suggestions}><summary>Processing notes</summary><ul>{notes.map(note => <li key={note}>{note}</li>)}</ul></details>}
     {!busy && session.notice && <StatusMessage tone={session.stage === "complete" && session.result?.chunks.length ? "success" : "info"}>{session.notice}</StatusMessage>}
     {source && <audio className={styles.audio} controls preload="metadata" src={source.url} aria-label="Review original recording" />}
     {captions && <fieldset disabled={busy} style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}><legend className="sr-only">Caption review and downloads</legend><CaptionReview key={captions.key} initialDocument={captions.document} /></fieldset>}

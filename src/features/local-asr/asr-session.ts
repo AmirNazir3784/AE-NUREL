@@ -1,10 +1,10 @@
 import type { AsrProgress, AsrResult } from "./asr-core.ts";
 
-export type AsrStage = "idle" | "checking" | "ready" | "loading" | "download" | "detecting" | "transcribing" | "complete" | "cancelled";
+export type AsrStage = "idle" | "checking" | "ready" | "loading" | "download" | "detecting" | "transcribing" | "preparing" | "translating" | "building" | "complete" | "cancelled";
 export type AsrSession = { id: number; stage: AsrStage; filename: string; duration: number; progress: AsrProgress | null; result: AsrResult | null; error: string; warnings: string[]; notice: string };
 export const initialAsrSession: AsrSession = { id: 0, stage: "idle", filename: "", duration: 0, progress: null, result: null, error: "", warnings: [], notice: "" };
 type Action = { type: "check" | "generate" | "cancel" | "reset"; id: number } | { type: "ready"; id: number; filename: string; duration: number } | { type: "progress"; id: number; progress: AsrProgress } | { type: "complete"; id: number; result: AsrResult } | { type: "failed"; id: number; message: string } | { type: "notice" | "error"; message: string };
-export function asrBusy(session: AsrSession) { return ["checking", "loading", "download", "detecting", "transcribing"].includes(session.stage); }
+export function asrBusy(session: AsrSession) { return ["checking", "loading", "download", "detecting", "transcribing", "preparing", "translating", "building"].includes(session.stage); }
 export function asrSessionReducer(state: AsrSession, action: Action): AsrSession {
   if ("id" in action && !["check", "generate", "cancel", "reset"].includes(action.type) && action.id !== state.id) return state;
   switch (action.type) {

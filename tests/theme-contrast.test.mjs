@@ -27,14 +27,14 @@ function contrast(a, b) {
 describe("shared light and dark theme contrast", () => {
   const light = tokens(":root");
   it("action, supporting accent and feedback roles stay independent", () => {
-    for (const palette of [light, { ...light, ...tokens(':root[data-theme="dark"]') }]) {
+    for (const palette of [light, { ...light, ...tokens('@media (prefers-color-scheme: dark)') }]) {
       assert.notEqual(color(palette, "--action"), color(palette, "--accent"));
       assert.notEqual(color(palette, "--on-action"), color(palette, "--on-accent"));
       assert.notEqual(color(palette, "--action"), color(palette, "--warning"));
       assert.notEqual(color(palette, "--action"), color(palette, "--error-fill"));
     }
   });
-  for (const [theme, palette] of [["light", light], ["dark", { ...light, ...tokens(':root[data-theme="dark"]') }]]) {
+  for (const [theme, palette] of [["light", light], ["dark", { ...light, ...tokens('@media (prefers-color-scheme: dark)') }]]) {
     it(`${theme}: readable text, links, actions and state messages meet AA`, () => {
       const pairs = [
         ...["--background", "--page-surface", "--surface", "--surface-soft", "--surface-elevated"].flatMap((surface) => [["--foreground", surface], ["--muted", surface]]),

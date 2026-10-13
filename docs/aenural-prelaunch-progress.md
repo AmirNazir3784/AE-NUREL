@@ -1,0 +1,41 @@
+# AENural pre-launch progress
+
+12 October 2026. Work remains uncommitted. Existing subtitle/local-AI work and production release holds must be preserved. Public browser tools stay available without login.
+
+## Phase 1 — directory and automatic theme (complete)
+
+DONE: Removed only the All Tools search input/state and its unused CSS; retained category links and ordinary cards. Directory is now a server component. Header search/public registry remain unchanged. Removed public theme switches, manual preference code and theme head script; migrated existing dark palette/brand/workspace selectors to native `prefers-color-scheme` CSS with `color-scheme`. Saved manual preferences are no longer read or applied; unrelated browser storage is untouched. No theme JavaScript, new dependencies or React theme state is needed. Homepage/Source Window structure and local-ASR algorithms are unchanged. Snapshot of pre-existing work saved under ignored `artifacts/prelaunch/`.
+
+TESTED: Baseline 18 focused tests passed. Updated focused checks: 33 pass. Full suite: **688 tests / 82 suites**, zero failures/skips; lint, typecheck and optimized production build pass. The count replaces obsolete manual-toggle tests with system-CSS contracts. Both existing palette contrast suites pass. Actual local production HTTP/CSS checks pass for homepage, All Tools, Source Window, editor, SRT-to-VTT and sitemap; 16 public cards, no duplicate input/manual switch, both AI preview routes 404 and excluded from directory/sitemap. Development browser shows 18 cards including both previews. Header search finds/navigates to SRT-to-VTT; preview-name search returns no public result. Escape closes search and returns focus to trigger. Current dark system preference matches native dark palette on initial load and refresh (no `data-theme` attribute), converter and directory display correctly, and inspected browser error log is empty. Current browser width is 767 CSS pixels with no horizontal overflow. Evidence/logs and directory screenshot are under ignored `artifacts/prelaunch/`; HTTP checks can be rerun with `node scripts/prelaunch/verify-phase1.mjs` against a separately started production build on port 3107.
+
+TESTED (follow-up): User confirms the website changes successfully when switching both Windows 11 and Chrome between light and dark, on one page. This is user-observed live-switch evidence, not an agent-run all-page color-mode matrix. All pages inherit the same root CSS palette; both light/dark contrast tests and render-blocking CSS contracts pass. Browser responsive follow-up uses an ignored, loopback-only HTML fixture embedding the actual unchanged pages in 390- and 1440-pixel iframes, because the viewport override was ineffective. Homepage, Source Window, All Tools, Subtitle Editor, SRT-to-VTT and Audio-to-SRT/VTT each show the expected dark palette and no internal horizontal overflow at both widths (375/1425 usable pixels after scrollbars). Phone preview was visually inspected; no captured browser errors. Evidence: `artifacts/prelaunch/phase1-responsive.json` and `phase1-phone-preview.jpg`. This validates responsive layout, not native phone performance or every page in both modes.
+
+BLOCKERS: None for Phase 1. Browser settings automation remains prohibited; no workaround was attempted. Fresh light-mode screenshots and explicit refresh in both modes are not independently captured; the implementation has no client theme initialization or hydration-dependent palette, and user live-switch acceptance plus shared stylesheet/contrast checks support closing this phase.
+
+NEXT: Phase 2 provider/SSR/schema/deployment architecture. Preserve the documented QA limits; do not represent Phase 1 as exhaustive device/browser certification.
+
+## Phase 2 — authentication architecture (complete)
+
+DONE: **Backend decision corrected at the user's request:** [Account architecture](aenural-auth-architecture.md) now selects Hostinger-managed MySQL + Better Auth, superseding Supabase/PostgreSQL. Defines the top-right Sign in trigger, accessible Sign in/Sign up modal based on the approved reference, Account menu/logout, full-page verification/recovery/reset flows, server-verified sessions, owner checks, minimal library-generated schema, environment names and real-backend acceptance checklist. Free tools retain anonymous access; no media/storage/subscription features added. These UI flows are specified, not implemented while prerequisites are missing.
+
+TESTED: Re-inspected current header/homepage, reference account card/styles, dependencies, Next 16.3.8 installed auth/route docs, empty Next config, environment file presence and database/auth/mail variable names only. No existing account components, MySQL driver, auth library or real configuration found. Current official Hostinger MySQL/Node/remote-access/SMTP and Better Auth MySQL/Next/email/session/schema/security/rate-limit docs support the proposed stack. Actual Hostinger plan/server, DB connection and mail delivery remain unverified. No account flows or database isolation tests are claimed. This correction changes documentation only; Phase 1's 688 passing tests/lint/typecheck/build are prior evidence, not newly rerun auth tests.
+
+BLOCKERS: None for completing the architecture correction. Implementation prerequisites below remain missing. MySQL ownership checks are server-side; previous Supabase RLS and paid session-timeout assumptions no longer apply. Proposed Better Auth sessions use documented rolling expiry and database revocation.
+
+NEXT: Confirm Hostinger plan and designate the AENural development database/SMTP sender; obtain explicit authorization for the named database changes, then implement/test Phase 3 against real accounts. Do not create/migrate/alter any live database implicitly.
+
+## Phase 3 — real database and authentication (BLOCKED)
+
+DONE: Read-only local prerequisites checked. Stopped before installing packages, adding a nonfunctional Sign in modal, connecting to live databases, provisioning or changing any database. Public website is unchanged by the architecture correction; previous development work is preserved.
+
+TESTED: No `.env*` files or relevant MySQL/database/Better Auth/SMTP process variables. No Hostinger management connector or account-specific hosting/database configuration is available. Registration, delivered email, recovery, sessions and cross-user authorization remain untested. Source/test/package/config hashes were compared before/after this documentation-only correction; no application files changed. Whitespace check passes.
+
+BLOCKERS: The exact Hostinger plan/Node.js Web Apps availability, designated MySQL database/engine/grants/secure connectivity and schema-change authorization are missing. Required server setting names: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, existing `SITE_URL`, and proposed `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`; conditional `DB_SSL_CA` for the selected remote TLS setup. No values are invented. Domain/HTTPS, sender ownership, delivery to two owned inboxes and plan limits/backups remain unverified. Supabase setup is no longer a prerequisite. User instructions require stopping here; this is not an automatic-approval rejection.
+
+NEXT USER ACTION: Identify the Hostinger plan/domain and whether Node.js Web Apps is available; designate an isolated AENural development database and explicitly authorize its reviewed schema changes. Configure server-only values in ignored `.env.local`/hosting environment and confirm the SMTP sender and two acceptance inboxes. Remote access, if needed, must be securely configured for a specific authorized IP; do not open Any Host. Do not send passwords, the auth secret or database credentials in chat. No purchase, live migration or deployment is authorized by this checkpoint.
+
+## Phases 4–5 — not started
+
+Security hardening and final integration QA remain gated by Phase 3. Phase 1 lint/build success does not establish auth/database security or launch readiness. No deployment-readiness claim, commit, push, reset, clean or deployment. Existing AI production release hold remains.
+
+Last completed phase: **2**. Phase **3 blocked**; phases **4–5 not started**.
