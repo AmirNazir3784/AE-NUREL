@@ -16,7 +16,7 @@ for(const [route,status] of [['/tools',200],['/',200],['/source-window',200],['/
   assert.equal((html.match(/class="aen-tool-card"/g)??[]).length,16);
   for(const tool of tools)assert.ok(html.includes('href="'+tool.href+'"'));
   assert.match(html,/aria-label="Search tools"/);
-  assert.match(html,/aria-label="Tool groups"/);
+  assert.doesNotMatch(html,/aria-label="Tool groups"|Free online utilities|focused subtitle tools/);
   const styles=[...new Set([...html.matchAll(/href="([^" ]+\.css[^" ]*)"/g)].map(match=>match[1]))];
   assert.ok(styles.length);
   const css=(await Promise.all(styles.map(async path=>(await fetch(new URL(path,origin))).text()))).join('\n');

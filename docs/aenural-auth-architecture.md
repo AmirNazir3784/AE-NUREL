@@ -1,6 +1,6 @@
 ﻿# AENural account architecture
 
-Revised 12 October 2026. **Phase 2 design only; Phase 3 blocked.** Hostinger-managed MySQL + Better Auth supersedes the earlier Supabase/PostgreSQL decision at the user's request. No account UI, dependencies, database, migration, credentials or deployment have been added. Public tools and local-media processing stay independent of accounts.
+Revised 12 October 2026. **Phase 2 design only; real Phase 3 authentication blocked.** Hostinger-managed MySQL + Better Auth supersedes the earlier Supabase/PostgreSQL decision at the user's request. On 13 October the user separately authorized a development-only frontend preview: the modal/validation are now implemented without auth dependencies, database, migration, credentials or deployment. Public tools and local-media processing stay independent of accounts. See the pre-launch progress checkpoint for test evidence and browser QA limitations; remaining backend flows below are still planned.
 
 ## Decision and inspected baseline
 
@@ -14,7 +14,7 @@ Better Auth documentation currently identifies 1.7.7 as latest. At implementatio
 
 The reference's account design is a **page/card**, not an accessible modal: `.auth` is 420px wide with a 20px radius, tab strip, Sora headings/labels, Inter fields, 11px input/button corners and orange primary action. Its demo uses anchor buttons and direct DOM tab toggling; do not copy those behaviors. The actual header has search, Explore tools and a mobile menu; there is no Sign in control or account component yet.
 
-Implement the requested experience only once real auth prerequisites are verified:
+The development-only preview may be tested with sample details now; enable the real customer experience only once auth prerequisites are verified:
 
 - Add one clean **Sign in** button at the top right, alongside the existing search/tools navigation. Keep it reachable on narrow screens rather than inheriting the reference's mobile-hidden login rule. Do not redesign the header, homepage or Source Window.
 - Open a native `<dialog>` with an accessible name, visible close button and **Sign in / Sign up** tabs. Reuse the existing header search-dialog approach, while keeping only one modal open. Native modal focus containment/inert background, initial focus, Escape close and focus return to the trigger are mandatory.

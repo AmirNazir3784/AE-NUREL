@@ -5,6 +5,10 @@
 .aen-topbar b { color: var(--foreground); }
 .aen-topbar a { color: var(--orange-ink); font-weight: 600; display: inline-flex; align-items: center; min-height: 28px; padding-inline: 4px; }
 .aen-brand { display: inline-flex; align-items: center; gap: 11px; min-height: 44px; font-family: var(--font-heading); font-weight: 700; font-size: 20px; white-space: nowrap; letter-spacing: -.02em; }
+/* Trim empty canvas in layout; the transparent derivative retains the supplied
+   colored pixels and the original square image ratio without redrawing. */
+.aen-official-logo { display: block; position: relative; width: 144px; height: 40px; overflow: hidden; flex: none; }
+.aen-official-logo .aen-logo-image { position: absolute; top: 50%; left: 0; width: 100%; height: auto; max-width: none; transform: translateY(-50%); }
 .aen-mark { width: 32px; height: 32px; flex: none; }
 .aen-brand-accent { color: #c9661a; }
 .aen-nav { position: sticky; top: 0; z-index: 60; background: rgba(12,14,16,.9); backdrop-filter: blur(14px); border-bottom: 1px solid var(--dark-border); color: var(--nav-text); }
@@ -33,6 +37,8 @@
 .aen-mega-footer a { color: var(--orange-ink); font-family: var(--font-heading); font-weight: 600; font-size: 13.5px; padding: 0; }
 .aen-mega-footer > span { color: var(--muted); font-size: 13px; }
 .aen-nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.aen-sign-in { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 12px; border: 1px solid var(--dark-border); border-radius: 10px; color: var(--nav-text); background: transparent; font-family: var(--font-platform); font-size: 14px; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.aen-sign-in:hover { background: rgba(255,255,255,.06); }
 .aen-btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; font-family: var(--font-heading); font-weight: 600; font-size: 15px; line-height: 1.4; padding: 12px 22px; border-radius: 11px; cursor: pointer; border: 1.5px solid transparent; transition: transform .15s,background .2s,border-color .2s; }
 .aen-btn:active { transform: translateY(1px); }
 .aen-btn-primary { background: var(--action); color: var(--on-action); }
@@ -68,8 +74,7 @@
 .aen-window-bar i:nth-child(2) { background: #e0a93f; }
 .aen-window-bar i:nth-child(3) { background: #4caf7d; }
 .aen-screen { aspect-ratio: 16/8; border-radius: 10px; background: linear-gradient(120deg,#12333c,#1a2a2f 48%,#3a2410); display: flex; align-items: center; justify-content: center; position: relative; color: #f0a35a; }
-.aen-screen-emblem { width: 58px; height: 58px; border-radius: 50%; background: rgba(224,123,31,.15); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(224,123,31,.45); }
-.aen-screen-emblem svg { width: 52px; height: 52px; }
+.aen-screen-emblem { display: flex; align-items: center; justify-content: center; }
 .aen-screen-label { position: absolute; left: 14px; bottom: 12px; font-family: var(--font-heading); font-size: 12px; color: #cfe6df; letter-spacing: .04em; }
 .aen-screen-note { position: absolute; top: 12px; right: 12px; font-size: 12px; color: #cfe6df; }
 .aen-band { padding: 80px 0; }
@@ -152,6 +157,10 @@
 .skip-link { z-index: 100; }
 @media (max-width: 1100px) { .aen-nav-inner { gap: 16px; } .aen-nav-links { margin-left: 0; } .aen-nav-links > a, .aen-tools-menu > summary { padding-inline: 10px; } .aen-nav-right { gap: 4px; } }
 @media (max-width: 960px) {
+  .aen-sign-in-desktop { display: none; }
+  .aen-mobile-menu .aen-sign-in-mobile { width: 100%; justify-content: flex-start; margin-bottom: 6px; color: var(--foreground); border-color: var(--border-strong); }
+  .aen-mobile-menu .aen-sign-in-mobile:hover { background: var(--surface-soft); }
+  .aen-mobile-menu .aen-sign-in-mobile:focus-visible { outline-color: var(--focus); }
   .aen-nav-links { display: none; } .aen-mobile-menu { display: block; }
   .aen-feature { grid-template-columns: 1fr; gap: 28px; } .aen-feature:nth-child(even) > :last-child { order: 0; }
   .aen-tools-grid, .aen-steps { grid-template-columns: repeat(2,minmax(0,1fr)); }

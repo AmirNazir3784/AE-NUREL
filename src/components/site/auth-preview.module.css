@@ -1,0 +1,33 @@
+.dialog { position: fixed; inset: 0; margin: auto; width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid var(--border-strong); border-radius: 20px; background: var(--surface); color: var(--foreground); box-shadow: var(--shadow-overlay); overflow: auto; overscroll-behavior: contain; }
+.dialog::backdrop { background: var(--backdrop); backdrop-filter: blur(4px); }
+.content { position: relative; padding: 32px; }
+.content h2 { margin: 0; padding-right: 20px; font-size: 23px; letter-spacing: -.04em; text-wrap: wrap; }
+.subtitle { margin: 10px 0 18px; color: var(--muted); font-size: 14px; }
+.close { position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 10px; color: var(--muted); background: transparent; cursor: pointer; }
+.close:hover { background: var(--surface-soft); color: var(--foreground); }
+.note { margin: 0 0 20px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+.tabs { display: flex; gap: 6px; padding: 5px; margin-bottom: 22px; border-radius: 12px; background: var(--page-surface); }
+.tabs button { flex: 1; min-height: 44px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); font-family: var(--font-heading); font-size: 14px; font-weight: 600; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--surface-soft); color: var(--foreground); }
+.field { min-width: 0; margin-bottom: 16px; }
+.field label { display: block; margin-bottom: 7px; font-family: var(--font-heading); color: var(--muted); font-size: 13px; font-weight: 500; }
+.field input { width: 100%; min-width: 0; min-height: 46px; padding: 12px 14px; border: 1px solid var(--control-border); border-radius: 11px; background: var(--background); color: var(--foreground); font-family: var(--font-platform); font-size: 16px; }
+.field input[aria-invalid="true"] { border-color: var(--error); }
+.field input:focus-visible { outline-offset: 2px; }
+.password { position: relative; }
+.password input { padding-right: 68px; }
+.reveal { position: absolute; top: 1px; right: 3px; height: calc(100% - 2px); min-width: 58px; border: 0; border-radius: 8px; background: transparent; color: var(--accent); font-size: 12px; font-weight: 600; cursor: pointer; }
+.reveal:hover { background: var(--surface-soft); }
+.hint, .error { margin: 7px 0 0; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.hint { color: var(--muted); }
+.error { color: var(--error); }
+.textButton { min-height: 44px; padding: 6px 0; border: 0; background: transparent; color: var(--accent); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.textButton:hover { text-decoration: underline; }
+.status { color: var(--muted); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.status:not(:empty) { margin: 4px 0 14px; }
+.submit { width: 100%; margin-top: 6px; }
+.footer { margin: 18px 0 0; color: var(--muted); font-size: 13px; text-align: center; }
+.recoveryTitle { margin: 0 0 20px; font-size: 17px; }
+@media (max-width: 480px) { .content { padding: 28px 22px; } .content h2 { font-size: 21px; } }
+@media (max-height: 600px) { .content { padding-block: 24px; } }
+

@@ -34,7 +34,7 @@ export function MergeFileList({ files, onMove, onReorder, onRemove, onReplace, b
         <button type="button" className="merge-icon-button" title="Move up" disabled={index === 0 || busy} aria-label={`Move file ${index + 1}, ${file.name}, up`} onClick={() => onMove(file.id, -1)}><Icon name="chevron" className="point-up" size={17} /></button>
         <button type="button" className="merge-icon-button" title="Move down" disabled={index === files.length - 1 || busy} aria-label={`Move file ${index + 1}, ${file.name}, down`} onClick={() => onMove(file.id, 1)}><Icon name="chevron" size={17} /></button>
         <button type="button" className="merge-icon-button" title="Replace file" disabled={busy} aria-label={`Replace file ${index + 1}, ${file.name}`} onClick={() => onReplace(file.id)}><Icon name="reset" size={16} /></button>
-        <button type="button" className="merge-icon-button" title="Remove file" aria-label={`Remove file ${index + 1}, ${file.name}`} onClick={() => onRemove(file.id)}><Icon name="close" size={17} /></button>
+        <button type="button" className="merge-icon-button destructive-action" title="Remove file" aria-label={`Remove file ${index + 1}, ${file.name}`} onClick={() => onRemove(file.id)}><Icon name="close" size={17} /></button>
       </div>
       {file.status === "invalid" && <p className="merge-file-error" role="alert">{file.error}</p>}
     </li>)}</ol>
