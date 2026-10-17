@@ -41,7 +41,7 @@ describe('UI finishing and branding contracts',()=>{
     const directory=read('src/components/tools/tool-directory.tsx');assert.doesNotMatch(directory,/<nav|Tool groups|v1-group-links/);assert.match(directory,/id="free-tools"/);assert.match(directory,/<ToolCard/);
   });
   it('removes developer copy while keeping real route gates and honest account behavior',()=>{
-    for(const file of ['src/app/tools/free-subtitle-generator/page.tsx','src/app/tools/podcast-to-captions/page.tsx']){
+    for(const file of ['src/app/tools/free-subtitle-generator/page.tsx']){
       const page=read(file);assert.doesNotMatch(page,/Development Preview|Development preview|release verification pending|This preview/);assert.match(page,/process\.env\.NODE_ENV === "production"\) notFound\(\)/);assert.match(page,/index: false, follow: false/);
     }
     const modal=read('src/components/site/auth-preview-modal.tsx');assert.doesNotMatch(modal,/Development preview|backend.*connected/);assert.match(modal,/Use sample details only/);assert.match(modal,/Nothing was sent or saved/);

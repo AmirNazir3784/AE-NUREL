@@ -103,6 +103,12 @@ describe('actual language capabilities, formats and local-only network rules',()
 });
 
 describe('persistent speech worker lifecycle',()=>{
+ it('does not reuse an incompatible model when quality, language model, timestamps or backend change',async()=>{
+  const workers=[];const client=new AsrClient(()=>{const worker={onmessage:null,onerror:null,postMessage(m){this.message=m},terminate(){this.terminated=true}};workers.push(worker);return worker;});const signal=new AbortController().signal;
+  const cases=[['wasm',{}],['wasm',{quality:'accurate'}],['wasm',{quality:'accurate',multilingual:true}],['wasm',{quality:'accurate',multilingual:true,wordTimestamps:true}],['webgpu',{quality:'accurate',multilingual:true,wordTimestamps:true}]];
+  for(const [backend,options] of cases){const pending=client.run(new Float32Array(1),backend,signal,()=>{},{...options,keepAlive:true});const worker=workers.at(-1);worker.onmessage({data:{id:worker.message.id,type:'result',result:{chunks:[],text:''}}});await pending;}
+  assert.equal(workers.length,cases.length);assert.ok(workers.slice(0,-1).every(w=>w.terminated));client.cancel();assert.ok(workers.every(w=>w.terminated));
+ });
  it('reuses one model worker between sections and terminates it on job cleanup',async()=>{
   const workers=[];const client=new AsrClient(()=>{const w={onmessage:null,onerror:null,postMessage(m){this.message=m},terminate(){this.terminated=true}};workers.push(w);return w});const signal=new AbortController().signal;
   for(let i=0;i<2;i++){const p=client.run(new Float32Array(1),'wasm',signal,()=>{},{keepAlive:true});const w=workers[0];w.onmessage({data:{id:w.message.id,type:'result',result:{chunks:[],text:''}}});await p;assert.ok(!w.terminated)}

@@ -35,7 +35,7 @@ describe("completed Format Conversion discovery", () => {
     try {
       process.env.SITE_URL = "https://tools.example";
       const urls = sitemap().map(entry => entry.url);
-      assert.equal(urls.length, 23);
+      assert.equal(urls.length, 24);
       for (const route of expected) assert.ok(urls.includes("https://tools.example/tools/" + route));
       delete process.env.SITE_URL; assert.deepEqual(sitemap(), []);
     } finally { if (previous === undefined) delete process.env.SITE_URL; else process.env.SITE_URL = previous; }

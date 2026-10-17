@@ -2,13 +2,25 @@
 
 Engineering notes, 10 October 2026; integrity repair verified 12 October 2026. **Production release hold remains in place.** Read with [the bounded local pipeline documentation](local-subtitle-upgrade.md). Audio, source transcripts and translated text remain on the device. The only external inference-related traffic is public static model/runtime downloads.
 
+These privacy statements describe the browser tool. The separate opt-in development CPU workspace explicitly requires upload consent and operator access; see [its implemented limits](../server/hybrid/README.md). It is unavailable in production and never silently replaces local processing.
+
 ## Transcription decision
+
+### Controlled development verification — 17 October 2026
+
+On `dev/aenural-hybrid`, original pinned Whisper Small/M2M100 revisions and all generation/coverage/timing protections remain. Found one concrete lifecycle defect: AsrClient's idle worker had no model identity, so a subsequent kept-alive request with a different quality, English/multilingual route, timestamp mode or backend could retain the previous loaded model. Reuse now requires matching settings; incompatible workers terminate. Same-model long-section reuse and cancellation remain. Added a regression covering all four transitions. Normal subtitle-job cleanup already reduced the exposure; this is not evidence that it caused every reported recognition error.
+
+Accurate is now the retained workspace's preferred default. Fast stays explicitly selectable; existing reported-memory ≤4 GiB guard asks the user to choose Fast instead of silently downgrading. Translation remains optional, with a concise draft/review note. No vocabulary substitutions, prompting changes, beam settings or language-pair fixes.
+
+`scripts/local-subtitle-quality/verify-standard-models.mjs` verifies cached original English Small and M2M100 ONNX files against pinned upstream LFS SHA-256 (four matching files), blocks all weight downloads, runs the existing synthetic terminology WAV and compares direct upstream M2M100 versus the integration on five existing multilingual cases. All five outputs match exactly, including known semantic failures. Multilingual Small's pinned manifest is checked, but its two weights are absent from the native filesystem cache; no new download was made and no native hash verification is claimed for them. These are original pinned ONNX community/Xenova exports of upstream models, not a claim that quantized ONNX bytes equal OpenAI/PyTorch weights.
+
+Real native Small CPU output recognizes A-roll/B-roll, After Effects, Premiere Pro and motion graphics; SaaS remains “SAUS”. 49 timed words, approximately 14.0s inference; both generated exports parse. Actual browser Accurate English: WASM, 10.57s loading / 25.70s inference, 15 cache hits, zero downloaded bytes/requests. Browser downloads contain four valid timed cues with A-roll/B-roll retained. Current fixture/evidence and unedited M2M100 outputs are in ignored `artifacts/hybrid/`; no private recording or new model was used. Structural correctness does not establish semantic quality.
 
 The installed stack is Transformers.js **4.3.1**, ONNX Runtime Web **1.31.0-dev.20260914-8d85527a0**, and Mediabunny **1.61.3**. Fast retains the working Tiny/Tiny.en paths. Accurate selects **Whisper Small timestamp-enabled ONNX**, with quantized encoder and merged decoder. No vocabulary substitutions, prompts containing terminology lists, fine tuning or external speech APIs were introduced.
 
 | Candidate | Selected weight bytes | Practical findings | Decision |
 | --- | ---: | --- | --- |
-| Tiny/Tiny.en, fp32 encoder + q8 decoder | approximately 63.6 million | Lowest memory; existing compatible short/long paths | Fast, default |
+| Tiny/Tiny.en, fp32 encoder + q8 decoder | approximately 63.6 million | Lowest memory; existing compatible short/long paths | Fast (previous default) |
 | Base.en timestamped, fp32 encoder + q8 decoder | 136,163,926 | Better SaaS recognition in this fixture, but still “a role” | Not selected |
 | Small.en timestamped, q8 encoder + q8 decoder | 249,035,489 | Recognized A-roll and B-roll; higher memory and latency | Accurate |
 | Small multilingual timestamped, q8 both | 249,036,248 | Same architecture, 99 Whisper language tokens; explicit language or actual token detection | Accurate for Auto Detect/non-English |

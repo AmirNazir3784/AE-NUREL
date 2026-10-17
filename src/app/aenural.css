@@ -23,6 +23,12 @@
 .aen-tools-menu[open] > summary svg { transform: rotate(180deg); }
 .aen-mega { position: absolute; top: calc(100% + 10px); left: -130px; width: 640px; max-width: calc(100vw - 48px); background: var(--surface); color: var(--foreground); border: 1px solid var(--border-strong); border-radius: 16px; padding: 20px; box-shadow: 0 30px 70px -30px rgba(20,32,31,.2); z-index: 70; }
 .aen-mega::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+.aen-product-menu .aen-mega { left: 0; width: 330px; }
+.aen-free-menu .aen-mega { left: -110px; width: 620px; max-height: calc(100dvh - 150px); overflow-y: auto; }
+.aen-free-menu .aen-mega a { font-size: 13px; }
+.aen-free-menu .aen-mega a b { font-weight: 500; }
+.aen-mobile-menu nav h2 { font-size: 12px; color: var(--muted); padding: 8px 12px; }
+.aen-mobile-free > summary { padding: 10px 12px; min-height: 44px; cursor: pointer; font-weight: 600; color: var(--foreground); }
 .aen-mega-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .aen-mega h2 { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin: 6px 10px 8px; display: flex; align-items: center; gap: 7px; line-height: 1.5; }
 .aen-mega h2 i, .aen-eyebrow i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none; }
@@ -85,6 +91,7 @@
 .aen-section-head p { color: var(--muted); font-size: 17px; margin-top: 14px; }
 .aen-feature { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; margin-bottom: 34px; }
 .aen-feature:last-child { margin-bottom: 0; }
+.aen-home .aen-feature:not(:last-child) { margin-bottom: 88px; }
 .aen-feature:nth-child(even) > :last-child { order: -1; }
 .aen-tag { font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: .04em; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; display: block; }
 .aen-feature-copy h2 { font-size: clamp(1.5rem,3vw,2rem); margin-bottom: 14px; line-height: 1.1; }
@@ -97,6 +104,26 @@
 .aen-feature-visual .aen-screen { aspect-ratio: 16/10; border-radius: 11px; background: linear-gradient(130deg,#12333c,#2b1c0e); }
 .aen-utility-visual .aen-screen { background: linear-gradient(130deg,#1a2a2f,#352314); }
 .aen-media-badge { position: absolute; top: 12px; right: 12px; font-family: var(--font-heading); font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 999px; background: rgba(0,0,0,.4); color: #fff; }
+.aen-video-screen { overflow: hidden; }
+.aen-video-screen video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; background: #101514; }
+.aen-video-error { position: absolute; inset: auto 12px 48px; padding: 10px; border-radius: 8px; background: var(--surface); color: var(--text); font-size: 13px; }
+.aen-video-error a { text-decoration: underline; }
+.aen-video-frame { border: 0; padding: 0; box-shadow: none; background: transparent; }
+.aen-preview.aen-video-frame { padding: 0; }
+.aen-video-frame .aen-video-screen { aspect-ratio: 16/9; background: transparent; }
+.aen-video-frame video { background: transparent; }
+.aen-video-expand { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: transparent; color: white; cursor: pointer; border-radius: inherit; }
+.aen-video-expand span { position: absolute; bottom: 16px; right: 16px; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: rgba(14,25,23,.72); backdrop-filter: blur(6px); }
+.aen-video-expand:hover span { background: var(--action); }
+.aen-video-expand:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.aen-video-load-note { margin-top: 8px; color: var(--muted); font-size: 13px; }
+.aen-video-dialog { position: fixed; inset: 0; margin: auto; width: min(1100px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow: auto; padding: 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--foreground); }
+.aen-video-dialog::backdrop { background: rgba(5,14,12,.75); backdrop-filter: blur(8px); }
+.aen-video-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 0 10px 4px; }
+.aen-video-dialog-head h2 { font-size: 16px; }
+.aen-video-dialog video { display: block; width: 100%; aspect-ratio: 16/9; max-height: calc(100dvh - 120px); object-fit: contain; border-radius: 8px; background: #101514; }
+.aen-conversion-visual { padding: 0; border: 0; box-shadow: none; background: transparent; }
+.aen-conversion-visual svg { display: block; width: 100%; height: auto; }
 .aen-tools-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; }
 .aen-tool-card { display: block; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 13px; padding: 18px; transition: transform .18s,border-color .18s; }
 .aen-tool-card:hover { transform: translateY(-3px); border-color: var(--border-strong); }
