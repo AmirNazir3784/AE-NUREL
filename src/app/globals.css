@@ -95,6 +95,11 @@
   --space-20: 80px;
   --content-max: 1200px;
   --gutter: 24px;
+  --editing-ink: #335fa3;
+  --editing-soft: #edf3fc;
+  --media-ink: #7543a8;
+  --media-soft: #f4edfb;
+  --inner-glow: radial-gradient(600px 260px at 90% 0%, #1e867610, transparent 75%), radial-gradient(460px 240px at 5% 0%, #e07b1f0b, transparent 75%);
   --shadow: 0 2px 8px #14201f06;
   --shadow-card: 0 8px 24px #14201f0a;
   --shadow-workspace: 0 4px 16px #14201f06;
@@ -111,6 +116,10 @@
 @media (prefers-color-scheme: dark) {
 :root {
   color-scheme: dark;
+  --editing-ink: #a9cbff;
+  --editing-soft: #20334a;
+  --media-ink: #d6baff;
+  --media-soft: #332840;
   --background: #0f1716;
   --page-surface: #121d1a;
   --surface: #172422;
@@ -170,6 +179,10 @@
 .icon-tone-soft { background: var(--accent-soft); color: var(--accent-pressed); border-color: var(--accent-border); box-shadow: inset 0 1px 0 var(--surface); }
 .icon-tile > svg { display: block; color: var(--icon-foreground, var(--on-accent)); }
 .icon-tone-soft { --icon-foreground: var(--accent-pressed); }
+.icon-tone-conversion { --icon-foreground: var(--accent); --icon-accent: var(--accent); background: var(--accent-soft); }
+.icon-tone-editing { --icon-foreground: var(--editing-ink); --icon-accent: var(--editing-ink); background: var(--editing-soft); }
+.icon-tone-caption { --icon-foreground: var(--orange-ink); --icon-accent: var(--orange-ink); background: var(--orange-soft); }
+.icon-tone-media { --icon-foreground: var(--media-ink); --icon-accent: var(--media-ink); background: var(--media-soft); }
 .icon-accent { stroke: var(--icon-accent, currentColor); }
 .icon-solid { fill: currentColor; stroke: none; }
 .icon-solid.icon-accent { fill: var(--icon-accent, currentColor); }

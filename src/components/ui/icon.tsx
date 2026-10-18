@@ -26,6 +26,7 @@ const productPaths = {
 const paths = {
   menu: <path d="M4 6h16M4 12h16M4 18h16" />,
   plus: <path d="M12 5v14M5 12h14" />,
+  expand: <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" />,
   arrow: <><path d="M5 12h14m-6-6 6 6-6 6" /></>,
   upload: <><path className="icon-wash" d="M4 16v4h16v-4Z" /><path d="M12 15V4m-4 4 4-4 4 4M4 16v4h16v-4" /></>,
   download: <><path className="icon-wash" d="M4 17v3h16v-3Z" /><path d="M12 4v11m-4-4 4 4 4-4M4 17v3h16v-3" /></>,

@@ -1,0 +1,86 @@
+.studio { padding: 24px 0 48px; }
+.heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
+.heading h1 { display:flex; gap:10px; align-items:center; font-size:26px; letter-spacing:-.025em; margin:8px 0 6px; }
+.heading h1 svg { color:var(--accent); flex:none; }
+.heading p,.back,.fileName,.note { font-size:13px; color:var(--muted); }
+.back:hover { color:var(--accent); }
+.fileName { max-width:30%; overflow-wrap:anywhere; }
+.upload { max-width:680px; margin:36px auto 80px; border:1px solid var(--border-strong); border-radius:16px; padding:24px; background:var(--surface); box-shadow:var(--shadow-card); }
+.upload :global(.upload-zone) { background:var(--page-surface); padding:28px 20px; }
+.upload :global(.upload-icon) { color:var(--accent); background:var(--accent-soft); border:0; box-shadow:none; }
+.upload :global(.upload-title) { font-size:20px; }
+.upload .note { margin:16px 0 0; }
+.workspace { display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:20px; align-items:start; }
+.previewPanel { min-width:0; position:sticky; top:84px; border:1px solid var(--border); padding:16px; border-radius:16px; background:var(--surface); }
+.stage { position:relative; margin:auto; background:#101615; overflow:hidden; border-radius:10px; }
+.stage video,.stage canvas { display:block; width:100%; height:100%; object-fit:contain; }
+.stage canvas { position:absolute; inset:0; pointer-events:none; }
+.stage:fullscreen { width:100%!important; height:100%; border-radius:0; }
+.transport { display:flex; gap:10px; align-items:center; margin:10px 0 16px; }
+.transport button,.history button { border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--foreground); min-height:40px; padding:6px 12px; cursor:pointer; }
+.transport span { font:12px var(--font-code); color:var(--muted); }
+.transport input { flex:1; min-width:0; accent-color:var(--accent); }
+.exportBar,.subtitleDownloads,.actions,.history { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+.exportBar { justify-content:space-between; border-top:1px solid var(--border); padding-top:14px; }
+.subtitleDownloads { margin-top:10px; }
+.subtitleDownloads :global(.download-button) { width:auto; min-width:0; margin:0; }
+.studio :global(.button) { min-height:44px; font-size:13px; padding:10px 13px; border-radius:9px; }
+.studio button:disabled { cursor:not-allowed; opacity:.6; }
+.studio :is(button,input,select,textarea):focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.studio label { display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:600; }
+.studio input:not([type=range]):not([type=color]):not([type=checkbox]):not([type=file]),.studio select,.studio textarea { width:100%; min-width:0; min-height:42px; border:1px solid var(--control-border); border-radius:8px; padding:8px 10px; font:16px var(--font-platform); background:var(--surface); color:var(--foreground); }
+.studio textarea { resize:vertical; }
+.studio [aria-invalid=true] { border-color:var(--error)!important; }
+.studio .inline { flex-direction:row; align-items:center; flex-wrap:wrap; gap:8px; }
+.inline select { width:auto; }
+.note { margin:10px 0; line-height:1.6; overflow-wrap:anywhere; }
+.details { border-top:1px solid var(--border); margin-top:16px; font-size:13px; color:var(--muted); }
+.details summary { min-height:44px; padding:12px 0; cursor:pointer; color:var(--foreground); font-weight:600; }
+.details label { margin:10px 0; }
+.details p { margin-bottom:10px; }
+.controls { border:1px solid var(--border); border-radius:16px; background:var(--surface); min-width:0; padding:12px; }
+.tabs { display:flex; border-bottom:1px solid var(--border); margin-bottom:14px; gap:4px; }
+.tabs button { flex:1; padding:10px; min-height:44px; border:0; border-bottom:2px solid transparent; background:transparent; color:var(--muted); font-weight:600; font-size:14px; cursor:pointer; }
+.tabs [aria-selected=true] { color:var(--accent); border-bottom-color:var(--accent); }
+.auto { padding:12px 0; border-bottom:1px solid var(--border); }
+.auto p { font-size:12px; color:var(--muted); margin:8px 0 0; }
+.history { margin:12px 0; }
+.history span { margin-right:auto; color:var(--muted); font-size:12px; }
+.history button { font-size:12px; }
+.captionSearch { margin-bottom:12px; }
+.cueList { max-height:250px; overflow-y:auto; overscroll-behavior:contain; display:grid; gap:4px; }
+.cueList > button { display:flex; gap:10px; text-align:left; padding:10px; min-height:54px; border:1px solid transparent; border-radius:8px; background:transparent; color:var(--foreground); cursor:pointer; width:100%; min-width:0; }
+.cueList > button:hover { background:var(--surface-soft); }
+.cueList .selectedCue { border-color:var(--accent); background:var(--accent-soft); }
+.cueList > button > span { color:var(--muted); font-size:11px; padding-top:2px; }
+.cueList > button > div { min-width:0; }
+.cueList small { color:var(--muted); font:11px var(--font-code); }
+.cueList p { font-size:13px; line-height:1.5; overflow-wrap:anywhere; margin-top:4px; white-space:pre-wrap; }
+.cueEditor,.customize { border:0; padding:14px 0 0; margin-top:12px; display:grid; gap:12px; min-width:0; }
+.cueEditor legend { font-size:13px; font-weight:600; }
+.times { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
+.times input { font-family:var(--font-code)!important; font-size:14px!important; }
+.presets { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.preset { border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; background:#182321; padding:0; cursor:pointer; min-width:0; }
+.preset[aria-pressed=true] { outline:2px solid var(--accent); outline-offset:2px; }
+.preset > span { display:flex; align-items:center; justify-content:center; min-height:70px; padding:12px 8px; color:#fff; font:700 14px var(--font-heading); }
+.preset small { display:block; background:var(--surface); color:var(--foreground); font-size:12px; text-align:left; padding:7px 10px; }
+.presetBold > span { color:#ffae58; font-weight:800; font-size:17px; }
+.presetOutline > span { -webkit-text-stroke:.5px #101716; text-shadow:1px 1px 0 #101716,-1px -1px 0 #101716; }
+.presetHighlight > span { text-decoration:underline; text-decoration-thickness:18px; text-decoration-color:#187e70; text-underline-offset:-13px; text-decoration-skip-ink:none; }
+.presetPop > span { color:#fff; text-shadow:2px 2px 0 #d66b12; font-size:17px; }
+.customize input[type=range] { width:100%; accent-color:var(--accent); min-height:32px; }
+.rangeRow { display:flex; align-items:center; gap:10px; }
+.rangeRow output { color:var(--muted); min-width:42px; text-align:right; font:12px var(--font-code); }
+.preset b { font:inherit; line-height:1.4; }
+.colors { display:flex; gap:20px; }
+.colors input { border:1px solid var(--border); border-radius:6px; width:64px; height:36px; background:var(--surface); padding:3px; }
+.error { padding:12px 14px; background:var(--error-soft); color:var(--error); border:1px solid var(--error); border-radius:10px; margin-top:16px; font-size:14px; overflow-wrap:anywhere; }
+.progress { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:14px; font-size:13px; }
+.progress progress { flex:1; min-width:100px; accent-color:var(--accent); }
+.result { margin:16px 0; display:grid; gap:12px; }
+.result video { width:100%; max-height:240px; background:#101615; border-radius:8px; }
+@media(max-width:950px) { .workspace { grid-template-columns:minmax(0,1fr) 320px; gap:12px; } .heading h1 { font-size:24px; } }
+@media(max-width:760px) { .workspace { display:flex; flex-direction:column; } .previewPanel { position:static; width:100%; padding:12px; } .controls { width:100%; } .heading { align-items:start; } .heading h1 { font-size:22px; } .fileName { display:none; } .upload { margin:24px 0 48px; padding:16px; } .studio { padding-top:16px; } .transport { gap:7px; } .transport button { min-width:40px; padding:6px; } }
+@media(max-width:360px) { .heading h1 { font-size:20px; } .exportBar { align-items:stretch; } .exportBar > button { width:100%; } .subtitleDownloads :global(.button) { width:100%; } }
+@media(prefers-reduced-motion:reduce) { .studio * { animation:none!important; transition:none!important; } }
