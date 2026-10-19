@@ -1,0 +1,15 @@
+import './helpers/auth-dom.mjs';
+import {describe,it} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {JSDOM} from 'jsdom';
+import React from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import sharp from 'sharp';
+const {default:PageLink}=await import('../src/components/site/page-link.tsx');
+const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
+describe('document navigation and authentic search icon',()=>{
+ it('renders real accessible anchors preserving destinations, modifiers, fragments and downloads',()=>{const html=renderToStaticMarkup(React.createElement(PageLink,{href:'/tools/srt-merger',className:'tool','aria-label':'Open SRT Merger',target:'_blank',rel:'noopener',download:'captions.srt'},'SRT Merger'));const dom=new JSDOM(html);const a=dom.window.document.querySelector('a');assert.equal(a.getAttribute('href'),'/tools/srt-merger');assert.equal(a.target,'_blank');assert.equal(a.download,'captions.srt');assert.equal(a.getAttribute('aria-label'),'Open SRT Merger');assert.doesNotMatch(read('src/components/site/page-link.tsx'),/preventDefault|router\.|next\/link|useEffect/);dom.window.close();});
+ it('uses document links throughout navigation/directories and preserves approved unsaved exits',()=>{for(const file of ['src/components/site/header.tsx','src/components/site/footer.tsx','src/components/home/tool-card.tsx','src/components/tools/task-links.tsx','src/components/tools/tool-layout.tsx','src/app/page.tsx'])assert.match(read(file),/from "@\/components\/site\/page-link"/);const guard=read('src/features/srt-editor/unsaved-navigation.tsx');assert.match(guard,/window\.location\.assign\(destination\)/);assert.match(guard,/beforeunload/);assert.match(guard,/event\.preventDefault\(\)/);assert.match(guard,/Keep editing/);assert.doesNotMatch(guard,/router\.push/);});
+ it('provides real multi-resolution ICO and square transparent PNGs from official artwork',async()=>{const ico=fs.readFileSync(new URL('../public/favicon.ico',import.meta.url));assert.equal(ico.readUInt16LE(2),1);assert.equal(ico.readUInt16LE(4),3);for(let i=0;i<3;i++){const position=6+16*i,size=ico[position],offset=ico.readUInt32LE(position+12),length=ico.readUInt32LE(position+8);const meta=await sharp(ico.subarray(offset,offset+length)).metadata();assert.equal(meta.width,size);assert.equal(meta.height,size);}for(const size of [96,180,192]){const file=new URL(`../public/branding/aenural-icon-${size}.png`,import.meta.url);const image=sharp(fs.readFileSync(file)),meta=await image.metadata();assert.equal(meta.width,size);assert.equal(meta.height,size);assert.equal(meta.hasAlpha,true);const {data}=await image.ensureAlpha().raw().toBuffer({resolveWithObject:true});assert.equal(data[3],0);assert.ok(data.some((value,index)=>index%4===3&&value===255));}assert.match(read('src/app/layout.tsx'),/url: "\/favicon\.ico"/);assert.match(read('src/app/layout.tsx'),/aenural-icon-96/);assert.match(read('scripts/branding/generate-icons.mjs'),/aenural-official-logo-transparent/);});
+});

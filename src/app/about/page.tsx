@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 import { InfoPage } from "@/components/site/info-page";
 import { pageMetadata } from "@/lib/site-metadata";
 export const metadata = pageMetadata("About AENural", "AENural is the home of Source Window and free browser-based tools for editors.", "/about");

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 import { ToolIcon } from "@/components/ui/icon-tile";
 import { Icon } from "@/components/ui/icon";
 import { tools } from "@/lib/tools";

@@ -1,0 +1,21 @@
+import './helpers/auth-dom.mjs';
+import {describe,it,beforeEach,afterEach} from 'node:test';
+import assert from 'node:assert/strict';
+import {JSDOM} from 'jsdom';
+import React,{act} from 'react';
+const bootstrap=new JSDOM('<html><body></body></html>');globalThis.window=bootstrap.window;globalThis.document=bootstrap.window.document;
+const {createRoot}=await import('react-dom/client');
+const {PreviewAudioControls}=await import('../src/features/caption-studio/preview-audio-controls.tsx');
+describe('real preview media audio controls',()=>{
+ let dom,root,video,reference;
+ const q=selector=>document.querySelector(selector);
+ const update=async fn=>act(async()=>{fn();await new Promise(resolve=>setTimeout(resolve,0));});
+ const mount=props=>act(()=>root.render(React.createElement(PreviewAudioControls,{videoRef:reference,hasAudio:true,disabled:false,...props})));
+ beforeEach(()=>{dom=new JSDOM('<video></video><div id="root"></div>');globalThis.window=dom.window;globalThis.document=dom.window.document;globalThis.IS_REACT_ACT_ENVIRONMENT=true;video=q('video');reference={current:video};root=createRoot(q('#root'));});
+ afterEach(async()=>{await act(()=>root.unmount());dom.window.close();});
+ it('exposes volume and mute outside collapsed settings',async()=>{await mount();assert.equal(q('[aria-label="Mute preview"]').disabled,false);assert.equal(q('[aria-label="Preview volume"]').value,'1');assert.equal(q('output').textContent,'100%');assert.equal(q('details'),null);});
+ it('mutes and restores the real element while keeping the chosen volume',async()=>{await mount();await update(()=>{video.volume=.4;});await update(()=>q('button').click());assert.equal(video.muted,true);assert.equal(video.volume,.4);assert.equal(q('button').getAttribute('aria-label'),'Unmute preview');await update(()=>q('button').click());assert.equal(video.muted,false);assert.equal(video.volume,.4);assert.equal(q('output').textContent,'40%');});
+ it('applies the slider and un-mutes audibly instead of leaving the UI out of sync',async()=>{await mount();await update(()=>{video.muted=true;});const slider=q('input');await update(()=>{Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype,'value').set.call(slider,'.25');slider.dispatchEvent(new dom.window.Event('input',{bubbles:true}));});assert.equal(video.volume,.25);assert.equal(video.muted,false);assert.equal(q('output').textContent,'25%');});
+ it('restores the last audible level after the slider reaches zero',async()=>{await mount();await update(()=>{video.volume=.65;});await update(()=>{video.volume=0;});assert.equal(q('output').textContent,'Muted');await update(()=>q('button').click());assert.equal(video.volume,.65);assert.equal(video.muted,false);});
+ it('disables controls for silent media and busy operations and resets for another source',async()=>{await mount({hasAudio:false});assert.equal(q('button').disabled,true);assert.equal(q('input').disabled,true);assert.equal(q('output').textContent,'No audio');await mount({disabled:true});assert.equal(q('button').disabled,true);await update(()=>{video.volume=.2;video.muted=true;});await act(()=>root.render(null));await mount();assert.equal(video.volume,1);assert.equal(video.muted,false);});
+});

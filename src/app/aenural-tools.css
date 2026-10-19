@@ -1,5 +1,5 @@
 /* AENural working surfaces. Shared visual language; purpose-built workflows. */
-body:has(.aen-tool-page) { background-color: var(--page-surface); background-image: var(--inner-glow); background-size: 100% 460px; background-repeat: no-repeat; }
+body:has(.aen-tool-page) { background-color: var(--page-surface); }
 .aen-tool-page { padding-block: 12px 40px; }
 .aen-tool-page::before, .aen-tool-page::after { display: none; }
 .aen-tool-page .breadcrumb { gap: 8px; font-size: 14px; color: var(--muted); flex-wrap: wrap; }

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 import { InfoPage } from "@/components/site/info-page";
 import { TaskLinks } from "@/components/tools/task-links";
 import { pageMetadata } from "@/lib/site-metadata";

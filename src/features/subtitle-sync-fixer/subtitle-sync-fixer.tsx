@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 import { useReducer, useRef } from "react";
 import { FileUpload } from "@/components/tools/file-upload";
 import { DownloadButton } from "@/components/tools/download-button";

@@ -1,5 +1,6 @@
 import { STUDIO_LIMITS, validateStudioFile, validateStudioMedia, validateStudioStyle, studioIssues, studioFont, paintStudioCaptions, type StudioMedia, type StudioStyle } from "./studio-core";
 import type { EditorDocument } from "@/lib/subtitle-editor";
+import type { StudioAlignment } from "./studio-alignment";
 
 export async function inspectStudioVideo(file: File, signal: AbortSignal): Promise<StudioMedia> {
   validateStudioFile(file); signal.throwIfAborted();
@@ -18,7 +19,7 @@ export async function inspectStudioVideo(file: File, signal: AbortSignal): Promi
   } finally { signal.removeEventListener("abort", cancel); input.dispose(); }
 }
 
-export async function exportStudioVideo(file: File, media: StudioMedia, captions: EditorDocument, style: StudioStyle, format: "mp4" | "webm", signal: AbortSignal, onProgress: (value: number) => void): Promise<Blob> {
+export async function exportStudioVideo(file: File, media: StudioMedia, captions: EditorDocument, style: StudioStyle, format: "mp4" | "webm", signal: AbortSignal, onProgress: (value: number) => void, alignment: StudioAlignment = []): Promise<Blob> {
   const issues = studioIssues(captions, media.duration); if (issues.length) throw new Error(issues[0]);
   validateStudioFile(file); validateStudioMedia(media); validateStudioStyle(style); signal.throwIfAborted();
   const { Input, BlobSource, BufferSource, ALL_FORMATS, Output, BufferTarget, Mp4OutputFormat, WebMOutputFormat, Conversion, Quality, canEncodeVideo } = await import("mediabunny");
@@ -40,12 +41,12 @@ export async function exportStudioVideo(file: File, media: StudioMedia, captions
   signal.addEventListener("abort", cancel, { once: true });
   try {
     // Fail before allocating encoders when any speech interval cannot fit safely.
-    for (let index = 0; index < captions.cues.length; index++) { const cue = captions.cues[index]; signal.throwIfAborted(); paintStudioCaptions(ctx, width, height, captions, cue.start! + Math.min(1, (cue.end! - cue.start!) / 2), style, font, reducedMotion); if (index % 16 === 15) await new Promise<void>(resolve => setTimeout(resolve, 0)); }
+    for (let index = 0; index < captions.cues.length; index++) { const cue = captions.cues[index]; signal.throwIfAborted(); paintStudioCaptions(ctx, width, height, captions, cue.start! + Math.min(1, (cue.end! - cue.start!) / 2), style, font, reducedMotion, alignment); if (index % 16 === 15) await new Promise<void>(resolve => setTimeout(resolve, 0)); }
     target.on("write", ({ end }) => { if (end > STUDIO_LIMITS.outputBytes) throw new Error("Output exceeded the 256 MiB safety limit. Choose a shorter video."); });
     conversion = await Conversion.init({ input, output, tracks: "primary", trim: { start: 0 }, copy: { shiftTolerance: 0 }, showWarnings: false,
       video: { codec, quality, allowTransformationMetadata: false, forceTranscode: true, process: sample => {
         signal.throwIfAborted(); ctx.fillStyle = "#000"; ctx.fillRect(0, 0, width, height); sample.draw(ctx, 0, 0, width, height);
-        paintStudioCaptions(ctx, width, height, captions, sample.timestamp * 1000, style, font, reducedMotion); return canvas;
+        paintStudioCaptions(ctx, width, height, captions, sample.timestamp * 1000, style, font, reducedMotion, alignment); return canvas;
       } },
       // Preserve the original packets when compatible; otherwise transcode audio,
       // never silently discard it. Conversion performs runtime encoder checks.

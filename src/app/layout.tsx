@@ -13,7 +13,10 @@ const inter = localFont({ src: "./fonts/Inter-Variable.ttf", weight: "100 900", 
 export const metadata = {
   ...pageMetadata("Tools for People Who Edit", "AENural Source Window and free browser-based tools for editors.", "/"),
   title: { default: "AENural — Tools for People Who Edit", template: "%s | AENural" },
-  applicationName: "AENural", icons: { icon: "/branding/aenural-official-logo-transparent.png", apple: "/branding/aenural-official-logo-transparent.png" },
+  applicationName: "AENural", icons: {
+    icon: [{ url: "/favicon.ico", sizes: "32x32 48x48 96x96", type: "image/x-icon" }, { url: "/branding/aenural-icon-96.png", sizes: "96x96", type: "image/png" }],
+    apple: [{ url: "/branding/aenural-icon-180.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

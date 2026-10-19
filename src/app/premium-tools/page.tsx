@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 import { Icon } from "@/components/ui/icon";
 import { products } from "@/lib/products";
 import { pageMetadata } from "@/lib/site-metadata";

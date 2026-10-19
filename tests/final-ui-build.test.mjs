@@ -34,7 +34,7 @@ describe('UI finishing and branding contracts',()=>{
   it('uses the official transparent image without retyped branding or generated paths',()=>{
     const brand=read('src/components/site/brand.tsx');assert.match(brand,/aenural-official-logo-transparent\.png/);assert.match(brand,/width=\{1000\} height=\{1000\}/);assert.match(brand,/unoptimized/);assert.doesNotMatch(brand,/<svg|<path|>AE</);
     const png=readFileSync(new URL('../public/branding/aenural-official-logo-transparent.png',import.meta.url));assert.equal(png.readUInt32BE(16),1000);assert.equal(png.readUInt32BE(20),1000);assert.equal(png[25],6);
-    assert.match(read('src/app/layout.tsx'),/icons: \{ icon: "\/branding\/aenural-official-logo-transparent\.png"/);
+    assert.match(read('src/app/layout.tsx'),/url: "\/branding\/aenural-icon-96\.png", sizes: "96x96"/);
   });
   it('removes the requested directory intro/buttons while preserving cards and anchor',()=>{
     assert.doesNotMatch(read('src/app/tools/page.tsx'),/Free online utilities|focused subtitle tools|aen-category-badge">Free tools/);

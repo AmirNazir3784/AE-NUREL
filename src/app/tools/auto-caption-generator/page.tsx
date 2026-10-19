@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import { CaptionStudio } from "@/features/caption-studio/caption-studio";
+import { configuration } from "../../../../server/hybrid/config.mjs";
 export const metadata = { title: "Auto Caption Generator", robots: { index: false, follow: false } };
+export const dynamic = "force-dynamic";
 export default function AutoCaptionGeneratorPage() {
   if (process.env.NODE_ENV !== "development") notFound();
-  return <main id="main-content" className="aen-wrap"><CaptionStudio /></main>;
+  return <main id="main-content" className="aen-wrap"><CaptionStudio transcriptionAvailable={!!configuration()} /></main>;
 }

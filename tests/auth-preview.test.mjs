@@ -125,7 +125,7 @@ describe('real Header and AuthPreviewModal component interactions', () => {
     await open();await click('[aria-label="Close account dialog"]');await click('[aria-label="Search tools"]');
     assert.equal(query('.search-dialog').open,true);assert.equal(document.activeElement.id,'tool-search');assert.equal(document.querySelectorAll('.search-results a').length,16);
     const link=query('.search-results a[href="/tools/srt-to-vtt"]');assert.ok(link);link.addEventListener('click',event=>event.preventDefault());await act(()=>link.click());assert.equal(query('.search-dialog').open,false);
-    assert.ok(query('.aen-nav-cta[href="/tools"]'));assert.ok(query('.aen-brand[href="/"]'));
+    assert.equal(query('.aen-nav-cta[href="/tools"]'),null);assert.ok(query('.aen-sign-in-desktop'));assert.ok(query('.aen-brand[href="/"]'));
   });
   it('renders no account entries in production',async()=>{
     await act(()=>root.unmount());process.env.NODE_ENV='production';root=createRoot(query('#root'));await act(()=>root.render(React.createElement(Header)));

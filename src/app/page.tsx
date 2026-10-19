@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 import { Icon } from "@/components/ui/icon";
 import { HomeVideo } from "@/components/home/home-video";
 import { HomeVideoProvider } from "@/components/home/home-video-modal";

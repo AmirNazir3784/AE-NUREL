@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 import type { ComponentProps, ReactNode } from "react";
 import { Icon } from "@/components/ui/icon";
 import { ToolIcon } from "@/components/ui/icon-tile";

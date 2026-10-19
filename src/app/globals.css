@@ -99,7 +99,7 @@
   --editing-soft: #edf3fc;
   --media-ink: #7543a8;
   --media-soft: #f4edfb;
-  --inner-glow: radial-gradient(600px 260px at 90% 0%, #1e867610, transparent 75%), radial-gradient(460px 240px at 5% 0%, #e07b1f0b, transparent 75%);
+  --inner-glow: radial-gradient(760px 420px at 94% 0%, #1e867619, transparent 72%), radial-gradient(660px 400px at 2% 12%, #e07b1f14, transparent 72%);
   --shadow: 0 2px 8px #14201f06;
   --shadow-card: 0 8px 24px #14201f0a;
   --shadow-workspace: 0 4px 16px #14201f06;
@@ -121,6 +121,7 @@
   --media-ink: #d6baff;
   --media-soft: #332840;
   --background: #0f1716;
+  --inner-glow: radial-gradient(760px 420px at 94% 0%, #1e867628, transparent 72%), radial-gradient(660px 400px at 2% 12%, #e07b1f1c, transparent 72%);
   --page-surface: #121d1a;
   --surface: #172422;
   --surface-soft: #213330;
@@ -200,7 +201,8 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 24px; }
-body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-platform); font-size: 16px; line-height: 1.6; }
+body { margin: 0; background: var(--background); background-image: var(--inner-glow); background-size: 100% 760px; background-position: center 86px; background-repeat: no-repeat; color: var(--foreground); font-family: var(--font-platform); font-size: 16px; line-height: 1.6; }
+body:has(.aen-home), body:has(.aen-product-page) { background-image: none; }
 button, input, select, textarea { font: inherit; }
 input { color: var(--foreground); background: var(--surface); }
 input::placeholder { color: var(--placeholder); opacity: 1; }

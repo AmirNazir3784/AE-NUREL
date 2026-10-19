@@ -1,2 +1,2 @@
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 export default function NotFound() { return <main id="main-content" className="container v1-recovery"><span className="eyebrow">404</span><h1>Page not found</h1><p>The page may have moved. Find your next task in the tool collection.</p><div><Link className="button button-primary" href="/tools">Browse all tools</Link><Link className="button button-secondary" href="/">Home</Link></div></main>; }

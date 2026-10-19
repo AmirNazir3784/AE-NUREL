@@ -27,6 +27,8 @@ const paths = {
   menu: <path d="M4 6h16M4 12h16M4 18h16" />,
   plus: <path d="M12 5v14M5 12h14" />,
   expand: <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" />,
+  volume: <><path d="M11 4 6 8H3v8h3l5 4V4Z" /><path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14" /></>,
+  "volume-off": <><path d="M11 4 6 8H3v8h3l5 4V4Z" /><path d="m16 9 6 6m0-6-6 6" /></>,
   arrow: <><path d="M5 12h14m-6-6 6 6-6 6" /></>,
   upload: <><path className="icon-wash" d="M4 16v4h16v-4Z" /><path d="M12 15V4m-4 4 4-4 4 4M4 16v4h16v-4" /></>,
   download: <><path className="icon-wash" d="M4 17v3h16v-3Z" /><path d="M12 4v11m-4-4 4 4 4-4M4 17v3h16v-3" /></>,

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 import { TaskLinks } from "@/components/tools/task-links";
 import { ToolCard } from "@/components/home/tool-card";
 import { tools } from "@/lib/tools";

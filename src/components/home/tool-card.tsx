@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/page-link";
 import { ToolIcon } from "@/components/ui/icon-tile";
 import type { Tool } from "@/lib/tools";
 export function ToolCard({ tool }: { tool: Tool }) {
