@@ -14,7 +14,7 @@ describe("Caption Studio player + guidance visual structure",()=>{
     assert.match(transport,/<PreviewAudioControls/);
     assert.match(transport,/Fullscreen preview/);
     assert.ok(transport.indexOf("Video timeline") < transport.indexOf("PreviewAudioControls"));
-    assert.ok(!ui.includes('          <PreviewAudioControls key={source.url}'));
+    assert.ok(transport.indexOf('<PreviewAudioControls') < transport.indexOf('Fullscreen preview'));
   });
   it("uses the site's orange action color for both player sliders",()=>{
     assert.match(css,/background:linear-gradient\(to right,var\(--action\)/);
