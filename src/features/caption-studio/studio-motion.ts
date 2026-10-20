@@ -6,6 +6,9 @@ export const STUDIO_ANIMATIONS = [
   ["drop", "Drop in"], ["zoom-in", "Zoom in"], ["zoom-out", "Zoom out"],
   ["bounce", "Bounce"], ["swing", "Swing"], ["blur", "Focus / blur"],
   ["glide", "Glide"], ["punch", "Punch"], ["settle", "Settle"], ["tilt", "Tilt in"],
+  ["glitch", "Digital glitch"], ["rgb-split", "RGB split"], ["typewriter", "Typewriter reveal"],
+  ["elastic", "Elastic pop"], ["whip-left", "Whip from left"], ["whip-right", "Whip from right"],
+  ["snap", "Snap zoom"], ["jitter", "Micro jitter"],
 ] as const;
 export type StudioAnimation = (typeof STUDIO_ANIMATIONS)[number][0];
 export type StudioMotionFrame = {
@@ -36,6 +39,18 @@ export function studioMotionFrame(animation: StudioAnimation, elapsedMs: number,
     case "punch": return { ...IDENTITY, scale: .75 + .25 * out + .15 * sin * (1 - t) };
     case "settle": return { ...IDENTITY, y: -.7 * remaining, rotation: 5 * degree * remaining };
     case "tilt": return { ...IDENTITY, x: -.35 * remaining, rotation: -10 * degree * remaining, opacity: .6 + .4 * t };
+    case "glitch": {
+      // Three small spatial jumps, never full-frame flashing.
+      const jump = t < .18 ? 1 : t < .36 ? -1 : t < .52 ? 1 : 0;
+      return { ...IDENTITY, x: jump * .16 * (1 - t), opacity: .75 + .25 * t };
+    }
+    case "rgb-split": return { ...IDENTITY, scale: .96 + .04 * out, opacity: .8 + .2 * t };
+    case "typewriter": return { ...IDENTITY };
+    case "elastic": return { ...IDENTITY, scale: .64 + .36 * out + .16 * Math.sin(Math.PI * 3 * t) * (1-t) };
+    case "whip-left": return { ...IDENTITY, x: -2.8 * remaining, opacity: .35 + .65 * t };
+    case "whip-right": return { ...IDENTITY, x: 2.8 * remaining, opacity: .35 + .65 * t };
+    case "snap": return { ...IDENTITY, scale: .5 + .5 * Math.min(1, t * 3), opacity: Math.min(1, .4 + t * 3) };
+    case "jitter": return { ...IDENTITY, x: Math.sin(t * 19) * .11 * (1-t), rotation: Math.sin(t * 11) * degree * 1.7 * (1-t) };
     default: return { ...IDENTITY };
   }
 }
