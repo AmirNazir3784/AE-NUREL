@@ -36,7 +36,7 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
   const [alignment, setAlignment] = useState<StudioAlignment>([]);
   const [fullscreen, setFullscreen] = useState(false);
   const [format, setFormat] = useState<"mp4" | "webm">("mp4"), [progress, setProgress] = useState(0);
-  const [output, setOutput] = useState<{ url: string; name: string } | null>(null), [panel, setPanel] = useState<"captions" | "style">("captions");
+  const [output, setOutput] = useState<{ url: string; name: string } | null>(null);
   const exportedVideo = useRef<HTMLVideoElement>(null);
   const video = useRef<HTMLVideoElement>(null), canvas = useRef<HTMLCanvasElement>(null), player = useRef<HTMLDivElement>(null), subtitleInput = useRef<HTMLInputElement>(null), videoInput = useRef<HTMLInputElement>(null);
   const job = useRef<AbortController | null>(null), generation = useRef(0), cueId = useRef(0), importId = useRef(0), revision = useRef(0);
@@ -91,7 +91,7 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
     job.current?.abort(); const abort = new AbortController(), run = ++generation.current; job.current = abort;
     setBusy("loading"); setError("");
     try { const media = await inspectStudioVideo(file, abort.signal); abort.signal.throwIfAborted(); if (run !== generation.current) return;
-      setSource({ file, media, url: URL.createObjectURL(file) }); dispatch({ type: "scratch", id: ++importId.current }); setSelected(""); setTime(0); setPlaying(false); setAlignment([]); setLayoutHint(""); setTranscriptionStage(""); setTranscriptionProgress(null); setQuery(""); setShift("0"); setPanel("captions"); setStyle(STUDIO_PRESETS[0]); invalidate();
+      setSource({ file, media, url: URL.createObjectURL(file) }); dispatch({ type: "scratch", id: ++importId.current }); setSelected(""); setTime(0); setPlaying(false); setAlignment([]); setLayoutHint(""); setTranscriptionStage(""); setTranscriptionProgress(null); setQuery(""); setShift("0"); setStyle(STUDIO_PRESETS[0]); invalidate();
     } catch (failure) { if (!abort.signal.aborted) setError(failure instanceof Error ? failure.message : "This video could not be opened."); }
     finally { if (job.current === abort) { job.current = null; setBusy(null); } }
   }
@@ -114,7 +114,7 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
       const start = Math.min(Math.round(time * 1000), Math.max(0, Math.floor(source.media.duration * 1000) - 1));
       const next = { ...added, start, end: Math.min(start + 2000, Math.floor(source.media.duration * 1000)) };
       const index = document.cues.findIndex(item => item.start !== null && item.start > start), cues = [...document.cues]; cues.splice(index < 0 ? cues.length : index, 0, next);
-      dispatch({ type: "apply", document: { ...document, cues } }); setSelected(id); setPanel("captions"); invalidate();
+      dispatch({ type: "apply", document: { ...document, cues } }); setSelected(id); invalidate();
     } catch (failure) { setError(failure instanceof Error ? failure.message : "A caption could not be added."); }
   }
   function changeStyle(value: Partial<StudioStyle>) {
@@ -155,7 +155,7 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
       abort.signal.throwIfAborted();
       dispatch({ type: "apply", document: captions, notice: "Captions ready. Review the text before exporting." });
       setAlignment(buildStudioAlignment(captions, words));
-      setSelected(captions.cues[0]?.id ?? ""); setPanel("captions"); setTranscriptionStage(previous => previous.startsWith("Server cleanup") ? previous : "Captions ready"); invalidate();
+      setSelected(captions.cues[0]?.id ?? ""); setTranscriptionStage(previous => previous.startsWith("Server cleanup") ? previous : "Captions ready"); invalidate();
     } catch (failure) { setTranscriptionStage(previous => previous.startsWith("Server cleanup") ? previous : abort.signal.aborted ? "Transcription stopped" : "Transcription failed"); if (!abort.signal.aborted) setError(failure instanceof Error ? failure.message : "Transcription failed. Try again."); }
     finally { if (job.current === abort) { job.current = null; setBusy(null); } }
   }
@@ -193,10 +193,10 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
           {!!issues.length && <p className={styles.note}>{issues[0]}</p>}
           <details className={styles.details}><summary>Video and export details</summary><p>{source.media.width} × {source.media.height} · {source.media.audioTracks ? "Original audio included in video export" : "This source has no audio track"}. Encoding support is checked on export. The video includes your styles; SRT/VTT contain only text and timing.</p><p>Your work stays in this session—download before leaving. Use Change video to start another project.</p></details>
         </section>
-        <aside className={styles.controls} aria-label="Caption controls">
-          <div className={styles.tabs} role="tablist" aria-label="Studio panels">{(["captions", "style"] as const).map(value => <button key={value} type="button" role="tab" aria-selected={panel === value} aria-controls={`studio-${value}`} id={`tab-${value}`} tabIndex={panel === value ? 0 : -1} onKeyDown={event => { if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) { event.preventDefault(); const next = event.key === "Home" ? "captions" : event.key === "End" ? "style" : panel === "captions" ? "style" : "captions"; setPanel(next); event.currentTarget.parentElement?.querySelector<HTMLButtonElement>(`#tab-${next}`)?.focus(); } }} onClick={() => setPanel(value)}>{value === "captions" ? "Captions" : "Style"}</button>)}</div>
+        <aside className={`${styles.controls} ${styles.captionSide}`} aria-label="Caption controls">
+          <div className={styles.sideHeading}><strong>Captions</strong><span>Transcript &amp; timing</span></div>
 
-          <section id="studio-captions" role="tabpanel" aria-labelledby="tab-captions" hidden={panel !== "captions"}>
+          <section id="studio-captions" aria-label="Caption timeline and editing">
             <details className={styles.workflowSection} key={document.cues.length ? "captions-ready" : "captions-empty"} open={!document.cues.length ? true : undefined}>
               <summary><span>Generate / import</span><small>{document.cues.length ? "Replace or add captions" : "Start with your video"}</small></summary>
               <div className={styles.workflowBody}>
@@ -217,7 +217,10 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
               {!cue && !!document.cues.length && <p className={styles.selectHelp}>Select a caption above to edit its text and timing.</p>}
             </div>
           </section>
-          <section id="studio-style" role="tabpanel" aria-labelledby="tab-style" hidden={panel !== "style"}>
+        </aside>
+        <aside className={`${styles.controls} ${styles.styleSide}`} aria-label="Caption style controls">
+          <div className={styles.sideHeading}><strong>Style</strong><span>Fonts, color &amp; motion</span></div>
+          <section id="studio-style" aria-label="Style presets and customization">
             <StyleControls style={style} disabled={!!busy} wordTimingAvailable={!!usableAlignment.length} onChange={changeStyle} onPreset={value => { setStyle(value); invalidate(); }} onError={setError} />
           </section>
         </aside>
