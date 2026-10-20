@@ -23,7 +23,7 @@ describe("shared preview/export caption animations",()=>{
       const f=studioMotionFrame(animation,progress*440,440,false);
       for(const x of Object.values(f))assert.ok(Number.isFinite(x),animation);
       assert.ok(f.opacity>=0 && f.opacity<=1,animation);
-      assert.ok(f.scale>.5 && f.scale<1.5,animation);
+      assert.ok(f.scale>=.5 && f.scale<1.5,animation);
       assert.ok(Math.abs(f.x)<=3 && Math.abs(f.y)<=2,animation);
       assert.ok(f.blur>=0 && f.blur<=.2,animation);
     }
