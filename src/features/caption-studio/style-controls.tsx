@@ -40,7 +40,7 @@ export function StyleControls({ style, disabled, wordTimingAvailable = false, on
         <p className={styles.note}>Only the spoken word gets this background. Uses measured speech timing; editing text or timing pauses highlighting for that caption.</p>
       </> : <p className={styles.note}>Generate captions to get word timing. Imported SRT/VTT files support caption backgrounds, not precise word highlighting.</p>}
       <details className={styles.details}><summary>Typography and lines</summary>
-        <p className={styles.note}>Inter and Sora are bundled. Other fonts use fonts installed on your device, so they may differ on other devices.</p>
+        <p className={styles.note}>Inter, Sora and the five OFL studio fonts are self-hosted. The other fonts require a local device installation.</p>
         {slider("Font weight", "weight", 100, 900, 100)}
         <div className={styles.decorationOptions}>
           <label className={styles.inline}><input type="checkbox" checked={style.italic} onChange={event => onChange({ italic: event.target.checked })} />Italic</label>
