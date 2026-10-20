@@ -45,6 +45,11 @@ export const STUDIO_PRESETS: readonly StudioStyle[] = [
   preset("Pulse", { font: "Inter", weight: 800, size: 5.4, color: "#9fffe5", outline: 3, outlineColor: "#123e37", shadowColor: "#20ab8b", shadowBlur: 30 }),
   preset("Atlas", { font: "Impact", weight: 800, size: 6.3, textCase: "upper", letterSpacing: 1.5, outline: 6, outlineColor: "#15201f", lineHeight: 1.15 }),
   preset("Gold Serif", { font: "Palatino Linotype", weight: 700, size: 5.2, color: "#fbe7b3", background: true, highlight: "#2b2520", backgroundOpacity: .84, radius: 8, paddingX: 55, paddingY: 30, shadow: false }),
+  preset("Viral Bold", { font: "Anton", weight: 400, size: 6.1, textCase: "upper", outline: 6, outlineColor: "#101716", shadow: true, lineHeight: 1.13 }),
+  preset("Modern Clean", { font: "DM Sans", weight: 700, size: 5.2, background: true, highlight: "#1a3040", backgroundOpacity: .88, radius: 14, paddingX: 48, paddingY: 25 }),
+  preset("Film Title", { font: "Bebas Neue", weight: 400, size: 7.0, textCase: "upper", letterSpacing: 3, outline: 2, shadow: true, lineHeight: 1.1 }),
+  preset("Luxe Serif", { font: "Playfair Display", weight: 600, italic: true, size: 5.1, background: true, highlight: "#322326", color: "#fff0e8", radius: 9, paddingX: 58, paddingY: 30, shadow: false }),
+  preset("News Condensed", { font: "Oswald", weight: 650, size: 5.5, background: true, highlight: "#17415d", color: "#ffffff", radius: 6, textCase: "upper", paddingX: 48, paddingY: 18 }),
 ];
 export function studioPlacement(style: StudioStyle, position: StudioStyle["position"]): StudioStyle {
   if (position === "custom") return { ...style, position };
