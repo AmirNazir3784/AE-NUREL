@@ -3,6 +3,7 @@ import { plainCaption } from "../../lib/subtitle-conversion.ts";
 import { wrapCaption } from "../../lib/subtitle-video.ts";
 import { studioWordSpans, type StudioAlignment } from "./studio-alignment.ts";
 import { measureStudioTextRange, drawStudioHighlightedLine, drawStudioWordBackground, type StudioRangeMeasurer } from "./studio-text-ranges.ts";
+import { STUDIO_ANIMATIONS, studioMotionFrame, type StudioAnimation } from "./studio-motion.ts";
 
 export const STUDIO_LIMITS = { bytes: 200 * 1024 ** 2, seconds: 120, pixels: 1920 * 1080, cues: 500, outputBytes: 256 * 1024 ** 2 } as const;
 // Inter/Sora are bundled. Other fonts rely on locally installed device fonts.
@@ -13,7 +14,7 @@ export type StudioStyle = {
   outline: number; outlineColor: string; shadow: boolean; shadowColor: string; shadowOpacity: number; shadowBlur: number; shadowX: number; shadowY: number;
   position: "top" | "middle" | "bottom" | "custom"; x: number; y: number; rotation: number; align: "left" | "center" | "right";
   maxWidth: number; maxLines: number; lineHeight: number; letterSpacing: number; wordSpacing: number; fit: boolean; textCase: "original" | "upper" | "lower";
-  animation: "none" | "fade" | "pop" | "rise"; motionDuration: number;
+  animation: StudioAnimation; motionDuration: number;
   wordHighlight: boolean; wordColor: string; wordBackground: boolean; wordBackgroundColor: string; wordBackgroundOpacity: number;
   italic: boolean; underline: boolean; strikethrough: boolean;
 };
@@ -51,7 +52,7 @@ export function studioPlacement(style: StudioStyle, position: StudioStyle["posit
 }
 export function validateStudioStyle(style: StudioStyle) {
   if (!style || typeof style.preset !== "string" || style.preset.length > 40 || !["top", "middle", "bottom", "custom"].includes(style.position) || [style.background, style.shadow, style.fit, style.wordHighlight, style.wordBackground, style.italic, style.underline, style.strikethrough].some(value => typeof value !== "boolean")) throw new Error("This caption style is not valid.");
-  if (!STUDIO_FONTS.includes(style.font) || !["left", "center", "right"].includes(style.align) || !["none", "fade", "pop", "rise"].includes(style.animation) || !["original", "upper", "lower"].includes(style.textCase)) throw new Error("Choose supported caption style settings.");
+  if (!STUDIO_FONTS.includes(style.font) || !["left", "center", "right"].includes(style.align) || !STUDIO_ANIMATIONS.some(([value]) => value === style.animation) || !["original", "upper", "lower"].includes(style.textCase)) throw new Error("Choose supported caption style settings.");
   for (const color of [style.color, style.highlight, style.outlineColor, style.shadowColor, style.wordColor, style.wordBackgroundColor]) if (!/^#[\da-f]{6}$/i.test(color)) throw new Error("Use a valid caption color.");
   const ranges: [number, number, number][] = [[style.size,2.5,12],[style.weight,100,900],[style.wordBackgroundOpacity,0,1],[style.opacity,.1,1],[style.backgroundOpacity,.05,1],[style.paddingX,0,100],[style.paddingY,0,100],[style.radius,0,100],[style.outline,0,20],[style.shadowOpacity,0,1],[style.shadowBlur,0,100],[style.shadowX,-50,50],[style.shadowY,-50,50],[style.x,0,100],[style.y,0,100],[style.rotation,-20,20],[style.maxWidth,40,94],[style.maxLines,1,4],[style.lineHeight,1,1.8],[style.letterSpacing,-2,12],[style.wordSpacing,-2,20],[style.motionDuration,80,1000]];
   if (ranges.some(([value,min,max]) => !Number.isFinite(value) || value < min || value > max) || !Number.isInteger(style.maxLines)) throw new Error("A caption style value is outside its supported range.");
@@ -136,18 +137,20 @@ export function paintStudioCaptions(ctx: CanvasRenderingContext2D, width: number
       if (lines.length <= style.maxLines || !style.fit) break;
     }
     if (size < minimum || lines.length > style.maxLines) throw new Error(`This caption cannot fit in ${style.maxLines} readable lines. Shorten or split it, or adjust text size and layout.`);
-    const elapsed = Math.max(0, (time - Math.min(...active.map(c => c.start!))) / 1000);
-    const motion = reducedMotion ? 1 : Math.min(1, elapsed / (style.motionDuration / 1000));
-    const scale = style.animation === "pop" ? .94 + .06 * Math.sin(motion * Math.PI / 2) : 1;
-    ctx.globalAlpha = style.opacity * (style.animation === "fade" || style.animation === "rise" ? motion : 1);
+    const elapsedMs = Math.max(0, time - Math.min(...active.map(c => c.start!)));
+    const motion = studioMotionFrame(style.animation, elapsedMs, style.motionDuration, reducedMotion);
+    ctx.globalAlpha = style.opacity * motion.opacity;
     const lineHeight = size * style.lineHeight, widest = Math.max(...lines.map(line => ctx.measureText(line).width));
     const boxWidth = widest + size * style.paddingX / 50, boxHeight = lineHeight * lines.length + size * style.paddingY / 50;
     const angle = style.rotation * Math.PI / 180, boundWidth = Math.abs(boxWidth * Math.cos(angle)) + Math.abs(boxHeight * Math.sin(angle)), boundHeight = Math.abs(boxWidth * Math.sin(angle)) + Math.abs(boxHeight * Math.cos(angle));
     const margin = base * .03;
     if (boundWidth > width - margin * 2 || boundHeight > height - margin * 2) throw new Error("This layout extends beyond the video. Reduce size, padding or rotation.");
     const x = margin + boundWidth / 2 + (width - margin * 2 - boundWidth) * style.x / 100;
-    const y = Math.min(height - margin - boundHeight / 2, Math.max(margin + boundHeight / 2, height * style.y / 100 + (style.animation === "rise" ? (1 - motion) * size * .6 : 0)));
-    ctx.translate(x, y); ctx.rotate(angle); ctx.scale(scale, scale);
+    const y = Math.min(height - margin - boundHeight / 2, Math.max(margin + boundHeight / 2, height * style.y / 100));
+    ctx.translate(x + motion.x * size, y + motion.y * size);
+    ctx.rotate(angle + motion.rotation);
+    ctx.scale(motion.scale, motion.scale);
+    if (motion.blur) ctx.filter = `blur(${(motion.blur * size).toFixed(2)}px)`;
     ctx.direction = /[\p{Script=Arabic}\p{Script=Hebrew}]/u.test(text.match(/\p{L}/u)?.[0] ?? "") ? "rtl" : "ltr";
     ctx.textAlign = style.align; ctx.textBaseline = "middle"; ctx.lineJoin = "round";
     if (style.background) { ctx.fillStyle = style.highlight + Math.round(style.backgroundOpacity * 255).toString(16).padStart(2,"0"); ctx.beginPath(); ctx.roundRect(-boxWidth / 2, -boxHeight / 2, boxWidth, boxHeight, Math.min(size * style.radius / 100, boxHeight / 2)); ctx.fill(); }
