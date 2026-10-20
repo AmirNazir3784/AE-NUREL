@@ -175,28 +175,24 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
             <canvas ref={canvas} width={source.media.width} height={source.media.height} aria-hidden="true" />
           </div>
           <div className={styles.transport}>
-              <button type="button" aria-label={playing ? "Pause video" : "Play video"} disabled={!!busy} onClick={() => { if (video.current?.paused) void video.current.play().catch(() => setError("Playback could not start.")); else video.current?.pause(); }}>{playing ? "Ⅱ" : "▶"}</button>
-              <span>{timeLabel(time)}</span>
-              <input aria-label="Video timeline" type="range" min={0} max={source.media.duration} step={.01} value={time} style={{ "--range-fill": `${source.media.duration > 0 ? Math.min(100, Math.max(0, time / source.media.duration * 100)) : 0}%` } as CSSProperties} onChange={event => seek(Number(event.target.value))} disabled={!!busy} />
-              <span>{timeLabel(source.media.duration)}</span>
-              <PreviewAudioControls key={source.url} videoRef={video} hasAudio={!!source.media.audioTracks} disabled={!!busy} />
-              <button type="button" aria-label={fullscreen ? "Exit fullscreen preview" : "Fullscreen preview"} onClick={() => void toggleFullscreen()}><Icon name="expand" size={17} /></button>
+            <button type="button" aria-label={playing ? "Pause video" : "Play video"} disabled={!!busy} onClick={() => { if (video.current?.paused) void video.current.play().catch(() => setError("Playback could not start.")); else video.current?.pause(); }}>{playing ? "Ⅱ" : "▶"}</button>
+            <div className={styles.transportNudge} role="group" aria-label="Frame stepping">
+              <button type="button" title="Back 0.1 seconds" aria-label="Back 0.1 seconds" disabled={!!busy} onClick={() => seek(time - .1)}><Icon name="reset" size={16} /></button>
+              <button type="button" title="Forward 0.1 seconds" aria-label="Forward 0.1 seconds" disabled={!!busy} onClick={() => seek(time + .1)}><Icon name="arrow" size={16} /></button>
+            </div>
+            <span>{timeLabel(time)}</span>
+            <input aria-label="Video timeline" type="range" min={0} max={source.media.duration} step={.01} value={time} style={{ "--range-fill": `${source.media.duration > 0 ? Math.min(100, Math.max(0, time / source.media.duration * 100)) : 0}%` } as CSSProperties} onChange={event => seek(Number(event.target.value))} disabled={!!busy} />
+            <span>{timeLabel(source.media.duration)}</span>
+            <PreviewSpeedControls key={source.url} videoRef={video} disabled={!!busy} />
+            <PreviewAudioControls key={source.url} videoRef={video} hasAudio={!!source.media.audioTracks} disabled={!!busy} />
+            <button type="button" aria-label={fullscreen ? "Exit fullscreen preview" : "Fullscreen preview"} onClick={() => void toggleFullscreen()}><Icon name="expand" size={17} /></button>
             </div>
           </div>
           {style.wordHighlight && alignment.length > usableAlignment.length && <p className={styles.note} role="status">Word highlighting is paused for changed captions. Undo your edits or generate captions again to restore alignment.</p>}
           {layoutHint && <p className={styles.note} role="status">{layoutHint}</p>}
-          <details className={styles.details} key={source.url}><summary>Playback controls</summary><div className={styles.actions}><button type="button" className="button button-secondary" disabled={!!busy} onClick={() => seek(time - .1)}>Back 0.1s</button><button type="button" className="button button-secondary" disabled={!!busy} onClick={() => seek(time + .1)}>Forward 0.1s</button></div><PreviewSpeedControls key={source.url} videoRef={video} disabled={!!busy} /><p className={styles.note}>Preview speed and volume do not change the exported video.</p></details>
-          <div className={styles.exportBar}><label className={styles.inline}>Video format<select value={format} disabled={!!busy} onChange={event => { setFormat(event.target.value as "mp4" | "webm"); setOutput(null); }}><option value="mp4">MP4</option><option value="webm">WebM</option></select></label><button type="button" className="button button-primary" disabled={!!busy || !!issues.length} onClick={() => void render()}><Icon name="download" size={17} />Export video</button></div>
-          {busy === "exporting" && <div className={styles.progress} role="status"><progress max={100} value={progress} /><span>Exporting · {progress}%</span><button type="button" className="text-button" onClick={cancel}>Cancel export</button></div>}
-          {output && <div className={styles.result}><video ref={exportedVideo} src={output.url} controls playsInline preload="metadata" aria-label="Exported captioned video" /><a className="button button-primary" href={output.url} download={output.name}>Download captioned video</a></div>}
-          <div className={styles.subtitleDownloads}>{captionDownloads}</div>
-          {!!issues.length && <p className={styles.note}>{issues[0]}</p>}
-          <details className={styles.details}><summary>Video and export details</summary><p>{source.media.width} × {source.media.height} · {source.media.audioTracks ? "Original audio included in video export" : "This source has no audio track"}. Encoding support is checked on export. The video includes your styles; SRT/VTT contain only text and timing.</p><p>Your work stays in this session—download before leaving. Use Change video to start another project.</p></details>
-        </section>
-        <aside className={`${styles.controls} ${styles.captionSide}`} aria-label="Caption controls">
-          <div className={styles.sideHeading}><strong>Captions</strong><span>Transcript &amp; timing</span></div>
-
-          <section id="studio-captions" aria-label="Caption timeline and editing">
+          
+          <div className={styles.processingArea} aria-label="Video processing and downloads">
+            <h2 className={styles.centerTaskTitle}>{document.cues.length ? "Export your captions" : "Create captions"}</h2>
             <details className={styles.workflowSection} key={document.cues.length ? "captions-ready" : "captions-empty"} open={!document.cues.length ? true : undefined}>
               <summary><span>Generate / import</span><small>{document.cues.length ? "Replace or add captions" : "Start with your video"}</small></summary>
               <div className={styles.workflowBody}>
@@ -204,9 +200,23 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
                 <GenerationControls key={source.url} available={transcriptionAvailable} busy={!!busy} transcribing={busy === "transcribing"} duration={source.media.duration} hasAudio={!!source.media.audioTracks} stage={transcriptionStage} progress={transcriptionProgress} onGenerate={settings => void generateCaptions(settings)} onCancel={cancel} />
               </div>
             </details>
+          </div>
+          {!!document.cues.length && <div className={styles.exportBar}><label className={styles.inline}>Video format<select value={format} disabled={!!busy} onChange={event => { setFormat(event.target.value as "mp4" | "webm"); setOutput(null); }}><option value="mp4">MP4</option><option value="webm">WebM</option></select></label><button type="button" className="button button-primary" disabled={!!busy || !!issues.length} onClick={() => void render()}><Icon name="download" size={17} />Export video</button></div>
+          {busy === "exporting" && <div className={styles.progress} role="status"><progress max={100} value={progress} /><span>Exporting · {progress}%</span><button type="button" className="text-button" onClick={cancel}>Cancel export</button></div>}
+          {output && <div className={styles.result}><video ref={exportedVideo} src={output.url} controls playsInline preload="metadata" aria-label="Exported captioned video" /><a className="button button-primary" href={output.url} download={output.name}>Download captioned video</a></div>}
+          {!!document.cues.length && <div className={styles.subtitleDownloads}>{captionDownloads}</div>}
+          {!!issues.length && <p className={styles.note}>{issues[0]}</p>}
+          {!!document.cues.length && <details className={styles.details}><summary>Video and export details</summary><p>{source.media.width} × {source.media.height} · {source.media.audioTracks ? "Original audio included in video export" : "This source has no audio track"}. Encoding support is checked on export. The video includes your styles; SRT/VTT contain only text and timing.</p><p>Your work stays in this session—download before leaving. Use Change video to start another project.</p></details>}
+        </section>
+        <aside className={`${styles.controls} ${styles.captionSide}`} aria-label="Caption controls">
+          <div className={styles.sideHeading}><strong>Captions</strong><span>Transcript &amp; timing</span></div>
+
+          <section id="studio-captions" aria-label="Caption timeline and editing">
+            {document.cues.length ? <>
             <div className={styles.captionWorkspace}>
               <div className={styles.captionToolbar}>
                 <div><strong>Captions</strong><small>{document.cues.length} in timeline</small></div>
+                <button type="button" className={styles.captionAdd} disabled={!!busy} onClick={addCaption} aria-label="Add caption"><Icon name="plus" size={17} /> Add</button>
                 <div className={styles.history}><button type="button" disabled={!!busy || !session.past.length && !session.pendingBase} onClick={() => { dispatch({ type: "undo" }); invalidate(); }}>Undo</button><button type="button" disabled={!!busy || !session.future.length} onClick={() => { dispatch({ type: "redo" }); invalidate(); }}>Redo</button></div>
               </div>
               <label className={styles.captionSearch}><span className="sr-only">Search caption text</span><input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Find a caption…" /></label>
@@ -216,6 +226,7 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
               {cue && <fieldset className={styles.cueEditor} disabled={!!busy}><legend>Edit caption {document.cues.indexOf(cue) + 1}</legend><div className={styles.times}>{(["start", "end"] as const).map(field => <label key={field}>{field === "start" ? "Start" : "End"}<input value={cue[`${field}Draft`] ?? (cue[field] === null ? "" : formatEditorTime(cue[field], document.format))} onChange={event => { dispatch({ type: "draft", id: cue.id, field, value: event.target.value }); invalidate(); }} onBlur={() => dispatch({ type: "commit" })} aria-invalid={cue[field] === null || cue.start !== null && cue.end !== null && cue.end <= cue.start} /></label>)}</div><label>Caption text<textarea ref={textSelection} rows={3} dir="auto" value={cue.text} maxLength={2000} onChange={event => { dispatch({ type: "draft", id: cue.id, field: "text", value: event.target.value }); invalidate(); }} onBlur={() => dispatch({ type: "commit" })} /></label><details className={styles.details}><summary>Edit tools</summary><div className={styles.actions}><button type="button" className="button button-secondary" onClick={() => applyEdit(() => splitStudioCue(document, cue.id, Math.round(time * 1000), textSelection.current?.selectionStart ?? 0, `studio-${++cueId.current}`))}>Split at playhead</button><button type="button" className="button button-secondary" onClick={() => applyEdit(() => mergeStudioCue(document, cue.id))}>Merge with next</button><button type="button" className="button button-secondary" onClick={() => applyEdit(() => ({ ...document, cues: [...document.cues].sort((a,b) => (a.start ?? Infinity) - (b.start ?? Infinity)) }))}>Sort by time</button></div><p className={styles.note}>Split at the playhead and text cursor.</p><label>Shift all (seconds)<input type="text" inputMode="decimal" value={shift} onChange={event => setShift(event.target.value)} /></label><button type="button" className="button button-secondary" onClick={() => applyEdit(() => shiftEditorCues(document, shift).document)}>Apply shift</button></details><button type="button" className="text-button destructive-action" onClick={() => { dispatch({ type: "apply", document: deleteEditorCue(document, cue.id) }); setSelected(""); invalidate(); }}>Delete caption</button></fieldset>}
               {!cue && !!document.cues.length && <p className={styles.selectHelp}>Select a caption above to edit its text and timing.</p>}
             </div>
+            </> : <p className={styles.emptyCaptions}>Generate or import captions beneath the video; your transcript and editing tools will appear here.</p>}
           </section>
         </aside>
         <aside className={`${styles.controls} ${styles.styleSide}`} aria-label="Caption style controls">
