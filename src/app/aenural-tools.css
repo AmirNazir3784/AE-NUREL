@@ -239,3 +239,13 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
   .aen-tool-page :is(.aen-timing, .aen-merger, .aen-splitter, .aen-editor, .aen-sync, .aen-overlap) .upload-zone:not(.has-file) .button { width: 100%; }
 }
 /* AENURAL_TIMING_EDITING_UPLOAD_CENTER_END */
+
+/* Font binaries and license notices are installed by
+   scripts/install-studio-fonts.mjs. No browser Google Fonts requests. */
+@font-face { font-family:"Anton"; src:url("/studio-fonts/Anton-Regular.ttf") format("truetype"); font-weight:400; font-display:swap; }
+@font-face { font-family:"Bebas Neue"; src:url("/studio-fonts/BebasNeue-Regular.ttf") format("truetype"); font-weight:400; font-display:swap; }
+@font-face { font-family:"Oswald"; src:url("/studio-fonts/Oswald-Variable.ttf") format("truetype"); font-weight:200 700; font-display:swap; }
+@font-face { font-family:"Playfair Display"; src:url("/studio-fonts/PlayfairDisplay-Variable.ttf") format("truetype"); font-weight:400 900; font-style:normal; font-display:swap; }
+@font-face { font-family:"Playfair Display"; src:url("/studio-fonts/PlayfairDisplay-Italic-Variable.ttf") format("truetype"); font-weight:400 900; font-style:italic; font-display:swap; }
+@font-face { font-family:"DM Sans"; src:url("/studio-fonts/DMSans-Variable.ttf") format("truetype"); font-weight:100 1000; font-style:normal; font-display:swap; }
+@font-face { font-family:"DM Sans"; src:url("/studio-fonts/DMSans-Italic-Variable.ttf") format("truetype"); font-weight:100 1000; font-style:italic; font-display:swap; }
