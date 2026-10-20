@@ -27,6 +27,12 @@ describe("Caption Studio uncluttered editing workspace",()=>{
     assert.match(motion,/Animation duration/);
     assert.ok(!motion.includes("<summary>Motion</summary>"));
   });
+  it("shows full caption style gallery before quick layout",()=>{
+    const preset = motion.indexOf("All caption styles");
+    const quick = motion.indexOf("Quick layout");
+    assert.ok(preset>=0 && quick>preset);
+    assert.ok(motion.indexOf("STUDIO_PRESETS.map(presetButton)")<quick);
+  });
   it("keeps all premium presets and existing caption editing actions",()=>{
     assert.match(motion,/STUDIO_PRESETS\.map\(presetButton\)/);
     for (const text of ["Split at playhead","Merge with next","Sort by time","Apply shift","Delete caption","Undo","Redo"])
