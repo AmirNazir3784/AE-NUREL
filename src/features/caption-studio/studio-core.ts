@@ -5,7 +5,8 @@ import { studioWordSpans, type StudioAlignment } from "./studio-alignment.ts";
 import { measureStudioTextRange, drawStudioHighlightedLine, drawStudioWordBackground, type StudioRangeMeasurer } from "./studio-text-ranges.ts";
 
 export const STUDIO_LIMITS = { bytes: 200 * 1024 ** 2, seconds: 120, pixels: 1920 * 1080, cues: 500, outputBytes: 256 * 1024 ** 2 } as const;
-export const STUDIO_FONTS = ["Inter", "Sora", "Arial", "Georgia", "Times New Roman", "Verdana", "Courier New"] as const;
+// Inter/Sora are bundled. Other fonts rely on locally installed device fonts.
+export const STUDIO_FONTS = ["Inter", "Sora", "Arial", "Georgia", "Times New Roman", "Verdana", "Courier New", "Trebuchet MS", "Segoe UI", "Tahoma", "Impact", "Arial Black", "Palatino Linotype", "Cambria", "Consolas", "Franklin Gothic Medium"] as const;
 export type StudioStyle = {
   preset: string; font: typeof STUDIO_FONTS[number]; size: number; weight: number;
   color: string; opacity: number; highlight: string; background: boolean; backgroundOpacity: number; paddingX: number; paddingY: number; radius: number;
@@ -13,9 +14,10 @@ export type StudioStyle = {
   position: "top" | "middle" | "bottom" | "custom"; x: number; y: number; rotation: number; align: "left" | "center" | "right";
   maxWidth: number; maxLines: number; lineHeight: number; letterSpacing: number; wordSpacing: number; fit: boolean; textCase: "original" | "upper" | "lower";
   animation: "none" | "fade" | "pop" | "rise"; motionDuration: number;
-  wordHighlight: boolean; wordColor: string; wordBackground: boolean; wordBackgroundColor: string;
+  wordHighlight: boolean; wordColor: string; wordBackground: boolean; wordBackgroundColor: string; wordBackgroundOpacity: number;
+  italic: boolean; underline: boolean; strikethrough: boolean;
 };
-const baseStyle: StudioStyle = { preset: "Clean", font: "Inter", size: 4.8, weight: 600, color: "#ffffff", opacity: 1, highlight: "#187e70", background: false, backgroundOpacity: .95, paddingX: 40, paddingY: 10, radius: 18, outline: 0, outlineColor: "#101716", shadow: true, shadowColor: "#000000", shadowOpacity: .7, shadowBlur: 14, shadowX: 0, shadowY: 4, position: "bottom", x: 50, y: 84, rotation: 0, align: "center", maxWidth: 86, maxLines: 2, lineHeight: 1.3, letterSpacing: 0, wordSpacing: 0, fit: true, textCase: "original", animation: "none", motionDuration: 180, wordHighlight: false, wordColor: "#ffae58", wordBackground: false, wordBackgroundColor: "#243f36" };
+const baseStyle: StudioStyle = { preset: "Clean", font: "Inter", size: 4.8, weight: 600, color: "#ffffff", opacity: 1, highlight: "#187e70", background: false, backgroundOpacity: .95, paddingX: 40, paddingY: 10, radius: 18, outline: 0, outlineColor: "#101716", shadow: true, shadowColor: "#000000", shadowOpacity: .7, shadowBlur: 14, shadowX: 0, shadowY: 4, position: "bottom", x: 50, y: 84, rotation: 0, align: "center", maxWidth: 86, maxLines: 2, lineHeight: 1.3, letterSpacing: 0, wordSpacing: 0, fit: true, textCase: "original", animation: "none", motionDuration: 180, wordHighlight: false, wordColor: "#ffae58", wordBackground: false, wordBackgroundColor: "#243f36", wordBackgroundOpacity: .9, italic: false, underline: false, strikethrough: false };
 function preset(name: string, changes: Partial<StudioStyle> = {}): StudioStyle { return { ...baseStyle, preset: name, ...changes }; }
 export const STUDIO_PRESETS: readonly StudioStyle[] = [
   preset("Clean"), preset("Bold", { font: "Sora", weight: 800, size: 6.2, color: "#ffae58" }),
@@ -30,21 +32,35 @@ export const STUDIO_PRESETS: readonly StudioStyle[] = [
   preset("Marker", { color: "#17221f", background: true, highlight: "#ffbf72", shadow: false, radius: 0, weight: 800, textCase: "upper" }),
   preset("Mono", { font: "Courier New", weight: 700, background: true, highlight: "#111b1a", paddingX: 35, radius: 6 }),
   preset("Paper", { font: "Georgia", weight: 400, color: "#17221f", highlight: "#f7f4eb", background: true, shadow: false, radius: 10, paddingX: 60, paddingY: 30 }),
-  preset("Broadcast", { font: "Arial", weight: 700, background: true, highlight: "#154a68", radius: 0, align: "left", x: 0, maxWidth: 78 }),
+  preset("Broadcast", { font: "Arial", weight: 700, background: true, highlight: "#154a68", radius: 0, align: "left", x: 50, maxWidth: 78 }),
   preset("Lift", { font: "Sora", weight: 700, size: 5.4, animation: "rise", motionDuration: 300, outline: 3 }),
+  preset("Creator", { font: "Sora", weight: 800, size: 5.7, background: true, highlight: "#242a45", backgroundOpacity: .85, radius: 14, paddingX: 38, paddingY: 20 }),
+  preset("Studio", { font: "Inter", weight: 750, size: 5.1, background: true, highlight: "#152a26", backgroundOpacity: .82, radius: 20, paddingX: 55, paddingY: 26, shadow: false }),
+  preset("Headline", { font: "Arial Black", weight: 900, size: 5.7, outline: 3, outlineColor: "#1b2020", textCase: "upper", lineHeight: 1.12 }),
+  preset("Documentary", { font: "Georgia", weight: 500, size: 4.8, background: true, highlight: "#15201e", backgroundOpacity: .8, radius: 10, paddingX: 45, paddingY: 22, shadow: false }),
+  preset("Podcast", { font: "Trebuchet MS", weight: 700, size: 5.3, background: true, highlight: "#30314b", backgroundOpacity: .86, radius: 12, paddingX: 40 }),
+  preset("Signal", { font: "Sora", weight: 800, size: 5.4, color: "#fff9e8", background: true, highlight: "#95500f", radius: 12, shadow: false, textCase: "upper" }),
+  preset("Slate", { font: "Segoe UI", weight: 700, size: 5.2, color: "#f4f7ff", background: true, highlight: "#263c51", radius: 22, paddingX: 50, paddingY: 24 }),
+  preset("Pulse", { font: "Inter", weight: 800, size: 5.4, color: "#9fffe5", outline: 3, outlineColor: "#123e37", shadowColor: "#20ab8b", shadowBlur: 30 }),
+  preset("Atlas", { font: "Impact", weight: 800, size: 6.3, textCase: "upper", letterSpacing: 1.5, outline: 6, outlineColor: "#15201f", lineHeight: 1.15 }),
+  preset("Gold Serif", { font: "Palatino Linotype", weight: 700, size: 5.2, color: "#fbe7b3", background: true, highlight: "#2b2520", backgroundOpacity: .84, radius: 8, paddingX: 55, paddingY: 30, shadow: false }),
 ];
+export function studioPlacement(style: StudioStyle, position: StudioStyle["position"]): StudioStyle {
+  if (position === "custom") return { ...style, position };
+  return { ...style, position, x: 50, y: { top: 18, middle: 50, bottom: 84 }[position] };
+}
 export function validateStudioStyle(style: StudioStyle) {
-  if (!style || typeof style.preset !== "string" || style.preset.length > 40 || !["top", "middle", "bottom", "custom"].includes(style.position) || [style.background, style.shadow, style.fit, style.wordHighlight, style.wordBackground].some(value => typeof value !== "boolean")) throw new Error("This caption style is not valid.");
+  if (!style || typeof style.preset !== "string" || style.preset.length > 40 || !["top", "middle", "bottom", "custom"].includes(style.position) || [style.background, style.shadow, style.fit, style.wordHighlight, style.wordBackground, style.italic, style.underline, style.strikethrough].some(value => typeof value !== "boolean")) throw new Error("This caption style is not valid.");
   if (!STUDIO_FONTS.includes(style.font) || !["left", "center", "right"].includes(style.align) || !["none", "fade", "pop", "rise"].includes(style.animation) || !["original", "upper", "lower"].includes(style.textCase)) throw new Error("Choose supported caption style settings.");
   for (const color of [style.color, style.highlight, style.outlineColor, style.shadowColor, style.wordColor, style.wordBackgroundColor]) if (!/^#[\da-f]{6}$/i.test(color)) throw new Error("Use a valid caption color.");
-  const ranges: [number, number, number][] = [[style.size,2.5,12],[style.weight,100,900],[style.opacity,.1,1],[style.backgroundOpacity,.05,1],[style.paddingX,0,100],[style.paddingY,0,100],[style.radius,0,100],[style.outline,0,20],[style.shadowOpacity,0,1],[style.shadowBlur,0,100],[style.shadowX,-50,50],[style.shadowY,-50,50],[style.x,0,100],[style.y,0,100],[style.rotation,-20,20],[style.maxWidth,40,94],[style.maxLines,1,4],[style.lineHeight,1,1.8],[style.letterSpacing,-2,12],[style.wordSpacing,-2,20],[style.motionDuration,80,1000]];
+  const ranges: [number, number, number][] = [[style.size,2.5,12],[style.weight,100,900],[style.wordBackgroundOpacity,0,1],[style.opacity,.1,1],[style.backgroundOpacity,.05,1],[style.paddingX,0,100],[style.paddingY,0,100],[style.radius,0,100],[style.outline,0,20],[style.shadowOpacity,0,1],[style.shadowBlur,0,100],[style.shadowX,-50,50],[style.shadowY,-50,50],[style.x,0,100],[style.y,0,100],[style.rotation,-20,20],[style.maxWidth,40,94],[style.maxLines,1,4],[style.lineHeight,1,1.8],[style.letterSpacing,-2,12],[style.wordSpacing,-2,20],[style.motionDuration,80,1000]];
   if (ranges.some(([value,min,max]) => !Number.isFinite(value) || value < min || value > max) || !Number.isInteger(style.maxLines)) throw new Error("A caption style value is outside its supported range.");
 }
 export function parseStudioStyle(text: string): StudioStyle {
   if (text.length > 32_768) throw new Error("Choose a style file smaller than 32 KiB.");
   let parsed; try { parsed = JSON.parse(text); } catch { throw new Error("This is not a valid caption style file."); }
   if (!parsed || parsed.version !== 1 || !parsed.style || typeof parsed.style !== "object") throw new Error("Choose an AENural caption style file.");
-  const style = Object.fromEntries(Object.keys(baseStyle).map(key => [key, Object.hasOwn(parsed.style, key) ? parsed.style[key] : key === "wordHighlight" || key === "wordColor" || key === "wordBackground" || key === "wordBackgroundColor" ? baseStyle[key] : undefined])) as StudioStyle;
+  const style = Object.fromEntries(Object.keys(baseStyle).map(key => [key, Object.hasOwn(parsed.style, key) ? parsed.style[key] : key === "wordHighlight" || key === "wordColor" || key === "wordBackground" || key === "wordBackgroundColor" || key === "wordBackgroundOpacity" || key === "italic" || key === "underline" || key === "strikethrough" ? baseStyle[key] : undefined])) as StudioStyle;
   validateStudioStyle(style); return style;
 }
 export type StudioMedia = { width: number; height: number; duration: number; audioTracks: number; videoCodec: string; audioCodec: string | null };
@@ -94,7 +110,7 @@ export function mergeStudioCue(document: EditorDocument, id: string): EditorDocu
   return { ...document, cues };
 }
 export function studioFont(style: StudioStyle): string {
-  return !["Inter", "Sora"].includes(style.font) ? `"${style.font}", ${style.font === "Courier New" ? "monospace" : ["Georgia", "Times New Roman"].includes(style.font) ? "serif" : "sans-serif"}` : getComputedStyle(document.documentElement).getPropertyValue(style.font === "Sora" ? "--font-heading" : "--font-platform").trim() || "Arial, sans-serif";
+  return !["Inter", "Sora"].includes(style.font) ? `"${style.font}", ${["Courier New", "Consolas"].includes(style.font) ? "monospace" : ["Georgia", "Times New Roman", "Palatino Linotype", "Cambria"].includes(style.font) ? "serif" : "sans-serif"}` : getComputedStyle(document.documentElement).getPropertyValue(style.font === "Sora" ? "--font-heading" : "--font-platform").trim() || "Arial, sans-serif";
 }
 
 // The preview and exporter call this same painter at original video dimensions.
@@ -111,7 +127,7 @@ export function paintStudioCaptions(ctx: CanvasRenderingContext2D, width: number
   ctx.save();
   try {
     for (; size >= minimum; size -= 1) {
-      ctx.font = `${style.weight} ${size}px ${font}`;
+      ctx.font = `${style.italic ? "italic " : ""}${style.weight} ${size}px ${font}`;
       if ("letterSpacing" in ctx) ctx.letterSpacing = `${size * style.letterSpacing / 100}px`;
       else if (style.letterSpacing) throw new Error("Letter spacing is not supported by this browser's video canvas.");
       if ("wordSpacing" in ctx) ctx.wordSpacing = `${size * style.wordSpacing / 100}px`;
@@ -147,12 +163,25 @@ export function paintStudioCaptions(ctx: CanvasRenderingContext2D, width: number
       if (style.wordHighlight && style.wordBackground && ranges.length) {
         const lineWidth = ctx.measureText(line).width;
         const left = textX - (style.align === "center" ? lineWidth / 2 : style.align === "right" ? lineWidth : 0);
-        drawStudioWordBackground(ctx, left, y, size, lineHeight, style.wordBackgroundColor, ranges);
+        drawStudioWordBackground(ctx, left, y, size, lineHeight, style.wordBackgroundColor, ranges, style.wordBackgroundOpacity);
       }
       if (style.outline) { ctx.strokeStyle = style.outlineColor; ctx.lineWidth = size * style.outline / 100; ctx.strokeText(line, textX, y); }
-      if (begin < 0 || !ranges.length) { ctx.fillStyle = style.color; ctx.fillText(line, textX, y); return; }
-      const lineWidth = ctx.measureText(line).width, left = textX - (style.align === "center" ? lineWidth / 2 : style.align === "right" ? lineWidth : 0);
-      drawStudioHighlightedLine(ctx, line, left, y, size, lineHeight, style.color, style.wordColor, ranges);
+      if (begin < 0 || !ranges.length) { ctx.fillStyle = style.color; ctx.fillText(line, textX, y); }
+      else {
+        const lineWidth = ctx.measureText(line).width, left = textX - (style.align === "center" ? lineWidth / 2 : style.align === "right" ? lineWidth : 0);
+        drawStudioHighlightedLine(ctx, line, left, y, size, lineHeight, style.color, style.wordColor, ranges);
+      }
+      if (style.underline || style.strikethrough) {
+        const lineWidth = ctx.measureText(line).width;
+        const left = textX - (style.align === "center" ? lineWidth / 2 : style.align === "right" ? lineWidth : 0);
+        ctx.save();
+        ctx.shadowColor = "transparent"; ctx.shadowBlur = 0;
+        ctx.fillStyle = style.color;
+        const thickness = Math.max(1, size * .045);
+        if (style.underline) ctx.fillRect(left, y + size * .38, lineWidth, thickness);
+        if (style.strikethrough) ctx.fillRect(left, y - size * .08, lineWidth, thickness);
+        ctx.restore();
+      }
     });
   } finally { ctx.restore(); }
 }
