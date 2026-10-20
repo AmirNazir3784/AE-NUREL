@@ -26,4 +26,14 @@ describe("SRT workspace and upload centering", () => {
     assert.match(style, /background:var\(--action\)/);
     assert.match(style, /@keyframes aenuralCaptionMeterMove/);
   });
+  it("centers empty file-upload invitations in all six Timing & Editing tools", () => {
+    const selector = ".aen-tool-page :is(.aen-timing, .aen-merger, .aen-splitter, .aen-editor, .aen-sync, .aen-overlap) .upload-zone:not(.has-file)";
+    const start = tools.indexOf(selector + " {");
+    assert.notEqual(start, -1);
+    const block = tools.slice(start, tools.indexOf("}", start) + 1);
+    for (const rule of ["display: flex;", "flex-direction: column;", "align-items: center;", "text-align: center;"]) assert.ok(block.includes(rule), rule);
+    assert.ok(tools.includes(selector + " .button { margin: 4px 0 0; max-width: 100%; }"));
+    assert.ok(!tools.includes(".upload-zone.has-file { text-align: center"));
+    for (const name of ["aen-timing", "aen-merger", "aen-splitter", "aen-editor", "aen-sync", "aen-overlap"]) assert.ok(selector.includes(name), name);
+  });
 });

@@ -219,3 +219,23 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
   .aen-conversion-actions { flex-direction: column; }
   .aen-conversion-actions .button, .aen-conversion-panel > .download-button { width: 100%; }
 }
+
+/* AENURAL_TIMING_EDITING_UPLOAD_CENTER_START */
+/* Center initial upload prompts in all six Timing & Editing tools.
+   Do not change loaded-file summaries or editor layouts. */
+.aen-tool-page :is(.aen-timing, .aen-merger, .aen-splitter, .aen-editor, .aen-sync, .aen-overlap) .upload-zone:not(.has-file) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  text-align: center;
+}
+.aen-tool-page :is(.aen-timing, .aen-merger, .aen-splitter, .aen-editor, .aen-sync, .aen-overlap) .upload-zone:not(.has-file) .upload-icon { margin: 0; }
+.aen-tool-page :is(.aen-timing, .aen-merger, .aen-splitter, .aen-editor, .aen-sync, .aen-overlap) .upload-zone:not(.has-file) > div[aria-live] { width: 100%; min-width: 0; }
+.aen-tool-page :is(.aen-timing, .aen-merger, .aen-splitter, .aen-editor, .aen-sync, .aen-overlap) .upload-zone:not(.has-file) .button { margin: 4px 0 0; max-width: 100%; }
+.aen-tool-page :is(.aen-timing, .aen-merger, .aen-splitter, .aen-editor, .aen-sync, .aen-overlap) .upload-zone:not(.has-file) .upload-note { margin: 0; }
+@media (max-width: 480px) {
+  .aen-tool-page :is(.aen-timing, .aen-merger, .aen-splitter, .aen-editor, .aen-sync, .aen-overlap) .upload-zone:not(.has-file) .button { width: 100%; }
+}
+/* AENURAL_TIMING_EDITING_UPLOAD_CENTER_END */
