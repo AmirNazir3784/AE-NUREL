@@ -121,7 +121,7 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
     setStyle(previous => {
       const next = { ...previous, preset: "Custom", ...value };
       if (value.position && value.position !== "custom") return studioPlacement(next, value.position);
-      return value.x !== undefined || value.y !== undefined ? { ...next, position: "custom" } : next;
+      return value.y !== undefined ? { ...next, position: "custom" } : next;
     });
     invalidate();
   }
