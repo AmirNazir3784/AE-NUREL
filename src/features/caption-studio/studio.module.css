@@ -191,3 +191,90 @@
 .guideQuestions details[open] summary::after { content:"−"; }
 .guideQuestions details p { padding:0 18px 18px 2px; max-width:66ch; }
 @media(max-width:760px) { .guide { padding:26px 0 54px; } .guideSteps { grid-template-columns:1fr; gap:10px; } .guideStep { padding:18px; } .guideFaq { grid-template-columns:1fr; gap:18px; margin-top:46px; } }
+
+
+/* THREE-PANEL CAPTION STUDIO. The controls remain mounted and independent. */
+.studio {
+  width:min(1500px,calc(100vw - 32px));
+  max-width:none;
+  margin-left:50%;
+  transform:translateX(-50%);
+}
+.workspace {
+  display:grid;
+  grid-template-areas:"captions preview style";
+  grid-template-columns:minmax(255px,300px) minmax(0,1fr) minmax(275px,330px);
+  align-items:start;
+  gap:clamp(12px,1.5vw,22px);
+}
+.previewPanel { grid-area:preview; position:sticky; top:90px; }
+.captionSide { grid-area:captions; }
+.styleSide { grid-area:style; }
+.controls {
+  position:sticky; top:90px;
+  padding:16px; max-height:calc(100dvh - 108px); overflow-y:auto;
+  overscroll-behavior:contain; scrollbar-width:thin;
+  scrollbar-color:var(--border-strong) transparent;
+}
+.sideHeading { display:flex; flex-direction:column; gap:4px; padding:4px 3px 16px; margin-bottom:16px; border-bottom:1px solid var(--border-strong); }
+.sideHeading strong { color:var(--foreground); font:800 18px/1.3 var(--font-heading); }
+.sideHeading span { color:var(--muted); font-size:12px; }
+.styleSide .presets { gap:8px; }
+.styleSide .preset { min-height:96px; }
+@media(max-width:1190px) {
+  .workspace {
+    grid-template-areas:"preview preview" "captions style";
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  }
+  .previewPanel,.controls { position:static; top:auto; }
+  .controls { max-height:none; overflow:visible; }
+}
+@media(max-width:760px) {
+  .workspace {
+    display:grid; grid-template-areas:"preview" "captions" "style";
+    grid-template-columns:minmax(0,1fr); gap:16px;
+  }
+  .studio { width:calc(100vw - 24px); }
+  .controls { width:100%; padding:14px; }
+  .sideHeading { padding-bottom:12px; margin-bottom:12px; }
+}
+
+/* Step cards with real movement, drawn entirely in CSS. No stock illustration. */
+.guideStep {
+  position:relative; isolation:isolate; overflow:hidden;
+  border-color:var(--border-strong);
+  background:
+    radial-gradient(circle at 96% -12%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 46%),
+    var(--surface);
+  box-shadow:var(--shadow-card);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .3s;
+}
+.guideStep:nth-child(2) { background:radial-gradient(circle at 96% -12%,color-mix(in srgb,var(--action) 13%,transparent),transparent 49%),var(--surface); }
+.guideStep:nth-child(3) { background:radial-gradient(circle at 96% -12%,color-mix(in srgb,var(--accent) 17%,transparent),transparent 49%),var(--surface); }
+.guideStep::before { content:""; position:absolute; inset:0 auto auto 0; width:100%; height:3px; background:linear-gradient(90deg,var(--accent),var(--action)); transform:scaleX(.22); transform-origin:left; transition:transform .42s cubic-bezier(.2,.8,.2,1); }
+.guideStep::after { content:""; position:absolute; width:170px; aspect-ratio:1; border:1px solid color-mix(in srgb,var(--accent) 23%,transparent); border-radius:50%; inset:auto -100px -120px auto; pointer-events:none; transition:transform .5s; }
+.guideStep:nth-child(2)::before { background:linear-gradient(90deg,var(--action),var(--accent)); }
+.guideStep:hover { transform:translateY(-7px); border-color:var(--accent-border); box-shadow:0 18px 36px -21px color-mix(in srgb,var(--accent) 40%,transparent); }
+.guideStep:hover::before,.guideStep:focus-within::before { transform:scaleX(1); }
+.guideStep:hover::after { transform:translate(-18px,-10px) scale(1.12); }
+.guideStep > span:first-child { background:var(--accent-soft); border:1px solid var(--accent-border); }
+.guideStep:nth-child(2) > span:first-child { background:color-mix(in srgb,var(--action) 14%,var(--surface)); border-color:color-mix(in srgb,var(--action) 50%,var(--border)); color:var(--action); }
+.guideStepMotif { display:flex; align-items:flex-end; justify-content:flex-end; position:absolute; right:21px; top:26px; height:28px; gap:4px; opacity:.83; }
+.guideStepMotif i { width:5px; height:12px; border-radius:4px; background:var(--accent); transition:height .32s cubic-bezier(.2,.8,.2,1),transform .32s; }
+.guideStepMotif i:nth-child(2) { height:25px; }
+.guideStepMotif i:nth-child(3) { height:16px; }
+.guideStepMotif i:nth-child(4) { height:22px; }
+.guideStepMotif i:nth-child(5) { height:9px; }
+.guideStep:nth-child(2) .guideStepMotif i { background:var(--action); border-radius:2px; }
+.guideStep:nth-child(2) .guideStepMotif i:nth-child(even) { transform:translateY(3px); }
+.guideStep:nth-child(3) .guideStepMotif i { background:var(--accent); width:7px; border-radius:1px; }
+.guideStep:hover .guideStepMotif i:nth-child(odd) { height:25px; }
+.guideStep:hover .guideStepMotif i:nth-child(even) { height:14px; }
+@supports (animation-timeline:view()) {
+  .guideStep { animation:studioGuideEnter both ease-out; animation-timeline:view(); animation-range:entry 2% cover 24%; }
+}
+@keyframes studioGuideEnter { from { opacity:.76; translate:0 15px; } to { opacity:1; translate:0 0; } }
+@media(prefers-reduced-motion:reduce) {
+  .guideStep,.guideStep::before,.guideStep::after,.guideStepMotif i { animation:none!important; transition:none!important; }
+  .guideStep:hover { transform:none; }
+}
