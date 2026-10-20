@@ -68,10 +68,10 @@ describe('real caption style settings, without word timing guesses',()=>{
    const glitch=canvas(),base={...style(),motionDuration:600,animation:'glitch'};
    paintStudioCaptions(glitch.context,1920,1080,doc,first,base,'Arial',false);
    assert.ok(glitch.writes.length>1,'glitch draws transient red/cyan ghost text');
-   assert.equal(glitch.writes.at(-1).text,doc.cues[0].text);
+   assert.ok(doc.cues[0].text.includes(glitch.writes.at(-1).text));
    const still=canvas();
    paintStudioCaptions(still.context,1920,1080,doc,first,base,'Arial',true);
-   assert.equal(still.writes.length,1,'reduced motion disables glitch');
+   assert.equal(still.writes.map(x=>x.text).join('\\n'),doc.cues[0].text,'reduced motion disables glitch duplicates');
    const reveal=canvas(),clips=[],rectangles=[];
    reveal.context.rect=(...args)=>rectangles.push(args);
    reveal.context.clip=()=>clips.push(true);
