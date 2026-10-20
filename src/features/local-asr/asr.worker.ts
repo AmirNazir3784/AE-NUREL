@@ -154,7 +154,7 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
       if (normalized.joined) progress({ stage: "transcribing", warning: "Small word-alignment overlaps were grouped within their measured outer spans. Both words are retained." });
       if (normalized.clipped) progress({ stage: "transcribing", warning: "Model output in a padded context edge was bounded to available audio. Non-final section edges are reconciled with the following overlap." });
       return { ...output, chunks: normalized.chunks };
-    }, wordTimestamps);
+    }, wordTimestamps, (completed, sections) => progress({ stage: "transcribing", completed, sections, unit: "sections", backend }));
     send({ type: "result", result: { ...output, language, backend, loadMs, inferenceMs: performance.now() - inferenceStarted, cacheHits, downloadedBytes, speechActivity, requests } });
   } catch (error) { send({ type: "error", message: error instanceof Error ? error.message : "Local transcription failed. Try CPU mode or a shorter recording." }); }
   finally { await detector?.release().catch(() => {}); if (!keepAlive) { await transcriber?.dispose().catch(() => {}); transcriber = undefined; transcriberBackend = undefined; if (factoryUrl) URL.revokeObjectURL(factoryUrl); factoryUrl = ""; } scope.fetch = nativeFetch; busy = false; }
