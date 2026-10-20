@@ -61,7 +61,12 @@
 .generationStatusHeader { display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:13px; }
 .generationStatusHeader strong { color:var(--foreground); }
 .generationPercent { color:var(--accent); font:700 13px var(--font-code); flex:none; }
-.generationStatus progress { width:100%; min-height:12px; height:12px; margin:0; }
+.generationMeter { position:relative; width:100%; height:12px; border-radius:999px; overflow:hidden; background:var(--border-strong); isolation:isolate; }
+.generationMeterFill,.generationMeterBusy { position:absolute; top:0; left:0; height:100%; border-radius:999px; background:var(--action); }
+.generationMeterFill { transition:width .2s ease; }
+.generationMeterBusy { width:34%; animation:aenuralCaptionMeterMove 1.25s ease-in-out infinite; }
+@keyframes aenuralCaptionMeterMove { from { transform:translateX(-110%); left:0; } to { transform:translateX(300%); left:100%; } }
+@media (prefers-reduced-motion:reduce) { .generationMeterBusy { animation:none; width:100%; } }
 .generationStatus .generationDetail { margin:0; line-height:1.5; color:var(--muted); overflow-wrap:anywhere; }
 .generationStatus > button { justify-self:start; min-height:44px; }
 .history { margin:12px 0; }

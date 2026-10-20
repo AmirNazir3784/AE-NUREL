@@ -175,6 +175,22 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
   .aen-related .v1-related-links a { width: 100%; } .aen-related .v1-related-links a > span { overflow-wrap: anywhere; }
 }
 @media (prefers-reduced-motion: reduce) { .aen-tool-page * { transition: none; } }
+/* Center only the initial upload invitation. File summaries stay left aligned. */
+.aen-tool-page .aen-file-converter .upload-zone:not(.has-file) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  text-align: center;
+}
+.aen-tool-page .aen-file-converter .upload-zone:not(.has-file) .upload-icon { margin: 0; }
+.aen-tool-page .aen-file-converter .upload-zone:not(.has-file) > div[aria-live] { width: 100%; min-width: 0; }
+.aen-tool-page .aen-file-converter .upload-zone:not(.has-file) .button { margin: 4px 0 0; max-width: 100%; }
+.aen-tool-page .aen-file-converter .upload-zone:not(.has-file) .upload-note { margin: 0; }
+@media (max-width: 480px) {
+  .aen-tool-page .aen-file-converter .upload-zone:not(.has-file) .button { width: 100%; }
+}
 /* Conversion stations share primitives. Transcript/JSON are the outputs themselves. */
 .aen-file-converter { width: 100%; max-width: 760px; margin: 0 auto; }
 .aen-transcript, .aen-json-converter { max-width: 960px; }
