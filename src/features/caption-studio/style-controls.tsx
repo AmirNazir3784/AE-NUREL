@@ -37,10 +37,10 @@ export function StyleControls({ style, disabled, wordTimingAvailable = false, on
         <label className={styles.inline}><input type="checkbox" checked={style.wordBackground} disabled={!style.wordHighlight} onChange={event => onChange({ wordBackground: event.target.checked })} />Background behind active word only</label>
         {style.wordHighlight && style.wordBackground && <div className={styles.colors}>{color("Active word background color", "wordBackgroundColor")}</div>}
         {style.wordHighlight && style.wordBackground && slider("Active word background opacity", "wordBackgroundOpacity", 0, 1, .05)}
-        <p className={styles.note}>Only the spoken word gets this background. Uses measured speech timing; editing text or timing pauses highlighting for that caption.</p>
-      </> : <p className={styles.note}>Generate captions to get word timing. Imported SRT/VTT files support caption backgrounds, not precise word highlighting.</p>}
+        <p className={styles.note}>Colors the active word only. Text or timing edits pause this effect.</p>
+      </> : <p className={styles.note}>Generate captions for measured word timing. Imported SRT/VTT files have no word-level timing.</p>}
       <details className={styles.details}><summary>Typography and lines</summary>
-        <p className={styles.note}>Inter, Sora and the five OFL studio fonts are self-hosted. The other fonts require a local device installation.</p>
+        <p className={styles.note}>Inter, Sora and five open-license fonts are built in. Other fonts use your device.</p>
         {slider("Font weight", "weight", 100, 900, 100)}
         <div className={styles.decorationOptions}>
           <label className={styles.inline}><input type="checkbox" checked={style.italic} onChange={event => onChange({ italic: event.target.checked })} />Italic</label>
@@ -51,7 +51,7 @@ export function StyleControls({ style, disabled, wordTimingAvailable = false, on
         {choice("Letter case", "textCase", [["original","Original"],["upper","UPPERCASE"],["lower","lowercase"]])}
         {slider("Letter spacing", "letterSpacing", -2, 12, .5, "%")}{slider("Word spacing", "wordSpacing", -2, 20, .5, "%")}
         {slider("Line spacing", "lineHeight", 1, 1.8, .05)}{slider("Caption width", "maxWidth", 40, 94, 1, "%")}{slider("Maximum lines", "maxLines", 1, 4)}
-        <label className={styles.inline}><input type="checkbox" checked={style.fit} onChange={event => onChange({ fit: event.target.checked })} />Auto-fit long captions</label><p className={styles.note}>Auto-fit reduces text size within readable limits. Source text and timing stay unchanged.</p>
+        <label className={styles.inline}><input type="checkbox" checked={style.fit} onChange={event => onChange({ fit: event.target.checked })} />Auto-fit long captions</label><p className={styles.note}>Fits long captions automatically without changing their words.</p>
       </details>
       <details className={styles.details}><summary>Background and outline</summary>
         {slider("Caption opacity", "opacity", .1, 1, .05)}
@@ -62,7 +62,7 @@ export function StyleControls({ style, disabled, wordTimingAvailable = false, on
         <label className={styles.inline}><input type="checkbox" checked={style.shadow} onChange={event => onChange({ shadow: event.target.checked })} />Text shadow</label>
         <div className={styles.colors}>{color("Shadow color", "shadowColor")}</div>{slider("Shadow opacity", "shadowOpacity", 0, 1, .05)}{slider("Blur / glow", "shadowBlur", 0, 100, 5, "%")}{slider("Shadow horizontal", "shadowX", -50, 50, 1, "%")}{slider("Shadow vertical", "shadowY", -50, 50, 1, "%")}
       </details>
-      <details className={styles.details}><summary>Precise position</summary>{slider("Horizontal position", "x", 0, 100, 1, "%")}{slider("Vertical position", "y", 0, 100, 1, "%")}{slider("Rotation", "rotation", -20, 20, 1, "°")}<p className={styles.note}>Placement stays inside the video. Layouts that cannot fit must be adjusted before export.</p></details>
+      <details className={styles.details}><summary>Precise position</summary>{slider("Horizontal position", "x", 0, 100, 1, "%")}{slider("Vertical position", "y", 0, 100, 1, "%")}{slider("Rotation", "rotation", -20, 20, 1, "°")}<p className={styles.note}>Position stays inside the frame. Shorten captions that cannot fit.</p></details>
 
     </fieldset>
     <details className={styles.details}><summary>Save or load your style</summary><div className={styles.actions}><DownloadButton label="Save style" filename="aenural-caption-style.json" content={() => JSON.stringify({ version: 1, style }, null, 2)} disabled={disabled} variant="secondary" onDownloaded={() => {}} onError={onError} /><button type="button" className="button button-secondary" disabled={disabled} onClick={() => fileInput.current?.click()}>Load style</button><input ref={fileInput} type="file" accept=".json" className="sr-only" aria-label="Load caption style" disabled={disabled} onChange={async event => { const file = event.target.files?.[0]; event.target.value = ""; if (!file) return; try { if (file.size > 32_768) throw new Error("Choose a style file smaller than 32 KiB."); onPreset(parseStudioStyle(await file.text())); } catch (error) { onError(error instanceof Error ? error.message : "This style could not be loaded."); } }} /></div></details>
