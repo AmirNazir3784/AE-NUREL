@@ -76,5 +76,34 @@ describe('real style-control interactions',()=>{
    assert.equal(style().wordBackgroundColor,'#24a06b');
    assert.equal(style().highlight,'#187e70');
  }));
+ it('shows all premium presets without a hidden gallery and offers a one-click horizontal center action',()=>exercise(false,async(_,style)=>{
+   const buttons=Array.from(document.querySelectorAll('button[aria-pressed]'));
+   assert.equal(buttons.length,25);
+   assert.equal(Array.from(document.querySelectorAll('summary')).some(el=>el.textContent.includes('More styles')),false);
+   const center=Array.from(document.querySelectorAll('button')).find(el=>el.textContent==='Center caption horizontally');
+   assert.ok(center);
+   await act(()=>center.click());
+   assert.equal(style().x,50);assert.equal(style().align,'center');
+   const font=Array.from(document.querySelectorAll('label')).find(el=>el.firstChild.textContent==='Font');
+   assert.ok(Array.from(font.querySelectorAll('option')).some(option=>option.value==='Impact'));
+ }));
+ it('supports new italic and underline settings without affecting original caption text',()=>exercise(false,async(_,style)=>{
+   const labels=['Italic','Underline','Strikethrough'];
+   for(const label of labels) {
+     const input=Array.from(document.querySelectorAll('label')).find(el=>el.textContent===label).querySelector('input');
+     await act(()=>input.click());
+   }
+   assert.equal(style().italic,true);assert.equal(style().underline,true);assert.equal(style().strikethrough,true);
+ }));
+ it('controls spoken-word background opacity independently from the caption background',()=>exercise(true,async(_,style)=>{
+   const toggle=(label)=>Array.from(document.querySelectorAll('label')).find(el=>el.textContent===label).querySelector('input');
+   await act(()=>toggle('Highlight spoken words').click());
+   await act(()=>toggle('Background behind active word only').click());
+   const label=Array.from(document.querySelectorAll('label')).find(el=>el.firstChild.textContent==='Active word background opacity');
+   assert.ok(label);
+   const input=label.querySelector('input');
+   await act(()=>{Object.getOwnPropertyDescriptor(input.ownerDocument.defaultView.HTMLInputElement.prototype,'value').set.call(input,'.4');input.dispatchEvent(new input.ownerDocument.defaultView.Event('input',{bubbles:true}));});
+   assert.equal(style().wordBackgroundOpacity,.4);assert.equal(style().background,false);
+ }));
  it('enables real word highlighting only with source alignment, rather than a permanently disabled control',async()=>{for(const available of [false,true])await exercise(available,async(_,style)=>{const checkbox=Array.from(document.querySelectorAll('label')).find(el=>el.textContent==='Highlight spoken words').querySelector('input');assert.equal(checkbox.disabled,!available);await act(()=>checkbox.click());assert.equal(style().wordHighlight,available);});});
 });
