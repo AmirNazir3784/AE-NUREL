@@ -27,7 +27,7 @@ describe("Caption Studio uncluttered editing workspace",()=>{
     assert.match(motion,/Animation duration/);
     assert.ok(!motion.includes("<summary>Motion</summary>"));
   });
-  it("keeps 25 presets and access to existing caption editing actions",()=>{
+  it("keeps all premium presets and existing caption editing actions",()=>{
     assert.match(motion,/STUDIO_PRESETS\.map\(presetButton\)/);
     for (const text of ["Split at playhead","Merge with next","Sort by time","Apply shift","Delete caption","Undo","Redo"])
       assert.ok(ui.includes(text),text);
