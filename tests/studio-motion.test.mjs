@@ -7,7 +7,7 @@ const identity = { opacity:1, scale:1, x:0, y:0, rotation:0, blur:0 };
 describe("shared preview/export caption animations",()=>{
   it("offers twenty-four distinct animations and validates each one",()=>{
     assert.equal(STUDIO_ANIMATIONS.length,24);
-    assert.equal(new Set(STUDIO_ANIMATIONS.map(([id])=>id)).size,16);
+    assert.equal(new Set(STUDIO_ANIMATIONS.map(([id])=>id)).size,24);
     for(const [animation] of STUDIO_ANIMATIONS)validateStudioStyle({...STUDIO_PRESETS[0],animation});
     assert.throws(()=>validateStudioStyle({...STUDIO_PRESETS[0],animation:"random"}));
   });
