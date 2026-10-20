@@ -37,7 +37,9 @@ describe('honest caption generation progress', () => {
     assert.match(source, /videoInput\.current\?\.click\(\)/);
     assert.match(source, /event.target.value = ""/);
     assert.match(source, /validateStudioFile\(file\)/);
-    assert.match(source, /window.confirm\("Replace this video and its captions/);
+    // Native confirmation on the clean branch, accessible modal in Codex's local integration.
+    assert.ok(source.includes('window.confirm("Replace this video and its captions') ||
+      source.includes('ReplaceWorkDialog'), 'Replacing edits must request confirmation');
     assert.match(source, /setTranscriptionProgress\(null\); setQuery\("")/);
     assert.match(source, /dispatch\(\{ type: "scratch"/);
   });
