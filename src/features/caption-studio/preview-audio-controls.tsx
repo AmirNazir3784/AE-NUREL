@@ -20,8 +20,11 @@ export function PreviewAudioControls({ videoRef, hasAudio, disabled }: { videoRe
     else element.muted = true;
   }
   return <div className={styles.previewAudio} role="group" aria-label="Preview audio">
-    <button type="button" aria-label={silent ? "Unmute preview" : "Mute preview"} aria-pressed={silent} disabled={disabled || !hasAudio} onClick={toggle}><Icon name={silent ? "volume-off" : "volume"} size={18} /></button>
-    <label htmlFor={id} className="sr-only">Volume</label><input id={id} aria-label="Preview volume" type="range" min={0} max={1} step={.05} value={audio.volume} style={{ "--range-fill": `${audio.volume * 100}%` } as CSSProperties} aria-valuetext={silent ? "Muted" : `${Math.round(audio.volume * 100)} percent`} disabled={disabled || !hasAudio} onChange={event => { if (videoRef.current) { videoRef.current.volume = Number(event.target.value); videoRef.current.muted = false; } }} />
-    <output htmlFor={id}>{!hasAudio ? "No audio" : silent ? "Muted" : `${Math.round(audio.volume * 100)}%`}</output>
+    <button type="button" title={silent ? "Unmute preview" : "Mute preview"} aria-label={silent ? "Unmute preview" : "Mute preview"} aria-pressed={silent} disabled={disabled || !hasAudio} onClick={toggle}><Icon name={silent ? "volume-off" : "volume"} size={18} /></button>
+    <div className={styles.volumePopover}>
+      <label htmlFor={id} className="sr-only">Volume</label>
+      <input id={id} aria-label="Preview volume" type="range" min={0} max={1} step={.05} value={audio.volume} style={{ "--range-fill": `${audio.volume * 100}%` } as CSSProperties} aria-valuetext={silent ? "Muted" : `${Math.round(audio.volume * 100)} percent`} disabled={disabled || !hasAudio} onChange={event => { if (videoRef.current) { videoRef.current.volume = Number(event.target.value); videoRef.current.muted = false; } }} />
+      <output htmlFor={id}>{!hasAudio ? "No audio" : silent ? "Muted" : `${Math.round(audio.volume * 100)}%`}</output>
+    </div>
   </div>;
 }
