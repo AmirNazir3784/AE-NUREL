@@ -9,12 +9,39 @@ describe("Caption Studio player + guidance visual structure",()=>{
   const guidance = read("src/features/caption-studio/studio-guidance.tsx");
   const page = read("src/app/tools/auto-caption-generator/page.tsx");
   it("places volume, seek and fullscreen together inside the video player",()=>{
-    const transport = ui.slice(ui.indexOf("<div className={styles.transport}>"),ui.indexOf("</div>",ui.indexOf("<div className={styles.transport}>")));
+    const transport = ui.slice(ui.indexOf("<div className={styles.transport}>"),ui.indexOf("{style.wordHighlight",ui.indexOf("<div className={styles.transport}>")));
     assert.match(transport,/aria-label="Video timeline"/);
     assert.match(transport,/<PreviewAudioControls/);
     assert.match(transport,/Fullscreen preview/);
     assert.ok(transport.indexOf("Video timeline") < transport.indexOf("PreviewAudioControls"));
     assert.ok(transport.indexOf('<PreviewAudioControls') < transport.indexOf('Fullscreen preview'));
+  });
+  it("keeps frame step and speed controls in the player with a full-width fullscreen seek bar",()=>{
+    assert.match(ui,/styles\.transportNudge/);
+    assert.match(ui,/Back 0\.1 seconds/);
+    assert.match(ui,/Forward 0\.1 seconds/);
+    assert.match(ui,/<PreviewSpeedControls/);
+    assert.ok(!ui.includes("<summary>Playback controls</summary>"));
+    assert.match(css,/\.player:fullscreen \.transport \{ width:min\(100%,1100px\)/);
+    assert.match(css,/\.player:fullscreen \.previewAudio \{ width:auto/);
+    assert.match(css,/\.transport > input\[type=range\] \{ display:block; flex:1 1 0/);
+  });
+  it("uses a focus-accessible volume popover while speaker click mutes",()=>{
+    assert.match(controls,/styles\.volumePopover/);
+    assert.match(controls,/onClick=\{toggle\}/);
+    assert.match(css,/\.previewAudio:is\(:hover,:focus-within\) \.volumePopover/);
+  });
+  it("centralizes generation and export, and shows only transcript controls on the left after generation",()=>{
+    const center = ui.slice(ui.indexOf("className={styles.previewPanel}"),ui.indexOf('aria-label="Caption controls"'));
+    const left = ui.slice(ui.indexOf('id="studio-captions"'),ui.indexOf('aria-label="Caption style controls"'));
+    assert.match(center,/styles\.processingArea/);
+    assert.match(center,/<GenerationControls/);
+    assert.match(center,/Import SRT \/ VTT/);
+    assert.match(center,/Export video/);
+    assert.ok(!left.includes("<GenerationControls"));
+    assert.match(left,/document\.cues\.length \? <>/);
+    assert.match(left,/styles\.captionAdd/);
+    assert.match(ui,/!!document\.cues\.length && <div className=\{styles\.exportBar\}/);
   });
   it("uses the site's orange action color for both player sliders",()=>{
     assert.match(css,/background:linear-gradient\(to right,var\(--action\)/);
