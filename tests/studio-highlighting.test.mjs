@@ -78,7 +78,7 @@ describe('real style-control interactions',()=>{
  }));
  it('shows all premium presets without a hidden gallery and offers a one-click horizontal center action',()=>exercise(false,async(_,style)=>{
    const buttons=Array.from(document.querySelectorAll('button[aria-pressed]'));
-   assert.equal(buttons.length,25);
+   assert.equal(buttons.length,30);
    assert.equal(Array.from(document.querySelectorAll('summary')).some(el=>el.textContent.includes('More styles')),false);
    const center=Array.from(document.querySelectorAll('button')).find(el=>el.textContent==='Center caption horizontally');
    assert.ok(center);
