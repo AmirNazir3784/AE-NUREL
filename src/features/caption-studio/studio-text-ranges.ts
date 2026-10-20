@@ -27,7 +27,7 @@ export const measureStudioTextRange: StudioRangeMeasurer = (ctx, line, from, to)
 // guessed word widths. No background is drawn for absent timing spans.
 export function drawStudioWordBackground(
   ctx: CanvasRenderingContext2D, left: number, y: number, size: number,
-  lineHeight: number, color: string, ranges: readonly StudioTextRange[]
+  lineHeight: number, color: string, ranges: readonly StudioTextRange[], opacity = 1
 ) {
   const pad = size * .1, height = Math.min(lineHeight * .92, size * 1.2);
   ctx.save();
@@ -35,6 +35,7 @@ export function drawStudioWordBackground(
     // Keep existing caption opacity but never duplicate the text shadow here.
     ctx.shadowColor = "transparent"; ctx.shadowBlur = 0; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
     ctx.fillStyle = color;
+    ctx.globalAlpha *= opacity;
     for (const range of ranges) {
       if (!Number.isFinite(range.left) || !Number.isFinite(range.right) || range.right <= range.left) continue;
       ctx.beginPath();
