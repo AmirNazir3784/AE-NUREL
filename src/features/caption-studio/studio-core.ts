@@ -2,7 +2,7 @@ import { editorExportErrors, type EditorDocument } from "../../lib/subtitle-edit
 import { plainCaption } from "../../lib/subtitle-conversion.ts";
 import { wrapCaption } from "../../lib/subtitle-video.ts";
 import { studioWordSpans, type StudioAlignment } from "./studio-alignment.ts";
-import { measureStudioTextRange, drawStudioHighlightedLine, type StudioRangeMeasurer } from "./studio-text-ranges.ts";
+import { measureStudioTextRange, drawStudioHighlightedLine, drawStudioWordBackground, type StudioRangeMeasurer } from "./studio-text-ranges.ts";
 
 export const STUDIO_LIMITS = { bytes: 200 * 1024 ** 2, seconds: 120, pixels: 1920 * 1080, cues: 500, outputBytes: 256 * 1024 ** 2 } as const;
 export const STUDIO_FONTS = ["Inter", "Sora", "Arial", "Georgia", "Times New Roman", "Verdana", "Courier New"] as const;
@@ -13,9 +13,9 @@ export type StudioStyle = {
   position: "top" | "middle" | "bottom" | "custom"; x: number; y: number; rotation: number; align: "left" | "center" | "right";
   maxWidth: number; maxLines: number; lineHeight: number; letterSpacing: number; wordSpacing: number; fit: boolean; textCase: "original" | "upper" | "lower";
   animation: "none" | "fade" | "pop" | "rise"; motionDuration: number;
-  wordHighlight: boolean; wordColor: string;
+  wordHighlight: boolean; wordColor: string; wordBackground: boolean; wordBackgroundColor: string;
 };
-const baseStyle: StudioStyle = { preset: "Clean", font: "Inter", size: 4.8, weight: 600, color: "#ffffff", opacity: 1, highlight: "#187e70", background: false, backgroundOpacity: .95, paddingX: 40, paddingY: 10, radius: 18, outline: 0, outlineColor: "#101716", shadow: true, shadowColor: "#000000", shadowOpacity: .7, shadowBlur: 14, shadowX: 0, shadowY: 4, position: "bottom", x: 50, y: 84, rotation: 0, align: "center", maxWidth: 86, maxLines: 2, lineHeight: 1.3, letterSpacing: 0, wordSpacing: 0, fit: true, textCase: "original", animation: "none", motionDuration: 180, wordHighlight: false, wordColor: "#ffae58" };
+const baseStyle: StudioStyle = { preset: "Clean", font: "Inter", size: 4.8, weight: 600, color: "#ffffff", opacity: 1, highlight: "#187e70", background: false, backgroundOpacity: .95, paddingX: 40, paddingY: 10, radius: 18, outline: 0, outlineColor: "#101716", shadow: true, shadowColor: "#000000", shadowOpacity: .7, shadowBlur: 14, shadowX: 0, shadowY: 4, position: "bottom", x: 50, y: 84, rotation: 0, align: "center", maxWidth: 86, maxLines: 2, lineHeight: 1.3, letterSpacing: 0, wordSpacing: 0, fit: true, textCase: "original", animation: "none", motionDuration: 180, wordHighlight: false, wordColor: "#ffae58", wordBackground: false, wordBackgroundColor: "#243f36" };
 function preset(name: string, changes: Partial<StudioStyle> = {}): StudioStyle { return { ...baseStyle, preset: name, ...changes }; }
 export const STUDIO_PRESETS: readonly StudioStyle[] = [
   preset("Clean"), preset("Bold", { font: "Sora", weight: 800, size: 6.2, color: "#ffae58" }),
@@ -34,9 +34,9 @@ export const STUDIO_PRESETS: readonly StudioStyle[] = [
   preset("Lift", { font: "Sora", weight: 700, size: 5.4, animation: "rise", motionDuration: 300, outline: 3 }),
 ];
 export function validateStudioStyle(style: StudioStyle) {
-  if (!style || typeof style.preset !== "string" || style.preset.length > 40 || !["top", "middle", "bottom", "custom"].includes(style.position) || [style.background, style.shadow, style.fit, style.wordHighlight].some(value => typeof value !== "boolean")) throw new Error("This caption style is not valid.");
+  if (!style || typeof style.preset !== "string" || style.preset.length > 40 || !["top", "middle", "bottom", "custom"].includes(style.position) || [style.background, style.shadow, style.fit, style.wordHighlight, style.wordBackground].some(value => typeof value !== "boolean")) throw new Error("This caption style is not valid.");
   if (!STUDIO_FONTS.includes(style.font) || !["left", "center", "right"].includes(style.align) || !["none", "fade", "pop", "rise"].includes(style.animation) || !["original", "upper", "lower"].includes(style.textCase)) throw new Error("Choose supported caption style settings.");
-  for (const color of [style.color, style.highlight, style.outlineColor, style.shadowColor, style.wordColor]) if (!/^#[\da-f]{6}$/i.test(color)) throw new Error("Use a valid caption color.");
+  for (const color of [style.color, style.highlight, style.outlineColor, style.shadowColor, style.wordColor, style.wordBackgroundColor]) if (!/^#[\da-f]{6}$/i.test(color)) throw new Error("Use a valid caption color.");
   const ranges: [number, number, number][] = [[style.size,2.5,12],[style.weight,100,900],[style.opacity,.1,1],[style.backgroundOpacity,.05,1],[style.paddingX,0,100],[style.paddingY,0,100],[style.radius,0,100],[style.outline,0,20],[style.shadowOpacity,0,1],[style.shadowBlur,0,100],[style.shadowX,-50,50],[style.shadowY,-50,50],[style.x,0,100],[style.y,0,100],[style.rotation,-20,20],[style.maxWidth,40,94],[style.maxLines,1,4],[style.lineHeight,1,1.8],[style.letterSpacing,-2,12],[style.wordSpacing,-2,20],[style.motionDuration,80,1000]];
   if (ranges.some(([value,min,max]) => !Number.isFinite(value) || value < min || value > max) || !Number.isInteger(style.maxLines)) throw new Error("A caption style value is outside its supported range.");
 }
@@ -44,7 +44,7 @@ export function parseStudioStyle(text: string): StudioStyle {
   if (text.length > 32_768) throw new Error("Choose a style file smaller than 32 KiB.");
   let parsed; try { parsed = JSON.parse(text); } catch { throw new Error("This is not a valid caption style file."); }
   if (!parsed || parsed.version !== 1 || !parsed.style || typeof parsed.style !== "object") throw new Error("Choose an AENural caption style file.");
-  const style = Object.fromEntries(Object.keys(baseStyle).map(key => [key, Object.hasOwn(parsed.style, key) ? parsed.style[key] : key === "wordHighlight" || key === "wordColor" ? baseStyle[key] : undefined])) as StudioStyle;
+  const style = Object.fromEntries(Object.keys(baseStyle).map(key => [key, Object.hasOwn(parsed.style, key) ? parsed.style[key] : key === "wordHighlight" || key === "wordColor" || key === "wordBackground" || key === "wordBackgroundColor" ? baseStyle[key] : undefined])) as StudioStyle;
   validateStudioStyle(style); return style;
 }
 export type StudioMedia = { width: number; height: number; duration: number; audioTracks: number; videoCodec: string; audioCodec: string | null };
@@ -140,9 +140,16 @@ export function paintStudioCaptions(ctx: CanvasRenderingContext2D, width: number
     let scan = 0;
     lines.forEach((line, index) => {
       const y = (index - (lines.length - 1) / 2) * lineHeight;
-      if (style.outline) { ctx.strokeStyle = style.outlineColor; ctx.lineWidth = size * style.outline / 100; ctx.strokeText(line, textX, y); }
       const begin = text.indexOf(line, scan), end = begin + line.length; scan = begin < 0 ? text.length : end;
       const ranges = begin < 0 ? [] : highlights.filter(span => span.from < end && span.to > begin).flatMap(span => measureRange(ctx, line, Math.max(0, span.from - begin), Math.min(line.length, span.to - begin)));
+      // Draw only the measured active glyph ranges, before the outline and
+      // the fully-shaped text. Preview and encoded frames share this painter.
+      if (style.wordHighlight && style.wordBackground && ranges.length) {
+        const lineWidth = ctx.measureText(line).width;
+        const left = textX - (style.align === "center" ? lineWidth / 2 : style.align === "right" ? lineWidth : 0);
+        drawStudioWordBackground(ctx, left, y, size, lineHeight, style.wordBackgroundColor, ranges);
+      }
+      if (style.outline) { ctx.strokeStyle = style.outlineColor; ctx.lineWidth = size * style.outline / 100; ctx.strokeText(line, textX, y); }
       if (begin < 0 || !ranges.length) { ctx.fillStyle = style.color; ctx.fillText(line, textX, y); return; }
       const lineWidth = ctx.measureText(line).width, left = textX - (style.align === "center" ? lineWidth / 2 : style.align === "right" ? lineWidth : 0);
       drawStudioHighlightedLine(ctx, line, left, y, size, lineHeight, style.color, style.wordColor, ranges);

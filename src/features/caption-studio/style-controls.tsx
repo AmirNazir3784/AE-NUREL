@@ -4,7 +4,7 @@ import { DownloadButton } from "@/components/tools/download-button";
 import { STUDIO_FONTS, STUDIO_PRESETS, parseStudioStyle, type StudioStyle } from "./studio-core";
 import styles from "./studio.module.css";
 type NumericKey = { [K in keyof StudioStyle]: StudioStyle[K] extends number ? K : never }[keyof StudioStyle];
-type ColorKey = "color" | "highlight" | "outlineColor" | "shadowColor" | "wordColor";
+type ColorKey = "color" | "highlight" | "outlineColor" | "shadowColor" | "wordColor" | "wordBackgroundColor";
 
 export function StyleControls({ style, disabled, wordTimingAvailable = false, onChange, onPreset, onError }: { style: StudioStyle; disabled: boolean; wordTimingAvailable?: boolean; onChange: (value: Partial<StudioStyle>) => void; onPreset: (value: StudioStyle) => void; onError: (message: string) => void }) {
   const fileInput = useRef<HTMLInputElement>(null);
@@ -23,7 +23,12 @@ export function StyleControls({ style, disabled, wordTimingAvailable = false, on
       <label className={styles.inline}><input type="checkbox" checked={style.background} onChange={event => onChange({ background: event.target.checked })} />Highlight background</label>
       <div className={styles.colors}>{color("Text color", "color")}{color("Background color", "highlight")}</div>
       <label className={styles.inline}><input type="checkbox" checked={style.wordHighlight && wordTimingAvailable} disabled={!wordTimingAvailable} onChange={event => onChange({ wordHighlight: event.target.checked })} />Highlight spoken words</label>
-      {wordTimingAvailable ? <><div className={styles.colors}>{color("Active word color", "wordColor")}</div><p className={styles.note}>Uses measured speech timing. Editing text or timing pauses highlighting for that caption.</p></> : <p className={styles.note}>Generate captions to get word timing. Imported SRT/VTT files support caption backgrounds, not precise word highlighting.</p>}
+      {wordTimingAvailable ? <>
+        <div className={styles.colors}>{color("Active word color", "wordColor")}</div>
+        <label className={styles.inline}><input type="checkbox" checked={style.wordBackground} disabled={!style.wordHighlight} onChange={event => onChange({ wordBackground: event.target.checked })} />Background behind active word only</label>
+        {style.wordHighlight && style.wordBackground && <div className={styles.colors}>{color("Active word background color", "wordBackgroundColor")}</div>}
+        <p className={styles.note}>Only the spoken word gets this background. Uses measured speech timing; editing text or timing pauses highlighting for that caption.</p>
+      </> : <p className={styles.note}>Generate captions to get word timing. Imported SRT/VTT files support caption backgrounds, not precise word highlighting.</p>}
       <details className={styles.details}><summary>Typography and lines</summary>
         {choice("Font", "font", STUDIO_FONTS.map(font => [font,font] as const))}<p className={styles.note}>Inter and Sora are included. Other fonts use your device.</p>
         {slider("Font weight", "weight", 100, 900, 100)}

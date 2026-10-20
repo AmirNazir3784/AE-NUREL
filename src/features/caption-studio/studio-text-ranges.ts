@@ -22,6 +22,28 @@ export const measureStudioTextRange: StudioRangeMeasurer = (ctx, line, from, to)
   } finally { span.remove(); }
 };
 
+// Draw a separate background behind the *measured* active word. Coordinates
+// are physical glyph spans from the browser's bidirectional text shaper, not
+// guessed word widths. No background is drawn for absent timing spans.
+export function drawStudioWordBackground(
+  ctx: CanvasRenderingContext2D, left: number, y: number, size: number,
+  lineHeight: number, color: string, ranges: readonly StudioTextRange[]
+) {
+  const pad = size * .1, height = Math.min(lineHeight * .92, size * 1.2);
+  ctx.save();
+  try {
+    // Keep existing caption opacity but never duplicate the text shadow here.
+    ctx.shadowColor = "transparent"; ctx.shadowBlur = 0; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+    ctx.fillStyle = color;
+    for (const range of ranges) {
+      if (!Number.isFinite(range.left) || !Number.isFinite(range.right) || range.right <= range.left) continue;
+      ctx.beginPath();
+      ctx.roundRect(left + range.left - pad, y - height / 2, range.right - range.left + pad * 2, height, size * .16);
+      ctx.fill();
+    }
+  } finally { ctx.restore(); }
+}
+
 export function drawStudioHighlightedLine(ctx: CanvasRenderingContext2D, line: string, left: number, y: number, size: number, lineHeight: number, color: string, highlight: string, ranges: StudioTextRange[]) {
   const canvas = ctx.canvas.ownerDocument.createElement("canvas"), padding = size * 2;
   canvas.width = Math.ceil(ctx.measureText(line).width + padding * 2); canvas.height = Math.ceil(Math.max(size * 4, lineHeight * 2));
