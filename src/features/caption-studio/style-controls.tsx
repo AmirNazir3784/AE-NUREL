@@ -16,6 +16,8 @@ export function StyleControls({ style, disabled, wordTimingAvailable = false, on
   function choice(label: string, key: keyof StudioStyle, options: readonly (readonly [string,string])[]) { return <label>{label}<select value={String(style[key])} onChange={event => onChange({ [key]: event.target.value })}>{options.map(([value,text]) => <option key={value} value={value}>{text}</option>)}</select></label>; }
   function presetButton(preset: StudioStyle) { return <button type="button" key={preset.preset} aria-pressed={style.preset === preset.preset} disabled={disabled} className={styles.preset} onClick={() => onPreset(preset)}><span style={{ fontFamily: ["Inter", "Sora"].includes(preset.font) ? `var(--font-${preset.font === "Sora" ? "heading" : "platform"})` : preset.font, fontWeight: preset.weight, color: preset.color, textShadow: preset.shadow ? `0 1px ${preset.shadowBlur / 10}px ${preset.shadowColor}` : "none", WebkitTextStroke: preset.outline ? `${preset.outline / 10}px ${preset.outlineColor}` : undefined, fontStyle: preset.italic ? "italic" : "normal", textDecoration: preset.underline ? "underline" : preset.strikethrough ? "line-through" : undefined, textTransform: preset.textCase === "upper" ? "uppercase" : preset.textCase === "lower" ? "lowercase" : undefined }}><b style={{ background: preset.background ? preset.highlight : undefined, borderRadius: preset.radius / 5, padding: preset.background ? "3px 6px" : undefined }}>Make it yours</b></span><small>{preset.preset}</small></button>; }
   return <>
+    <h2 className={styles.styleHeading}>All caption styles <span>{STUDIO_PRESETS.length}</span></h2>
+    <div className={styles.presets}>{STUDIO_PRESETS.map(presetButton)}</div>
     <fieldset className={styles.quickControls} disabled={disabled}>
       <legend>Quick layout</legend>
       {choice("Placement", "position", [["top","Top"],["middle","Center"],["bottom","Bottom"],["custom","Custom"]])}
@@ -26,8 +28,6 @@ export function StyleControls({ style, disabled, wordTimingAvailable = false, on
       {style.animation !== "none" && slider("Animation duration", "motionDuration", 80, 1000, 20, "ms")}
       <p className={styles.note}>Animation applies when each caption first appears. Reduced-motion settings are respected.</p>
     </fieldset>
-    <h2 className={styles.styleHeading}>All caption styles <span>{STUDIO_PRESETS.length}</span></h2>
-    <div className={styles.presets}>{STUDIO_PRESETS.map(presetButton)}</div>
     <fieldset className={styles.customize} disabled={disabled}>
       <label className={styles.inline}><input type="checkbox" checked={style.background} onChange={event => onChange({ background: event.target.checked })} />Highlight background</label>
       <div className={styles.colors}>{color("Text color", "color")}{color("Background color", "highlight")}</div>
