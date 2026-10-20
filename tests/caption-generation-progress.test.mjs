@@ -1,3 +1,4 @@
+import './helpers/auth-dom.mjs';
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
