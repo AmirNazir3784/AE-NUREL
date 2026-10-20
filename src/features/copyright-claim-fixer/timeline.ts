@@ -26,7 +26,7 @@ export function formatEditTime(seconds: number): string {
   if (!Number.isFinite(seconds) || seconds < 0) throw new Error('Invalid timestamp.');
   const millis = Math.round(seconds * 1000);
   const h = Math.floor(millis / 3600000), m = Math.floor(millis % 3600000 / 60000), s = Math.floor(millis % 60000 / 1000), ms = millis % 1000;
-  return (h ? \`\${h}:\` + String(m).padStart(2, '0') + ':' : \`\${m}:\`) + String(s).padStart(2, '0') + (ms ? '.' + String(ms).padStart(3, '0') : '');
+  return (h ? String(h) + ':' + String(m).padStart(2, '0') + ':' : String(m) + ':') + String(s).padStart(2, '0') + (ms ? '.' + String(ms).padStart(3, '0') : '');
 }
 function validRepair(repair: Repair, kind: ClaimKind) {
   if (repair.mode === 'lower-volume' || repair.mode === 'replace-audio') {
