@@ -85,10 +85,19 @@
 .cueEditor legend { font-size:13px; font-weight:600; }
 .times { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
 .times input { font-family:var(--font-code)!important; font-size:14px!important; }
-.presets { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-.preset { border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; background:#182321; padding:0; cursor:pointer; min-width:0; }
+.quickControls { display:grid; gap:12px; margin:0 0 16px; padding:12px; min-width:0; border:1px solid var(--border-strong); border-radius:12px; background:var(--surface-soft); }
+.quickControls legend { font-size:14px; color:var(--foreground); font-weight:750; padding:0 6px; }
+.quickControls label { margin:0; }
+.quickControls :global(.button) { width:100%; justify-content:center; }
+.styleHeading { display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:15px; margin:16px 0 10px; color:var(--foreground); }
+.styleHeading span { padding:3px 8px; border:1px solid var(--border); border-radius:20px; color:var(--muted); font-size:12px; }
+.decorationOptions { display:flex; flex-wrap:wrap; align-items:center; gap:6px 14px; }
+.decorationOptions label { margin:4px 0; }
+.presets { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
+.preset { border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; background:#182321; padding:0; cursor:pointer; min-width:0; transition:border-color .15s ease,box-shadow .15s ease; }
+.preset:hover { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent-border); }
 .preset[aria-pressed=true] { outline:2px solid var(--accent); outline-offset:2px; }
-.preset > span { display:flex; align-items:center; justify-content:center; min-height:70px; padding:12px 8px; color:#fff; font:700 14px var(--font-heading); }
+.preset > span { display:flex; align-items:center; justify-content:center; min-height:66px; padding:10px 6px; color:#fff; font:700 13px var(--font-heading); overflow:hidden; }
 .preset small { display:block; background:var(--surface); color:var(--foreground); font-size:12px; text-align:left; padding:7px 10px; }
 .presetBold > span { color:#ffae58; font-weight:800; font-size:17px; }
 .presetOutline > span { -webkit-text-stroke:.5px #101716; text-shadow:1px 1px 0 #101716,-1px -1px 0 #101716; }
