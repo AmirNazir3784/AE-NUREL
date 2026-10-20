@@ -2,7 +2,7 @@ import { ASR_SAMPLE_RATE, captionDocument, type TimedText } from "./asr-core.ts"
 import type { SpeechRegion } from "./speech-activity.ts";
 type Recognizer = (samples: Float32Array) => Promise<{ text: string; chunks?: TimedText[] }>;
 
-export async function transcribeSpeech(samples: Float32Array, regions: readonly SpeechRegion[], recognize: Recognizer, longAudio = false) {
+export async function transcribeSpeech(samples: Float32Array, regions: readonly SpeechRegion[], recognize: Recognizer, longAudio = false, onSections?: (completed: number, total: number) => void) {
   if (!regions.length) return { text: "", chunks: [] as TimedText[] };
   let previousEnd = 0;
   for (const region of regions) {
@@ -23,14 +23,16 @@ export async function transcribeSpeech(samples: Float32Array, regions: readonly 
       else contexts.push(context);
     }
     const local: TimedText[] = []; const texts: string[] = [];
+    onSections?.(0, contexts.length);
     for (const context of contexts) {
       const from = Math.floor(context.start * ASR_SAMPLE_RATE), to = Math.ceil(context.end * ASR_SAMPLE_RATE);
       const result = await recognize(samples.subarray(from, to));
       texts.push(result.text);
       for (const chunk of result.chunks ?? []) local.push({ text: chunk.text, timestamp: [chunk.timestamp[0] === null ? null : chunk.timestamp[0] + from / ASR_SAMPLE_RATE, chunk.timestamp[1] === null ? null : chunk.timestamp[1] + from / ASR_SAMPLE_RATE] });
+      onSections?.(texts.length, contexts.length);
     }
     output = { text: texts.join(" "), chunks: local };
-  } else output = await recognize(samples);
+  } else { onSections?.(0, 1); output = await recognize(samples); onSections?.(1, 1); }
   const local = output.chunks ?? [];
   if (longAudio && local.some(chunk => chunk.text.trim() && (chunk.timestamp[0] === null || chunk.timestamp[1] === null || !Number.isFinite(chunk.timestamp[0]) || !Number.isFinite(chunk.timestamp[1]) || chunk.timestamp[0] < 0 || chunk.timestamp[1] <= chunk.timestamp[0]))) throw new Error("Speech was recognized with incomplete word timing. Retry this section; no timing was invented.");
   // A model segment entirely outside detected speech is unsupported. Never split
