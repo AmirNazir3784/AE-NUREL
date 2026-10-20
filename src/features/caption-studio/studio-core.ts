@@ -157,6 +157,15 @@ export function paintStudioCaptions(ctx: CanvasRenderingContext2D, width: number
     ctx.scale(motion.scale, motion.scale);
     if (motion.blur) ctx.filter = `blur(${(motion.blur * size).toFixed(2)}px)`;
     ctx.direction = /[\p{Script=Arabic}\p{Script=Hebrew}]/u.test(text.match(/\p{L}/u)?.[0] ?? "") ? "rtl" : "ltr";
+    const effectProgress = reducedMotion ? 1 : Math.min(1, elapsedMs / style.motionDuration);
+    // True progressive reveal of the entire composed caption (including
+    // background), using a clip rather than shortening source text or timing.
+    if (style.animation === "typewriter" && effectProgress < 1) {
+      ctx.beginPath();
+      const revealed = boxWidth * Math.max(0, effectProgress);
+      ctx.rect(ctx.direction === "rtl" ? boxWidth / 2 - revealed : -boxWidth / 2, -boxHeight / 2, revealed, boxHeight);
+      ctx.clip();
+    }
     ctx.textAlign = style.align; ctx.textBaseline = "middle"; ctx.lineJoin = "round";
     if (style.background) { ctx.fillStyle = style.highlight + Math.round(style.backgroundOpacity * 255).toString(16).padStart(2,"0"); ctx.beginPath(); ctx.roundRect(-boxWidth / 2, -boxHeight / 2, boxWidth, boxHeight, Math.min(size * style.radius / 100, boxHeight / 2)); ctx.fill(); }
     ctx.shadowColor = style.shadow ? style.shadowColor + Math.round(style.shadowOpacity * 255).toString(16).padStart(2,"0") : "transparent"; ctx.shadowBlur = size * style.shadowBlur / 100; ctx.shadowOffsetX = size * style.shadowX / 100; ctx.shadowOffsetY = size * style.shadowY / 100;
@@ -172,6 +181,18 @@ export function paintStudioCaptions(ctx: CanvasRenderingContext2D, width: number
         const lineWidth = ctx.measureText(line).width;
         const left = textX - (style.align === "center" ? lineWidth / 2 : style.align === "right" ? lineWidth : 0);
         drawStudioWordBackground(ctx, left, y, size, lineHeight, style.wordBackgroundColor, ranges, style.wordBackgroundOpacity);
+      }
+      // Chromatic ghosting draws shaped full lines; no word-width guesses,
+      // strobing, or edits to cue text. It settles before the caption ends.
+      if (!reducedMotion && (style.animation === "glitch" || style.animation === "rgb-split") && effectProgress < .65) {
+        const displacement = (1 - effectProgress / .65) * size * (style.animation === "glitch" ? .14 : .075);
+        const side = style.animation === "glitch" && effectProgress > .22 && effectProgress < .43 ? -1 : 1;
+        ctx.save();
+        ctx.shadowColor = "transparent"; ctx.shadowBlur = 0;
+        ctx.globalAlpha = style.opacity * motion.opacity * Math.min(.55, 1 - effectProgress);
+        ctx.fillStyle = "#ff4a89"; ctx.fillText(line, textX + displacement * side, y);
+        ctx.fillStyle = "#42edff"; ctx.fillText(line, textX - displacement * side, y);
+        ctx.restore();
       }
       if (style.outline) { ctx.strokeStyle = style.outlineColor; ctx.lineWidth = size * style.outline / 100; ctx.strokeText(line, textX, y); }
       if (begin < 0 || !ranges.length) { ctx.fillStyle = style.color; ctx.fillText(line, textX, y); }
