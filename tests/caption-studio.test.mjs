@@ -52,8 +52,15 @@ describe('real caption style settings, without word timing guesses',()=>{
    c.context.fillRect=(...args)=>rects.push({args,color:c.context.fillStyle});
    paintStudioCaptions(c.context,1920,1080,fixture(),1500,s,'Arial',false);
    assert.match(c.writes[0].font,/^italic /);
-   assert.equal(rects.length,2);
-   assert.ok(rects[0].args[2]>0 && rects[1].args[2]>0);
+   // Fixture wraps onto two lines: underline and strikethrough on each.
+   assert.equal(rects.length,4);
+   for (const line of [0, 1]) {
+     const underline = rects[line * 2], strike = rects[line * 2 + 1];
+     assert.ok(underline.args[2] > 0 && strike.args[2] > 0);
+     assert.equal(underline.args[0], strike.args[0]);
+     assert.equal(underline.args[2], strike.args[2]);
+     assert.ok(underline.args[1] > strike.args[1]);
+   }
  });
  it('reports impossible layouts instead of truncating text',()=>{const doc=fixture();doc.cues[0].text='This is a very long caption. '.repeat(100);assert.throws(()=>paintStudioCaptions(canvas().context,1920,1080,doc,1500,style(),'Arial',false),/cannot fit/);assert.ok(doc.cues[0].text.endsWith('caption. '));});
  it('respects reduced motion and leaves source speech times immutable',()=>{const doc=fixture(),s={...style(),animation:'pop'};const animated=canvas(),still=canvas();paintStudioCaptions(animated.context,1920,1080,doc,1004,s,'Arial',false);paintStudioCaptions(still.context,1920,1080,doc,1004,s,'Arial',true);assert.ok(animated.context.scaleValue[0]<1);assert.equal(still.context.scaleValue[0],1);assert.equal(doc.cues[0].start,1003);});
