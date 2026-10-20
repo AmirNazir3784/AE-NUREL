@@ -2,6 +2,7 @@
 import { useRef } from "react";
 import { DownloadButton } from "@/components/tools/download-button";
 import { STUDIO_FONTS, STUDIO_PRESETS, parseStudioStyle, type StudioStyle } from "./studio-core";
+import { STUDIO_ANIMATIONS } from "./studio-motion";
 import styles from "./studio.module.css";
 type NumericKey = { [K in keyof StudioStyle]: StudioStyle[K] extends number ? K : never }[keyof StudioStyle];
 type ColorKey = "color" | "highlight" | "outlineColor" | "shadowColor" | "wordColor" | "wordBackgroundColor";
@@ -21,6 +22,9 @@ export function StyleControls({ style, disabled, wordTimingAvailable = false, on
       <button className="button button-secondary" type="button" onClick={() => onChange({ x: 50, align: "center" })}>Center caption horizontally</button>
       {choice("Font", "font", STUDIO_FONTS.map(font => [font,font] as const))}
       {slider("Text size", "size", 2.5, 12, .1, "%")}
+      {choice("Animation", "animation", STUDIO_ANIMATIONS)}
+      {style.animation !== "none" && slider("Animation duration", "motionDuration", 80, 1000, 20, "ms")}
+      <p className={styles.note}>Animation applies when each caption first appears. Reduced-motion settings are respected.</p>
     </fieldset>
     <h2 className={styles.styleHeading}>All caption styles <span>{STUDIO_PRESETS.length}</span></h2>
     <div className={styles.presets}>{STUDIO_PRESETS.map(presetButton)}</div>
@@ -59,7 +63,7 @@ export function StyleControls({ style, disabled, wordTimingAvailable = false, on
         <div className={styles.colors}>{color("Shadow color", "shadowColor")}</div>{slider("Shadow opacity", "shadowOpacity", 0, 1, .05)}{slider("Blur / glow", "shadowBlur", 0, 100, 5, "%")}{slider("Shadow horizontal", "shadowX", -50, 50, 1, "%")}{slider("Shadow vertical", "shadowY", -50, 50, 1, "%")}
       </details>
       <details className={styles.details}><summary>Precise position</summary>{slider("Horizontal position", "x", 0, 100, 1, "%")}{slider("Vertical position", "y", 0, 100, 1, "%")}{slider("Rotation", "rotation", -20, 20, 1, "°")}<p className={styles.note}>Placement stays inside the video. Layouts that cannot fit must be adjusted before export.</p></details>
-      <details className={styles.details}><summary>Motion</summary>{choice("Animation", "animation", [["none","None"],["fade","Fade"],["pop","Pop"],["rise","Rise"]])}{slider("Entrance duration", "motionDuration", 80, 1000, 20, "ms")}<p className={styles.note}>Motion is disabled when your device requests reduced motion.</p></details>
+
     </fieldset>
     <details className={styles.details}><summary>Save or load your style</summary><div className={styles.actions}><DownloadButton label="Save style" filename="aenural-caption-style.json" content={() => JSON.stringify({ version: 1, style }, null, 2)} disabled={disabled} variant="secondary" onDownloaded={() => {}} onError={onError} /><button type="button" className="button button-secondary" disabled={disabled} onClick={() => fileInput.current?.click()}>Load style</button><input ref={fileInput} type="file" accept=".json" className="sr-only" aria-label="Load caption style" disabled={disabled} onChange={async event => { const file = event.target.files?.[0]; event.target.value = ""; if (!file) return; try { if (file.size > 32_768) throw new Error("Choose a style file smaller than 32 KiB."); onPreset(parseStudioStyle(await file.text())); } catch (error) { onError(error instanceof Error ? error.message : "This style could not be loaded."); } }} /></div></details>
   </>;
