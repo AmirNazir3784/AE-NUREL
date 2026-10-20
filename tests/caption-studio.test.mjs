@@ -71,14 +71,14 @@ describe('real caption style settings, without word timing guesses',()=>{
    assert.ok(doc.cues[0].text.includes(glitch.writes.at(-1).text));
    const still=canvas();
    paintStudioCaptions(still.context,1920,1080,doc,first,base,'Arial',true);
-   assert.equal(still.writes.map(x=>x.text).join('\\n'),doc.cues[0].text,'reduced motion disables glitch duplicates');
+   assert.equal(still.writes.map(x=>x.text).join('\n'),doc.cues[0].text,'reduced motion disables glitch duplicates');
    const reveal=canvas(),clips=[],rectangles=[];
    reveal.context.rect=(...args)=>rectangles.push(args);
    reveal.context.clip=()=>clips.push(true);
    paintStudioCaptions(reveal.context,1920,1080,doc,first,{...style(),animation:'typewriter',motionDuration:600},'Arial',false);
    assert.equal(clips.length,1);assert.equal(rectangles.length,1);
    assert.ok(rectangles[0][2]>0 && rectangles[0][2]<1920);
-   assert.equal(reveal.writes.map(x=>x.text).join('\\n'),doc.cues[0].text);
+   assert.equal(reveal.writes.map(x=>x.text).join('\n'),doc.cues[0].text);
  });
  it('reports impossible layouts instead of truncating text',()=>{const doc=fixture();doc.cues[0].text='This is a very long caption. '.repeat(100);assert.throws(()=>paintStudioCaptions(canvas().context,1920,1080,doc,1500,style(),'Arial',false),/cannot fit/);assert.ok(doc.cues[0].text.endsWith('caption. '));});
  it('respects reduced motion and leaves source speech times immutable',()=>{const doc=fixture(),s={...style(),animation:'pop'};const animated=canvas(),still=canvas();paintStudioCaptions(animated.context,1920,1080,doc,1004,s,'Arial',false);paintStudioCaptions(still.context,1920,1080,doc,1004,s,'Arial',true);assert.ok(animated.context.scaleValue[0]<1);assert.equal(still.context.scaleValue[0],1);assert.equal(doc.cues[0].start,1003);});
