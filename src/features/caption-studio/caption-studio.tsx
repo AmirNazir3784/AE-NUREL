@@ -7,7 +7,7 @@ import { DownloadButton } from "@/components/tools/download-button";
 import { UnsavedNavigation } from "@/features/srt-editor/unsaved-navigation";
 import { editorSessionReducer, initialEditorSession, editorIsDirty } from "@/features/srt-editor/editor-session";
 import { emptyEditor, openSubtitle, validateSubtitleFile, formatEditorTime, editorExportErrors, exportEditor, addEditorCue, deleteEditorCue, shiftEditorCues, type EditorDocument } from "@/lib/subtitle-editor";
-import { STUDIO_PRESETS, STUDIO_LIMITS, studioIssues, studioFilename, studioFont, paintStudioCaptions, activeStudioCues, splitStudioCue, mergeStudioCue, validateStudioFile, type StudioMedia, type StudioStyle } from "./studio-core";
+import { STUDIO_PRESETS, STUDIO_LIMITS, studioIssues, studioFilename, studioFont, studioPlacement, paintStudioCaptions, activeStudioCues, splitStudioCue, mergeStudioCue, validateStudioFile, type StudioMedia, type StudioStyle } from "./studio-core";
 import { inspectStudioVideo, exportStudioVideo } from "./studio-media";
 import styles from "./studio.module.css";
 import { StyleControls } from "./style-controls";
@@ -117,7 +117,14 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
       dispatch({ type: "apply", document: { ...document, cues } }); setSelected(id); setPanel("captions"); invalidate();
     } catch (failure) { setError(failure instanceof Error ? failure.message : "A caption could not be added."); }
   }
-  function changeStyle(value: Partial<StudioStyle>) { setStyle(previous => ({ ...previous, preset: "Custom", ...value, ...(value.position && value.position !== "custom" ? { y: { top: 18, middle: 50, bottom: 84 }[value.position] } : value.x !== undefined || value.y !== undefined ? { position: "custom" as const } : {}) })); invalidate(); }
+  function changeStyle(value: Partial<StudioStyle>) {
+    setStyle(previous => {
+      const next = { ...previous, preset: "Custom", ...value };
+      if (value.position && value.position !== "custom") return studioPlacement(next, value.position);
+      return value.x !== undefined || value.y !== undefined ? { ...next, position: "custom" } : next;
+    });
+    invalidate();
+  }
   async function render() {
     if (!source || busy) return;
     const abort = new AbortController(); job.current = abort; setBusy("exporting"); setProgress(0); invalidate(); const version = revision.current; video.current?.pause();
