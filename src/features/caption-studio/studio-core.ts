@@ -7,7 +7,7 @@ import { STUDIO_ANIMATIONS, studioMotionFrame, type StudioAnimation } from "./st
 
 export const STUDIO_LIMITS = { bytes: 200 * 1024 ** 2, seconds: 120, pixels: 1920 * 1080, cues: 500, outputBytes: 256 * 1024 ** 2 } as const;
 // Inter/Sora are bundled. Other fonts rely on locally installed device fonts.
-export const STUDIO_FONTS = ["Inter", "Sora", "Arial", "Georgia", "Times New Roman", "Verdana", "Courier New", "Trebuchet MS", "Segoe UI", "Tahoma", "Impact", "Arial Black", "Palatino Linotype", "Cambria", "Consolas", "Franklin Gothic Medium"] as const;
+export const STUDIO_FONTS = ["Inter", "Sora", "Arial", "Georgia", "Times New Roman", "Verdana", "Courier New", "Trebuchet MS", "Segoe UI", "Tahoma", "Impact", "Arial Black", "Palatino Linotype", "Cambria", "Consolas", "Franklin Gothic Medium", "Anton", "Bebas Neue", "Oswald", "Playfair Display", "DM Sans"] as const;
 export type StudioStyle = {
   preset: string; font: typeof STUDIO_FONTS[number]; size: number; weight: number;
   color: string; opacity: number; highlight: string; background: boolean; backgroundOpacity: number; paddingX: number; paddingY: number; radius: number;
@@ -111,7 +111,7 @@ export function mergeStudioCue(document: EditorDocument, id: string): EditorDocu
   return { ...document, cues };
 }
 export function studioFont(style: StudioStyle): string {
-  return !["Inter", "Sora"].includes(style.font) ? `"${style.font}", ${["Courier New", "Consolas"].includes(style.font) ? "monospace" : ["Georgia", "Times New Roman", "Palatino Linotype", "Cambria"].includes(style.font) ? "serif" : "sans-serif"}` : getComputedStyle(document.documentElement).getPropertyValue(style.font === "Sora" ? "--font-heading" : "--font-platform").trim() || "Arial, sans-serif";
+  return !["Inter", "Sora"].includes(style.font) ? `"${style.font}", ${["Courier New", "Consolas"].includes(style.font) ? "monospace" : ["Georgia", "Times New Roman", "Palatino Linotype", "Cambria", "Playfair Display"].includes(style.font) ? "serif" : "sans-serif"}` : getComputedStyle(document.documentElement).getPropertyValue(style.font === "Sora" ? "--font-heading" : "--font-platform").trim() || "Arial, sans-serif";
 }
 
 // The preview and exporter call this same painter at original video dimensions.
