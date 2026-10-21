@@ -45,7 +45,7 @@ export function Header() {
     else if (event.key === "Enter") { const link = resultsList.current?.querySelectorAll("a")[activeIndex]; if (link) { event.preventDefault(); link.click(); } }
   }
   return <>
-    <div className="aen-topbar"><b>Source Window</b> — the flagship product from AENural. <Link href="/source-window">Explore →</Link></div>
+    <div className="aen-topbar"><b>Source Window</b> — a new After Effects tool from AENural. <Link href="/source-window">Explore →</Link></div>
     <header className="aen-nav"><div className="aen-wrap aen-nav-inner">
       <Link href="/" className="aen-brand" aria-label="AENural home" onClick={closeMenus}><Brand /></Link>
       <nav className="aen-nav-links" aria-label="Main navigation">
