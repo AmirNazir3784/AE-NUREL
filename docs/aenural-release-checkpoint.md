@@ -10,6 +10,7 @@ Last updated: 2026-10-21
   - `574b24c92a3b31dd495e17ceadf825381c6c2f72`: approved product roadmap, including **3 free videos lifetime per free account**.
   - `466d34c319d858e37cae52d83801ddbeaa0d0119`: preliminary security audit and future paid-release blockers.
   - `01965f65b5c622ef0addaf136f4c2a05e7820b89`: corrected project README and safe development workflow.
+  - `42320a7685cbdf9f0a5db0250447ad05826f864b`: preserved early SRT behavior contract in updated README.
 - This checkpoint was committed after the above changes. **Local Windows tree NOT inspected this turn**; local Codex edits may differ. Never assume `git status` is clean or merge blindly.
 
 ## Approved product requirements
