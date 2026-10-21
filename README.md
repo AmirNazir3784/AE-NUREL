@@ -67,3 +67,18 @@ Update the checkpoint at each validated milestone: commit, changed files, test e
 ## SRT Timing Adjuster — current utility contract
 
 SRT processing is performed locally. Files are validated for supported size, timestamp syntax and encoding. The adjuster can move timestamps earlier/later, preserves meaningful cue text, provides a preview, and exports the result. Review exported timing before using it with a video. Refer to the implementation and tests rather than this overview for authoritative numeric limits.
+
+
+### Historical detailed SRT contract (retained from initial README)
+
+> The following notes were inherited from the early ToolSuite README. Revalidate against current implementation and tests before treating limits as release guarantees.
+
+#### Original SRT behavior notes
+
+All file reading and processing takes place in the browser. No upload endpoint, backend, telemetry, external fonts or file persistence is used. Downloads are UTF-8 SRT files. UTF-8 and BOM-marked UTF-16 inputs are supported. File size is limited to 10 MB to keep browser processing responsive.
+
+Cues must contain a numeric identifier, valid timestamps and subtitle text, with blank lines between cues. Multiline text, original numbering, spacing, markup and original line endings are preserved. Standard SRT coordinate suffixes are supported. Invalid cues reject the whole file rather than silently removing content.
+
+Offsets support positive/negative seconds with up to three decimal places. Timestamps before zero are clamped to zero, with an explicit warning; fully clamped cues can have zero duration. Offsets or results beyond `99:59:59,999` are rejected. Zero offset preserves the source text exactly. Preview shows the first three cues; download includes every cue.
+
+Each successful upload or replacement starts a fresh session at offset `0` and clears previous messages. Start over clears the file, preview, offset, download state and messages. Progress reflects upload, valid output readiness and the download action.
