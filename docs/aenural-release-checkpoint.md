@@ -1,6 +1,6 @@
 # AENural release checkpoint — resume here
 Last updated: 2026-10-21
-**Status:** Phase 0 (development baseline and security hardening) **IN PROGRESS**. No production changes or deployment.
+**Status:** Phase 0 baseline COMPLETE. Phase 1A header/search fixes merged (PRs #2-#4). Local/GitHub reconciliation COMPLETE — one verified tree on `dev/aenural-hybrid` (`d9d9a10`). CI active via GitHub Actions. No production changes or deployment.
 
 ## Trusted repositories and working tree
 - Development repository: `faisalhere-afk/aenural-website`, branch `dev/aenural-hybrid`.
@@ -53,6 +53,15 @@ git status --short
 node --version
 ```
 Purpose: identify exactly which local changes are modified/untracked and how the local tree differs from `dev/aenural-hybrid`, so a safe preservation plan (what to commit, what to keep local, what is a temporary helper script) can be agreed **before** anything moves. Don't pull, merge, reset, switch branches, overwrite or run installers. The next code feature after Phase 0 acceptance is **Phase 1A: header hover-menu dismissal and blank search suggestions**, with focused regression tests.
+
+## Milestone — 2026-10-21: Phase 1A fixes, reconciliation, CI
+
+- PR #2 (merged, `f714dfe`): navigation dropdown 300ms close-grace (Issue #1); search no longer lists all tools on an empty query (Issue #7 core).
+- PR #3 (merged, `5bd2d50`): search dialog replaced by the approved dropdown panel under the search icon (new `src/components/site/header-search.module.css`).
+- PR #4 (merged, `84b29fc`): Source Window "flagship" wording removed and Coming Soon state made explicit on the product page, header topbar, premium-tools page and product card (Issues #12/#9); the Source Window page hero now uses the feature video (`source-window-feature.mp4`). Homepage flagship mentions in `src/app/page.tsx` were deferred to the reconciliation and remain open (Batch E).
+- Reconciliation DONE: the diverged local line (base `651fd93` plus uncommitted work) was preserved on `backup/local-work-2026-10-21` (9 grouped commits; ZIP-era leftovers archived outside the repo at `D:\Work\AENural-archive\zip-era-2026-10-21`), merged with `origin/dev` (merge commit `9761bf9`; 4 conflicts resolved file-by-file), and verified on the merged tree: lint PASS, typecheck PASS, tests **875/875 PASS** (114 suites), production build PASS (31/31 pages). Three tests that encoded pre-fix behaviour were updated (`tests/theme.test.mjs`, `tests/auth-preview.test.mjs`, `tests/home-video.test.mjs`; commit `d9d9a10`). Local `dev/aenural-hybrid` fast-forwarded and pushed (`84b29fc..d9d9a10`). Local tree and GitHub dev are now one identical copy. Production repository untouched throughout.
+- CI added (`.github/workflows/ci.yml`): lint, typecheck, test and build run automatically on pushes to `dev/aenural-hybrid` and on pull requests into it.
+- Next: Batch C performance measurement (Issue #2), then Batches D/E.
 
 ## Reporting policy
 Mark each task as `DONE (evidence)`, `BLOCKED (reason)`, `NOT RUN`, or `IN PROGRESS`. For each meaningful commit document actual tested command outputs, SHA, locally preserved changes, known security risks, rollback strategy, and precise continuation. Never mark user-facing production released without deployment approval and final smoke tests.
