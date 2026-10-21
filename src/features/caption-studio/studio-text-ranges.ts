@@ -1,6 +1,7 @@
 export type StudioTextRange = { left: number; right: number };
 export type StudioRangeMeasurer = (ctx: CanvasRenderingContext2D, line: string, from: number, to: number) => StudioTextRange[];
 const cache = new Map<string, StudioTextRange[]>();
+export function clearStudioTextRangeCache() { cache.clear(); }
 
 // Ask the browser's shaping/bidi engine for physical glyph ranges. Measuring
 // isolated word widths would misplace mixed RTL/LTR and joined-script words.
@@ -21,6 +22,29 @@ export const measureStudioTextRange: StudioRangeMeasurer = (ctx, line, from, to)
     return rectangles;
   } finally { span.remove(); }
 };
+
+// Draw a separate background behind the *measured* active word. Coordinates
+// are physical glyph spans from the browser's bidirectional text shaper, not
+// guessed word widths. No background is drawn for absent timing spans.
+export function drawStudioWordBackground(
+  ctx: CanvasRenderingContext2D, left: number, y: number, size: number,
+  lineHeight: number, color: string, ranges: readonly StudioTextRange[], opacity = 1
+) {
+  const pad = size * .1, height = Math.min(lineHeight * .92, size * 1.2);
+  ctx.save();
+  try {
+    // Keep existing caption opacity but never duplicate the text shadow here.
+    ctx.shadowColor = "transparent"; ctx.shadowBlur = 0; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+    ctx.fillStyle = color;
+    ctx.globalAlpha *= opacity;
+    for (const range of ranges) {
+      if (!Number.isFinite(range.left) || !Number.isFinite(range.right) || range.right <= range.left) continue;
+      ctx.beginPath();
+      ctx.roundRect(left + range.left - pad, y - height / 2, range.right - range.left + pad * 2, height, size * .16);
+      ctx.fill();
+    }
+  } finally { ctx.restore(); }
+}
 
 export function drawStudioHighlightedLine(ctx: CanvasRenderingContext2D, line: string, left: number, y: number, size: number, lineHeight: number, color: string, highlight: string, ranges: StudioTextRange[]) {
   const canvas = ctx.canvas.ownerDocument.createElement("canvas"), padding = size * 2;

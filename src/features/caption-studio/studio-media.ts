@@ -25,6 +25,7 @@ export async function exportStudioVideo(file: File, media: StudioMedia, captions
   const { Input, BlobSource, BufferSource, ALL_FORMATS, Output, BufferTarget, Mp4OutputFormat, WebMOutputFormat, Conversion, Quality, canEncodeVideo } = await import("mediabunny");
   const width = media.width, height = media.height, codec = format === "mp4" ? "avc" : "vp9", quality = new Quality({ bitrate: 5_000_000 });
   if (!await canEncodeVideo(codec, { width, height, quality })) throw new Error(`Your browser cannot encode ${format.toUpperCase()} at this size. Try the other video format, or download SRT/VTT.`);
+  await document.fonts.load(`${style.italic ? "italic " : ""}${style.weight} 48px "${style.font}"`);
   await document.fonts.ready; signal.throwIfAborted();
   const font = studioFont(style), reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canvas = document.createElement("canvas"); canvas.width = width; canvas.height = height;
