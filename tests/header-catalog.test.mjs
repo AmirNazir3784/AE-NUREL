@@ -54,9 +54,9 @@ describe('separate product and free tool navigation',()=>{
   await key(q('dialog'),'Escape');assert.equal(q('dialog').open,false);assert.equal(document.activeElement.getAttribute('aria-label'),'Search tools');
  });
 });
-it('retires only the duplicate route while preserving the shared engine and held canonical page',()=>{
+it('reuses the retired URL for a focused development-only podcast workflow without publishing it',()=>{
  const read=f=>readFileSync(new URL('../'+f,import.meta.url),'utf8');
- const retired=read('src/app/tools/podcast-to-captions/page.tsx');assert.match(retired,/function RetiredCaptionPage\(\) \{ notFound\(\); \}/);assert.doesNotMatch(retired,/TranscriptionWorkspace|Speech to Captions|process.env/);
+ const retired=read('src/app/tools/podcast-to-captions/page.tsx');assert.match(retired,/process.env.NODE_ENV !== "development"\) notFound\(\)/);assert.match(retired,/PodcastWorkspace/);assert.doesNotMatch(retired,/TranscriptionWorkspace|Speech to Captions/);
  assert.match(read('src/app/tools/free-subtitle-generator/page.tsx'),/process.env.NODE_ENV === "production"\) notFound\(\)/);
  assert.ok(read('src/features/local-asr/asr.worker.ts').length>0);assert.ok(read('src/features/local-asr/caption-review.tsx').length>0);
  assert.match(read('src/app/premium-tools/page.tsx'),/products.map/);

@@ -52,3 +52,7 @@ next-env.d.ts
 /artifacts/*
 !/artifacts/v1-site-audit.md
 !/artifacts/v1-design-integration-plan.md
+
+# User-provided local audio fixtures; never include recordings in a code backup.
+/references/Audio/
+/references/audio/

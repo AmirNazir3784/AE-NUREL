@@ -2,12 +2,12 @@ import {describe,it} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {emptyEditor,openSubtitle,exportEditor} from '../src/lib/subtitle-editor.ts';
-import {STUDIO_PRESETS,STUDIO_LIMITS,validateStudioFile,validateStudioMedia,validateStudioStyle,parseStudioStyle,studioIssues,activeStudioCues,splitStudioCue,mergeStudioCue,paintStudioCaptions,studioFilename} from '../src/features/caption-studio/studio-core.ts';
+import {STUDIO_PRESETS,STUDIO_LIMITS,validateStudioFile,validateStudioMedia,validateStudioStyle,parseStudioStyle,studioIssues,activeStudioCues,splitStudioCue,mergeStudioCue,paintStudioCaptions,studioFilename,studioPlacement} from '../src/features/caption-studio/studio-core.ts';
 const bytes=readFileSync(new URL('./fixtures/conversions/normal.srt',import.meta.url));
 const fixture=()=>openSubtitle({name:'normal.srt',size:bytes.length},bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength));
 const style=()=>({...STUDIO_PRESETS[0]});
 function canvas(){
- const writes=[],transforms=[],rects=[];const context={letterSpacing:'0px',wordSpacing:'0px',save(){},restore(){},translate(...args){transforms.push(args);},rotate(v){this.angle=v;},scale(x,y){this.scaleValue=[x,y];},beginPath(){},roundRect(...args){rects.push({args,color:this.fillStyle});},fill(){},strokeText(){},fillText(text,x,y){writes.push({text,x,y,color:this.fillStyle,font:this.font,direction:this.direction,alpha:this.globalAlpha,shadow:this.shadowColor,spacing:this.letterSpacing});},measureText(text){return {width:Array.from(text).length*parseFloat(this.font.split(' ')[1])*.48};}};return {context,writes,transforms,rects};
+ const writes=[],transforms=[],rects=[];const context={letterSpacing:'0px',wordSpacing:'0px',save(){},restore(){},translate(...args){transforms.push(args);},rotate(v){this.angle=v;},scale(x,y){this.scaleValue=[x,y];},beginPath(){},roundRect(...args){rects.push({args,color:this.fillStyle});},fill(){},strokeText(){},fillText(text,x,y){writes.push({text,x,y,color:this.fillStyle,font:this.font,direction:this.direction,alpha:this.globalAlpha,shadow:this.shadowColor,spacing:this.letterSpacing});},measureText(text){const size = Number(this.font.match(/(\d+(?:\.\d+)?)px\b/)?.[1]);return {width:Array.from(text).length*size*.48};}};return {context,writes,transforms,rects};
 }
 describe('Caption Studio integrity and safety',()=>{
  it('retains the real subtitle parser/exporter including Unicode and exact timing',()=>{const doc=fixture();assert.deepEqual(studioIssues(doc,21.376),[]);for(const ext of ['srt','vtt']){const text=exportEditor(doc,ext),data=new TextEncoder().encode(text),opened=openSubtitle({name:'captions.'+ext,size:data.length},data.buffer);assert.deepEqual(opened.cues.map(c=>[c.start,c.end,c.text]),doc.cues.map(c=>[c.start,c.end,c.text]));}});
@@ -20,11 +20,59 @@ describe('Caption Studio integrity and safety',()=>{
  it('produces language-neutral output names',()=>{assert.equal(studioFilename('動画.final.mov','mp4'),'動画.final-captioned.mp4');assert.equal(studioFilename('فيديو.webm','vtt'),'فيديو-captioned.vtt');});
 });
 describe('real caption style settings, without word timing guesses',()=>{
- it('has fifteen valid, distinct presets',()=>{assert.equal(STUDIO_PRESETS.length,15);for(const preset of STUDIO_PRESETS)validateStudioStyle(preset);assert.equal(new Set(STUDIO_PRESETS.map(preset=>JSON.stringify({...preset,preset:undefined}))).size,15);});
+ it('has 30 valid, distinct caption presets',()=>{assert.equal(STUDIO_PRESETS.length,30);for(const preset of STUDIO_PRESETS)validateStudioStyle(preset);assert.equal(new Set(STUDIO_PRESETS.map(preset=>JSON.stringify({...preset,preset:undefined}))).size,30);});
  it('round-trips custom style files and rejects invalid values/unknown fonts/executable colors',()=>{const custom={...style(),size:8.3,rotation:-8,shadowBlur:80,background:true};assert.deepEqual(parseStudioStyle(JSON.stringify({version:1,style:custom})),custom);for(const change of [{font:'javascript:alert(1)'},{color:'url(bad)'},{size:Infinity},{maxLines:2.5},{opacity:-1},{background:'yes'}])assert.throws(()=>validateStudioStyle({...style(),...change}));for(const input of ['{}','bad','x'.repeat(32769)])assert.throws(()=>parseStudioStyle(input));});
  it('draws all Unicode text without altering the caption document',()=>{const doc=fixture(),before=structuredClone(doc),c=canvas();paintStudioCaptions(c.context,1920,1080,doc,1500,style(),'Arial',false);assert.equal(c.writes.map(x=>x.text).join('\n'),doc.cues[0].text);assert.deepEqual(doc,before);});
  it('uses RTL context for Arabic-script leading text and no phrase replacements',()=>{const doc=fixture();doc.cues[0].text='مرحبا بالعالم';const c=canvas();paintStudioCaptions(c.context,1920,1080,doc,1500,style(),'Arial',false);assert.equal(c.writes[0].direction,'rtl');assert.equal(c.writes[0].text,'مرحبا بالعالم');});
  it('applies typography, background, outline, shadow and position settings to the real painter',()=>{const doc=fixture(),s={...style(),weight:800,background:true,backgroundOpacity:.5,highlight:'#f08020',x:0,y:20,rotation:10,letterSpacing:4,color:'#abc123',opacity:.8,shadowColor:'#123456',shadowOpacity:1};const c=canvas();paintStudioCaptions(c.context,1920,1080,doc,1500,s,'Arial',false);assert.match(c.writes[0].font,/^800 /);assert.equal(c.writes[0].color,'#abc123');assert.equal(c.writes[0].alpha,.8);assert.equal(c.writes[0].shadow,'#123456ff');assert.equal(c.rects[0].color,'#f0802080');assert.ok(c.context.angle>0);assert.ok(c.transforms[0][0]<960);});
+ it('re-centers Broadcast and resets horizontal origin on selecting a placement',()=>{
+   const broadcast=STUDIO_PRESETS.find(p=>p.preset==='Broadcast');
+   assert.equal(broadcast.x,50);
+   assert.equal(studioPlacement({...broadcast,x:0},'middle').x,50);
+   assert.equal(studioPlacement({...broadcast,x:0},'middle').y,50);
+   assert.equal(studioPlacement({...broadcast,x:10},'top').y,18);
+   assert.equal(studioPlacement({...broadcast,x:10},'bottom').y,84);
+   assert.equal(studioPlacement({...broadcast,x:10},'custom').x,10);
+ });
+ it('adds premium font options and validates new decorations and active-word opacity',()=>{
+   const s=style();
+   for(const font of ['Impact','Arial Black','Trebuchet MS','Segoe UI','Consolas','Palatino Linotype'])validateStudioStyle({...s,font});
+   validateStudioStyle({...s,italic:true,underline:true,strikethrough:true,wordBackgroundOpacity:0});
+   assert.throws(()=>validateStudioStyle({...s,italic:'yes'}));
+   assert.throws(()=>validateStudioStyle({...s,underline:null}));
+   assert.throws(()=>validateStudioStyle({...s,strikethrough:1}));
+   assert.throws(()=>validateStudioStyle({...s,wordBackgroundOpacity:2}));
+   const legacy={...s};delete legacy.italic;delete legacy.underline;delete legacy.strikethrough;delete legacy.wordBackgroundOpacity;
+   const migrated=parseStudioStyle(JSON.stringify({version:1,style:legacy}));
+   assert.equal(migrated.italic,false);assert.equal(migrated.underline,false);
+   assert.equal(migrated.strikethrough,false);assert.equal(migrated.wordBackgroundOpacity,.9);
+ });
+ it('paints italic, underline and strikethrough in the same canvas used for export',()=>{
+   const s={...style(),italic:true,underline:true,strikethrough:true},c=canvas(),rects=[];
+   c.context.fillRect=(...args)=>rects.push({args,color:c.context.fillStyle});
+   paintStudioCaptions(c.context,1920,1080,fixture(),1500,s,'Arial',false);
+   assert.match(c.writes[0].font,/^italic /);
+   assert.equal(rects.length,4);
+   assert.ok(rects[0].args[2]>0 && rects[1].args[2]>0);
+ });
+ it('renders true chromatic glitch offsets and a progressive typewriter clip without changing caption text',()=>{
+   const doc=fixture();
+   const first=doc.cues[0].start+1;
+   const glitch=canvas(),base={...style(),motionDuration:600,animation:'glitch'};
+   paintStudioCaptions(glitch.context,1920,1080,doc,first,base,'Arial',false);
+   assert.ok(glitch.writes.length>1,'glitch draws transient red/cyan ghost text');
+   assert.ok(doc.cues[0].text.includes(glitch.writes.at(-1).text));
+   const still=canvas();
+   paintStudioCaptions(still.context,1920,1080,doc,first,base,'Arial',true);
+   assert.equal(still.writes.map(x=>x.text).join('\n'),doc.cues[0].text,'reduced motion disables glitch duplicates');
+   const reveal=canvas(),clips=[],rectangles=[];
+   reveal.context.rect=(...args)=>rectangles.push(args);
+   reveal.context.clip=()=>clips.push(true);
+   paintStudioCaptions(reveal.context,1920,1080,doc,first,{...style(),animation:'typewriter',motionDuration:600},'Arial',false);
+   assert.equal(clips.length,1);assert.equal(rectangles.length,1);
+   assert.ok(rectangles[0][2]>0 && rectangles[0][2]<1920);
+   assert.equal(reveal.writes.map(x=>x.text).join('\n'),doc.cues[0].text);
+ });
  it('reports impossible layouts instead of truncating text',()=>{const doc=fixture();doc.cues[0].text='This is a very long caption. '.repeat(100);assert.throws(()=>paintStudioCaptions(canvas().context,1920,1080,doc,1500,style(),'Arial',false),/cannot fit/);assert.ok(doc.cues[0].text.endsWith('caption. '));});
  it('respects reduced motion and leaves source speech times immutable',()=>{const doc=fixture(),s={...style(),animation:'pop'};const animated=canvas(),still=canvas();paintStudioCaptions(animated.context,1920,1080,doc,1004,s,'Arial',false);paintStudioCaptions(still.context,1920,1080,doc,1004,s,'Arial',true);assert.ok(animated.context.scaleValue[0]<1);assert.equal(still.context.scaleValue[0],1);assert.equal(doc.cues[0].start,1003);});
  it('keeps the customer route development-only, explicit generation modes and local rendering',()=>{const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');assert.match(read('src/app/tools/auto-caption-generator/page.tsx'),/NODE_ENV !== "development"\) notFound\(\)/);const source=read('src/features/caption-studio/caption-studio.tsx');assert.doesNotMatch(source,/fetch\(|setInterval/);assert.match(source,/<GenerationControls/);assert.match(source,/transcribeStudioOnDevice/);assert.doesNotMatch(read('src/features/caption-studio/studio-media.ts'),/fetch\(|renderMp4|ffmpeg/);});

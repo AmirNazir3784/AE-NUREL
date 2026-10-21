@@ -47,3 +47,32 @@ TESTED: **784 tests / 98 suites pass**; focused 52 interactions/policy tests, li
 BLOCKER: Chrome request-header-policy connection failed before inspection and its one retry failed. New full device video → Whisper → editor flow, fresh screenshots and final responsive/themed visual acceptance are **not certified**. This is not another completed transcription acceptance claim. Prior real browser exporter and native private-worker evidence remain valid separately.
 
 NEXT: Finish browser transcription and final visual/media acceptance when browser control works. Then use the user-supplied `Downloads/Html Tool/Lyrics to Captions.html` and `Podcast to Captions.html` only as examples for the subsequent tools; files confirmed present, no embedded scripts/instructions executed, no new tools started in this repair.
+
+## Current three-caption-tool assignment checkpoint — 19 October
+
+This assignment's numbering supersedes the older premium-plan phase numbering above.
+
+| Phase | Status | Evidence / next requirement |
+| --- | --- | --- |
+| 0: baseline/reuse | Complete | `dev/aenural-hybrid`, remotes and existing implementation inspected; both approved prototypes present. Existing latest commit `651fd93`. |
+| 1: Auto Caption Generator | Partial; browser acceptance blocked | Mute/volume/speed/fullscreen and measured-word highlighting repaired; shared preview/export renderer and genuine timestamp association tested. Fresh end-to-end browser/media acceptance still required. |
+| 2: Podcast | Not started | Approved prototype available; wait for Phase 1 acceptance. |
+| 3: Lyrics | Not started | Approved prototype available; wait for Phase 2 acceptance; no fabricated alignment. |
+| 4–5: shared/final QA | Not started | Current studio regression/build checks pass, but do not constitute acceptance of three finished tools. |
+| 6: development backup | Not started | No new commit/push in this pass; production remote untouched. |
+
+DONE: Visible audio controls and synchronized speed, fullscreen containing its controls, prevention of double preview audio, functional background highlighting, and optional genuine word highlighting. Cue edits invalidate affected alignment; Undo can restore it. Preview/export share shaped text and real word intervals. No estimated word timing, model changes or new dependency. Details in [caption-studio.md](caption-studio.md).
+
+TESTED: **803/803 tests, 102 suites**, ESLint, TypeScript and fresh Node 22 optimized production build pass. Final production HTTP catalog/account/hybrid scripts pass: all 16 tools/assets, sitemap/search exclusions, AI/account/hybrid 404 holds and two real videos. Earlier actual MP4 download re-read: all 641 frames, exact final frame time and 1,003 byte-identical original AAC packets retained; earlier SRT/VTT downloads parse correctly. Not a new highlighting export certification.
+
+BLOCKER: Chrome inventory detects the extension, but after user reconnect it still fails before page inspection with `Unable to load browser request-header policy`. No fresh browser transcription, mobile/theme/fullscreen or native highlight rendering pass claimed. Do not start subsequent tools or lift release holds based solely on automated checks.
+
+NEXT: Finish Phase 1's actual owned-speech video transcription, measured highlight/edit/Undo, audio controls/fullscreen, responsive/theme and fresh video/SRT/VTT download acceptance once the browser bridge works. Then implement Podcast from the approved local prototype using the existing ASR engine. Task-owned production QA server stopped; user's localhost:3000 server preserved. No deployment.
+
+### Live Chrome continuation
+
+DONE/TESTED: Actual cached Small.en Accurate English generation now verified in Chrome: four timed captions, 28.337s WASM inference, no model download/worker requests. Actual mute/volume/speed, text Undo/Redo, measured word highlight pixels, background effect, presets, export cancel/retry and 390px/320px layouts checked. Fresh downloaded MP4/WebM/SRT/VTT plus portrait MP4 independently decoded/parsed. MP4 retains every frame and byte-identical original AAC packets in both orientations; WebM retains every frame and non-silent Opus (42ms container-duration difference). Actual exported frame shows highlighted word. See latest [caption-studio.md](caption-studio.md) and ignored `live-browser-acceptance.json`.
+
+REPAIR: Old JavaScript Replace confirmation blocked the whole browser-control connection. Replaced all three studio replacement prompts with an accessible, asynchronous HTML dialog using existing styling; safe focus/Escape/confirmation/restoration tests pass. Full suite now **807/807, 103 suites**, lint/typecheck pass. Build verification ongoing.
+
+STILL OPEN: Live check of the new replacement dialog and transcription cancellation; native theme pass after user disabled Dark Reader; automated Chrome fullscreen requests reported unavailable. Fresh Node 22 build and final production HTTP/gate scripts now pass. Chrome's stale tab retained its old JavaScript confirmation; the documented dialog API times out and close() reports an active confirm. User has been asked to close that disposable test tab. Do not repeat getJsDialog or reconnect loops. Resume in a fresh tab containing the repaired dialog. Phase 1 remains partial; Podcast/Lyrics not started. No new commit/push/deployment. Original dev server retained; task-owned production/native-theme QA servers stopped. See latest studio checkpoint for the exact pending action.

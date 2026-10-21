@@ -6,6 +6,7 @@ import React,{act} from 'react';
 const bootstrap=new JSDOM('<html><body></body></html>');globalThis.window=bootstrap.window;globalThis.document=bootstrap.window.document;
 const {createRoot}=await import('react-dom/client');
 const {PreviewAudioControls}=await import('../src/features/caption-studio/preview-audio-controls.tsx');
+const {PreviewSpeedControls}=await import('../src/features/caption-studio/preview-speed-controls.tsx');
 describe('real preview media audio controls',()=>{
  let dom,root,video,reference;
  const q=selector=>document.querySelector(selector);
@@ -18,4 +19,5 @@ describe('real preview media audio controls',()=>{
  it('applies the slider and un-mutes audibly instead of leaving the UI out of sync',async()=>{await mount();await update(()=>{video.muted=true;});const slider=q('input');await update(()=>{Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype,'value').set.call(slider,'.25');slider.dispatchEvent(new dom.window.Event('input',{bubbles:true}));});assert.equal(video.volume,.25);assert.equal(video.muted,false);assert.equal(q('output').textContent,'25%');});
  it('restores the last audible level after the slider reaches zero',async()=>{await mount();await update(()=>{video.volume=.65;});await update(()=>{video.volume=0;});assert.equal(q('output').textContent,'Muted');await update(()=>q('button').click());assert.equal(video.volume,.65);assert.equal(video.muted,false);});
  it('disables controls for silent media and busy operations and resets for another source',async()=>{await mount({hasAudio:false});assert.equal(q('button').disabled,true);assert.equal(q('input').disabled,true);assert.equal(q('output').textContent,'No audio');await mount({disabled:true});assert.equal(q('button').disabled,true);await update(()=>{video.volume=.2;video.muted=true;});await act(()=>root.render(null));await mount();assert.equal(video.volume,1);assert.equal(video.muted,false);});
+ it('keeps the speed selector synchronized with real rate changes and resets another source to 1x',async()=>{const speed=disabled=>act(()=>root.render(React.createElement(PreviewSpeedControls,{videoRef:reference,disabled})));await speed(false);await update(()=>{q('select').value='1.5';q('select').dispatchEvent(new dom.window.Event('change',{bubbles:true}));});assert.equal(video.playbackRate,1.5);await update(()=>{video.playbackRate=.75;});assert.equal(q('select').value,'0.75');await speed(true);assert.equal(q('select').disabled,true);await act(()=>root.render(null));await speed(false);assert.equal(video.playbackRate,1);assert.equal(q('select').value,'1');});
 });
