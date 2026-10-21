@@ -21,10 +21,11 @@ Last updated: 2026-10-21
 
 ## Last verified technical progress
 - Three-panel Auto Caption Generator and in-player full-screen controls were visually verified by user on localhost in prior session.
-- User-reported local test suite: **869 tests; 869 pass, 0 fail**. This is a historical result **before these documentation commits**; no fresh suite was run by the assistant.
+- **Fresh local baseline run 2026-10-21 (user's Windows tree, output shared with assistant; assistant has no direct local access):** `npm run lint` PASS — 0 errors, 2 warnings (unused variable `j` in root helper scripts `aenural_player_controls_exact_sync.mjs` and `aenural_player_controls_sync.mjs`; not app source). `npm run typecheck` PASS — no errors. `npm test` PASS — **869 tests, 869 pass, 0 fail, 113 suites**. `npm run build` PASS — compiled successfully, 31/31 static pages generated. This supersedes the earlier historical 869 figure, which is now freshly confirmed on the local tree. NOTE: these results describe the **local Windows checkout**, which is ahead of this GitHub branch; they do not by themselves verify this branch's code.
 - Development source currently contains 30 style presets, Fast/Accurate local transcription and a 120-second media validation limit. These **do not** yet implement the approved free/premium plan.
 - Development-only account preview has **no authentication backend**; no payment billing or quota enforcement exists.
 - Development hybrid transcription API is gated and **not ready for multi-user production**.
+- **Live-site verification 2026-10-21 (assistant, real browser, read-only):** `https://aenural.com/dev/local-transcription` and `https://aenural.com/tools/auto-caption-generator` both return the site's 404 page — dev-only routes are **not** exposed in production, and the Auto Caption Generator page is **not live yet** (live build is older than the local tree). A hosting bot-verification interstitial was observed before the page loaded for the automated browser; recorded as a possible first-visit performance factor to measure in the performance task.
 
 ## Phase 0 results and open work
 **COMPLETED (review/documentation):**
@@ -35,7 +36,7 @@ Last updated: 2026-10-21
 
 **NOT VERIFIED / STILL PENDING:**
 - [ ] Inspect user's **actual Windows Git branch, remotes, status and diffs**, and reconcile local Codex changes without destroying them.
-- [ ] Run `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` on the current checkout and record fresh outcomes.
+- [x] Run `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` on the current **local** checkout and record fresh outcomes — DONE 2026-10-21, all pass (see Last verified technical progress). Still outstanding: the same checks running automatically on this GitHub branch via CI (item below).
 - [ ] Run safe lockfile/dependency vulnerability audit and secret/history scan; verify deployed HTTP headers (without exposing secrets).
 - [ ] Add development CI (lint/typecheck/tests/build) and review branch protection/required checks.
 - [ ] Validate production/dev route gating under a production build and assess errors / edge cases.
@@ -43,22 +44,15 @@ Last updated: 2026-10-21
 - [ ] Observe real production cold loads, navigation and video range/cache behavior (separate performance task; no production changes yet).
 
 ## Exact next small task
-**Phase 0B — local baseline / read-only Git check:**
-From `D:\Work\Tools\online-tools-platform` run and share:
+**Phase 0B (continued) — local baseline is DONE (2026-10-21, all four checks pass on the local tree). Next: read-only local Git inspection and reconciliation plan.**
+From `D:\Work\Tools\online-tools-platform` run and share only the summary (counts and branch/remote names; full file lists only if comfortable):
 ```cmd
 git branch --show-current
 git remote -v
 git status --short
 node --version
 ```
-Then validate the **existing local checkout** using:
-```cmd
-npm run lint
-npm run typecheck
-npm test
-npm run build
-```
-Don't first pull, merge, reset, switch branches, overwrite or run installers. If a check fails, stop and share output. The next code feature after Phase 0 acceptance is **Phase 1A: header hover-menu dismissal and blank search suggestions**, with focused regression tests.
+Purpose: identify exactly which local changes are modified/untracked and how the local tree differs from `dev/aenural-hybrid`, so a safe preservation plan (what to commit, what to keep local, what is a temporary helper script) can be agreed **before** anything moves. Don't pull, merge, reset, switch branches, overwrite or run installers. The next code feature after Phase 0 acceptance is **Phase 1A: header hover-menu dismissal and blank search suggestions**, with focused regression tests.
 
 ## Reporting policy
 Mark each task as `DONE (evidence)`, `BLOCKED (reason)`, `NOT RUN`, or `IN PROGRESS`. For each meaningful commit document actual tested command outputs, SHA, locally preserved changes, known security risks, rollback strategy, and precise continuation. Never mark user-facing production released without deployment approval and final smoke tests.
