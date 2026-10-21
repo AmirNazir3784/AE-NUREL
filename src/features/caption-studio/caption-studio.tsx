@@ -192,11 +192,11 @@ export function CaptionStudio({ transcriptionAvailable = false }: { transcriptio
             <PreviewSpeedControls key={source.url} videoRef={video} disabled={!!busy} />
             <PreviewAudioControls key={source.url} videoRef={video} hasAudio={!!source.media.audioTracks} disabled={!!busy} />
             <button type="button" aria-label={fullscreen ? "Exit fullscreen preview" : "Fullscreen preview"} onClick={() => void toggleFullscreen()}><Icon name="expand" size={17} /></button>
-          </div>
-          
+            </div>
           </div>
           {style.wordHighlight && alignment.length > usableAlignment.length && <p className={styles.note} role="status">Word highlighting is paused for changed captions. Undo your edits or generate captions again to restore alignment.</p>}
           {layoutHint && <p className={styles.note} role="status">{layoutHint}</p>}
+          
           <div className={styles.processingArea} aria-label="Video processing and downloads">
             <h2 className={styles.centerTaskTitle}>{document.cues.length ? "Export your captions" : "Create captions"}</h2>
             <details className={styles.workflowSection} key={document.cues.length ? "captions-ready" : "captions-empty"} open={!document.cues.length ? true : undefined}>

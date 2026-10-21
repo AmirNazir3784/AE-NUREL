@@ -43,15 +43,26 @@ describe('separate product and free tool navigation',()=>{
   await key(document.activeElement,'Home');assert.equal(document.activeElement,menu.querySelector('a'));
   await key(document.activeElement,'ArrowUp');assert.equal(document.activeElement,menu.querySelector('.aen-mega-footer a'));
  });
- it('opens on hover, closes on leave, and keeps a pinned menu open',async()=>{
+ it('opens on hover, closes only after a grace period on leave, and keeps a pinned menu open',async()=>{
   const menu=q('.aen-product-menu');await act(()=>menu.dispatchEvent(new dom.window.MouseEvent('mouseover',{bubbles:true})));assert.equal(menu.open,true);
-  await act(()=>menu.dispatchEvent(new dom.window.MouseEvent('mouseout',{bubbles:true,relatedTarget:document.body})));assert.equal(menu.open,false);
-  await click('.aen-product-menu summary');await act(()=>menu.dispatchEvent(new dom.window.MouseEvent('mouseout',{bubbles:true,relatedTarget:document.body})));assert.equal(menu.open,true);
+  await act(()=>menu.dispatchEvent(new dom.window.MouseEvent('mouseout',{bubbles:true,relatedTarget:document.body})));assert.equal(menu.open,true);
+  await act(()=>menu.dispatchEvent(new dom.window.MouseEvent('mouseover',{bubbles:true})));await act(async()=>{await new Promise(resolve=>setTimeout(resolve,450));});assert.equal(menu.open,true);
+  await act(()=>menu.dispatchEvent(new dom.window.MouseEvent('mouseout',{bubbles:true,relatedTarget:document.body})));await act(async()=>{await new Promise(resolve=>setTimeout(resolve,450));});assert.equal(menu.open,false);
+  await click('.aen-product-menu summary');await act(()=>menu.dispatchEvent(new dom.window.MouseEvent('mouseout',{bubbles:true,relatedTarget:document.body})));await act(async()=>{await new Promise(resolve=>setTimeout(resolve,450));});assert.equal(menu.open,true);
+ });
+ it('shows no tool list for an empty search and filters while typing',async()=>{
+  await click('[aria-label="Search tools"]');assert.ok(q('[data-search-panel]'));
+  assert.equal(q('[data-search-panel]').querySelectorAll('a').length,0);
+  const input=q('#tool-search');assert.equal(input.getAttribute('placeholder'),'Search here');const setValue=Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype,'value').set;
+  await act(()=>{setValue.call(input,'merge');input.dispatchEvent(new dom.window.Event('input',{bubbles:true}));});
+  const hrefs=[...q('[data-search-panel]').querySelectorAll('a')].map(a=>a.getAttribute('href'));assert.ok(hrefs.includes('/tools/srt-merger'));assert.ok(hrefs.length<16);
+  await act(()=>{setValue.call(input,'zzzz');input.dispatchEvent(new dom.window.Event('input',{bubbles:true}));});
+  assert.equal(q('[data-search-panel]').querySelectorAll('a').length,0);assert.match(q('[data-search-panel]').textContent,/No tools found/);
  });
  it('keeps the existing search accessible and closes menus first',async()=>{
   await click('.aen-free-menu summary');await click('[aria-label="Search tools"]');
-  assert.equal(q('.aen-free-menu').open,false);assert.equal(q('dialog').open,true);assert.equal(document.activeElement.id,'tool-search');
-  await key(q('dialog'),'Escape');assert.equal(q('dialog').open,false);assert.equal(document.activeElement.getAttribute('aria-label'),'Search tools');
+  assert.equal(q('.aen-free-menu').open,false);assert.ok(q('[data-search-panel]'));assert.equal(document.activeElement.id,'tool-search');
+  await key(q('#tool-search'),'Escape');assert.equal(q('[data-search-panel]'),null);assert.equal(document.activeElement.getAttribute('aria-label'),'Search tools');
  });
 });
 it('reuses the retired URL for a focused development-only podcast workflow without publishing it',()=>{
