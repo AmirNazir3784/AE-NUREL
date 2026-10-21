@@ -1,0 +1,20 @@
+import './helpers/auth-dom.mjs';
+import {describe,it,beforeEach,afterEach} from 'node:test';
+import assert from 'node:assert/strict';
+import {JSDOM} from 'jsdom';
+import React,{act} from 'react';
+const bootstrap=new JSDOM('<html><body></body></html>');globalThis.window=bootstrap.window;globalThis.document=bootstrap.window.document;
+const {createRoot}=await import('react-dom/client');
+const {ReplaceWorkDialog}=await import('../src/features/caption-studio/replace-work-dialog.tsx');
+describe('nonblocking studio replacement confirmation',()=>{
+ let dom,root,confirmed,cancelled;
+ const q=s=>document.querySelector(s);
+ const settle=fn=>act(async()=>{fn();await Promise.resolve();});
+ const mount=()=>act(()=>root.render(React.createElement(ReplaceWorkDialog,{message:'Download your edits first.',onCancel:()=>cancelled++,onConfirm:()=>confirmed++})));
+ beforeEach(()=>{dom=new JSDOM('<button id="trigger">Generate captions</button><div id="root"></div>');globalThis.window=dom.window;globalThis.document=dom.window.document;globalThis.HTMLElement=dom.window.HTMLElement;globalThis.IS_REACT_ACT_ENVIRONMENT=true;dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;};root=createRoot(q('#root'));confirmed=cancelled=0;q('#trigger').focus();});
+ afterEach(async()=>{await act(()=>root.unmount());dom.window.close();});
+ it('opens a labelled native modal, locks scroll and focuses the safe action',async()=>{await mount();assert.equal(q('dialog').open,true);assert.ok(document.getElementById(q('dialog').getAttribute('aria-labelledby')));assert.equal(document.activeElement.textContent,'Keep editing');assert.equal(document.documentElement.style.overflow,'hidden');assert.equal(confirmed,0);});
+ it('cancels on Escape without authorizing replacement',async()=>{await mount();const event=new dom.window.Event('cancel',{cancelable:true});await settle(()=>q('dialog').dispatchEvent(event));assert.equal(event.defaultPrevented,true);assert.equal(cancelled,1);assert.equal(confirmed,0);});
+ it('requires the explicit Replace action to authorize work',async()=>{await mount();await settle(()=>q('.button-danger').click());assert.equal(confirmed,1);assert.equal(cancelled,0);});
+ it('restores scrolling and the original control when closed',async()=>{document.documentElement.style.overflow='clip';await mount();await act(()=>root.render(null));await Promise.resolve();assert.equal(document.documentElement.style.overflow,'clip');assert.equal(document.activeElement.id,'trigger');assert.equal(q('dialog'),null);});
+});
