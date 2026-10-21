@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
+import { PodcastWorkspace } from "@/features/audio-captions/podcast-workspace";
 
-// Retired duplicate customer route. Shared speech/model/editor modules are retained.
-export const metadata = { robots: { index: false, follow: false } };
-export default function RetiredCaptionPage() { notFound(); }
+export const metadata = { title: "Podcast to Captions", robots: { index: false, follow: false } };
+export const dynamic = "force-dynamic";
+export default function PodcastPage() { if (process.env.NODE_ENV !== "development") notFound(); return <PodcastWorkspace />; }
