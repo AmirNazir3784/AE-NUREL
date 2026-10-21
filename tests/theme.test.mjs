@@ -25,8 +25,8 @@ describe("native automatic system theme", () => {
     assert.doesNotMatch(header, /ThemeToggle|Switch to (?:light|dark)/);
     assert.match(header, /aria-label="Search tools"/);
     assert.match(header, /aria-label="Mobile navigation"/);
-    assert.match(header, /onClose=\{\(\) => searchTrigger.current\?\.focus\(\)\}/);
-    assert.match(header, /const results = searchTools\(query\)/);
+    assert.match(header, /searchTrigger\.current\?\.focus\(\)/);
+    assert.match(header, /const results = query\.trim\(\) \? searchTools\(query\) : \[\];/);
   });
   it("keeps brand accents and workspace shadows responsive to the same native preference", () => {
     assert.match(read("src/app/aenural.css"), /@media \(prefers-color-scheme: dark\) \{ \.aen-hero h1 > span, \.aen-brand-accent/);

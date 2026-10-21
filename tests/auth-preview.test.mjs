@@ -123,8 +123,10 @@ describe('real Header and AuthPreviewModal component interactions', () => {
   });
   it('leaves search, tool links and header menus working after dismissal',async()=>{
     await open();await click('[aria-label="Close account dialog"]');await click('[aria-label="Search tools"]');
-    assert.equal(query('.search-dialog').open,true);assert.equal(document.activeElement.id,'tool-search');assert.equal(document.querySelectorAll('.search-results a').length,16);
-    const link=query('.search-results a[href="/tools/srt-to-vtt"]');assert.ok(link);link.addEventListener('click',event=>event.preventDefault());await act(()=>link.click());assert.equal(query('.search-dialog').open,false);
+    assert.ok(query('[data-search-panel]'));assert.equal(document.activeElement.id,'tool-search');assert.equal(document.querySelectorAll('[data-search-panel] a').length,0);
+    const searchInput=query('#tool-search');const setSearchValue=Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype,'value').set;
+    await act(()=>{setSearchValue.call(searchInput,'vtt');searchInput.dispatchEvent(new dom.window.Event('input',{bubbles:true}));});
+    const link=query('[data-search-panel] a[href="/tools/srt-to-vtt"]');assert.ok(link);link.addEventListener('click',event=>event.preventDefault());await act(()=>link.click());assert.equal(query('[data-search-panel]'),null);
     assert.equal(query('.aen-nav-cta[href="/tools"]'),null);assert.ok(query('.aen-sign-in-desktop'));assert.ok(query('.aen-brand[href="/"]'));
   });
   it('renders no account entries in production',async()=>{

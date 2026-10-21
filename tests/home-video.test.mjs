@@ -90,7 +90,7 @@ it('keeps exactly two homepage paths, one static illustration and no third video
     assert.ok(statSync(new URL('../public/videos/'+name+'.mp4',import.meta.url)).size<100*1024**2);
   }
   assert.equal(existsSync(new URL('../public/videos/subtitle-tools.mp4',import.meta.url)),false);
-  const product=read('src/app/source-window/page.tsx');assert.match(product,/<HomeVideo hero src="\/videos\/source-window\.mp4"/);assert.match(product,/<HomeVideoProvider>/);assert.doesNotMatch(product,/<HeroVideoPlaceholder/);
+  const product=read('src/app/source-window/page.tsx');assert.match(product,/<HomeVideo hero src="\/videos\/source-window-feature\.mp4"/);assert.match(product,/<HomeVideoProvider>/);assert.doesNotMatch(product,/<HeroVideoPlaceholder/);
   assert.match(read('src/app/aenural.css'),/\.aen-video-frame \.aen-video-screen \{ aspect-ratio: 16\/9/);
   assert.match(read('src/app/aenural.css'),/\.aen-home \.aen-feature:not\(:last-child\) \{ margin-bottom: 88px/);
 });
