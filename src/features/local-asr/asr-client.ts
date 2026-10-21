@@ -2,7 +2,7 @@ import type { AsrProgress, AsrResult, Backend, WorkerReply } from "./asr-core";
 import type { TranscriptionQuality } from "./subtitle-capabilities";
 
 type WorkerPort = Pick<Worker, "postMessage" | "terminate" | "onmessage" | "onerror">;
-export type AsrRunOptions = { language?: string; quality?: TranscriptionQuality; multilingual?: boolean; wordTimestamps?: boolean; hasFollowingSection?: boolean; keepAlive?: boolean; timeoutMs?: number };
+export type AsrRunOptions = { language?: string; quality?: TranscriptionQuality; multilingual?: boolean; wordTimestamps?: boolean; hasFollowingSection?: boolean; keepAlive?: boolean; timeoutMs?: number; audioKind?: "speech" | "music" };
 export class AsrClient {
   private job = 0;
   private active: { worker: WorkerPort; reject: (reason: Error) => void; cleanup: () => void } | null = null;
@@ -20,7 +20,7 @@ export class AsrClient {
     const id = ++this.job;
     // A warm worker owns one loaded model/runtime. Never report a new quality
     // while actually reusing the previous model or English-only tokenizer.
-    const key = JSON.stringify([backend, options.quality ?? "fast", !!options.multilingual, !!options.wordTimestamps]);
+    const key = JSON.stringify([backend, options.quality ?? "fast", !!options.multilingual, !!options.wordTimestamps, options.audioKind ?? "speech"]);
     if (this.idle && this.idle.key !== key) { this.idle.worker.terminate(); this.idle = null; }
     return new Promise((resolve, reject) => {
       const worker = this.idle?.worker ?? this.createWorker(); this.idle = null;

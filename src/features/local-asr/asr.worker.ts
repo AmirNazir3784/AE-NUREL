@@ -1,5 +1,5 @@
 /// <reference lib="webworker" />
-import { ASR_CACHE, ASR_MODEL, ASR_REVISION, ASR_ORT_VERSION, ASR_MAX_SECONDS, ASR_SAMPLE_RATE, isDigitalSilence, permittedAssetRequest, type Backend, type WorkerReply, type AsrProgress } from "./asr-core";
+import { ASR_CACHE, ASR_MODEL, ASR_REVISION, ASR_ORT_VERSION, ASR_MAX_SECONDS, ASR_SAMPLE_RATE, isDigitalSilence, permittedAssetRequest, type Backend, type WorkerReply, type AsrProgress, type AsrResult } from "./asr-core";
 import type { AutomaticSpeechRecognitionPipeline } from "@huggingface/transformers";
 import { observeAsset } from "./asset-progress";
 import { cachedAsset, type AssetCache } from "./cached-asset";
@@ -20,7 +20,7 @@ let factoryUrl = "";
 scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array; backend: Backend } & AsrRunOptions>) => {
   if (busy) return;
   busy = true;
-  const { id, samples, backend: requested, multilingual = false, wordTimestamps = false, keepAlive = false, quality = "fast" } = event.data;
+  const { id, samples, backend: requested, multilingual = false, wordTimestamps = false, keepAlive = false, quality = "fast", audioKind = "speech" } = event.data;
   let language = event.data.language ?? (multilingual ? "auto" : "en");
   const modelName = quality === "accurate" ? multilingual ? ACCURATE_MULTILINGUAL_MODEL : ACCURATE_ENGLISH_MODEL : multilingual ? MULTILINGUAL_MODEL : wordTimestamps ? ENGLISH_TIMED_MODEL : ASR_MODEL;
   const revision = quality === "accurate" ? multilingual ? ACCURATE_MULTILINGUAL_REVISION : ACCURATE_ENGLISH_REVISION : multilingual ? MULTILINGUAL_REVISION : wordTimestamps ? ENGLISH_TIMED_REVISION : ASR_REVISION;
@@ -44,6 +44,8 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
   try {
     validateSpokenLanguage(language);
     validateTranscriptionQuality(quality);
+    if (audioKind !== "speech" && audioKind !== "music") throw new Error("Unsupported audio processing mode.");
+    if (audioKind === "music" && (quality !== "accurate" || !wordTimestamps || samples.some(value => !Number.isFinite(value)))) throw new Error("Music requires valid audio and Accurate measured word timing.");
     if (!(samples instanceof Float32Array) || !samples.length || samples.length > (wordTimestamps ? SECTION_MAX_SECONDS : ASR_MAX_SECONDS) * ASR_SAMPLE_RATE + 1) throw new Error("Audio exceeds the local section processing limit.");
     if (isDigitalSilence(samples)) {
       send({ type: "result", result: { chunks: [], text: "", backend: "silence check", loadMs: 0, inferenceMs: 0, cacheHits: 0, downloadedBytes: 0, requests } });
@@ -86,12 +88,18 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
     const [binary, factory, model] = await Promise.all([
       cachedAsset(runtimeBase + "ort-wasm-simd-threaded.asyncify.wasm", assetCache, scope.fetch),
       cachedAsset(runtimeBase + "ort-wasm-simd-threaded.asyncify.mjs", assetCache, scope.fetch),
-      cachedAsset(VAD_URL, assetCache, scope.fetch, VAD_SHA256)
+      audioKind === "music" ? undefined : cachedAsset(VAD_URL, assetCache, scope.fetch, VAD_SHA256)
     ]);
     wasm.wasmBinary = binary.buffer;
     if (!factoryUrl) factoryUrl = URL.createObjectURL(new Blob([factory], { type: "text/javascript" }));
     wasm.wasmPaths = { mjs: factoryUrl, wasm: runtimeBase + "ort-wasm-simd-threaded.asyncify.wasm" };
-    detector = await ort.InferenceSession.create(model, { executionProviders: ["wasm"] });
+    // Speech VAD rejected most sung vocals in the approved song regression.
+    // Music mode preserves full real sections for Whisper; it does not invent
+    // speech-detector confidence or word timing. Speech tools retain Silero.
+    let regions = [{ start: 0, end: samples.length / ASR_SAMPLE_RATE }];
+    let speechActivity: AsrResult["speechActivity"];
+    if (audioKind === "speech") {
+    detector = await ort.InferenceSession.create(model!, { executionProviders: ["wasm"] });
     progress({ stage: "detecting", backend: "wasm" });
     const detectionStarted = performance.now();
     const activity = await detectSpeech(samples, async (input, state) => {
@@ -99,11 +107,12 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
       if (!(output.output?.data instanceof Float32Array) || !(output.stateN?.data instanceof Float32Array)) throw new Error("The speech detector returned an invalid response.");
       return { probability: output.output.data[0], state: output.stateN.data };
     });
-    const speechActivity = { ...activity, elapsedMs: performance.now() - detectionStarted };
+    speechActivity = { ...activity, elapsedMs: performance.now() - detectionStarted }; regions = activity.regions;
     await detector.release(); detector = undefined;
     if (!activity.regions.length) {
       send({ type: "result", result: { chunks: [], text: "", backend: "speech detector / wasm", loadMs: performance.now() - started, inferenceMs: 0, cacheHits, downloadedBytes, speechActivity, requests } });
       return;
+    }
     }
     let hasGpu = false;
     if (requested === "webgpu" || requested === "auto" && quality === "fast") {
@@ -133,7 +142,7 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
     if (multilingual && language === "auto") {
       // transformers.js 4.3.1 currently defaults to English when language is
       // omitted. Perform Whisper's language-token detection explicitly.
-      const features = await transcriber.processor(samples.subarray(Math.floor(activity.regions[0].start * ASR_SAMPLE_RATE), Math.floor((activity.regions[0].start + 30) * ASR_SAMPLE_RATE)));
+      const features = await transcriber.processor(samples.subarray(Math.floor(regions[0].start * ASR_SAMPLE_RATE), Math.floor((regions[0].start + 30) * ASR_SAMPLE_RATE)));
       const allowed = new Set(SPOKEN_LANGUAGES.map(item => item.token));
       const suppress = Array.from({ length: 51865 }, (_, i) => i).filter(i => !allowed.has(i));
       const output = await transcriber.model.generate({ inputs: features.input_features, decoder_input_ids: new Tensor("int64", BigInt64Array.of(BigInt(50258)), [1, 1]), max_new_tokens: 1, return_timestamps: false, return_token_timestamps: false, return_dict_in_generate: false, suppress_tokens: suppress, begin_suppress_tokens: [], do_sample: false });
@@ -145,7 +154,7 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
     const loadMs = performance.now() - started;
     progress({ stage: "transcribing", backend });
     const inferenceStarted = performance.now();
-    const output = await transcribeSpeech(samples, activity.regions, async speech => {
+    const output = await transcribeSpeech(samples, regions, async speech => {
       const output = await transcriber!(speech, { return_timestamps: wordTimestamps ? "word" : true, chunk_length_s: 30, stride_length_s: 5, do_sample: false, ...(multilingual ? { language, task: "transcribe" } : {}) });
       if (Array.isArray(output)) throw new Error("Unexpected transcription response.");
       if (!wordTimestamps) return output;
@@ -154,7 +163,7 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
       if (normalized.joined) progress({ stage: "transcribing", warning: "Small word-alignment overlaps were grouped within their measured outer spans. Both words are retained." });
       if (normalized.clipped) progress({ stage: "transcribing", warning: "Model output in a padded context edge was bounded to available audio. Non-final section edges are reconciled with the following overlap." });
       return { ...output, chunks: normalized.chunks };
-    }, wordTimestamps);
+    }, wordTimestamps, (completed, sections) => progress({ stage: "transcribing", completed, sections, unit: "sections", backend }));
     send({ type: "result", result: { ...output, language, backend, loadMs, inferenceMs: performance.now() - inferenceStarted, cacheHits, downloadedBytes, speechActivity, requests } });
   } catch (error) { send({ type: "error", message: error instanceof Error ? error.message : "Local transcription failed. Try CPU mode or a shorter recording." }); }
   finally { await detector?.release().catch(() => {}); if (!keepAlive) { await transcriber?.dispose().catch(() => {}); transcriber = undefined; transcriberBackend = undefined; if (factoryUrl) URL.revokeObjectURL(factoryUrl); factoryUrl = ""; } scope.fetch = nativeFetch; busy = false; }

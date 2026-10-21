@@ -9,7 +9,7 @@ import { CHECKPOINT_TTL, type CheckpointStore, type SubtitleCheckpoint } from ".
 import { semanticUnits, localizeUnit, localizedDocument, LOCALIZATION_VERSION, type UnitTranslation, type LocalizationDiagnostic } from "./semantic-localization.ts";
 
 type Decoder = { duration: number; read(start: number, end: number): Promise<Float32Array>; dispose(): void };
-type JobOptions = { filename: string; fileKey: string; spoken: string; target: string; quality?: TranscriptionQuality; backend: Backend; signal: AbortSignal; progress(value: AsrProgress): void; diagnostics?(value: LocalizationDiagnostic): void };
+type JobOptions = { filename: string; fileKey: string; spoken: string; target: string; quality?: TranscriptionQuality; audioKind?: "speech" | "music"; backend: Backend; signal: AbortSignal; progress(value: AsrProgress): void; diagnostics?(value: LocalizationDiagnostic): void };
 type Dependencies = { decoder: Decoder; asr: Pick<AsrClient, "run" | "cancel">; translator: Pick<TranslationClient, "translate" | "cancel">; store: CheckpointStore };
 export async function retrySection<T>(operation: () => Promise<T>, signal: AbortSignal, onRetry: (attempt: number, error: unknown) => void): Promise<T> {
   for (let attempt = 0; ; attempt++) {
@@ -19,14 +19,14 @@ export async function retrySection<T>(operation: () => Promise<T>, signal: Abort
   }
 }
 export async function runSubtitleJob(options: JobOptions, dependencies: Dependencies) {
-  const { filename, fileKey, spoken, target, quality = "fast", backend, signal, progress } = options;
+  const { filename, fileKey, spoken, target, quality = "fast", audioKind = "speech", backend, signal, progress } = options;
   const { decoder, asr, translator, store } = dependencies;
   validateSpokenLanguage(spoken);
   validateTranscriptionQuality(quality);
   const sections = audioSections(decoder.duration);
   // Bump this schema when timing/model behavior changes; target language is
   // deliberately excluded so another output can reuse source transcription.
-  const key = `v3/${fileKey}/${spoken}` + (quality === "accurate" ? `/small-${spoken === "en" ? ACCURATE_ENGLISH_REVISION : ACCURATE_MULTILINGUAL_REVISION}` : "");
+  const key = `v3/${fileKey}/${spoken}` + (quality === "accurate" ? `/small-${spoken === "en" ? ACCURATE_ENGLISH_REVISION : ACCURATE_MULTILINGUAL_REVISION}` : "") + (audioKind === "music" ? "/music-v1" : "");
   let storageAvailable = true;
   // Mirrored checkpoints also cover browsers with disabled/evicted IndexedDB.
   const memory = sessionCheckpoints.get(key);
@@ -47,7 +47,7 @@ export async function runSubtitleJob(options: JobOptions, dependencies: Dependen
         const samples = await decoder.read(section.start, section.end);
         // Fresh translation jobs need measured sentence boundaries even in
         // Fast mode. Same-language short English retains its original path.
-        const result = await asr.run(samples, backend, signal, value => progress({ ...value, completed: index, sections: sections.length }), { language, quality, multilingual: spoken !== "en", wordTimestamps: quality === "accurate" || decoder.duration > 60 || spoken !== "en" || needsTranslation(language, target), hasFollowingSection: index + 1 < sections.length, keepAlive: true });
+        const result = await asr.run(samples, backend, signal, value => progress({ ...value, completed: index, sections: sections.length }), { language, quality, multilingual: spoken !== "en", wordTimestamps: quality === "accurate" || decoder.duration > 60 || spoken !== "en" || needsTranslation(language, target), hasFollowingSection: index + 1 < sections.length, keepAlive: true, ...(audioKind === "music" ? { audioKind } : {}) });
         if (result.language) language = result.language;
         if (result.text.trim() && !result.chunks.length) throw new Error("Speech was recognized without usable timing. Retry this section.");
         return mergeSection(words, result.chunks, section);
@@ -61,9 +61,9 @@ export async function runSubtitleJob(options: JobOptions, dependencies: Dependen
     // Release speech model memory before allocating the larger text model.
     asr.cancel(); signal.throwIfAborted(); progress({ stage: "building" });
     const source = captionDocument(words, decoder.duration, filename, true);
-    if (!source.cues.length) return { document: source, source, language, translated: false };
+    if (!source.cues.length) return { document: source, source, words, language, translated: false };
     if (language === "auto") throw new Error("The spoken language could not be detected. Select it and retry.");
-    if (!needsTranslation(language, target)) return { document: { ...readableSourceDocument(source, language, words), filename: languageFilename(source.filename, language) }, source, language, translated: false };
+    if (!needsTranslation(language, target)) return { document: { ...readableSourceDocument(source, language, words), filename: languageFilename(source.filename, language) }, source, words, language, translated: false };
     validateTranslationPair(language, target);
     const units = semanticUnits(source, language, words), translations: UnitTranslation[] = [];
     // Explicitly opt-in, development-only callback. Never log private text by
@@ -108,7 +108,7 @@ export async function runSubtitleJob(options: JobOptions, dependencies: Dependen
       for (const [index, coverage] of localized.ledger.entries()) diagnose({ stage: "coverage", unit: units[index], translation: translations[index], coverage, cues: coverage.outputCueIds.map(id => byId.get(id)!) });
     }
     if (localized.fast) progress({ stage: "building", warning: "Some localized captions are too dense for comfortable reading. Their source time envelopes were preserved; review them before downloading." });
-    return { document: localized.document, source, language, translated: true, coverage: localized.ledger, failedTranslations: localized.failed };
+    return { document: localized.document, source, words, language, translated: true, coverage: localized.ledger, failedTranslations: localized.failed };
   } finally { decoder.dispose(); asr.cancel(); translator.cancel(); }
 }
 const sessionCheckpoints = new Map<string, SubtitleCheckpoint>();
