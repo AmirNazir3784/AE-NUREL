@@ -11,7 +11,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "convert"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "convert" | "shift"; badgeFrom?: string; badgeTo?: string }) {
   const words = title.split(" ");
   const last = words.length > 1 ? words[words.length - 1] : null;
   const head = last ? words.slice(0, -1).join(" ") : title;
@@ -36,6 +36,16 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <circle className="aen-badge-pulse" cx="135" cy="10" r="10" />
         <g className="aen-badge aen-badge-from"><rect x="118" y="2" width="34" height="16" rx="8" /><text x="135" y="13.5" textAnchor="middle">{badgeFrom}</text></g>
         <g className="aen-badge aen-badge-to"><rect x="118" y="2" width="34" height="16" rx="8" /><text x="135" y="13.5" textAnchor="middle">{badgeTo}</text></g>
+      </svg>
+    </div>
+    : art === "shift" ? <div className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
+        <path className="aen-tl-line" d="M10 47h200" />
+        <path className="aen-tl-ticks" d="M22 43v8M47 43v8M72 43v8M97 43v8M122 43v8M147 43v8M172 43v8M197 43v8" />
+        <g className="aen-shift-blocks"><rect x="28" y="27" width="34" height="13" rx="4" /><rect className="aen-shift-mid" x="72" y="27" width="44" height="13" rx="4" /><rect x="126" y="27" width="30" height="13" rx="4" /></g>
+        <text className="aen-shift-label" x="146" y="17">+2.0s</text>
+        <circle className="aen-shift-ring" cx="94" cy="31" r="5" />
+        <g className="aen-shift-cursor"><path d="M0 0v13l3.5-3 2 4.5 2.2-1-2-4.5H10z" /></g>
       </svg>
     </div>
     : <div className="aen-hero-merge" aria-hidden="true">
