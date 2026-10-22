@@ -664,3 +664,17 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .aen-splitter .download-section { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 80; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-overlay); margin: 0; }
   .aen-splitter .download-section .download-heading { display: none; }
 }
+
+/* Rollout — all tools: the upload zone becomes a slim strip once a file is in. */
+.aen-tool-page .upload-zone.has-file { flex-direction: row; flex-wrap: wrap; align-items: center; text-align: left; gap: 14px; padding: 16px 18px; min-height: 0; }
+.aen-tool-page .upload-zone.has-file .upload-icon { width: 40px; height: 40px; border-radius: 12px; flex: none; }
+.aen-tool-page .upload-zone.has-file > div { flex: 1; min-width: 140px; }
+.aen-tool-page .upload-zone.has-file .upload-note { display: none; }
+.aen-tool-page .upload-zone.has-file .button { margin-left: auto; flex: none; }
+/* Rollout — SRT Timing Adjuster. */
+.aen-timing .offset-control { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 22px; }
+.aen-timing .v1-result-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; border-top: 1px solid var(--border); padding-top: 18px; margin-top: 22px; }
+@media (max-width: 940px) {
+  .aen-timing { margin-bottom: 110px; }
+  .aen-timing .v1-result-actions { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 80; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-overlay); margin: 0; }
+}
