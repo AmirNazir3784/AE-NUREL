@@ -489,3 +489,18 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-doc-a, .aen-hero-doc-b, .aen-hero-ripple, .aen-hero-dot { animation: none; }
 }
+
+/* Pilot v8 — owner: "kuch zyada ho gya". The story choreography is removed.
+   What stays is calm: chips and documents float gently, the arrow flows
+   (the owner liked it), and motion inside the workspace stays functional. */
+.aen-hero-chip-a { animation: aen-float 6.5s ease-in-out infinite alternate; }
+.aen-hero-chip-b { animation: aen-float 7.5s ease-in-out -3s infinite alternate; }
+.aen-hero-chip-c { animation: aen-float 7s ease-in-out -1.5s infinite alternate; }
+.aen-hero-doc-a { animation: aen-float 6.5s ease-in-out infinite alternate; }
+.aen-hero-doc-b { animation: aen-float 7.5s ease-in-out -3s infinite alternate; }
+.aen-hero-doc-c { animation: aen-float 7s ease-in-out -1s infinite alternate; }
+.aen-hero-ripple, .aen-hero-dot { display: none; }
+.aen-merger-steps li.is-current .aen-step-dot { animation-duration: 3s; }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-doc-c { animation: none; }
+}
