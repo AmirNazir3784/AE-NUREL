@@ -98,11 +98,12 @@ export function SrtMerger() {
       {duplicateNames && <StatusMessage tone="warning">Some files share the same name. They are kept as separate files. Check the order and remove any unintended copies.</StatusMessage>}
       {session.files.length > 0 && <GapControl value={session.gap} onChange={(value) => dispatch({ type: "gap", value })} error={calculation.gapError || undefined} disabled={!session.files.length || busy} />}
       </div><aside className="aen-merger-side"><MergePreview result={valid ? calculation.result : null} busy={busy} fileCount={session.files.length} blocked={invalid || !!session.error || !!calculation.gapError || !!calculation.mergeError} />
-      <div className="download-section"><div className="download-heading"><span className="section-label">Download</span>{(session.files.length > 0 || session.error) && <button type="button" className="text-button" onClick={reset}><Icon name="reset" size={14} />Start over</button>}</div>
+      <p className="v1-merge-assumption">The next file is placed after the previous file’s last subtitle, plus the added gap.<br />Its original lead-in is kept. <strong>SRT files do not contain the full video-part duration.</strong></p>
+        <div className="download-section"><div className="download-heading"><span className="section-label">Download</span>{(session.files.length > 0 || session.error) && <button type="button" className="text-button" onClick={reset}><Icon name="reset" size={14} />Start over</button>}</div>
         {calculation.mergeError && <StatusMessage tone="error">{calculation.mergeError}</StatusMessage>}
         {invalid && <p className="download-help">Remove or replace the files marked “Needs attention” before downloading.</p>}
         {valid && <p className="adjustment-summary">{calculation.result!.parts.length} files, {calculation.result!.cues.length} subtitles. Merged in the order above.</p>}
-        <p className="v1-merge-assumption">The next file is placed after the previous file’s last subtitle, plus the added gap.<br />Its original lead-in is kept. <strong>SRT files do not contain the full video-part duration.</strong></p>
+        
         <DownloadButton label="Download merged SRT" content={valid ? calculation.content : null} filename="merged-subtitles.srt" mimeType="application/x-subrip;charset=utf-8" disabled={!valid || busy} onDownloaded={() => dispatch({ type: "download" })} onError={(message) => dispatch({ type: "error", message })} />
         {session.files.length < 2 && <p className="download-help">{session.files.length ? "Add one more file to merge." : "Add at least two SRT files to get started."}</p>}
         {session.downloaded && valid && <StatusMessage tone="success">Download started: merged-subtitles.srt</StatusMessage>}
