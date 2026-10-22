@@ -504,3 +504,44 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-doc-c { animation: none; }
 }
+
+/* Pilot v9 — the owner's own choreography: Part 1 and Part 2 fly into the two
+   middle documents and dissolve; then the merged file comes OUT of the result
+   document and travels to its place. 9s loop, everything else stays calm. */
+.aen-hero-chip-a { --tx: 230px; --ty: 10px; animation: aen-part-fly 9s ease-in-out infinite; }
+.aen-hero-chip-b { --tx: 242px; --ty: -48px; animation: aen-part-fly 9s ease-in-out .35s infinite; }
+.aen-hero-chip-c { --sx: -252px; --sy: -14px; animation: aen-merged-journey 9s ease-in-out infinite; }
+@keyframes aen-part-fly {
+  0% { translate: 0 0; scale: 1; opacity: 1; }
+  7% { translate: 0 -5px; opacity: 1; }
+  14% { translate: 0 0; opacity: 1; }
+  16% { translate: 0 0; animation-timing-function: cubic-bezier(.45, .05, .3, 1); }
+  36% { translate: calc(var(--tx) * .6) calc(var(--ty) * .6 - 14px); scale: .93; opacity: 1; }
+  44% { translate: var(--tx) var(--ty); scale: .8; opacity: 0; filter: blur(2px); }
+  88% { translate: 0 0; scale: 1; opacity: 0; filter: none; }
+  96%, 100% { translate: 0 0; opacity: 1; }
+}
+@keyframes aen-merged-journey {
+  0%, 48% { translate: var(--sx) var(--sy); scale: .75; opacity: 0; }
+  55% { translate: var(--sx) var(--sy); scale: .92; opacity: 1; animation-timing-function: cubic-bezier(.3, .7, .3, 1); }
+  65% { translate: calc(var(--sx) * .45) calc(var(--sy) - 12px); scale: .97; opacity: 1; }
+  74% { translate: 0 0; scale: 1; opacity: 1; }
+  82% { translate: 0 -5px; opacity: 1; }
+  90% { translate: 0 0; opacity: 1; }
+  97%, 100% { translate: 0 0; opacity: 0; }
+}
+.aen-hero-doc-a, .aen-hero-doc-b, .aen-hero-doc-c { transform-box: fill-box; transform-origin: center; }
+.aen-hero-doc-a { animation: aen-doc-a9 9s ease-in-out infinite; }
+.aen-hero-doc-b { animation: aen-doc-a9 9s ease-in-out .35s infinite; }
+.aen-hero-doc-c { animation: aen-doc-c9 9s ease-in-out infinite; }
+@keyframes aen-doc-a9 {
+  0% { transform: none; } 8% { transform: translateY(-2.5px); } 16% { transform: none; }
+  32% { transform: scale(1); } 38% { transform: scale(1.09); } 44%, 100% { transform: scale(1); }
+}
+@keyframes aen-doc-c9 {
+  0% { transform: none; } 8% { transform: translateY(-2.5px); } 16% { transform: none; }
+  49% { transform: scale(1); } 55% { transform: scale(1.08); } 62%, 100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-chip-a, .aen-hero-chip-b, .aen-hero-chip-c, .aen-hero-doc-a, .aen-hero-doc-b, .aen-hero-doc-c { animation: none; }
+}
