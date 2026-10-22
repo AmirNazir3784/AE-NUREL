@@ -697,3 +697,13 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .aen-overlap { margin-bottom: 110px; }
   .aen-overlap .overlap-result-actions { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 80; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-overlay); }
 }
+
+/* Rollout — Subtitle Editor: the editing surface keeps its own layout;
+   cue rows become one hairline list and export becomes a quiet action row. */
+.aen-editor .editor-cue-list > * { background: transparent; border: 0; border-top: 1px solid var(--border); border-radius: 0; box-shadow: none; }
+.aen-editor .editor-cue-list > *:first-child { border-top: 0; }
+.aen-editor .editor-export-buttons { border-top: 1px solid var(--border); padding-top: 18px; margin-top: 22px; }
+@media (max-width: 940px) {
+  .aen-editor { margin-bottom: 110px; }
+  .aen-editor .editor-export-buttons { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 80; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-overlay); margin: 0; }
+}
