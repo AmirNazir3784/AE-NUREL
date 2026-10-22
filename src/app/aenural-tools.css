@@ -545,3 +545,27 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-chip-a, .aen-hero-chip-b, .aen-hero-chip-c, .aen-hero-doc-a, .aen-hero-doc-b, .aen-hero-doc-c { animation: none; }
 }
+
+/* Pilot v10 — side panel and controls, following the owner's references:
+   joins as stacked rows, a quieter gap control, stat tiles in the download
+   card, and a slim dismissible success strip instead of the big green box. */
+.aen-merger .v1-join { display: flex; flex-direction: column; gap: 7px; padding: 14px 16px; }
+.aen-merger .vj-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-width: 0; }
+.aen-merger .vj-row strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+.aen-merger .vj-row span { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+.aen-merger .vj-row time { color: var(--foreground); font-weight: 650; font-variant-numeric: tabular-nums; }
+.aen-merger .vj-link { display: flex; align-items: center; gap: 8px; }
+.aen-merger .vj-arrow { display: inline-flex; transform: rotate(90deg); color: var(--muted); }
+.aen-merger .vj-gap { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.aen-merger .v1-gap-control legend.section-label { font-size: 16px; font-weight: 650; color: var(--foreground); letter-spacing: 0; text-transform: none; }
+.aen-merger .v1-gap-control .quick-offsets button[aria-pressed="true"] { background: color-mix(in srgb, var(--action) 12%, transparent); border-color: var(--action); color: var(--action); box-shadow: none; }
+.aen-dl-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 6px 0 14px; }
+.aen-dl-stat { background: var(--surface-soft); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 1px; }
+.aen-dl-stat strong { font-size: 21px; font-weight: 700; line-height: 1.15; }
+.aen-dl-stat span { font-size: 12.5px; color: var(--muted); }
+.aen-dl-success { display: flex; align-items: center; gap: 10px; margin-top: 12px; background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent); border-radius: 14px; padding: 11px 13px; color: var(--accent); }
+.aen-dl-success-text { display: flex; flex-direction: column; line-height: 1.3; color: var(--foreground); }
+.aen-dl-success-text strong { font-size: 13.5px; }
+.aen-dl-success-text small { font-size: 12px; color: var(--muted); }
+.aen-dl-success-close { margin-left: auto; background: none; border: 0; color: var(--muted); font-size: 17px; line-height: 1; cursor: pointer; padding: 4px 6px; border-radius: 8px; }
+.aen-dl-success-close:hover { color: var(--foreground); }
