@@ -3,7 +3,7 @@ import { VttToSrtConverter } from "@/features/vtt-to-srt/vtt-to-srt";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
 import { pageMetadata } from "@/lib/site-metadata";
-export const metadata = pageMetadata("VTT to SRT Converter", "Convert VTT subtitles to SRT. Free, browser-based conversion with no signup.", "/tools/vtt-to-srt");
+export const metadata = pageMetadata("VTT to SRT Converter — Convert WebVTT to SRT Online", "Convert VTT (WebVTT) subtitles to SRT for players, editors, and platforms that need standard SubRip files. Free online, with no signup required.", "/tools/vtt-to-srt");
 export default function ToolPage() {
   return <ToolLayout title="VTT to SRT Converter" category="Subtitle Tools" categoryHref="/tools/subtitle-tools">
     <ToolHeader title="VTT to SRT Converter" description="Convert VTT subtitles to SRT." toolIcon="vtt-to-srt" />
