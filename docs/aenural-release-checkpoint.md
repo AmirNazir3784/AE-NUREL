@@ -1,6 +1,6 @@
 # AENural release checkpoint — resume here
-Last updated: 2026-10-21
-**Status:** Phase 0 baseline COMPLETE. Phase 1A header/search fixes merged (PRs #2-#4). Local/GitHub reconciliation COMPLETE — one verified tree on `dev/aenural-hybrid` (`d9d9a10`). CI active via GitHub Actions. No production changes or deployment.
+Last updated: 2026-10-22
+**Status:** Phase 0 baseline COMPLETE. Phase 1A header/search fixes merged (PRs #2-#4). Local/GitHub reconciliation COMPLETE — one verified tree on `dev/aenural-hybrid` (`d9d9a10`). CI active via GitHub Actions. Batch C performance fixes merged (PRs #6-#7). Batch D SEO COMPLETE on dev (audit, structured data PR #9, owner-approved wording PRs #12-#13) — see docs/aenural-release-checklist.md for what only lands at release (SITE_URL). Live site still runs the older build; no production changes or deployment.
 
 ## Trusted repositories and working tree
 - Development repository: `faisalhere-afk/aenural-website`, branch `dev/aenural-hybrid`.
@@ -65,3 +65,17 @@ Purpose: identify exactly which local changes are modified/untracked and how the
 
 ## Reporting policy
 Mark each task as `DONE (evidence)`, `BLOCKED (reason)`, `NOT RUN`, or `IN PROGRESS`. For each meaningful commit document actual tested command outputs, SHA, locally preserved changes, known security risks, rollback strategy, and precise continuation. Never mark user-facing production released without deployment approval and final smoke tests.
+
+## Milestone 2026-10-22 - Batch C performance, navigation decision, Batch D SEO (complete)
+
+- **Batch C measurement (live site + dev code):** fonts were the biggest per-page cost (~570 KB transferred on every page); homepage shipped both videos (12.3 MB total) with no Cache-Control header. Pages themselves were healthy (static prerender, CDN cache HIT).
+- **PR #6 (merged `fe0ad03`):** font subsets, glyph-verified — Inter-Variable.woff2 138 KB, Sora-Variable.woff2 34 KB; ~570 KB -> ~172 KB of fonts per page.
+- **PR #7 (merged `a9628be`):** both homepage videos re-encoded CRF 28 (SSIM 0.997/0.995, audio kept): 12.6 MB -> 6.7 MB; `next.config.ts` sends Cache-Control for `/videos/*`. The Source Window page shares `source-window-feature.mp4` with the homepage feature slot.
+- **Navigation complaint (owner, live site on mobile data):** root cause is the deliberate plain-anchor design in `src/components/site/page-link.tsx` (full document loads; chosen for pre-hydration reliability and the dirty-editor exit guard). A top loading-bar (PR #8) was built but CLOSED at the owner's decision — the site should behave like a normal website: fix the weight, not mask the wait. Localhost can never reproduce this; verification happens after the next release (see release checklist).
+- **Batch D SEO audit:** live `/sitemap.xml` contains ZERO urls, `robots.txt` has no Sitemap line, pages have no canonical and no og:image/og:url — all gated on `process.env.SITE_URL`, evidently not set for the live build. Dev-side sitemap/robots/metadata code is complete.
+- **PR #9 (merged `c31e924`):** schema.org JSON-LD — Organization + WebSite site-wide, WebApplication (free Offer) per tool page, behind the same SITE_URL rule; builders functionally tested against the real registry first.
+- **PR #10 (merged `95f1814`):** `docs/aenural-release-checklist.md` — SITE_URL requirement, no dev-only routes, post-release live verification list, owner mobile-data navigation re-test.
+- **Wording research (owner reassigned it from ChatGPT to Muse):** SEO wording pack built from the real registry + live search phrasing, then owner decisions applied 2026-10-22: new "Name — Benefit" title style approved; privacy/file-handling claims banned from all wording ("files stay on your device" style lines are NOT used); "flagship" removed everywhere; no support email — Help contact will use the owner's social media accounts when he shares them.
+- **PR #12 (merged `7ea640b`):** titles/descriptions for all 16 tools + homepage, /tools, category, Source Window, Premium Tools, About. One CI failure fixed in-branch: tests/format-conversion.test.mjs required metadata title == ToolHeader title for the four newest converters; updated to compare the heading with the title's name part, matching the approved style. Homepage "Flagship product" tag became "Upcoming · After Effects" (the homepage Coming-soon ban in the v1 tests respected). SRT-to-MP4 wording corrected: it renders a NEW silent caption video (max 500 cues / 2 minutes), it does not burn subtitles into an existing video.
+- **PR #13:** FAQ section on every tool page (3 questions each; facts verified from the converter code) + matching FAQPage JSON-LD; About page rewritten from the approved draft with all flagship/main-product wording removed. Help page deliberately untouched — its structure already matches the approved proposal; its Contact section changes when the owner's social links arrive.
+- Production repository and live site untouched throughout. Next per roadmap: Batch E (design) or a release, at the owner's direction.
