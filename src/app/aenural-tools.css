@@ -644,3 +644,9 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (max-width: 940px) {
   .aen-merger .download-section { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 14px 16px; }
 }
+
+/* Rollout foundation — the pilot page settings apply to every tool page
+   that uses the shared hero: full-bleed wash, and a two-document art
+   variant for transform-style tools. */
+.aen-tool-page:has(.aen-tool-hero)::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 100vw; z-index: -1; pointer-events: none; background-image: radial-gradient(680px 400px at 18% -60px, color-mix(in srgb, var(--action) 13%, transparent), transparent 70%), radial-gradient(760px 440px at 84% -40px, color-mix(in srgb, var(--accent) 12%, transparent), transparent 72%); background-repeat: no-repeat; animation: aen-wash 14s ease-in-out infinite alternate; }
+.aen-tool-hero.art-transform .aen-hero-doc-b { display: none; }
