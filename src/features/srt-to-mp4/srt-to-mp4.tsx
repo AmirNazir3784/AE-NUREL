@@ -39,7 +39,7 @@ export function SrtToMp4Converter() {
       <label>Background<select value={settings.background} disabled={busy} onChange={event => { clearVideo(); setSettings({ ...settings, background: event.target.value as VideoSettings["background"] }); }}><option value="black">Black with white text</option><option value="white">White with dark text</option></select></label></div></>}
     <ConversionNotices tool={tool} />
     {error && <StatusMessage tone="error">{error}</StatusMessage>}
-    {message && <StatusMessage tone="success">{message}</StatusMessage>}
+    
     {busy && <div role="status"><label htmlFor="mp4-progress">Rendering MP4 · {percent}%</label><progress id="mp4-progress" max={100} value={percent} /><p>Keep this tab open. You can cancel rendering.</p></div>}
     {plan && !busy && <button className="button button-primary" type="button" onClick={render}>{video ? "Render again" : "Render MP4"}</button>}
     {video && <div className="aen-conversion-ready"><h2 role="status">{video.playable ? "MP4 ready" : "Checking video playback…"}</h2>
