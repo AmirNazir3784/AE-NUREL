@@ -79,3 +79,13 @@ Mark each task as `DONE (evidence)`, `BLOCKED (reason)`, `NOT RUN`, or `IN PROGR
 - **PR #12 (merged `7ea640b`):** titles/descriptions for all 16 tools + homepage, /tools, category, Source Window, Premium Tools, About. One CI failure fixed in-branch: tests/format-conversion.test.mjs required metadata title == ToolHeader title for the four newest converters; updated to compare the heading with the title's name part, matching the approved style. Homepage "Flagship product" tag became "Upcoming · After Effects" (the homepage Coming-soon ban in the v1 tests respected). SRT-to-MP4 wording corrected: it renders a NEW silent caption video (max 500 cues / 2 minutes), it does not burn subtitles into an existing video.
 - **PR #13:** FAQ section on every tool page (3 questions each; facts verified from the converter code) + matching FAQPage JSON-LD; About page rewritten from the approved draft with all flagship/main-product wording removed. Help page deliberately untouched — its structure already matches the approved proposal; its Contact section changes when the owner's social links arrive.
 - Production repository and live site untouched throughout. Next per roadmap: Batch E (design) or a release, at the owner's direction.
+
+## Batch E — tool page design system (pilot finalized + rollout, 2026-10-22)
+
+The SRT Merger pilot was finalized by the owner (PR: design/srt-merger-pilot-v2, v15) and its design system was then rolled out to the other 15 free tools on `design/tools-rollout` — one tool at a time, each adapted to how that tool works (NOT a copy-paste of the Merger layout). Auto Caption Generator's layout was not touched.
+
+**Core rules on every tool page — what a page contains:** two-tone hero (first word plain, last word in the site orange `--action`; `--accent` is teal) whose calm motion tells the tool's own small story (parts fly in and dissolve, the result comes out; reduced-motion always respected), 3 short SEO/feature ticks, one workspace card with a linear flow, at most 4 benefits, FAQ accordion, related-tool cards, full-bleed soft wash, generous section spacing.
+
+**What a page must never contain:** long text lines or paragraphs inside the tool (explanations live in the FAQ), the privacy claim, fake settings/toggles, empty panels shown before they are relevant, boxes inside boxes (sections are separated by hairlines instead), and a success box after a download (the file simply downloads).
+
+**Workspace rules:** short text only; file rows as one hairline list with full filenames and a small ✓ status; the action area holds a label, one real summary line, and the button; progress steps reflect real state; on mobile the experience stays minimal with a slim bottom action bar and no horizontal scrolling.
