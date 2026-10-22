@@ -3,7 +3,7 @@ import { SrtToTxtConverter } from "@/features/srt-to-txt/srt-to-txt";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
 import { pageMetadata } from "@/lib/site-metadata";
-export const metadata = pageMetadata("SRT to TXT Converter", "Extract a readable transcript from SRT subtitles. Free, browser-based conversion with no signup.", "/tools/srt-to-txt");
+export const metadata = pageMetadata("SRT to TXT Converter — Extract a Clean Transcript", "Turn an SRT file into a readable plain-text transcript — one subtitle per line, or joined as paragraphs — no timestamps or cue numbers. Free, no signup.", "/tools/srt-to-txt");
 export default function ToolPage() {
   return <ToolLayout title="SRT to TXT Converter" category="Subtitle Tools" categoryHref="/tools/subtitle-tools">
     <ToolHeader title="SRT to TXT Converter" description="Extract a readable transcript from SRT subtitles." toolIcon="srt-to-txt" />
