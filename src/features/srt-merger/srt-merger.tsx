@@ -83,8 +83,9 @@ export function SrtMerger() {
     });
   }
 
+  const progress = session.downloaded && valid ? 3 : valid ? 2 : session.files.length >= 2 ? 1 : 0;
   return <>
-    <div className="tool-workspace v1-merge-workspace aen-merger" ref={workspace}><div className="editor-panel aen-merger-layout"><div className="aen-merger-main">
+    <div className="tool-workspace v1-merge-workspace aen-merger" ref={workspace}><div className="editor-panel aen-merger-layout"><ol className="aen-merger-steps" aria-label="Merge progress">{["Add files", "Check the joins", "Download"].map((label, i) => <li key={label} className={i < progress ? "is-done" : i === progress ? "is-current" : ""} aria-current={i === progress && progress < 3 ? "step" : undefined}><span className="aen-step-dot">{i < progress ? <Icon name="check" size={13} /> : i + 1}</span><span className="aen-step-label">{label}</span></li>)}</ol><div className="aen-merger-main">
       <div className="editor-heading"><span className="section-label">Add your subtitle files</span><span className="badge accent">2–10 files</span></div>
       <FileUpload multiple accept=".srt" title="Add your SRT files" filename={session.files.length ? `${session.files.length} files selected` : undefined} detail="Add more files or drop them here." buttonLabel={session.files.length ? "Add more SRT files" : "Choose SRT files"} description="Choose the SRT files you want to combine." hint=".srt only · 10 MB per file · 50 MB total" busy={busy} validateFile={validateSrtFile} onFiles={addFiles} onError={(message) => dispatch({ type: "error", message })} />
       <input ref={replacement} className="sr-only" tabIndex={-1} type="file" accept=".srt" aria-label="Choose replacement SRT file" disabled={busy} onChange={(event) => {
@@ -98,7 +99,7 @@ export function SrtMerger() {
       {duplicateNames && <StatusMessage tone="warning">Some files share the same name. They are kept as separate files. Check the order and remove any unintended copies.</StatusMessage>}
       {session.files.length > 0 && <GapControl value={session.gap} onChange={(value) => dispatch({ type: "gap", value })} error={calculation.gapError || undefined} disabled={!session.files.length || busy} />}
       </div><aside className="aen-merger-side"><MergePreview result={valid ? calculation.result : null} busy={busy} fileCount={session.files.length} blocked={invalid || !!session.error || !!calculation.gapError || !!calculation.mergeError} />
-      <p className="v1-merge-assumption">The next file is placed after the previous file’s last subtitle, plus the added gap.<br />Its original lead-in is kept. <strong>SRT files do not contain the full video-part duration.</strong></p>
+      
         <div className="download-section"><div className="download-heading"><span className="section-label">Download</span>{(session.files.length > 0 || session.error) && <button type="button" className="text-button" onClick={reset}><Icon name="reset" size={14} />Start over</button>}</div>
         {calculation.mergeError && <StatusMessage tone="error">{calculation.mergeError}</StatusMessage>}
         {invalid && <p className="download-help">Remove or replace the files marked “Needs attention” before downloading.</p>}
