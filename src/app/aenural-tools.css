@@ -727,3 +727,34 @@ html:has(.aen-merger) body { overflow-x: clip; }
 /* Rollout fix — the workspace is a two-column grid; a tool that renders a
    single root must span the full width, not sit in the left column. */
 .aen-tool-page .tool-workspace > :only-child { grid-column: 1 / -1; }
+
+/* Per-tool hero scenes — each tool's animation tells its own work.
+   Split: the cut line draws, then the two parts slide out.
+   Edit: a pencil crosses the middle line while the new text draws in.
+   Convert: one document, and its format badge flips to the new format. */
+.art-split .aen-split-cut { opacity: .85; stroke-dasharray: 4 5; animation: aen-cut-fade 9s ease-in-out infinite; }
+@keyframes aen-cut-fade { 0% { opacity: 0 } 12%, 88% { opacity: .85 } 97%, 100% { opacity: 0 } }
+.art-split .aen-hero-doc.aen-split-p1, .art-split .aen-hero-doc.aen-split-p2 { animation: aen-split-out 9s ease-in-out infinite; }
+.art-split .aen-hero-doc.aen-split-p2 { animation-delay: .45s; }
+@keyframes aen-split-out { 0%, 16% { transform: translateX(-54px); opacity: 0 } 36%, 88% { transform: translateX(0); opacity: 1 } 96%, 100% { transform: translateX(0); opacity: 0 } }
+.art-split .aen-hero-chip-b { --sx: 285px; --sy: -34px; animation: aen-output-file 9s cubic-bezier(.3, .7, .3, 1) .45s infinite; }
+.art-edit .aen-edit-pencil { animation: aen-pencil-move 8s ease-in-out infinite; }
+@keyframes aen-pencil-move { 0%, 10% { transform: translate(99px, 21px); opacity: 0 } 16% { transform: translate(99px, 21px); opacity: 1 } 52% { transform: translate(127px, 21px); opacity: 1 } 60%, 100% { transform: translate(127px, 21px); opacity: 0 } }
+.art-edit .aen-edit-new { stroke-dasharray: 24; stroke-dashoffset: 24; animation: aen-line-draw 8s ease-in-out infinite; }
+@keyframes aen-line-draw { 0%, 16% { stroke-dashoffset: 24 } 52%, 88% { stroke-dashoffset: 0 } 96%, 100% { stroke-dashoffset: 0; opacity: 0 } }
+.art-convert .aen-badge rect { stroke: none; }
+.art-convert .aen-badge-from rect { fill: var(--accent); }
+.art-convert .aen-badge-to rect { fill: var(--action); }
+.art-convert .aen-badge text { fill: #fff; stroke: none; font-size: 9px; font-weight: 700; letter-spacing: .03em; }
+.art-convert .aen-badge-from { animation: aen-badge-from 6s ease-in-out infinite; }
+.art-convert .aen-badge-to { animation: aen-badge-to 6s ease-in-out infinite; }
+@keyframes aen-badge-from { 0%, 36% { opacity: 1; transform: translateY(0) } 48%, 88% { opacity: 0; transform: translateY(4px) } 97%, 100% { opacity: 1; transform: translateY(0) } }
+@keyframes aen-badge-to { 0%, 36% { opacity: 0; transform: translateY(-4px) } 48%, 88% { opacity: 1; transform: translateY(0) } 97%, 100% { opacity: 0; transform: translateY(-4px) } }
+.art-convert .aen-badge-pulse { fill: none; stroke: var(--action); transform-box: fill-box; transform-origin: center; animation: aen-badge-ring 6s ease-out infinite; }
+@keyframes aen-badge-ring { 0%, 40% { opacity: 0; transform: scale(.55) } 50% { opacity: .45 } 64%, 100% { opacity: 0; transform: scale(1.3) } }
+@media (prefers-reduced-motion: reduce) {
+  .art-split .aen-split-cut, .art-split .aen-hero-doc.aen-split-p1, .art-split .aen-hero-doc.aen-split-p2, .art-edit .aen-edit-pencil, .art-edit .aen-edit-new, .art-convert .aen-badge-from, .art-convert .aen-badge-to, .art-convert .aen-badge-pulse { animation: none; }
+  .art-edit .aen-edit-new { stroke-dashoffset: 0; }
+  .art-convert .aen-badge-from { opacity: 0; }
+  .art-convert .aen-badge-to { opacity: 1; }
+}
