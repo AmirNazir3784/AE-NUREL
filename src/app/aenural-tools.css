@@ -461,3 +461,31 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-chip-a, .aen-hero-chip-b, .aen-hero-chip-c, .aen-hero-doc-c { animation: none; }
 }
+
+/* Pilot v7 — richer choreography: the chips arc in with anticipation, the two
+   source documents glide together, a ripple marks the merge, and a dot of
+   light carries the result to the merged file. Tick phrases strengthened. */
+.aen-hero-doc-a, .aen-hero-doc-b { transform-box: fill-box; transform-origin: center; }
+.aen-hero-doc-a { animation: aen-doc-a 8s ease-in-out infinite; }
+.aen-hero-doc-b { animation: aen-doc-b 8s ease-in-out infinite; }
+@keyframes aen-doc-a { 0%, 18% { transform: translate(0, 0); opacity: 1; } 24% { transform: translate(0, -3px); opacity: 1; } 34% { transform: translate(7px, -1px); opacity: 1; } 46%, 64% { transform: translate(13px, 0); opacity: 0; } 80% { transform: translate(0, 0); opacity: 0; } 93%, 100% { transform: translate(0, 0); opacity: 1; } }
+@keyframes aen-doc-b { 0%, 18% { transform: translate(0, 0); opacity: 1; } 24% { transform: translate(0, 3px); opacity: 1; } 34% { transform: translate(-7px, 1px); opacity: 1; } 46%, 64% { transform: translate(-13px, 0); opacity: 0; } 80% { transform: translate(0, 0); opacity: 0; } 93%, 100% { transform: translate(0, 0); opacity: 1; } }
+@keyframes aen-chip-story {
+  0% { translate: 0 0; rotate: 0deg; scale: 1; opacity: 1; }
+  9% { translate: 0 -6px; opacity: 1; }
+  18% { translate: 0 0; opacity: 1; }
+  24% { translate: -7px 2px; opacity: 1; animation-timing-function: cubic-bezier(.5, 0, .8, .4); }
+  35% { translate: calc(var(--tx) * .55) -26px; rotate: 3deg; scale: .96; opacity: 1; }
+  46% { translate: var(--tx) var(--ty); rotate: 0deg; scale: .82; opacity: 0; }
+  64% { translate: var(--tx) var(--ty); opacity: 0; }
+  80% { translate: 0 0; opacity: 0; animation-timing-function: cubic-bezier(.2, .8, .2, 1); }
+  93%, 100% { translate: 0 0; rotate: 0deg; scale: 1; opacity: 1; }
+}
+@keyframes aen-doc-pop { 0%, 44% { transform: scale(1); animation-timing-function: cubic-bezier(.34, 1.4, .64, 1); } 56% { transform: scale(1.14); } 66%, 100% { transform: scale(1); } }
+.aen-hero-ripple { fill: none; stroke: var(--action); stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; animation: aen-ripple 8s ease-out infinite; }
+@keyframes aen-ripple { 0%, 48% { transform: scale(.6); opacity: 0; } 57% { opacity: .55; } 72%, 100% { transform: scale(2.3); opacity: 0; } }
+.aen-hero-dot { fill: var(--action); opacity: 0; animation: aen-dot 8s linear infinite; }
+@keyframes aen-dot { 0%, 52% { cx: 150px; opacity: 0; } 59% { opacity: 1; } 71% { cx: 206px; opacity: 1; } 77%, 100% { cx: 212px; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-doc-a, .aen-hero-doc-b, .aen-hero-ripple, .aen-hero-dot { animation: none; }
+}
