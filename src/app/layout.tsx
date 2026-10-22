@@ -7,8 +7,8 @@ import "./globals.css";
 import "./aenural.css";
 import "./aenural-tools.css";
 
-const sora = localFont({ src: "./fonts/Sora-Variable.ttf", weight: "100 800", display: "swap", variable: "--font-sora" });
-const inter = localFont({ src: "./fonts/Inter-Variable.ttf", weight: "100 900", display: "swap", variable: "--font-inter" });
+const sora = localFont({ src: "./fonts/Sora-Variable.woff2", weight: "100 800", display: "swap", variable: "--font-sora" });
+const inter = localFont({ src: "./fonts/Inter-Variable.woff2", weight: "100 900", display: "swap", variable: "--font-inter" });
 
 export const metadata = {
   ...pageMetadata("Tools for People Who Edit", "AENural Source Window and free browser-based tools for editors.", "/"),
