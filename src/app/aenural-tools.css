@@ -371,3 +371,26 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
 .aen-tool-page .aen-merger .aen-merger-side .v1-merge-assumption strong { color: var(--foreground); }
 .aen-tool-page .aen-merger .upload-zone { min-height: 150px; padding-block: 26px; }
 .aen-tool-page:has(.aen-merger) .tool-frame { box-shadow: 0 34px 64px -26px rgb(15 23 42 / .24), 0 4px 16px -6px rgb(15 23 42 / .08); }
+
+/* Pilot v4 — owner review: name colours, clean download card, related cards,
+   and a real section rhythm (premium sites space sections ~72-88px apart). */
+.aen-tool-hero h1 { color: var(--foreground); }
+.aen-tool-page .aen-tool-benefits { margin-top: 76px; }
+.aen-tool-page .tool-faq { margin-top: 84px; padding-top: 0; border-top: 0; }
+.aen-tool-page .aen-related { margin-top: 88px; padding-top: 0; border-top: 0; }
+.aen-related-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+.aen-related-head h2 { margin: 0; font-size: 24px; font-family: var(--font-heading); letter-spacing: -.01em; }
+.aen-related-head a { display: inline-flex; align-items: center; gap: 6px; color: var(--action); font-weight: 600; font-size: 14.5px; white-space: nowrap; }
+.aen-tool-page .aen-related .v1-related-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 14px; }
+.aen-tool-page .aen-related .v1-related-links a { flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; min-height: 148px; padding: 20px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+.aen-tool-page .aen-related .v1-related-links a > svg { margin-top: auto; align-self: flex-end; color: var(--action); }
+.aen-tool-page .aen-related .aen-related-text > span { font-size: 15.5px; font-weight: 600; }
+.aen-tool-page .aen-merger .v1-merge-assumption { background: none; border: 0; border-left: 0; border-radius: 0; padding: 0 4px; margin: 2px 0 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.aen-tool-page .aen-merger .v1-merge-assumption strong { color: var(--muted); font-weight: 600; }
+.aen-tool-page .aen-merger .aen-merger-side .download-section { padding: 20px; }
+.aen-tool-page .aen-merger .aen-merger-side .download-heading { margin-bottom: 12px; }
+@media (max-width: 900px) {
+  .aen-tool-page .aen-tool-benefits { margin-top: 52px; }
+  .aen-tool-page .tool-faq { margin-top: 56px; }
+  .aen-tool-page .aen-related { margin-top: 60px; }
+}
