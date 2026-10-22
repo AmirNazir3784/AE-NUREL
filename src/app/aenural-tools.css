@@ -687,3 +687,13 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .aen-sync .download-section { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 80; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-overlay); margin: 0; border-top: 1px solid var(--border-strong); }
   .aen-sync .download-section .download-heading { display: none; }
 }
+
+/* Rollout — Subtitle Overlap Fixer: its panels become quiet hairline
+   sections inside the one workspace card. */
+.aen-overlap .overlap-analysis, .aen-overlap .overlap-controls, .aen-overlap .overlap-verification, .aen-overlap .overlap-clean { background: transparent; border: 0; border-radius: 0; box-shadow: none; padding-left: 0; padding-right: 0; }
+.aen-overlap .overlap-controls, .aen-overlap .overlap-verification { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 22px; }
+.aen-overlap .overlap-issue-card { background: transparent; border: 0; border-top: 1px solid var(--border); border-radius: 0; box-shadow: none; }
+@media (max-width: 940px) {
+  .aen-overlap { margin-bottom: 110px; }
+  .aen-overlap .overlap-result-actions { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 80; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-overlay); }
+}
