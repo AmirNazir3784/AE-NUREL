@@ -3,7 +3,7 @@ import { SrtToJsonConverter } from "@/features/srt-to-json/srt-to-json";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
 import { pageMetadata } from "@/lib/site-metadata";
-export const metadata = pageMetadata("SRT to JSON Converter", "Convert SRT cues into a structured JSON array. Free, browser-based conversion with no signup.", "/tools/srt-to-json");
+export const metadata = pageMetadata("SRT to JSON Converter — Turn Subtitle Cues into JSON", "Convert SRT subtitle cues into a clean, structured JSON array — index, start and end times, and text — ready for apps and scripts. Free, no signup.", "/tools/srt-to-json");
 export default function ToolPage() {
   return <ToolLayout title="SRT to JSON Converter" category="Subtitle Tools" categoryHref="/tools/subtitle-tools">
     <ToolHeader title="SRT to JSON Converter" description="Convert SRT cues into a structured JSON array." toolIcon="srt-to-json" />
