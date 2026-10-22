@@ -3,7 +3,7 @@ import { AssToSrtConverter } from "@/features/ass-to-srt/ass-to-srt";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
 import { pageMetadata } from "@/lib/site-metadata";
-export const metadata = pageMetadata("ASS / SSA to SRT Converter", "Convert ASS or SSA dialogue into SRT subtitles. Free, browser-based conversion with no signup.", "/tools/ass-to-srt");
+export const metadata = pageMetadata("ASS / SSA to SRT Converter — Convert Subtitles Online", "Convert ASS or SSA subtitle dialogue into widely supported SRT files that play almost anywhere, keeping the words and timing. Free, no signup.", "/tools/ass-to-srt");
 export default function ToolPage() {
   return <ToolLayout title="ASS / SSA to SRT Converter" category="Subtitle Tools" categoryHref="/tools/subtitle-tools">
     <ToolHeader title="ASS / SSA to SRT Converter" description="Convert ASS or SSA dialogue into SRT subtitles." toolIcon="ass-to-srt" />
