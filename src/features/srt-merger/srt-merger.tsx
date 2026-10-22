@@ -99,13 +99,13 @@ export function SrtMerger() {
       {duplicateNames && <StatusMessage tone="warning">Some files share the same name. They are kept as separate files. Check the order and remove any unintended copies.</StatusMessage>}
       {session.files.length > 0 && <GapControl value={session.gap} onChange={(value) => dispatch({ type: "gap", value })} error={calculation.gapError || undefined} disabled={!session.files.length || busy} />}
       </div>{session.files.length > 0 && <aside className="aen-merger-side"><MergePreview result={valid ? calculation.result : null} busy={busy} fileCount={session.files.length} blocked={invalid || !!session.error || !!calculation.gapError || !!calculation.mergeError} /></aside>}
-        {session.files.length > 0 && <div className="download-section"><div className="download-heading aen-dl-head"><span className="aen-panel-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 4v10" /><path d="m7 10 5 5 5-5" /><path d="M4 19h16" /></svg></span><div className="aen-dl-titles"><span className="section-label">{valid ? "Ready to download" : "Download"}</span>{valid && <p className="aen-dl-sub">Your merged SRT is ready.</p>}</div>{(session.files.length > 0 || session.error) && <button type="button" className="text-button" onClick={reset}><Icon name="reset" size={14} />Start over</button>}</div>
+        {session.files.length > 0 && <div className="download-section"><div className="download-heading"><span className="section-label">Download</span></div>{(session.files.length > 0 || session.error) && <button type="button" className="text-button" onClick={reset}><Icon name="reset" size={14} />Start over</button>}</div>
         {calculation.mergeError && <StatusMessage tone="error">{calculation.mergeError}</StatusMessage>}
         {invalid && <p className="download-help">Remove or replace the files marked “Needs attention” before downloading.</p>}
-        {valid && <div className="aen-dl-stats"><div className="aen-dl-stat"><strong>{calculation.result!.parts.length}</strong><span>Files</span></div><div className="aen-dl-stat"><strong>{calculation.result!.cues.length}</strong><span>Total subtitles</span></div></div>}
+        {valid && <p className="aen-dl-summary">{calculation.result!.parts.length} files · {calculation.result!.cues.length} subtitles</p>}
         
         <DownloadButton label="Download merged SRT" content={valid ? calculation.content : null} filename="merged-subtitles.srt" mimeType="application/x-subrip;charset=utf-8" disabled={!valid || busy} onDownloaded={() => dispatch({ type: "download" })} onError={(message) => dispatch({ type: "error", message })} />
-        {valid && !session.downloaded && <p className="aen-dl-ok"><span className="aen-dl-ok-dot"><Icon name="check" size={12} /></span>All joins look good.</p>}{session.files.length < 2 && <p className="download-help">{session.files.length ? "Add one more file to merge." : "Add at least two SRT files to get started."}</p>}
+        {session.files.length < 2 && <p className="download-help">{session.files.length ? "Add one more file to merge." : "Add at least two SRT files to get started."}</p>}
         
       </div>}
     </div></div>
