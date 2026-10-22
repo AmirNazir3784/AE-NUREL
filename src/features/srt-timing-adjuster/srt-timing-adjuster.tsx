@@ -20,7 +20,7 @@ import { initialSession, sessionReducer } from "./session";
 
 export function SrtTimingAdjuster() {
   const [session, dispatch] = useReducer(sessionReducer, initialSession);
-  const { uploaded, value, busy, fileError, downloadMessage } = session;
+  const { uploaded, value, busy, fileError } = session;
   const request = useRef(0);
   const workspace = useRef<HTMLDivElement>(null);
 
@@ -81,6 +81,6 @@ export function SrtTimingAdjuster() {
     {uploaded && <><OffsetControl value={value} onChange={changeOffset} error={!busy ? calculation.error || undefined : undefined} disabled={busy} /><SubtitlePreview document={uploaded.document} offset={calculation.offset} offsetError={calculation.error} loading={busy} />
     {valid && <p className="adjustment-summary" role="status">{calculation.offset === 0 ? "Original timing kept." : "All subtitles move " + Math.abs(calculation.offset) / 1000 + " seconds " + (calculation.offset > 0 ? "later." : "earlier.")}</p>}
     {clamped > 0 && <StatusMessage tone="warning">{clamped} {clamped === 1 ? "subtitle reaches" : "subtitles reach"} before zero. Affected timestamps stop at 00:00:00,000; some subtitles may have no duration.</StatusMessage>}
-    <div className="v1-result-actions"><DownloadButton content={calculation.result?.content ?? null} filename={filename} label="Download adjusted SRT" mimeType="application/x-subrip;charset=utf-8" disabled={!valid || busy} onDownloaded={() => dispatch({ type: "download-started", message: "Download started: " + filename })} onError={showError} /><button className="text-button" type="button" onClick={reset}><Icon name="reset" size={16} />Start over</button></div>{downloadMessage && <StatusMessage tone="success">{downloadMessage}</StatusMessage>}</>}
+    <div className="v1-result-actions"><DownloadButton content={calculation.result?.content ?? null} filename={filename} label="Download adjusted SRT" mimeType="application/x-subrip;charset=utf-8" disabled={!valid || busy} onDownloaded={() => dispatch({ type: "download-started", message: "Download started: " + filename })} onError={showError} /><button className="text-button" type="button" onClick={reset}><Icon name="reset" size={16} />Start over</button></div></>}
   </div></div>;
 }
