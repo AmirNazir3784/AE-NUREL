@@ -619,3 +619,28 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (max-width: 940px) {
   .aen-tool-page .aen-merger { margin-bottom: 215px; }
 }
+
+/* Pilot v15 — the owner's six approved improvements: joins stacked with full
+   filenames, a light download panel, the gap on one full line, file rows as
+   one hairline list, inner boxes removed, and no long text lines. */
+.aen-tool-page .aen-merger .aen-merger-side .v1-join-inspection { background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+.aen-merger .v1-join-inspection h2 { font-size: 16px; margin: 0 0 4px; }
+.aen-merger .v1-join-list { gap: 0; }
+.aen-merger .v1-join { display: block; background: transparent; border: 0; border-top: 1px solid var(--border); border-radius: 0; box-shadow: none; padding: 13px 2px; }
+.aen-merger .v1-join:first-child { border-top: 0; }
+.aen-merger .vj-name { display: block; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aen-merger .vj-line { display: flex; align-items: center; gap: 8px; margin-top: 3px; color: var(--muted); font-size: 12.5px; }
+.aen-merger .vj-line time { color: var(--foreground); font-weight: 650; font-variant-numeric: tabular-nums; }
+.aen-merger .vj-line .vj-pill { margin-left: auto; }
+.aen-merger .vj-line + .vj-name { margin-top: 9px; }
+.aen-merger .vj-arrow { display: inline-flex; transform: rotate(90deg); }
+.aen-merger .download-section { background: transparent; border: 0; box-shadow: none; border-top: 1px solid var(--border); border-radius: 0; padding: 18px 0 0; }
+.aen-dl-summary { margin: 0 0 12px; font-size: 14px; color: var(--muted); }
+.aen-merger .v1-gap-control { display: flex; flex-wrap: wrap; align-items: center; column-gap: 18px; }
+.aen-merger .v1-gap-control legend, .aen-merger .v1-gap-control .field-note { flex-basis: 100%; }
+.aen-merger .v1-gap-control .quick-offsets { flex: 1; min-width: 200px; display: grid; grid-template-columns: repeat(4, 1fr); }
+.aen-merger .merge-file-list { gap: 0; padding: 4px 0; }
+.aen-merger .merge-file-row { border-width: 0 0 1px; }
+@media (max-width: 940px) {
+  .aen-merger .download-section { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 14px 16px; }
+}
