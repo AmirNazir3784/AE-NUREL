@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useReducer, useRef, useState } from "react";
+import { useMemo, useReducer, useRef } from "react";
 import { FileUpload } from "@/components/tools/file-upload";
 import { DownloadButton } from "@/components/tools/download-button";
 import { Icon } from "@/components/ui/icon";
@@ -19,7 +19,6 @@ export function SrtMerger() {
   const replaceId = useRef<number | null>(null);
   const replacement = useRef<HTMLInputElement>(null);
   const workspace = useRef<HTMLDivElement>(null);
-  const [successHidden, setSuccessHidden] = useState(false);
   const busy = session.files.some((file) => file.status === "reading");
   const invalid = session.files.some((file) => file.status === "invalid");
   const calculation = useMemo(() => {
@@ -106,9 +105,9 @@ export function SrtMerger() {
         {invalid && <p className="download-help">Remove or replace the files marked “Needs attention” before downloading.</p>}
         {valid && <div className="aen-dl-stats"><div className="aen-dl-stat"><strong>{calculation.result!.parts.length}</strong><span>Files</span></div><div className="aen-dl-stat"><strong>{calculation.result!.cues.length}</strong><span>Total subtitles</span></div></div>}
         
-        <DownloadButton label="Download merged SRT" content={valid ? calculation.content : null} filename="merged-subtitles.srt" mimeType="application/x-subrip;charset=utf-8" disabled={!valid || busy} onDownloaded={() => { dispatch({ type: "download" }); setSuccessHidden(false); }} onError={(message) => dispatch({ type: "error", message })} />
+        <DownloadButton label="Download merged SRT" content={valid ? calculation.content : null} filename="merged-subtitles.srt" mimeType="application/x-subrip;charset=utf-8" disabled={!valid || busy} onDownloaded={() => dispatch({ type: "download" })} onError={(message) => dispatch({ type: "error", message })} />
         {valid && !session.downloaded && <p className="aen-dl-ok"><span className="aen-dl-ok-dot"><Icon name="check" size={12} /></span>All joins look good.</p>}{session.files.length < 2 && <p className="download-help">{session.files.length ? "Add one more file to merge." : "Add at least two SRT files to get started."}</p>}
-        {session.downloaded && valid && !successHidden && <div className="aen-dl-success" role="status"><Icon name="check" size={16} /><span className="aen-dl-success-text"><strong>Download complete</strong><small>merged-subtitles.srt</small></span><button type="button" className="aen-dl-success-close" aria-label="Dismiss" onClick={() => setSuccessHidden(true)}>×</button></div>}
+        
       </div></aside>}
     </div></div>
   </>;
