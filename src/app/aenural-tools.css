@@ -619,3 +619,26 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (max-width: 940px) {
   .aen-tool-page .aen-merger { margin-bottom: 215px; }
 }
+
+/* Pilot v13 — proper layout, following the owner's reference: the side
+   column widens so join cards fit real filenames and full timestamps, and
+   the download card spans the full workspace width at the bottom. */
+.aen-tool-page .aen-merger .aen-merger-layout { grid-template-columns: minmax(0, 1fr) 410px; grid-template-areas: "steps steps" "main side" "download download"; }
+.aen-merger .aen-merger-main { grid-area: main; }
+.aen-tool-page .aen-merger .aen-merger-side { grid-area: side; }
+.aen-merger .download-section { grid-area: download; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 22px 26px; }
+.aen-merger .download-section .button { width: 100%; }
+.aen-tool-page .aen-merger .aen-merger-layout.is-empty { grid-template-columns: 1fr; grid-template-areas: "steps" "main"; }
+.aen-merger .v1-gap-control .quick-offsets { display: grid; grid-template-columns: repeat(4, 1fr); }
+.aen-merger .v1-gap-control .offset-input { max-width: 320px; }
+.aen-merger .vj-time { font-size: 12px; white-space: nowrap; }
+.aen-merger .vj-name { font-size: 13px; }
+@media (max-width: 940px) {
+  .aen-tool-page .aen-merger .aen-merger-layout { grid-template-columns: 1fr; grid-template-areas: "steps" "main" "side" "download"; }
+}
+@media (max-width: 430px) {
+  .aen-merger .v1-join { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+  .aen-merger .vj-mid { padding-left: 2px; }
+  .aen-merger .vj-mid::before { display: none; }
+  .aen-merger .vj-mid .icon { transform: rotate(90deg); }
+}
