@@ -3,7 +3,7 @@ import { VttToTxtConverter } from "@/features/vtt-to-txt/vtt-to-txt";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
 import { pageMetadata } from "@/lib/site-metadata";
-export const metadata = pageMetadata("VTT to TXT Converter", "Extract readable transcript text from WebVTT subtitles. Copy text or download UTF-8 TXT, in your browser without signup.", "/tools/vtt-to-txt");
+export const metadata = pageMetadata("VTT to TXT Converter — Extract a WebVTT Transcript", "Extract readable transcript text from WebVTT subtitles, then copy it or download it as a UTF-8 TXT file to read, quote, or reuse. Free, no signup.", "/tools/vtt-to-txt");
 export default function ToolPage() {
   return <ToolLayout title="VTT to TXT Converter" category="Subtitle Tools" categoryHref="/tools/subtitle-tools">
     <ToolHeader title="VTT to TXT Converter" description="Extract a readable transcript from VTT subtitles." toolIcon="srt-to-txt" />

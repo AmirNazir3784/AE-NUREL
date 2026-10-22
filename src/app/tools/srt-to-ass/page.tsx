@@ -3,7 +3,7 @@ import { SrtToAssConverter } from "@/features/srt-to-ass/srt-to-ass";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
 import { pageMetadata } from "@/lib/site-metadata";
-export const metadata = pageMetadata("SRT to ASS Converter", "Convert SRT subtitles to ASS with a default style. Free, browser-based conversion with no signup.", "/tools/srt-to-ass");
+export const metadata = pageMetadata("SRT to ASS Converter — Convert SRT to ASS Subtitles", "Convert SRT subtitles to ASS format with a ready-to-use default style included, so the file is ready to use right away in ASS players. Free, no signup.", "/tools/srt-to-ass");
 export default function ToolPage() {
   return <ToolLayout title="SRT to ASS Converter" category="Subtitle Tools" categoryHref="/tools/subtitle-tools">
     <ToolHeader title="SRT to ASS Converter" description="Convert SRT subtitles to ASS with a default style." toolIcon="srt-to-ass" />

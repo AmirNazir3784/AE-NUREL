@@ -3,7 +3,7 @@ import { SrtToSbvConverter } from "@/features/srt-to-sbv/srt-to-sbv";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
 import { pageMetadata } from "@/lib/site-metadata";
-export const metadata = pageMetadata("SRT to SBV Converter", "Convert SRT subtitles to basic YouTube SBV captions. Keep words, line breaks and timing, with free browser-local processing.", "/tools/srt-to-sbv");
+export const metadata = pageMetadata("SRT to SBV Converter — Make YouTube SBV Captions", "Convert SRT subtitles to basic YouTube SBV captions, keeping your words, line breaks, and timing exactly as they are. Free online, no signup required.", "/tools/srt-to-sbv");
 export default function ToolPage() {
   return <ToolLayout title="SRT to SBV Converter" category="Subtitle Tools" categoryHref="/tools/subtitle-tools">
     <ToolHeader title="SRT to SBV Converter" description="Convert SRT subtitles to SBV captions." toolIcon="srt-to-vtt" />

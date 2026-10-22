@@ -3,7 +3,7 @@ import { SrtToMp4Converter } from "@/features/srt-to-mp4/srt-to-mp4";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
 import { pageMetadata } from "@/lib/site-metadata";
-export const metadata = pageMetadata("SRT to MP4 Converter", "Render SRT subtitles as a silent MP4 caption video on a solid background, locally in a supported browser.", "/tools/srt-to-mp4");
+export const metadata = pageMetadata("SRT to MP4 Converter — Turn an SRT File into a Caption Video", "Turn an SRT file into a new silent MP4 caption video — subtitle text on a black or white background, up to 500 cues and 2 minutes. Free, no signup.", "/tools/srt-to-mp4");
 export default function ToolPage() {
   return <ToolLayout title="SRT to MP4 Converter" category="Subtitle Tools" categoryHref="/tools/subtitle-tools">
     <ToolHeader title="SRT to MP4 Converter" description="Create a silent video of your subtitle text." toolIcon="video" />

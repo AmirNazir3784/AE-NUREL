@@ -3,7 +3,7 @@ import { SbvToSrtConverter } from "@/features/sbv-to-srt/sbv-to-srt";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
 import { pageMetadata } from "@/lib/site-metadata";
-export const metadata = pageMetadata("SBV to SRT Converter", "Convert YouTube SBV caption files to numbered SRT subtitles. Free browser-local conversion, with no signup.", "/tools/sbv-to-srt");
+export const metadata = pageMetadata("SBV to SRT Converter — Convert YouTube Captions to SRT", "Convert YouTube SBV caption files into standard, numbered SRT subtitles that other players and editors accept, timings kept exactly. Free, no signup.", "/tools/sbv-to-srt");
 export default function ToolPage() {
   return <ToolLayout title="SBV to SRT Converter" category="Subtitle Tools" categoryHref="/tools/subtitle-tools">
     <ToolHeader title="SBV to SRT Converter" description="Convert SBV captions to standard SRT subtitles." toolIcon="vtt-to-srt" />
