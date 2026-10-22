@@ -11,12 +11,12 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [] }: { title: string; description: string; ticks?: readonly string[] }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" }) {
   const words = title.split(" ");
   const last = words.length > 1 ? words[words.length - 1] : null;
   const head = last ? words.slice(0, -1).join(" ") : title;
-  return <header className="aen-tool-hero">
-    <span className="aen-hero-chip aen-hero-chip-a" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>Part 1.srt</span><span className="aen-hero-chip aen-hero-chip-b" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>Part 2.srt</span><span className="aen-hero-chip aen-hero-chip-c" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>Merged.srt</span><div className="aen-hero-merge" aria-hidden="true">
+  return <header className={"aen-tool-hero art-" + art}>
+    {chipA && <span className="aen-hero-chip aen-hero-chip-a" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipA}</span>}{chipB && <span className="aen-hero-chip aen-hero-chip-b" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipB}</span>}{chipC && <span className="aen-hero-chip aen-hero-chip-c" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipC}</span>}<div className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 220 64" role="presentation" focusable="false">
         <g className="aen-hero-doc aen-hero-doc-a"><rect x="6" y="8" width="40" height="48" rx="9" /><path d="M14 24h24M14 34h24M14 44h15" /></g>
         <g className="aen-hero-doc aen-hero-doc-b"><rect x="58" y="8" width="40" height="48" rx="9" /><path d="M66 24h24M66 34h24M66 44h15" /></g>
