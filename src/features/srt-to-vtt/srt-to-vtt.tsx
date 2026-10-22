@@ -40,7 +40,7 @@ export function SrtToVttConverter() {
           <DownloadButton content={state.error ? null : () => serializeConversionSession(state)} filename={conversion.filename} label="Download VTT" mimeType="text/vtt;charset=utf-8" disabled={!!state.error || busy} onDownloaded={() => dispatch({ type: "download" })} onError={(message) => dispatch({ type: "error", message })} />
           {conversion.warnings.map((warning) => <StatusMessage tone="warning" key={warning}>{warning}</StatusMessage>)}
         </section>
-        {state.downloaded && <StatusMessage tone="success">Download started: {conversion.filename}</StatusMessage>}
+        
       </>}
       {state.error && <StatusMessage tone="error">{state.error}</StatusMessage>}
       {(conversion || busy || state.error) && <div className="conversion-reset"><button className="text-button" type="button" onClick={reset}><Icon name="reset" size={16} />Start over</button></div>}
