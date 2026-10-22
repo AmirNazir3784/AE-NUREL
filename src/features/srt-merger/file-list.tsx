@@ -28,7 +28,7 @@ export function MergeFileList({ files, onMove, onReorder, onRemove, onReplace, b
     >
       <span className="merge-order" aria-label={`File ${index + 1}`}>{index + 1}</span>
       <div className="merge-file-detail"><strong className="merge-filename">{file.name}</strong>
-        <span className="merge-file-meta">{file.status === "ready" ? `${file.document.cues.length} ${file.document.cues.length === 1 ? "subtitle" : "subtitles"} · ` : ""}{file.size < 1024 ? `${file.size} B` : file.size >= 1024 * 1024 ? `${(file.size / 1024 / 1024).toFixed(1)} MB` : `${(file.size / 1024).toFixed(1)} KB`}<span className={`merge-file-status status-${file.status}`}>{file.status === "ready" ? <><Icon name="check" size={12} />Ready</> : file.status === "reading" ? "Reading…" : "Needs attention"}</span></span>
+        <span className="merge-file-meta">{file.status === "ready" ? `${file.document.cues.length} ${file.document.cues.length === 1 ? "subtitle" : "subtitles"} · ` : ""}{file.size < 1024 ? `${file.size} B` : file.size >= 1024 * 1024 ? `${(file.size / 1024 / 1024).toFixed(1)} MB` : `${(file.size / 1024).toFixed(1)} KB`}<span className={`merge-file-status status-${file.status}`}>{file.status === "ready" ? <><Icon name="check" size={13} /><span className="sr-only">Ready</span></> : file.status === "reading" ? "Reading…" : "Needs attention"}</span></span>
       </div>
       <div className="merge-row-actions">
         <button type="button" className="merge-icon-button" title="Move up" disabled={index === 0 || busy} aria-label={`Move file ${index + 1}, ${file.name}, up`} onClick={() => onMove(file.id, -1)}><Icon name="chevron" className="point-up" size={17} /></button>
