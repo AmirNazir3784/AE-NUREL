@@ -322,3 +322,44 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
   .aen-benefit { transition: none; } .aen-benefit:hover { transform: none; }
   .aen-tool-page .tool-faq-item summary::after { transition: none; }
 }
+
+/* Batch E redesign pilot v2 — reference quality pass (SRT Merger).
+   Soft page wash, one large floating workspace card, pastel accents,
+   two-column FAQ. Still scoped to the merger pilot page. */
+.aen-tool-page:has(.aen-merger) { background-image: radial-gradient(640px 360px at 10% -40px, color-mix(in srgb, var(--accent) 11%, transparent), transparent 70%), radial-gradient(760px 420px at 92% -60px, color-mix(in srgb, #0d9488 11%, transparent), transparent 70%); background-repeat: no-repeat; }
+.aen-tool-page:has(.aen-merger) .tool-frame { border-radius: 24px; border-color: var(--border); box-shadow: 0 30px 60px -28px rgb(15 23 42 / .20), 0 4px 16px -6px rgb(15 23 42 / .07); animation: aen-rise .6s cubic-bezier(.2,.8,.2,1) .05s both; }
+.aen-tool-page .aen-merger .editor-panel { padding: 30px; }
+.aen-tool-hero { position: relative; }
+.aen-hero-merge svg { width: 190px; }
+.aen-hero-chip { position: absolute; display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 9px 13px; font-family: var(--font-platform); font-size: 13px; font-weight: 600; box-shadow: 0 16px 32px -16px rgb(15 23 42 / .28); z-index: 1; }
+.aen-hero-chip-a { left: 3%; top: 2px; color: var(--accent); transform: rotate(-6deg); animation: aen-float 6s ease-in-out infinite alternate; }
+.aen-hero-chip-b { left: 8.5%; top: 62px; color: #0d9488; transform: rotate(4deg); animation: aen-float 6s ease-in-out -3s infinite alternate; }
+.aen-hero-chip-c { right: 4%; top: 24px; color: var(--accent); transform: rotate(5deg); animation: aen-float 6s ease-in-out -1.5s infinite alternate; }
+@media (max-width: 1150px) { .aen-hero-chip { display: none; } }
+.aen-tool-page .aen-merger .upload-zone { border-radius: 18px; background: var(--surface-soft); min-height: 180px; }
+.aen-tool-page .aen-merger .merge-file-row { border-color: var(--border); padding: 12px 14px; transition: box-shadow .25s cubic-bezier(.2,.8,.2,1), border-color .25s; }
+.aen-tool-page .aen-merger .merge-file-row:hover { box-shadow: 0 10px 22px -14px rgb(15 23 42 / .25); border-color: var(--border-strong); }
+.aen-tool-page .aen-merger .merge-order { width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; }
+.aen-tool-page .aen-merger .quick-offsets button { border-radius: 999px; padding: 6px 14px; border: 1px solid var(--border-strong); background: var(--surface); font-weight: 550; transition: background-color .2s, border-color .2s, color .2s; }
+.aen-tool-page .aen-merger .quick-offsets button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.aen-tool-page .aen-merger .aen-merger-side .v1-join-inspection { background: var(--surface); }
+.aen-tool-page .aen-merger .aen-merger-side .download-section { background: var(--surface); }
+.aen-tool-page .aen-merger .v1-join { background: var(--surface-soft); border-color: var(--border); }
+.aen-tool-page .aen-merger .aen-merger-side .download-button { background-image: linear-gradient(180deg, color-mix(in srgb, var(--accent) 80%, #ffffff), var(--accent)); box-shadow: 0 14px 26px -12px color-mix(in srgb, var(--accent) 70%, transparent); border: 0; }
+.aen-benefit { border-radius: 18px; padding: 22px; }
+.aen-benefit:nth-child(2) .aen-benefit-icon { background: color-mix(in srgb, #3b82f6 13%, transparent); color: #2563eb; }
+.aen-benefit:nth-child(3) .aen-benefit-icon { background: color-mix(in srgb, #10b981 13%, transparent); color: #059669; }
+.aen-benefit:nth-child(4) .aen-benefit-icon { background: color-mix(in srgb, #8b5cf6 13%, transparent); color: #7c3aed; }
+.aen-tool-page .tool-faq { max-width: 1180px; display: grid; grid-template-columns: 300px minmax(0, 1fr); column-gap: 44px; align-items: start; }
+.aen-tool-page .tool-faq h2 { grid-row: 1 / span 3; margin: 0; padding-top: 10px; font-size: 27px; font-family: var(--font-heading); letter-spacing: -.01em; }
+.aen-tool-page .tool-faq-item { grid-column: 2; }
+@media (max-width: 900px) {
+  .aen-tool-page .tool-faq { grid-template-columns: minmax(0, 1fr); }
+  .aen-tool-page .tool-faq h2 { grid-row: auto; margin-bottom: 16px; padding-top: 0; }
+  .aen-tool-page .tool-faq-item { grid-column: 1; }
+  .aen-tool-page .aen-merger .editor-panel { padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-chip-a, .aen-hero-chip-b, .aen-hero-chip-c { animation: none; }
+  .aen-tool-page:has(.aen-merger) .tool-frame { animation: none; }
+}
