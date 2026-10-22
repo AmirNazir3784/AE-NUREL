@@ -18,7 +18,7 @@ describe("completed Format Conversion discovery", () => {
       const page = await readFile(new URL("../src/app/tools/" + route + "/page.tsx", import.meta.url), "utf8");
       const title = /pageMetadata\("([^"]+)"/.exec(page)?.[1];
       assert.ok(title); titles.add(title);
-      assert.ok(page.includes('ToolHeader title="' + title + '"'));
+      assert.ok(page.includes('ToolHeader title="' + title.split(" — ")[0] + '"'));
       assert.match(page, /<ToolLayout/); assert.match(page, /<RelatedTools/);
       assert.ok(page.includes('"/tools/' + route + '"'));
       assert.doesNotMatch(page, /index: false/);
