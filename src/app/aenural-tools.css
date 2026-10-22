@@ -597,3 +597,31 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .aen-merger .aen-dl-stat { flex-direction: row; align-items: baseline; gap: 7px; padding: 8px 12px; }
   .aen-merger .aen-dl-stat strong { font-size: 17px; }
 }
+
+/* Pilot v12 — the side panel exists only once files are added, and follows
+   the owner's clean reference: icon-tile panel heads, three-part join cards,
+   and a calm ready state in the download card. */
+.aen-tool-page .aen-merger .aen-merger-layout.is-empty { grid-template-columns: 1fr; }
+.aen-panel-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.aen-panel-head h2 { margin: 0; }
+.aen-panel-icon { width: 40px; height: 40px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
+.aen-merger .v1-join { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 10px; padding: 14px 16px; }
+.aen-merger .vj-side { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.aen-merger .vj-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; }
+.aen-merger .vj-lab { font-size: 11.5px; color: var(--muted); }
+.aen-merger .vj-time { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.aen-merger .vj-clock { display: inline-flex; }
+.aen-merger .vj-clock-end { color: var(--action); }
+.aen-merger .vj-clock-start { color: var(--accent); }
+.aen-merger .vj-mid { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+.aen-merger .vj-mid::before { content: ""; width: 20px; height: 1px; background: var(--border-strong); }
+.aen-merger .vj-pill { font-size: 12px; font-weight: 600; color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+.aen-dl-head { justify-content: flex-start; }
+.aen-dl-head .text-button { margin-left: auto; }
+.aen-dl-titles { display: flex; flex-direction: column; gap: 1px; }
+.aen-dl-sub { margin: 0; font-size: 13px; color: var(--muted); }
+.aen-dl-ok { display: flex; align-items: center; gap: 8px; margin: 12px 0 0; font-size: 13.5px; color: var(--foreground); }
+.aen-dl-ok-dot { width: 20px; height: 20px; flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--accent); color: #fff; }
+@media (max-width: 940px) {
+  .aen-tool-page .aen-merger { margin-bottom: 215px; }
+}
