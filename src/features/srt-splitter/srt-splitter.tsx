@@ -16,7 +16,7 @@ export function SrtSplitter() {
   const [session, dispatch] = useReducer(splitSessionReducer, initialSplitSession);
   const request = useRef(0);
   const workspace = useRef<HTMLDivElement>(null);
-  const { source, busy, method, values, timestamps, error, message } = session;
+  const { source, busy, method, values, timestamps, error } = session;
   const calculation = useMemo(() => {
     if (!source || busy) return { result: null, error: "" };
     try { return { result: splitSrt(source.document, source.name, { method, value: values[method], timestamps }), error: "" }; }
@@ -51,8 +51,8 @@ export function SrtSplitter() {
         <div className="download-section"><div className="download-heading"><span className="section-label">Download your parts</span>{(source || busy || error) && <button type="button" className="text-button" onClick={reset}><Icon name="reset" size={14} />Start over</button>}</div>
           {valid && <p className="adjustment-summary">{result.parts.length} files · {result.parts.length <= 6 ? `${result.parts.map((part) => part.cues.length).join(" / ")} cues` : `${result.cueCount} cues total`}</p>}
           <DownloadButton content={valid ? () => createSplitZip(result) : null} filename={archiveName} label="Download all parts (ZIP)" mimeType="application/zip" disabled={!valid} onDownloaded={() => dispatch({ type: "download", filename: archiveName, all: true })} onError={showError} />
-          <p className="download-help">{source ? "One ZIP with every part. Individual files are available in the output list." : "Upload a file to get started."}</p>
-          {message && <StatusMessage tone="success">{message}</StatusMessage>}
+          
+          
         </div></>}
         {!source && busy && <button type="button" className="text-button" onClick={reset}>Start over</button>}
       </div>
