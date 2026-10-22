@@ -275,19 +275,19 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
 /* Batch E redesign pilot (SRT Merger) — hero, benefits, two-column workspace.
    Patterns are shared (.aen-tool-hero, .aen-tool-benefits) so later tool pages
    can adopt them; workspace rules stay scoped to .aen-merger. */
-.aen-tool-hero { text-align: center; padding: 26px 0 30px; animation: aen-rise .6s cubic-bezier(.2,.8,.2,1) both; }
+.aen-tool-hero { text-align: center; padding: 16px 0 28px; animation: aen-rise .6s cubic-bezier(.2,.8,.2,1) both; }
 .aen-hero-merge { display: flex; justify-content: center; margin-bottom: 18px; }
 .aen-hero-merge svg { width: 220px; max-width: 70vw; height: auto; overflow: visible; }
 .aen-hero-doc rect { fill: var(--surface); stroke-width: 1.5; }
 .aen-hero-doc path { fill: none; stroke-width: 2.4; stroke-linecap: round; }
-.aen-hero-doc-a rect { stroke: var(--accent); } .aen-hero-doc-a path { stroke: var(--accent); }
-.aen-hero-doc-b rect { stroke: var(--teal, #0d9488); } .aen-hero-doc-b path { stroke: var(--teal, #0d9488); }
-.aen-hero-doc-c rect { stroke: var(--accent); fill: var(--accent-soft); } .aen-hero-doc-c path { stroke: var(--accent); }
+.aen-hero-doc-a rect { stroke: var(--action); } .aen-hero-doc-a path { stroke: var(--action); }
+.aen-hero-doc-b rect { stroke: var(--accent); } .aen-hero-doc-b path { stroke: var(--accent); }
+.aen-hero-doc-c rect { stroke: var(--action); fill: color-mix(in srgb, var(--action) 9%, var(--surface)); } .aen-hero-doc-c path { stroke: var(--action); }
 .aen-hero-arrow { fill: none; stroke: var(--muted); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .aen-hero-doc-a { animation: aen-float 5s ease-in-out infinite alternate; }
 .aen-hero-doc-b { animation: aen-float 5s ease-in-out -2.5s infinite alternate; }
 .aen-tool-hero h1 { font-family: var(--font-heading); font-weight: 800; font-size: clamp(38px, 5vw, 56px); line-height: 1.08; letter-spacing: -.03em; margin: 0; }
-.aen-hero-accent { color: var(--accent); }
+.aen-hero-accent { color: var(--action); }
 .aen-tool-hero > p { color: var(--muted); font-size: 17px; line-height: 1.6; margin: 14px auto 0; max-width: 56ch; }
 .aen-hero-ticks { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; margin: 20px 0 0; padding: 0; list-style: none; font-size: 14.5px; font-weight: 550; }
 .aen-hero-ticks li { display: inline-flex; align-items: center; gap: 8px; }
@@ -296,7 +296,7 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
 .aen-benefits-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .aen-benefit { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s cubic-bezier(.2,.8,.2,1), border-color .3s; }
 .aen-benefit:hover { transform: translateY(-3px); border-color: var(--border-strong); box-shadow: var(--shadow-overlay); }
-.aen-benefit-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 11px; background: var(--accent-soft); color: var(--accent); margin-bottom: 12px; }
+.aen-benefit-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 11px; background: color-mix(in srgb, var(--action) 12%, transparent); color: var(--action); margin-bottom: 12px; }
 .aen-benefit-icon .icon-tile { border: 0; box-shadow: none; background: transparent; }
 .aen-benefit h2 { font-family: var(--font-heading); font-size: 16.5px; font-weight: 650; margin: 0 0 5px; }
 .aen-benefit p { color: var(--muted); font-size: 14px; line-height: 1.55; margin: 0; }
@@ -326,26 +326,26 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
 /* Batch E redesign pilot v2 — reference quality pass (SRT Merger).
    Soft page wash, one large floating workspace card, pastel accents,
    two-column FAQ. Still scoped to the merger pilot page. */
-.aen-tool-page:has(.aen-merger) { background-image: radial-gradient(640px 360px at 10% -40px, color-mix(in srgb, var(--accent) 11%, transparent), transparent 70%), radial-gradient(760px 420px at 92% -60px, color-mix(in srgb, #0d9488 11%, transparent), transparent 70%); background-repeat: no-repeat; }
+.aen-tool-page:has(.aen-merger) { background-image: radial-gradient(640px 360px at 10% -40px, color-mix(in srgb, var(--action) 10%, transparent), transparent 70%), radial-gradient(700px 400px at 92% -60px, color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%); background-repeat: no-repeat; }
 .aen-tool-page:has(.aen-merger) .tool-frame { border-radius: 24px; border-color: var(--border); box-shadow: 0 30px 60px -28px rgb(15 23 42 / .20), 0 4px 16px -6px rgb(15 23 42 / .07); animation: aen-rise .6s cubic-bezier(.2,.8,.2,1) .05s both; }
 .aen-tool-page .aen-merger .editor-panel { padding: 30px; }
 .aen-tool-hero { position: relative; }
 .aen-hero-merge svg { width: 190px; }
 .aen-hero-chip { position: absolute; display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 9px 13px; font-family: var(--font-platform); font-size: 13px; font-weight: 600; box-shadow: 0 16px 32px -16px rgb(15 23 42 / .28); z-index: 1; }
-.aen-hero-chip-a { left: 3%; top: 2px; color: var(--accent); transform: rotate(-6deg); animation: aen-float 6s ease-in-out infinite alternate; }
-.aen-hero-chip-b { left: 8.5%; top: 62px; color: #0d9488; transform: rotate(4deg); animation: aen-float 6s ease-in-out -3s infinite alternate; }
-.aen-hero-chip-c { right: 4%; top: 24px; color: var(--accent); transform: rotate(5deg); animation: aen-float 6s ease-in-out -1.5s infinite alternate; }
+.aen-hero-chip-a { left: calc(50% - 440px); top: 2px; color: var(--action); transform: rotate(-6deg); animation: aen-float 6s ease-in-out infinite alternate; }
+.aen-hero-chip-b { left: calc(50% - 392px); top: 62px; color: var(--accent); transform: rotate(4deg); animation: aen-float 6s ease-in-out -3s infinite alternate; }
+.aen-hero-chip-c { right: calc(50% - 440px); top: 24px; color: var(--action); transform: rotate(5deg); animation: aen-float 6s ease-in-out -1.5s infinite alternate; }
 @media (max-width: 1150px) { .aen-hero-chip { display: none; } }
 .aen-tool-page .aen-merger .upload-zone { border-radius: 18px; background: var(--surface-soft); min-height: 180px; }
 .aen-tool-page .aen-merger .merge-file-row { border-color: var(--border); padding: 12px 14px; transition: box-shadow .25s cubic-bezier(.2,.8,.2,1), border-color .25s; }
 .aen-tool-page .aen-merger .merge-file-row:hover { box-shadow: 0 10px 22px -14px rgb(15 23 42 / .25); border-color: var(--border-strong); }
 .aen-tool-page .aen-merger .merge-order { width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; }
 .aen-tool-page .aen-merger .quick-offsets button { border-radius: 999px; padding: 6px 14px; border: 1px solid var(--border-strong); background: var(--surface); font-weight: 550; transition: background-color .2s, border-color .2s, color .2s; }
-.aen-tool-page .aen-merger .quick-offsets button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.aen-tool-page .aen-merger .quick-offsets button[aria-pressed="true"] { background: var(--action); border-color: var(--action); color: #fff; }
 .aen-tool-page .aen-merger .aen-merger-side .v1-join-inspection { background: var(--surface); }
 .aen-tool-page .aen-merger .aen-merger-side .download-section { background: var(--surface); }
 .aen-tool-page .aen-merger .v1-join { background: var(--surface-soft); border-color: var(--border); }
-.aen-tool-page .aen-merger .aen-merger-side .download-button { background-image: linear-gradient(180deg, color-mix(in srgb, var(--accent) 80%, #ffffff), var(--accent)); box-shadow: 0 14px 26px -12px color-mix(in srgb, var(--accent) 70%, transparent); border: 0; }
+.aen-tool-page .aen-merger .aen-merger-side .download-button:not(:disabled) { background-image: linear-gradient(180deg, color-mix(in srgb, var(--action) 82%, #ffffff), var(--action)); box-shadow: 0 14px 26px -12px color-mix(in srgb, var(--action) 70%, transparent); border: 0; color: #fff; }
 .aen-benefit { border-radius: 18px; padding: 22px; }
 .aen-benefit:nth-child(2) .aen-benefit-icon { background: color-mix(in srgb, #3b82f6 13%, transparent); color: #2563eb; }
 .aen-benefit:nth-child(3) .aen-benefit-icon { background: color-mix(in srgb, #10b981 13%, transparent); color: #059669; }
@@ -363,3 +363,11 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
   .aen-hero-chip-a, .aen-hero-chip-b, .aen-hero-chip-c { animation: none; }
   .aen-tool-page:has(.aen-merger) .tool-frame { animation: none; }
 }
+/* Pilot v3 corrections (owner screenshots): the legacy .related-section grid
+   in globals.css was squeezing RelatedTools into two columns — the tool-page
+   section is a plain block. The timing note becomes a quiet side note. */
+.aen-tool-page .aen-related { display: block; }
+.aen-tool-page .aen-merger .aen-merger-side .v1-merge-assumption { background: var(--surface-soft); border-left: 3px solid var(--accent); border-radius: 10px; padding: 12px 14px; color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+.aen-tool-page .aen-merger .aen-merger-side .v1-merge-assumption strong { color: var(--foreground); }
+.aen-tool-page .aen-merger .upload-zone { min-height: 150px; padding-block: 26px; }
+.aen-tool-page:has(.aen-merger) .tool-frame { box-shadow: 0 34px 64px -26px rgb(15 23 42 / .24), 0 4px 16px -6px rgb(15 23 42 / .08); }
