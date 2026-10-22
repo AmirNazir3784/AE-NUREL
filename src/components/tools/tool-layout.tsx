@@ -22,7 +22,7 @@ export function ToolHero({ title, description, ticks = [] }: { title: string; de
         <g className="aen-hero-doc aen-hero-doc-b"><rect x="58" y="8" width="40" height="48" rx="9" /><path d="M66 24h24M66 34h24M66 44h15" /></g>
         <path className="aen-hero-arrow" d="M104 32h34m0 0-9-8m9 8-9 8" />
         <g className="aen-hero-doc aen-hero-doc-c"><rect x="146" y="4" width="46" height="56" rx="10" /><path d="M155 21h28M155 32h28M155 43h19" /></g>
-      </svg>
+      <circle className="aen-hero-ripple" cx="169" cy="32" r="12" /><circle className="aen-hero-dot" cx="150" cy="32" r="3.5" /></svg>
     </div>
     <h1>{head}{last ? <> <span className="aen-hero-accent">{last}</span></> : null}</h1>
     <p>{description}</p>
