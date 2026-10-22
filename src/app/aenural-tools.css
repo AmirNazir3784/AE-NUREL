@@ -723,3 +723,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .aen-file-converter { margin-bottom: 110px; }
   .aen-file-converter .aen-conversion-actions { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 80; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-overlay); margin: 0; }
 }
+
+/* Rollout fix — the workspace is a two-column grid; a tool that renders a
+   single root must span the full width, not sit in the left column. */
+.aen-tool-page .tool-workspace > :only-child { grid-column: 1 / -1; }
