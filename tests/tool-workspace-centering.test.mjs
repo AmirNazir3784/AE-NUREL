@@ -6,7 +6,7 @@ describe("SRT workspace and upload centering", () => {
   const globals = css("src/app/globals.css");
   const tools = css("src/app/aenural-tools.css");
   it("centers the narrower timing, merger and sync tool frames without changing widths", () => {
-    for (const [name, width] of [["timing",760],["merge",960],["sync",960]]) {
+    for (const [name, width] of [["timing",760],["merge",1180],["sync",960]]) {
       const target = ".tool-page:has(.v1-" + name + "-workspace) .tool-frame";
       assert.ok(globals.includes(target + " { max-width: " + width + "px; width: 100%; margin-inline: auto; }"), name);
     }
