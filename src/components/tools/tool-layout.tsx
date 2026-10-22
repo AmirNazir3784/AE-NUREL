@@ -5,7 +5,7 @@ import { ToolIcon } from "@/components/ui/icon-tile";
 import type { ProductIconName } from "@/lib/icons";
 import { tools, type Tool } from "@/lib/tools";
 import { JsonLd } from "@/components/site/json-ld";
-import { toolJsonLd } from "@/lib/structured-data";
+import { faqJsonLd, toolJsonLd, type FaqItem } from "@/lib/structured-data";
 export function ToolLayout({ children, title, category, categoryHref }: { children: ReactNode; title: string; category: string; categoryHref: string }) { const tool = tools.find((t) => t.title === title); return <main id="main-content" className="container tool-page aen-tool-page">{tool ? <JsonLd data={toolJsonLd(tool)} /> : null}<nav aria-label="Breadcrumb" className="breadcrumb"><Link href="/tools">All Tools</Link><span>/</span><Link href={categoryHref}>{category}</Link><span>/</span><span aria-current="page">{title}</span></nav>{children}</main>; }
 export function ToolHeader({ title, description, toolIcon }: { title: string; description: string; category?: string; categoryIcon?: ComponentProps<typeof Icon>["name"]; toolIcon?: ProductIconName }) {
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
@@ -13,3 +13,5 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
 }
 export function ToolWorkspace({ children, label }: { children: ReactNode; label: string }) { return <section className="tool-frame aen-workspace" aria-label={label}>{children}</section>; }
 export function RelatedTools({ title, tools = [] }: { title: string; tools?: readonly Tool[] }) { if (!tools.length) return null; return <section className="related-section aen-related" aria-labelledby="related-title"><h2 id="related-title">{title}</h2><div className="v1-related-links">{tools.map((tool) => <Link key={tool.href} href={tool.href}><ToolIcon name={tool.icon} compact /><span>{tool.title}</span><Icon name="arrow" size={16} /></Link>)}</div></section>; }
+
+export function ToolFaq({ href, items }: { href: string; items: readonly FaqItem[] }) { if (!items.length) return null; return <section className="v1-support tool-faq" aria-labelledby="tool-faq-title"><h2 id="tool-faq-title">Frequently asked questions</h2>{items.map((item) => <div key={item.q}><h3>{item.q}</h3><p>{item.a}</p></div>)}<JsonLd data={faqJsonLd(href, items)} /></section>; }
