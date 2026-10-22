@@ -758,3 +758,22 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-convert .aen-badge-from { opacity: 0; }
   .art-convert .aen-badge-to { opacity: 1; }
 }
+
+/* Timing Adjuster scene — a timeline, subtitle blocks, and a mouse pointer
+   that clicks a block and shifts every block later. */
+.art-shift .aen-tl-line, .art-shift .aen-tl-ticks { fill: none; stroke: var(--border-strong); stroke-width: 1.6; stroke-linecap: round; }
+.art-shift .aen-tl-ticks { opacity: .65; }
+.art-shift .aen-shift-blocks rect { fill: var(--accent); opacity: .85; }
+.art-shift .aen-shift-blocks rect.aen-shift-mid { fill: var(--action); opacity: 1; }
+.art-shift .aen-shift-blocks { animation: aen-blocks-shift 9s ease-in-out infinite; }
+@keyframes aen-blocks-shift { 0%, 24% { transform: translateX(0) } 42%, 64% { transform: translateX(18px) } 82%, 100% { transform: translateX(0) } }
+.art-shift .aen-shift-label { fill: var(--action); stroke: none; font-size: 10px; font-weight: 700; opacity: 0; animation: aen-shift-label 9s ease-in-out infinite; }
+@keyframes aen-shift-label { 0%, 32% { opacity: 0 } 46%, 64% { opacity: 1 } 78%, 100% { opacity: 0 } }
+.art-shift .aen-shift-ring { fill: none; stroke: var(--action); stroke-width: 1.6; opacity: 0; transform-box: fill-box; transform-origin: center; animation: aen-shift-ring 9s ease-out infinite; }
+@keyframes aen-shift-ring { 0%, 17% { opacity: 0; transform: scale(.4) } 21% { opacity: .75 } 30%, 100% { opacity: 0; transform: scale(1.9) } }
+.art-shift .aen-shift-cursor { opacity: 0; transform-box: fill-box; transform-origin: top left; animation: aen-shift-cursor 9s ease-in-out infinite; }
+.art-shift .aen-shift-cursor path { fill: var(--foreground); stroke: var(--surface); stroke-width: 1.1; }
+@keyframes aen-shift-cursor { 0%, 8% { transform: translate(152px, 40px) scale(1); opacity: 0 } 15% { transform: translate(94px, 29px) scale(1); opacity: 1 } 20% { transform: translate(94px, 29px) scale(.86); opacity: 1 } 25% { transform: translate(94px, 29px) scale(1); opacity: 1 } 42%, 60% { transform: translate(112px, 29px) scale(1); opacity: 1 } 68%, 100% { transform: translate(136px, 38px) scale(1); opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .art-shift .aen-shift-blocks, .art-shift .aen-shift-label, .art-shift .aen-shift-ring, .art-shift .aen-shift-cursor { animation: none; }
+}
