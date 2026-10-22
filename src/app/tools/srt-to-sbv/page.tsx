@@ -1,4 +1,4 @@
-import { RelatedTools, ToolHeader, ToolLayout, ToolWorkspace } from "@/components/tools/tool-layout";
+import { RelatedTools, ToolFaq, ToolHeader, ToolLayout, ToolWorkspace } from "@/components/tools/tool-layout";
 import { SrtToSbvConverter } from "@/features/srt-to-sbv/srt-to-sbv";
 import { tools } from "@/lib/tools";
 import { relevantRoutes } from "@/lib/discovery";
@@ -9,6 +9,6 @@ export default function ToolPage() {
     <ToolHeader title="SRT to SBV Converter" description="Convert SRT subtitles to SBV captions." toolIcon="srt-to-vtt" />
     <ToolWorkspace label="SRT to SBV Converter"><SrtToSbvConverter /></ToolWorkspace>
     <section className="v1-support"><h2>Basic SBV output</h2><p>Cue numbers are removed and times use SBV’s comma-separated format. Caption words, single line breaks and millisecond timing are kept. Basic SBV cannot store SRT styling or positioning, so those features are omitted with a warning.</p></section>
-    <RelatedTools title="Useful next tools" tools={relevantRoutes["/tools/srt-to-sbv"].map(href => tools.find(tool => tool.href === href)!)} />
+    <ToolFaq href="/tools/srt-to-sbv" items={[{"q": "Why make an SBV file?", "a": "SBV is YouTube's caption format, so this is the direction to use when your subtitles are in SRT and you need basic YouTube SBV captions."}, {"q": "What is kept in the conversion?", "a": "Your words, line breaks, and timing are kept; the output is a basic SBV file."}, {"q": "Is signup needed?", "a": "No — it is free and no signup is needed."}]} /><RelatedTools title="Useful next tools" tools={relevantRoutes["/tools/srt-to-sbv"].map(href => tools.find(tool => tool.href === href)!)} />
   </ToolLayout>;
 }
