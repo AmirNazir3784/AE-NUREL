@@ -1303,3 +1303,26 @@ html:has(.aen-merger) body { overflow-x: clip; }
 /* --- Overlap improvement: ghost outline of B's original spot (shows the move in stills) --- */
 .art-overlap .aen-ov-ghost { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 3; opacity: .55; }
 .art-overlap .aen-ov-check path { stroke-width: 2.5; }
+
+/* --- Audio 100%: Waveform to Words (base = final state: bars, arrow, cues,
+   SRT label all visible; scan is transient; .aen-hero-entered loops 6s) --- */
+.aen-au-bars rect { fill: var(--accent); }
+.aen-au-bars rect.aen-au-hot { fill: var(--action); }
+.aen-au-scan { opacity: 0; }
+.aen-au-scan line { stroke: var(--action); stroke-width: 2; }
+.aen-au-scan path { fill: var(--action); }
+.aen-au-arrow { stroke: var(--accent); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.aen-au-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.aen-au-ts { fill: var(--muted); font-size: 8px; }
+.aen-au-tx { fill: var(--foreground); font-size: 11px; }
+.aen-au-label { fill: var(--action); font-size: 8px; font-weight: 700; }
+.aen-hero-entered .aen-au-scan { animation: aen-au-scan 6s ease-in-out infinite; }
+.aen-hero-entered .aen-au-arrow { animation: aen-au-arrow 6s ease-in-out infinite; }
+.aen-hero-entered .aen-au-cue1 { animation: aen-au-cue1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-au-cue2 { animation: aen-au-cue2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-au-label { animation: aen-au-label 6s ease-in-out infinite; }
+@keyframes aen-au-scan { 0% { transform: translateX(0); opacity: 0 } 8% { opacity: 1 } 40% { transform: translateX(104px); opacity: 1 } 50%, 100% { transform: translateX(104px); opacity: 0 } }
+@keyframes aen-au-arrow { 0%, 32% { opacity: 0 } 46%, 92% { opacity: 1 } 100% { opacity: 0 } }
+@keyframes aen-au-cue1 { 0%, 38% { opacity: 0 } 52%, 92% { opacity: 1 } 100% { opacity: 0 } }
+@keyframes aen-au-cue2 { 0%, 58% { opacity: 0 } 72%, 92% { opacity: 1 } 100% { opacity: 0 } }
+@keyframes aen-au-label { 0%, 70% { opacity: 0 } 82%, 92% { opacity: 1 } 100% { opacity: 0 } }
