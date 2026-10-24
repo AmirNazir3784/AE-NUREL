@@ -81,7 +81,18 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <g className="aen-vt-cue2"><text className="aen-vt-ts2" x="82" y="108">00:05.000 --&gt; 00:08.500</text><text className="aen-vt-line2" x="82" y="124">Thanks for watching.</text></g>
       </svg>
     </div>
-: art === "sync" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+: art === "shift" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <line className="aen-sh-ruler" x1="20" y1="108" x2="300" y2="108" />
+        <path className="aen-sh-ticks" d="M20 104v8M40 104v8M60 104v8M80 104v8M100 104v8M120 104v8M140 104v8M160 104v8M180 104v8M200 104v8M220 104v8M240 104v8M260 104v8M280 104v8M300 104v8" />
+        <g className="aen-sh-ghost"><rect x="40" y="55" width="60" height="18" rx="5" /><rect x="120" y="55" width="60" height="18" rx="5" /><rect x="200" y="55" width="60" height="18" rx="5" /></g>
+        <g className="aen-sh-blocks"><rect x="40" y="55" width="60" height="18" rx="5" /><rect x="120" y="55" width="60" height="18" rx="5" /><rect x="200" y="55" width="60" height="18" rx="5" /></g>
+        <g className="aen-sh-chip"><rect x="130" y="12" width="60" height="20" rx="10" /><text className="aen-sh-plus" x="160" y="26">+2.0s</text><text className="aen-sh-minus" x="160" y="26">−2.0s</text></g>
+        <text className="aen-sh-old" x="70" y="92">00:01</text><text className="aen-sh-old" x="150" y="92">00:05</text><text className="aen-sh-old" x="230" y="92">00:09</text>
+        <text className="aen-sh-new" x="110" y="92">00:03</text><text className="aen-sh-new" x="190" y="92">00:07</text><text className="aen-sh-new" x="270" y="92">00:11</text>
+      </svg>
+    </div>
+    : art === "sync" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 320 140" role="presentation" focusable="false">
         <line className="aen-sy-ruler" x1="30" y1="40" x2="290" y2="40" />
         <line className="aen-sy-ruler" x1="30" y1="92" x2="290" y2="92" />
