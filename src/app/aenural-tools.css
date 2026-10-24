@@ -900,3 +900,20 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-list .aen-list-row { opacity: 1; }
   .art-list .aen-list-web { opacity: .45; }
 }
+
+/* ASS to SRT scene — the style decorations (colour dots and { } override
+   tags) drop off the lines, and the lines settle to plain text. */
+.art-plain .aen-plain-deco circle { stroke: none; }
+.art-plain .aen-plain-deco circle:nth-child(1) { fill: var(--action); }
+.art-plain .aen-plain-deco circle:nth-child(2) { fill: #b07fe8; }
+.art-plain .aen-plain-deco circle:nth-child(3) { fill: var(--accent); }
+.art-plain .aen-plain-deco text { fill: var(--muted); stroke: none; font-size: 13px; font-weight: 700; }
+.art-plain .aen-plain-deco { animation: aen-plain-drop 7.5s ease-in-out infinite; }
+@keyframes aen-plain-drop { 0%, 30% { transform: translateY(0); opacity: 1 } 48%, 84% { transform: translateY(11px); opacity: 0 } 93%, 100% { transform: translateY(0); opacity: 1 } }
+.art-plain .aen-plain-line { animation: aen-plain-settle 7.5s ease-in-out infinite; }
+@keyframes aen-plain-settle { 0%, 30% { fill: var(--action); opacity: .75 } 52%, 88% { fill: var(--foreground); opacity: .6 } 96%, 100% { fill: var(--action); opacity: .75 } }
+@media (prefers-reduced-motion: reduce) {
+  .art-plain .aen-plain-deco, .art-plain .aen-plain-line { animation: none; }
+  .art-plain .aen-plain-deco { opacity: 0; }
+  .art-plain .aen-plain-line { fill: var(--foreground); opacity: .6; }
+}
