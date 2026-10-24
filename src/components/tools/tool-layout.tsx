@@ -13,7 +13,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap" | "json" | "vtxt" | "sbvin" | "sbvout" | "video"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap" | "json" | "vtxt" | "sbvin" | "sbvout" | "video" | "audio"; badgeFrom?: string; badgeTo?: string }) {
   const heroRef = useRef<HTMLElement | null>(null);
   const [entered, setEntered] = useState(false);
   const [playKey, setPlayKey] = useState(0);
@@ -259,6 +259,17 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <rect className="aen-vi-f1" x="150" y="118" width="24" height="12" rx="2" />
         <rect className="aen-vi-f2" x="178" y="118" width="24" height="12" rx="2" />
         <rect className="aen-vi-f3" x="206" y="118" width="24" height="12" rx="2" />
+      </svg>
+    </div>
+    : art === "audio" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <g className="aen-au-bars"><rect x="36" y="46" width="8" height="48" rx="4" /><rect x="52" y="56" width="8" height="28" rx="4" /><rect className="aen-au-hot" x="68" y="38" width="8" height="64" rx="4" /><rect x="84" y="52" width="8" height="36" rx="4" /><rect x="100" y="60" width="8" height="20" rx="4" /><rect className="aen-au-hot" x="116" y="44" width="8" height="52" rx="4" /></g>
+        <g className="aen-au-scan"><line x1="28" y1="28" x2="28" y2="112" /><path d="M23 28h10l-5 9z" /></g>
+        <path className="aen-au-arrow" d="M138 70h18m-5-5 5 5-5 5" />
+        <rect className="aen-au-card" x="168" y="28" width="128" height="84" rx="8" />
+        <g className="aen-au-cue1"><text className="aen-au-ts" x="178" y="48">00:00:01,000</text><text className="aen-au-tx" x="178" y="66">Hello, welcome!</text></g>
+        <g className="aen-au-cue2"><text className="aen-au-ts" x="178" y="86">00:00:03,500</text><text className="aen-au-tx" x="178" y="104">Thanks for watching.</text></g>
+        <text className="aen-au-label" x="272" y="42">SRT</text>
       </svg>
     </div>
     : <div key={playKey} className="aen-hero-merge" aria-hidden="true">
