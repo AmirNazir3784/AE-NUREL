@@ -849,3 +849,29 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-edit .aen-type-new { transform: scaleX(1); }
   .art-edit .aen-type-caret { opacity: 0; }
 }
+
+/* SRT to VTT scene — a small browser window: the WEBVTT header appears,
+   and the caption time's comma becomes a dot. */
+.art-web .aen-web-frame { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-web .aen-web-bar { fill: none; stroke: var(--border); stroke-width: 1.2; }
+.art-web .aen-web-dot { fill: var(--border-strong); stroke: none; }
+.art-web .aen-web-url { fill: var(--surface-soft); stroke: var(--border); stroke-width: 1; }
+.art-web .aen-web-head { fill: var(--accent); stroke: none; font-size: 8.5px; font-weight: 800; letter-spacing: .08em; opacity: 0; animation: aen-web-head 7s ease-in-out infinite; }
+@keyframes aen-web-head { 0%, 22% { opacity: 0; transform: translateY(2px) } 38%, 84% { opacity: 1; transform: translateY(0) } 94%, 100% { opacity: 0 } }
+.art-web .aen-web-t1, .art-web .aen-web-t2 { stroke: none; font-size: 8.5px; font-weight: 700; text-anchor: end; }
+.art-web .aen-web-t1 { fill: var(--muted); animation: aen-web-t1 7s ease-in-out infinite; }
+.art-web .aen-web-t2 { fill: var(--action); opacity: 0; animation: aen-web-t2 7s ease-in-out infinite; }
+@keyframes aen-web-t1 { 0%, 34% { opacity: 1 } 48%, 88% { opacity: 0 } 96%, 100% { opacity: 1 } }
+@keyframes aen-web-t2 { 0%, 34% { opacity: 0 } 48%, 88% { opacity: 1 } 96%, 100% { opacity: 0 } }
+.art-web .aen-web-band { fill: var(--foreground); opacity: .28; animation: aen-web-band 7s ease-in-out infinite; }
+@keyframes aen-web-band { 0%, 30% { opacity: .28 } 46%, 88% { opacity: .85 } 96%, 100% { opacity: .28 } }
+.art-web .aen-web-cap { fill: var(--surface); stroke: none; opacity: .9; }
+.art-web .aen-web-play { fill: var(--action); stroke: none; transform-box: fill-box; transform-origin: center; animation: aen-web-play 3.5s ease-in-out infinite; }
+@keyframes aen-web-play { 0%, 100% { transform: scale(1); opacity: .85 } 50% { transform: scale(1.14); opacity: 1 } }
+@media (prefers-reduced-motion: reduce) {
+  .art-web .aen-web-head, .art-web .aen-web-t1, .art-web .aen-web-t2, .art-web .aen-web-band, .art-web .aen-web-play { animation: none; }
+  .art-web .aen-web-head { opacity: 1; }
+  .art-web .aen-web-t1 { opacity: 0; }
+  .art-web .aen-web-t2 { opacity: 1; }
+  .art-web .aen-web-band { opacity: .85; }
+}
