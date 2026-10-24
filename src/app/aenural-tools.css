@@ -958,3 +958,13 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-text .aen-txt-l1 { transform: translateY(-7px); }
   .art-text .aen-txt-l2 { opacity: .65; }
 }
+
+/* Overlap Fixer — direction doc: a tiny "fixed" cue appears once the blocks
+   have separated and the clean gap is showing. */
+.art-overlap .aen-ovl-fixed circle { fill: var(--accent); stroke: none; }
+.art-overlap .aen-ovl-fixed path { fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.art-overlap .aen-ovl-fixed { opacity: 0; animation: aen-ovl-fixed 8s ease-in-out infinite; }
+@keyframes aen-ovl-fixed { 0%, 78% { opacity: 0; transform: scale(.6); transform-box: fill-box; transform-origin: center } 84%, 92% { opacity: 1; transform: scale(1) } 97%, 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .art-overlap .aen-ovl-fixed { animation: none; opacity: 1; }
+}
