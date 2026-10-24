@@ -61,18 +61,23 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <rect className="aen-ed-handle" x="168" y="90" width="6" height="18" rx="3" />
       </svg>
     </div>
-    : art === "web" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <rect className="aen-web-frame" x="45" y="6" width="130" height="52" rx="9" />
-        <path className="aen-web-bar" d="M45 19h130" />
-        <circle className="aen-web-dot" cx="55" cy="12.5" r="2.2" /><circle className="aen-web-dot" cx="64" cy="12.5" r="2.2" /><circle className="aen-web-dot" cx="73" cy="12.5" r="2.2" />
-        <rect className="aen-web-url" x="83" y="9" width="56" height="7" rx="3.5" />
-        <text className="aen-web-head" x="54" y="31">WEBVTT</text>
-        <text className="aen-web-t1" x="166" y="31">00:01,000</text>
-        <text className="aen-web-t2" x="166" y="31">00:01.000</text>
-        <path className="aen-web-play" d="M104 34l13 7-13 7z" />
-        <rect className="aen-web-band" x="53" y="45" width="114" height="9" rx="4.5" />
-        <rect className="aen-web-cap" x="86" y="47.5" width="48" height="4.5" rx="2.25" />
+    : art === "web" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <text className="aen-vt-header" x="160" y="22">WEBVTT</text>
+        <rect className="aen-vt-card" x="70" y="30" width="180" height="80" rx="10" />
+        <text className="aen-vt-num" x="82" y="52">1</text>
+        <text className="aen-vt-ts" x="82" y="76">00:01</text>
+        <text className="aen-vt-c1" x="115" y="76">,</text>
+        <text className="aen-vt-d1" x="116" y="76">.</text>
+        <text className="aen-vt-ts" x="121" y="76">500</text>
+        <text className="aen-vt-ts" x="141" y="76">--&gt;</text>
+        <text className="aen-vt-ts" x="174" y="76">00:04</text>
+        <text className="aen-vt-c2" x="207" y="76">,</text>
+        <text className="aen-vt-d2" x="208" y="76">.</text>
+        <text className="aen-vt-ts" x="213" y="76">200</text>
+        <text className="aen-vt-line" x="82" y="98">Hello, welcome!</text>
+        <circle className="aen-vt-p1" cx="117" cy="72" r="6" />
+        <circle className="aen-vt-p2" cx="209" cy="72" r="6" />
       </svg>
     </div>
     : art === "shift" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
