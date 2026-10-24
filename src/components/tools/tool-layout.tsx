@@ -161,24 +161,23 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <line className="aen-tx-scan" x1="70" y1="20" x2="250" y2="20" />
       </svg>
     </div>
-    : art === "json" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+        : art === "json" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 320 140" role="presentation" focusable="false">
-        <rect className="aen-js-src" x="30" y="35" width="110" height="70" rx="8" />
-        <g className="aen-js-ci"><rect x="40" y="44" width="20" height="14" rx="7" /><text x="50" y="54">1</text></g>
-        <g className="aen-js-ct"><rect x="40" y="62" width="52" height="14" rx="7" /><text x="66" y="72">00:01,000</text></g>
-        <g className="aen-js-cx"><rect x="40" y="80" width="44" height="14" rx="7" /><text x="62" y="90">Hello!</text></g>
-        <text className="aen-js-bl" x="172" y="75">{"{"}</text>
-        <rect className="aen-js-card" x="180" y="20" width="110" height="100" rx="8" />
-        <text className="aen-js-r1" x="188" y="36"><tspan>"index"</tspan>: 1,</text>
-        <text className="aen-js-r2" x="188" y="49"><tspan>"start"</tspan>: "00:01,000",</text>
-        <text className="aen-js-r3" x="188" y="62"><tspan>"end"</tspan>: "00:04,000",</text>
-        <text className="aen-js-r4" x="188" y="75"><tspan>"startMs"</tspan>: 1000,</text>
-        <text className="aen-js-r5" x="188" y="88"><tspan>"endMs"</tspan>: 4000,</text>
-        <text className="aen-js-r6" x="188" y="101"><tspan>"text"</tspan>: "Hello!"</text>
-        <text className="aen-js-br" x="298" y="75">{"}"}</text>
+        <rect className="aen-js-card" x="70" y="20" width="180" height="100" rx="8" />
+        <text className="aen-js-s1" x="82" y="40">1</text>
+        <text className="aen-js-s2" x="82" y="58">00:01,000 --&gt; 00:04,000</text>
+        <text className="aen-js-s3" x="82" y="76">Hello!</text>
+        <text className="aen-js-bl" x="58" y="70">{"{"}</text>
+        <text className="aen-js-br" x="262" y="70">{"}"}</text>
+        <text className="aen-js-r1" x="82" y="40"><tspan>"index"</tspan>: 1,</text>
+        <text className="aen-js-r2" x="82" y="54"><tspan>"start"</tspan>: "00:01,000",</text>
+        <text className="aen-js-r3" x="82" y="68"><tspan>"end"</tspan>: "00:04,000",</text>
+        <text className="aen-js-r4" x="82" y="82"><tspan>"startMs"</tspan>: 1000,</text>
+        <text className="aen-js-r5" x="82" y="96"><tspan>"endMs"</tspan>: 4000,</text>
+        <text className="aen-js-r6" x="82" y="110"><tspan>"text"</tspan>: "Hello!"</text>
       </svg>
     </div>
-    : art === "vtxt" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+: art === "vtxt" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 320 140" role="presentation" focusable="false">
         <rect className="aen-vx-frame" x="70" y="28" width="180" height="84" rx="10" />
         <g className="aen-vx-meta"><rect x="180" y="12" width="60" height="14" rx="7" /><text x="210" y="22">WEBVTT</text><rect x="246" y="12" width="56" height="14" rx="7" /><text x="274" y="22">captions</text></g>
