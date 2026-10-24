@@ -1186,3 +1186,26 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-sy-pin, .aen-hero-entered .aen-sy-guide, .aen-hero-entered .aen-sy-b1, .aen-hero-entered .aen-sy-b2, .aen-hero-entered .aen-sy-b3, .aen-hero-entered .aen-sy-b4, .aen-hero-entered .aen-sy-check { animation: none; }
 }
+
+/* --- Overlap 100%: Collision Rescue (base = final repaired state; entered
+   plays once 3.2s; hover replays the collision + correction) --- */
+.art-overlap .aen-ov-a { fill: var(--accent); opacity: .85; }
+.art-overlap .aen-ov-b rect { fill: var(--action); opacity: .9; }
+.art-overlap .aen-ov-b { transform: translateX(38px); }
+.art-overlap .aen-ov-zone { transform-box: fill-box; transform-origin: left center; opacity: 0; }
+.art-overlap .aen-ov-gap { fill: var(--accent); opacity: .35; }
+.art-overlap .aen-ov-ruler { fill: none; stroke: var(--border-strong); stroke-width: 1.4; }
+.art-overlap .aen-ov-ticks { fill: none; stroke: var(--border); stroke-width: 1.2; }
+.art-overlap .aen-ov-check circle { fill: var(--accent); stroke: none; }
+.art-overlap .aen-ov-check path { fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.aen-hero-entered .aen-ov-b { animation: aen-ov-b 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-ov-zone { animation: aen-ov-zone 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-ov-gap { animation: aen-ov-gap 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-ov-check { animation: aen-ov-check 3.2s ease-in-out 1 forwards; }
+@keyframes aen-ov-b { 0%, 40% { transform: translateX(0) } 55%, 78%, 100% { transform: translateX(38px) } }
+@keyframes aen-ov-zone { 0% { opacity: .7; transform: scaleX(1) } 15% { opacity: 1; transform: scaleX(1) } 30% { opacity: .7; transform: scaleX(1) } 45%, 70% { opacity: 0; transform: scaleX(0) } 100% { opacity: 0; transform: scaleX(0) } }
+@keyframes aen-ov-gap { 0%, 65% { opacity: 0 } 78%, 100% { opacity: .35 } }
+@keyframes aen-ov-check { 0%, 78% { opacity: 0; transform: scale(.6) } 88%, 100% { opacity: 1; transform: scale(1) } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-ov-b, .aen-hero-entered .aen-ov-zone, .aen-hero-entered .aen-ov-gap, .aen-hero-entered .aen-ov-check { animation: none; }
+}
