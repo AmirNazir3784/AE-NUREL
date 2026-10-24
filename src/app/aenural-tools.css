@@ -830,3 +830,22 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-split .aen-cut-rwrap, .art-split .aen-cut-mark, .art-split .aen-cut-chev { animation: none; }
   .art-split .aen-cut-mark, .art-split .aen-cut-chev { opacity: .8; }
 }
+
+/* Editor scene (redone) — a subtitle card: the second line is deleted and
+   retyped, with a blinking caret that travels as the new text grows. */
+.art-edit .aen-type-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-edit .aen-type-time { fill: var(--muted); stroke: none; font-size: 8px; font-weight: 600; letter-spacing: .04em; }
+.art-edit .aen-type-line { fill: var(--foreground); opacity: .55; }
+.art-edit .aen-type-old { fill: var(--foreground); opacity: .55; animation: aen-type-old 8s ease-in-out infinite; }
+@keyframes aen-type-old { 0%, 26% { opacity: .55 } 38%, 88% { opacity: 0 } 96%, 100% { opacity: .55 } }
+.art-edit .aen-type-new { fill: var(--action); transform-box: fill-box; transform-origin: left center; transform: scaleX(0); animation: aen-type-new 8s ease-in-out infinite; }
+@keyframes aen-type-new { 0%, 40% { transform: scaleX(0); opacity: 1 } 68%, 88% { transform: scaleX(1); opacity: 1 } 95%, 100% { transform: scaleX(1); opacity: 0 } }
+.art-edit .aen-type-caret { fill: var(--action); animation: aen-type-caret-move 8s ease-in-out infinite, aen-type-blink 1s step-end infinite; }
+@keyframes aen-type-caret-move { 0%, 30% { transform: translateX(0) } 40% { transform: translateX(-35px) } 68%, 88% { transform: translateX(17px) } 95%, 100% { transform: translateX(17px); opacity: 0 } }
+@keyframes aen-type-blink { 0%, 100% { opacity: 1 } 50% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .art-edit .aen-type-old, .art-edit .aen-type-new, .art-edit .aen-type-caret { animation: none; }
+  .art-edit .aen-type-old { opacity: 0; }
+  .art-edit .aen-type-new { transform: scaleX(1); }
+  .art-edit .aen-type-caret { opacity: 0; }
+}
