@@ -28,8 +28,12 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
     </div>
     : art === "edit" ? <div className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <g className="aen-hero-doc aen-edit-doc"><rect x="84" y="8" width="52" height="48" rx="9" /><path d="M92 22h36M92 42h24" /><path d="M92 32h13" /><path className="aen-edit-new" d="M107 32h21" /></g>
-        <g className="aen-edit-pencil"><path d="M1 11 9 3l3 3-8 8-4 1z" /><path d="M8 4l3 3" /></g>
+        <rect className="aen-type-card" x="52" y="8" width="116" height="48" rx="10" />
+        <text className="aen-type-time" x="62" y="21">00:04 → 00:07</text>
+        <rect className="aen-type-line" x="62" y="27" width="72" height="5.5" rx="2.75" />
+        <rect className="aen-type-old" x="62" y="39" width="34" height="5.5" rx="2.75" />
+        <rect className="aen-type-new" x="62" y="39" width="52" height="5.5" rx="2.75" />
+        <rect className="aen-type-caret" x="99" y="36.5" width="2.6" height="11" rx="1.3" />
       </svg>
     </div>
     : art === "convert" ? <div className="aen-hero-merge" aria-hidden="true">
