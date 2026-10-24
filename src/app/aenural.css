@@ -41,8 +41,8 @@
 .aen-mega a b { font-family: var(--font-heading); font-size: 13.5px; font-weight: 600; line-height: 1.4; }
 .aen-mega small { display: block; color: var(--muted); font-size: 12px; line-height: 1.5; margin-top: 3px; }
 .aen-menu-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: var(--orange-soft); color: var(--orange-ink); flex: none; }
-.aen-mega .icon-tile, .aen-mobile-free .icon-tile { border: 0; width: 28px; height: 28px; border-radius: 7px; flex: none; }
-.aen-mega .icon-tile svg, .aen-mobile-free .icon-tile svg { width: 17px; height: 17px; }
+.aen-mega .icon-tile { border: 0; width: 28px; height: 28px; border-radius: 7px; flex: none; }
+.aen-mega .icon-tile svg { width: 17px; height: 17px; }
 .aen-mega-footer { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .aen-mega-footer a { color: var(--orange-ink); font-family: var(--font-heading); font-weight: 600; font-size: 12px; padding-inline: 8px; min-height: 36px; width: 100%; }
 .aen-mega-footer > span { color: var(--muted); font-size: 13px; }
