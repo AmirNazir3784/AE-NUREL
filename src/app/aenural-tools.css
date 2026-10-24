@@ -727,16 +727,6 @@ html:has(.aen-merger) body { overflow-x: clip; }
 /* Rollout fix — the workspace is a two-column grid; a tool that renders a
    single root must span the full width, not sit in the left column. */
 .aen-tool-page .tool-workspace > :only-child { grid-column: 1 / -1; }
-
-/* Per-tool hero scenes — each tool's animation tells its own work.
-   Split: the cut line draws, then the two parts slide out.
-   Edit: a pencil crosses the middle line while the new text draws in.
-   Convert: one document, and its format badge flips to the new format. */
-.art-split .aen-split-cut { opacity: .85; stroke-dasharray: 4 5; animation: aen-cut-fade 9s ease-in-out infinite; }
-@keyframes aen-cut-fade { 0% { opacity: 0 } 12%, 88% { opacity: .85 } 97%, 100% { opacity: 0 } }
-.art-split .aen-hero-doc.aen-split-p1, .art-split .aen-hero-doc.aen-split-p2 { animation: aen-split-out 9s ease-in-out infinite; }
-.art-split .aen-hero-doc.aen-split-p2 { animation-delay: .45s; }
-@keyframes aen-split-out { 0%, 16% { transform: translateX(-54px); opacity: 0 } 36%, 88% { transform: translateX(0); opacity: 1 } 96%, 100% { transform: translateX(0); opacity: 0 } }
 .art-split .aen-hero-chip-b { --sx: 285px; --sy: -34px; animation: aen-output-file 9s cubic-bezier(.3, .7, .3, 1) .45s infinite; }
 .art-edit .aen-edit-pencil { animation: aen-pencil-move 8s ease-in-out infinite; }
 @keyframes aen-pencil-move { 0%, 10% { transform: translate(99px, 21px); opacity: 0 } 16% { transform: translate(99px, 21px); opacity: 1 } 52% { transform: translate(127px, 21px); opacity: 1 } 60%, 100% { transform: translate(127px, 21px); opacity: 0 } }
@@ -753,88 +743,11 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-convert .aen-badge-pulse { fill: none; stroke: var(--action); transform-box: fill-box; transform-origin: center; animation: aen-badge-ring 6s ease-out infinite; }
 @keyframes aen-badge-ring { 0%, 40% { opacity: 0; transform: scale(.55) } 50% { opacity: .45 } 64%, 100% { opacity: 0; transform: scale(1.3) } }
 @media (prefers-reduced-motion: reduce) {
-  .art-split .aen-split-cut, .art-split .aen-hero-doc.aen-split-p1, .art-split .aen-hero-doc.aen-split-p2, .art-edit .aen-edit-pencil, .art-edit .aen-edit-new, .art-convert .aen-badge-from, .art-convert .aen-badge-to, .art-convert .aen-badge-pulse { animation: none; }
   .art-edit .aen-edit-new { stroke-dashoffset: 0; }
   .art-convert .aen-badge-from { opacity: 0; }
   .art-convert .aen-badge-to { opacity: 1; }
 }
-
-/* Timing Adjuster scene — a timeline, subtitle blocks, and a mouse pointer
-   that clicks a block and shifts every block later. */
-.art-shift .aen-tl-line, .art-shift .aen-tl-ticks { fill: none; stroke: var(--border-strong); stroke-width: 1.6; stroke-linecap: round; }
-.art-shift .aen-tl-ticks { opacity: .65; }
-.art-shift .aen-shift-blocks rect { fill: var(--accent); opacity: .85; }
-.art-shift .aen-shift-blocks rect.aen-shift-mid { fill: var(--action); opacity: 1; }
-.art-shift .aen-shift-blocks { animation: aen-blocks-shift 9s ease-in-out infinite; }
 @keyframes aen-blocks-shift { 0%, 24% { transform: translateX(0) } 42%, 64% { transform: translateX(18px) } 82%, 100% { transform: translateX(0) } }
-.art-shift .aen-shift-label { fill: var(--action); stroke: none; font-size: 10px; font-weight: 700; opacity: 0; animation: aen-shift-label 9s ease-in-out infinite; }
-@keyframes aen-shift-label { 0%, 32% { opacity: 0 } 46%, 64% { opacity: 1 } 78%, 100% { opacity: 0 } }
-.art-shift .aen-shift-ring { fill: none; stroke: var(--action); stroke-width: 1.6; opacity: 0; transform-box: fill-box; transform-origin: center; animation: aen-shift-ring 9s ease-out infinite; }
-@keyframes aen-shift-ring { 0%, 17% { opacity: 0; transform: scale(.4) } 21% { opacity: .75 } 30%, 100% { opacity: 0; transform: scale(1.9) } }
-.art-shift .aen-shift-cursor { opacity: 0; transform-box: fill-box; transform-origin: top left; animation: aen-shift-cursor 9s ease-in-out infinite; }
-.art-shift .aen-shift-cursor path { fill: var(--foreground); stroke: var(--surface); stroke-width: 1.1; }
-@keyframes aen-shift-cursor { 0%, 8% { transform: translate(152px, 40px) scale(1); opacity: 0 } 15% { transform: translate(94px, 29px) scale(1); opacity: 1 } 20% { transform: translate(94px, 29px) scale(.86); opacity: 1 } 25% { transform: translate(94px, 29px) scale(1); opacity: 1 } 42%, 60% { transform: translate(112px, 29px) scale(1); opacity: 1 } 68%, 100% { transform: translate(136px, 38px) scale(1); opacity: 0 } }
-@media (prefers-reduced-motion: reduce) {
-  .art-shift .aen-shift-blocks, .art-shift .aen-shift-label, .art-shift .aen-shift-ring, .art-shift .aen-shift-cursor { animation: none; }
-}
-
-/* Sync Fixer scene — two timelines: the lower blocks start drifted (each
-   further out than the last) and glide into line with the top row. */
-.art-sync .aen-tl-line { fill: none; stroke: var(--border-strong); stroke-width: 1.6; stroke-linecap: round; }
-.art-sync .aen-sync-guide { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 3 5; opacity: .55; }
-.art-sync .aen-sync-top rect { fill: var(--accent); opacity: .8; }
-.art-sync .aen-sync-low rect { fill: var(--action); animation-duration: 8s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
-.art-sync .aen-sync-b1 { animation-name: aen-sync-b1; }
-.art-sync .aen-sync-b2 { animation-name: aen-sync-b2; }
-.art-sync .aen-sync-b3 { animation-name: aen-sync-b3; }
-@keyframes aen-sync-b1 { 0%, 24% { transform: translateX(5px); fill: var(--action) } 44%, 78% { transform: translateX(0); fill: var(--accent) } 92%, 100% { transform: translateX(5px); fill: var(--action) } }
-@keyframes aen-sync-b2 { 0%, 30% { transform: translateX(11px); fill: var(--action) } 52%, 78% { transform: translateX(0); fill: var(--accent) } 92%, 100% { transform: translateX(11px); fill: var(--action) } }
-@keyframes aen-sync-b3 { 0%, 36% { transform: translateX(18px); fill: var(--action) } 60%, 78% { transform: translateX(0); fill: var(--accent) } 92%, 100% { transform: translateX(18px); fill: var(--action) } }
-.art-sync .aen-sync-check { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0; animation: aen-sync-check 8s ease-in-out infinite; }
-@keyframes aen-sync-check { 0%, 60% { opacity: 0 } 68%, 78% { opacity: 1 } 90%, 100% { opacity: 0 } }
-
-/* Sync Fixer — direction doc: anchor pins mark the two anchor points. */
-.art-sync .aen-sync-pin circle { fill: var(--action); stroke: none; }
-.art-sync .aen-sync-pin { animation: aen-sync-pin 8s ease-in-out infinite; }
-@keyframes aen-sync-pin { 0%, 8% { opacity: 0 } 14%, 88% { opacity: 1 } 95%, 100% { opacity: 0 } }
-@media (prefers-reduced-motion: reduce) {
-  .art-sync .aen-sync-low rect, .art-sync .aen-sync-check, .art-sync .aen-sync-pin { animation: none; }
-  .art-sync .aen-sync-check { opacity: 1; }
-}
-
-/* Overlap Fixer scene — one timeline: two blocks collide (the overlap
-   glows), then the later block slides away and leaves a clean gap. */
-.art-overlap .aen-ovl-line, .art-overlap .aen-ovl-ticks { fill: none; stroke: var(--border-strong); stroke-width: 1.6; stroke-linecap: round; }
-.art-overlap .aen-ovl-ticks { opacity: .6; }
-.art-overlap .aen-ovl-a { fill: var(--accent); opacity: .85; }
-.art-overlap .aen-ovl-b { fill: var(--action); }
-.art-overlap .aen-ovl-bwrap { animation: aen-ovl-move 8s ease-in-out infinite; }
-@keyframes aen-ovl-move { 0%, 30% { transform: translateX(0) } 50%, 78% { transform: translateX(30px) } 92%, 100% { transform: translateX(0) } }
-.art-overlap .aen-ovl-zone { fill: #ff5d3a; animation: aen-ovl-zone 8s ease-in-out infinite; }
-@keyframes aen-ovl-zone { 0%, 12% { opacity: .25 } 20% { opacity: .65 } 28% { opacity: .3 } 34% { opacity: .65 } 46%, 80% { opacity: 0 } 93%, 100% { opacity: .3 } }
-.art-overlap .aen-ovl-gap { fill: var(--accent); opacity: 0; animation: aen-ovl-gap 8s ease-in-out infinite; }
-@keyframes aen-ovl-gap { 0%, 46% { opacity: 0 } 58%, 78% { opacity: .3 } 90%, 100% { opacity: 0 } }
-.art-overlap .aen-ovl-posts { fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; opacity: 0; animation: aen-ovl-gap 8s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .art-overlap .aen-ovl-bwrap, .art-overlap .aen-ovl-zone, .art-overlap .aen-ovl-gap, .art-overlap .aen-ovl-posts { animation: none; }
-  .art-overlap .aen-ovl-zone { opacity: .35; }
-}
-
-/* Splitter scene (redone) — a timeline with one long block: the cut mark
-   drops, and the block becomes two parts that separate. */
-.art-split .aen-cut-line, .art-split .aen-cut-ticks { fill: none; stroke: var(--border-strong); stroke-width: 1.6; stroke-linecap: round; }
-.art-split .aen-cut-ticks { opacity: .6; }
-.art-split .aen-cut-l { fill: var(--accent); opacity: .85; }
-.art-split .aen-cut-r { fill: var(--action); }
-.art-split .aen-cut-rwrap { animation: aen-cut-move 8s ease-in-out infinite; }
-@keyframes aen-cut-move { 0%, 34% { transform: translateX(0) } 54%, 80% { transform: translateX(16px) } 93%, 100% { transform: translateX(0) } }
-.art-split .aen-cut-mark { fill: none; stroke: var(--foreground); stroke-width: 1.8; stroke-dasharray: 3.5 4; stroke-linecap: round; opacity: 0; animation: aen-cut-mark 8s ease-in-out infinite; }
-@keyframes aen-cut-mark { 0%, 8% { opacity: 0; transform: translateY(-4px) } 20%, 44% { opacity: .9; transform: translateY(0) } 58%, 100% { opacity: 0 } }
-.art-split .aen-cut-chev { fill: none; stroke: var(--foreground); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; opacity: 0; animation: aen-cut-mark 8s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .art-split .aen-cut-rwrap, .art-split .aen-cut-mark, .art-split .aen-cut-chev { animation: none; }
-  .art-split .aen-cut-mark, .art-split .aen-cut-chev { opacity: .8; }
-}
 
 /* Editor scene (redone) — a subtitle card: the second line is deleted and
    retyped, with a blinking caret that travels as the new text grows. */
@@ -854,171 +767,11 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-edit .aen-type-new { transform: scaleX(1); }
   .art-edit .aen-type-caret { opacity: 0; }
 }
-
-/* SRT to VTT scene — a small browser window: the WEBVTT header appears,
-   and the caption time's comma becomes a dot. */
-.art-web .aen-web-frame { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
-.art-web .aen-web-bar { fill: none; stroke: var(--border); stroke-width: 1.2; }
-.art-web .aen-web-dot { fill: var(--border-strong); stroke: none; }
-.art-web .aen-web-url { fill: var(--surface-soft); stroke: var(--border); stroke-width: 1; }
-.art-web .aen-web-head { fill: var(--accent); stroke: none; font-size: 8.5px; font-weight: 800; letter-spacing: .08em; opacity: 0; animation: aen-web-head 7s ease-in-out infinite; }
-@keyframes aen-web-head { 0%, 22% { opacity: 0; transform: translateY(2px) } 38%, 84% { opacity: 1; transform: translateY(0) } 94%, 100% { opacity: 0 } }
-.art-web .aen-web-t1, .art-web .aen-web-t2 { stroke: none; font-size: 8.5px; font-weight: 700; text-anchor: end; }
-.art-web .aen-web-t1 { fill: var(--muted); animation: aen-web-t1 7s ease-in-out infinite; }
-.art-web .aen-web-t2 { fill: var(--action); opacity: 0; animation: aen-web-t2 7s ease-in-out infinite; }
-@keyframes aen-web-t1 { 0%, 34% { opacity: 1 } 48%, 88% { opacity: 0 } 96%, 100% { opacity: 1 } }
-@keyframes aen-web-t2 { 0%, 34% { opacity: 0 } 48%, 88% { opacity: 1 } 96%, 100% { opacity: 0 } }
-.art-web .aen-web-band { fill: var(--foreground); opacity: .28; animation: aen-web-band 7s ease-in-out infinite; }
-@keyframes aen-web-band { 0%, 30% { opacity: .28 } 46%, 88% { opacity: .85 } 96%, 100% { opacity: .28 } }
-.art-web .aen-web-cap { fill: var(--surface); stroke: none; opacity: .9; }
-.art-web .aen-web-play { fill: var(--action); stroke: none; transform-box: fill-box; transform-origin: center; animation: aen-web-play 3.5s ease-in-out infinite; }
-@keyframes aen-web-play { 0%, 100% { transform: scale(1); opacity: .85 } 50% { transform: scale(1.14); opacity: 1 } }
-@media (prefers-reduced-motion: reduce) {
-  .art-web .aen-web-head, .art-web .aen-web-t1, .art-web .aen-web-t2, .art-web .aen-web-band, .art-web .aen-web-play { animation: none; }
-  .art-web .aen-web-head { opacity: 1; }
-  .art-web .aen-web-t1 { opacity: 0; }
-  .art-web .aen-web-t2 { opacity: 1; }
-  .art-web .aen-web-band { opacity: .85; }
-}
-
-/* VTT to SRT scene — the web window recedes (its extras drop away) while a
-   plain numbered SRT list appears, row by row. */
-.art-list .aen-list-frame { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
-.art-list .aen-list-bar { fill: none; stroke: var(--border); stroke-width: 1.2; }
-.art-list .aen-list-dot { fill: var(--border-strong); stroke: none; }
-.art-list .aen-list-extra { fill: var(--foreground); opacity: .5; animation: aen-list-extra 8s ease-in-out infinite; }
-@keyframes aen-list-extra { 0%, 12% { opacity: .5 } 24%, 88% { opacity: .12 } 96%, 100% { opacity: .5 } }
-.art-list .aen-list-web { transform-box: fill-box; transform-origin: center; animation: aen-list-web 8s ease-in-out infinite; }
-@keyframes aen-list-web { 0%, 14% { opacity: 1; transform: scale(1) } 30%, 86% { opacity: .45; transform: scale(.93) } 95%, 100% { opacity: 1; transform: scale(1) } }
-.art-list .aen-list-row { opacity: 0; animation-duration: 8s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
-.art-list .aen-list-r1 { animation-name: aen-row-1; }
-.art-list .aen-list-r2 { animation-name: aen-row-2; }
-.art-list .aen-list-r3 { animation-name: aen-row-3; }
 @keyframes aen-row-1 { 0%, 16% { opacity: 0; transform: translateX(7px) } 26%, 86% { opacity: 1; transform: translateX(0) } 95%, 100% { opacity: 0 } }
 @keyframes aen-row-2 { 0%, 28% { opacity: 0; transform: translateX(7px) } 38%, 86% { opacity: 1; transform: translateX(0) } 95%, 100% { opacity: 0 } }
 @keyframes aen-row-3 { 0%, 40% { opacity: 0; transform: translateX(7px) } 50%, 86% { opacity: 1; transform: translateX(0) } 95%, 100% { opacity: 0 } }
-.art-list .aen-list-num { fill: var(--action); stroke: none; font-size: 10px; font-weight: 800; }
-.art-list .aen-list-line { fill: var(--foreground); opacity: .6; }
-.art-list .aen-list-time { fill: var(--muted); stroke: none; font-size: 7.5px; font-weight: 600; }
-@media (prefers-reduced-motion: reduce) {
-  .art-list .aen-list-web, .art-list .aen-list-extra, .art-list .aen-list-row { animation: none; }
-  .art-list .aen-list-row { opacity: 1; }
-  .art-list .aen-list-web { opacity: .45; }
-}
 
-/* ASS to SRT scene — the style decorations (colour dots and { } override
-   tags) drop off the lines, and the lines settle to plain text. */
-.art-plain .aen-plain-deco circle { stroke: none; }
-.art-plain .aen-plain-deco circle:nth-child(1) { fill: var(--action); }
-.art-plain .aen-plain-deco circle:nth-child(2) { fill: #b07fe8; }
-.art-plain .aen-plain-deco circle:nth-child(3) { fill: var(--accent); }
-.art-plain .aen-plain-deco text { fill: var(--muted); stroke: none; font-size: 13px; font-weight: 700; }
-.art-plain .aen-plain-deco { animation: aen-plain-drop 7.5s ease-in-out infinite; }
-@keyframes aen-plain-drop { 0%, 30% { transform: translateY(0); opacity: 1 } 48%, 84% { transform: translateY(11px); opacity: 0 } 93%, 100% { transform: translateY(0); opacity: 1 } }
-.art-plain .aen-plain-line { animation: aen-plain-settle 7.5s ease-in-out infinite; }
-@keyframes aen-plain-settle { 0%, 30% { fill: var(--action); opacity: .75 } 52%, 88% { fill: var(--foreground); opacity: .6 } 96%, 100% { fill: var(--action); opacity: .75 } }
-@media (prefers-reduced-motion: reduce) {
-  .art-plain .aen-plain-deco, .art-plain .aen-plain-line { animation: none; }
-  .art-plain .aen-plain-deco { opacity: 0; }
-  .art-plain .aen-plain-line { fill: var(--foreground); opacity: .6; }
-}
-
-/* SRT to ASS scene — inside a video frame, a plain line settles at the
-   bottom centre and takes on the default style: white on a dark band,
-   with the style name appearing beside it. */
-.art-style .aen-style-frame { fill: var(--surface-soft); stroke: var(--border-strong); stroke-width: 1.4; }
-.art-style .aen-style-play { fill: var(--muted); stroke: none; opacity: .35; }
-.art-style .aen-style-band { fill: #14181d; stroke: none; opacity: 0; animation: aen-style-band 7.5s ease-in-out infinite; }
-@keyframes aen-style-band { 0%, 34% { opacity: 0 } 50%, 86% { opacity: .88 } 95%, 100% { opacity: 0 } }
-.art-style .aen-style-line { animation: aen-style-line 7.5s ease-in-out infinite; }
-@keyframes aen-style-line { 0%, 26% { transform: translateY(0); fill: var(--foreground); opacity: .55 } 48%, 86% { transform: translateY(20.5px); fill: #fff; opacity: 1 } 95%, 100% { transform: translateY(0); fill: var(--foreground); opacity: .55 } }
-.art-style .aen-style-chip rect { fill: var(--accent); stroke: none; }
-.art-style .aen-style-chip text { fill: #fff; stroke: none; font-size: 7.5px; font-weight: 700; text-anchor: middle; }
-.art-style .aen-style-chip { opacity: 0; animation: aen-style-chip 7.5s ease-in-out infinite; }
-@keyframes aen-style-chip { 0%, 52% { opacity: 0; transform: translateY(3px) } 64%, 86% { opacity: 1; transform: translateY(0) } 95%, 100% { opacity: 0 } }
-@media (prefers-reduced-motion: reduce) {
-  .art-style .aen-style-band, .art-style .aen-style-line, .art-style .aen-style-chip { animation: none; }
-  .art-style .aen-style-band { opacity: .88; }
-  .art-style .aen-style-line { transform: translateY(20.5px); fill: #fff; opacity: 1; }
-  .art-style .aen-style-chip { opacity: 1; }
-}
-
-/* SRT to TXT scene — setup: a cue with number and timing; action: the
-   number fades out and the timing slides away; result: the dialogue
-   regroups as a neat text stack inside a transcript page. */
-.art-text .aen-txt-frame { fill: none; stroke: var(--border-strong); stroke-width: 1.4; opacity: 0; animation: aen-txt-frame 3.5s ease-in-out infinite; }
-@keyframes aen-txt-frame { 0%, 50% { opacity: 0 } 62%, 90% { opacity: 1 } 97%, 100% { opacity: 0 } }
-.art-text .aen-txt-num { fill: var(--action); stroke: none; font-size: 10px; font-weight: 800; animation: aen-txt-num 3.5s ease-in-out infinite; }
-@keyframes aen-txt-num { 0%, 20% { opacity: 1 } 32%, 94% { opacity: 0 } 100% { opacity: 1 } }
-.art-text .aen-txt-time { fill: var(--muted); stroke: none; font-size: 8px; font-weight: 600; animation: aen-txt-time 3.5s ease-in-out infinite; }
-@keyframes aen-txt-time { 0%, 24% { opacity: 1; transform: translateX(0) } 42%, 94% { opacity: 0; transform: translateX(-9px) } 100% { opacity: 1; transform: translateX(0) } }
-.art-text .aen-txt-l1 { fill: var(--foreground); opacity: .65; animation: aen-txt-l1 3.5s ease-in-out infinite; }
-@keyframes aen-txt-l1 { 0%, 44% { transform: translateY(0) } 60%, 90% { transform: translateY(-7px) } 97%, 100% { transform: translateY(0) } }
-.art-text .aen-txt-l2 { fill: var(--foreground); opacity: 0; animation: aen-txt-l2 3.5s ease-in-out infinite; }
-@keyframes aen-txt-l2 { 0%, 50% { opacity: 0 } 62%, 90% { opacity: .65 } 97%, 100% { opacity: 0 } }
-@media (prefers-reduced-motion: reduce) {
-  .art-text .aen-txt-frame, .art-text .aen-txt-num, .art-text .aen-txt-time, .art-text .aen-txt-l1, .art-text .aen-txt-l2 { animation: none; }
-  .art-text .aen-txt-frame { opacity: 1; }
-  .art-text .aen-txt-num, .art-text .aen-txt-time { opacity: 0; }
-  .art-text .aen-txt-l1 { transform: translateY(-7px); }
-  .art-text .aen-txt-l2 { opacity: .65; }
-}
-
-/* Overlap Fixer — direction doc: a tiny "fixed" cue appears once the blocks
-   have separated and the clean gap is showing. */
-.art-overlap .aen-ovl-fixed circle { fill: var(--accent); stroke: none; }
-.art-overlap .aen-ovl-fixed path { fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.art-overlap .aen-ovl-fixed { opacity: 0; animation: aen-ovl-fixed 8s ease-in-out infinite; }
-@keyframes aen-ovl-fixed { 0%, 78% { opacity: 0; transform: scale(.6); transform-box: fill-box; transform-origin: center } 84%, 92% { opacity: 1; transform: scale(1) } 97%, 100% { opacity: 0 } }
-@media (prefers-reduced-motion: reduce) {
-  .art-overlap .aen-ovl-fixed { animation: none; opacity: 1; }
-}
-
-/* Splitter — direction doc: one long file, two dotted cut markers, then
-   three pieces move apart and settle with Part 1 / Part 2 / Part 3 labels. */
-.art-split .aen-cut3-p1 rect { fill: var(--accent); stroke: none; }
-.art-split .aen-cut3-p2 rect { fill: var(--action); stroke: none; }
-.art-split .aen-cut3-p3 rect { fill: var(--foreground); opacity: .55; stroke: none; }
-.art-split .aen-cut3-p1 { animation: aen-cut3-p1 8s ease-in-out infinite; }
-.art-split .aen-cut3-p3 { animation: aen-cut3-p3 8s ease-in-out infinite; }
-@keyframes aen-cut3-p1 { 0%, 40% { transform: translateX(0) } 55%, 85% { transform: translateX(-10px) } 94%, 100% { transform: translateX(0) } }
-@keyframes aen-cut3-p3 { 0%, 40% { transform: translateX(0) } 55%, 85% { transform: translateX(10px) } 94%, 100% { transform: translateX(0) } }
-.art-split .aen-cut3-mark { fill: none; stroke: var(--action); stroke-width: 1.4; stroke-dasharray: 3 3; animation: aen-cut3-mark 8s ease-in-out infinite; }
-@keyframes aen-cut3-mark { 0%, 12% { opacity: 0 } 22%, 80% { opacity: 1 } 90%, 100% { opacity: 0 } }
-.art-split .aen-cut3-label { fill: var(--muted); stroke: none; font-size: 7.5px; font-weight: 700; text-anchor: middle; opacity: 0; animation: aen-cut3-label 8s ease-in-out infinite; }
-@keyframes aen-cut3-label { 0%, 55% { opacity: 0 } 65%, 88% { opacity: 1 } 95%, 100% { opacity: 0 } }
-@media (prefers-reduced-motion: reduce) {
-  .art-split .aen-cut3-p1, .art-split .aen-cut3-p3, .art-split .aen-cut3-mark, .art-split .aen-cut3-label { animation: none; }
-  .art-split .aen-cut3-mark, .art-split .aen-cut3-label { opacity: 1; }
-}
-
-/* Editor — direction doc: a subtitle line carries a mistake; the wrong part
-   is underlined orange, the cursor travels to it and fixes it, the corrected
-   text locks with a teal flash, the timing block shifts slightly, and
-   undo/redo arrows flash briefly. */
-.art-edit .aen-fix-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
-.art-edit .aen-fix-time text { fill: var(--muted); stroke: none; font-size: 8.5px; font-weight: 600; }
-.art-edit .aen-fix-time { animation: aen-fix-time 8s ease-in-out infinite; }
-@keyframes aen-fix-time { 0%, 60% { transform: translateX(0) } 70%, 88% { transform: translateX(4px) } 95%, 100% { transform: translateX(0) } }
-.art-edit .aen-fix-line { fill: var(--foreground); opacity: .65; }
-.art-edit .aen-fix-wrong { fill: var(--foreground); opacity: .65; animation: aen-fix-wrong 8s ease-in-out infinite; }
-@keyframes aen-fix-wrong { 0%, 28% { opacity: .65 } 40%, 88% { opacity: 0 } 96%, 100% { opacity: .65 } }
-.art-edit .aen-fix-under { fill: var(--action); animation: aen-fix-under 8s ease-in-out infinite; }
-@keyframes aen-fix-under { 0%, 8% { opacity: 0 } 16%, 40% { opacity: 1 } 48%, 100% { opacity: 0 } }
-.art-edit .aen-fix-new { transform-box: fill-box; transform-origin: left center; animation: aen-fix-new 8s ease-in-out infinite; }
-@keyframes aen-fix-new { 0%, 32% { transform: scaleX(0); fill: var(--accent); opacity: 0 } 45% { transform: scaleX(1); fill: var(--accent); opacity: 1 } 62%, 88% { transform: scaleX(1); fill: var(--foreground); opacity: .65 } 96%, 100% { transform: scaleX(0); opacity: 0 } }
-.art-edit .aen-fix-caret-wrap { animation: aen-fix-caret-wrap 8s ease-in-out infinite; }
-@keyframes aen-fix-caret-wrap { 0%, 8% { opacity: 0; transform: translateX(0) } 12% { opacity: 1 } 28%, 55% { opacity: 1; transform: translateX(33px) } 62%, 100% { opacity: 0; transform: translateX(33px) } }
-.art-edit .aen-fix-caret { fill: var(--action); animation: aen-fix-blink .9s step-end infinite; }
-@keyframes aen-fix-blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
-.art-edit .aen-fix-undo path { fill: none; stroke: var(--muted); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
-.art-edit .aen-fix-undo { opacity: 0; animation: aen-fix-undo 8s ease-in-out infinite; }
-@keyframes aen-fix-undo { 0%, 76% { opacity: 0 } 82%, 90% { opacity: 1 } 96%, 100% { opacity: 0 } }
-@media (prefers-reduced-motion: reduce) {
-  .art-edit .aen-fix-time, .art-edit .aen-fix-wrong, .art-edit .aen-fix-under, .art-edit .aen-fix-new, .art-edit .aen-fix-caret-wrap, .art-edit .aen-fix-caret, .art-edit .aen-fix-undo { animation: none; }
-  .art-edit .aen-fix-wrong, .art-edit .aen-fix-under, .art-edit .aen-fix-caret-wrap, .art-edit .aen-fix-undo { opacity: 0; }
-  .art-edit .aen-fix-new { transform: scaleX(1); fill: var(--foreground); opacity: .65; }
-}
+/* ASS to SRT scene — the style decorations (colour dots and { }
 
 /* --- Merger 100%: Magnetic Merge (new animation doc; base = final state,
    .aen-hero-entered plays it once, 3.2s, forwards; hover/focus replays) --- */
@@ -1356,4 +1109,40 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @keyframes aen-st-tag { 0%, 60% { opacity: 0; transform: translateY(-6px) } 74%, 100% { opacity: 1; transform: translateY(0) } }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-st-arrow, .aen-hero-entered .aen-st-blue, .aen-hero-entered .aen-st-shadow, .aen-hero-entered .aen-st-text, .aen-hero-entered .aen-st-tag { animation: none; }
+}
+
+/* --- SRT to JSON 100%: Data Architecture (base = final JSON object; entered
+   plays once 3.2s; hover replays tokens snapping into rows) --- */
+.art-json .aen-js-src { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-json .aen-js-ci rect, .art-json .aen-js-ct rect, .art-json .aen-js-cx rect { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.2; }
+.art-json .aen-js-ci text, .art-json .aen-js-ct text, .art-json .aen-js-cx text { fill: var(--foreground); stroke: none; font-size: 7px; font-weight: 600; text-anchor: middle; }
+.art-json .aen-js-ci, .art-json .aen-js-ct, .art-json .aen-js-cx { opacity: 0; }
+.art-json .aen-js-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-json .aen-js-bl, .art-json .aen-js-br { fill: var(--accent); stroke: none; font-size: 20px; font-weight: 800; text-anchor: middle; }
+.art-json .aen-js-r1, .art-json .aen-js-r2, .art-json .aen-js-r3, .art-json .aen-js-r4, .art-json .aen-js-r5, .art-json .aen-js-r6 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 8px; }
+.art-json .aen-js-r1 tspan, .art-json .aen-js-r2 tspan, .art-json .aen-js-r3 tspan, .art-json .aen-js-r4 tspan, .art-json .aen-js-r5 tspan, .art-json .aen-js-r6 tspan { fill: var(--accent); }
+.aen-hero-entered .aen-js-ci { animation: aen-js-ci 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-ct { animation: aen-js-ct 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-cx { animation: aen-js-cx 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-bl { animation: aen-js-bl 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-br { animation: aen-js-br 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-r1 { animation: aen-js-r1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-r2 { animation: aen-js-r2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-r3 { animation: aen-js-r3 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-r4 { animation: aen-js-r4 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-r5 { animation: aen-js-r5 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-js-r6 { animation: aen-js-r6 3.2s ease-in-out 1 forwards; }
+@keyframes aen-js-ci { 0%, 18% { opacity: 1; transform: translate(0, 0) } 38%, 100% { opacity: 0; transform: translate(150px, -12px) } }
+@keyframes aen-js-ct { 0%, 26% { opacity: 1; transform: translate(0, 0) } 44%, 100% { opacity: 0; transform: translate(150px, 2px) } }
+@keyframes aen-js-cx { 0%, 32% { opacity: 1; transform: translate(0, 0) } 50%, 100% { opacity: 0; transform: translate(150px, 14px) } }
+@keyframes aen-js-bl { 0%, 52% { opacity: 0; transform: translateX(-16px) } 66%, 100% { opacity: 1; transform: translateX(0) } }
+@keyframes aen-js-br { 0%, 52% { opacity: 0; transform: translateX(16px) } 66%, 100% { opacity: 1; transform: translateX(0) } }
+@keyframes aen-js-r1 { 0%, 44% { opacity: 0; transform: translateX(8px) } 52%, 100% { opacity: 1; transform: translateX(0) } }
+@keyframes aen-js-r2 { 0%, 50% { opacity: 0; transform: translateX(8px) } 58%, 100% { opacity: 1; transform: translateX(0) } }
+@keyframes aen-js-r3 { 0%, 56% { opacity: 0; transform: translateX(8px) } 64%, 100% { opacity: 1; transform: translateX(0) } }
+@keyframes aen-js-r4 { 0%, 62% { opacity: 0; transform: translateX(8px) } 70%, 100% { opacity: 1; transform: translateX(0) } }
+@keyframes aen-js-r5 { 0%, 68% { opacity: 0; transform: translateX(8px) } 76%, 100% { opacity: 1; transform: translateX(0) } }
+@keyframes aen-js-r6 { 0%, 74% { opacity: 0; transform: translateX(8px) } 82%, 100% { opacity: 1; transform: translateX(0) } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-js-ci, .aen-hero-entered .aen-js-ct, .aen-hero-entered .aen-js-cx, .aen-hero-entered .aen-js-bl, .aen-hero-entered .aen-js-br, .aen-hero-entered .aen-js-r1, .aen-hero-entered .aen-js-r2, .aen-hero-entered .aen-js-r3, .aen-hero-entered .aen-js-r4, .aen-hero-entered .aen-js-r5, .aen-hero-entered .aen-js-r6 { animation: none; }
 }
