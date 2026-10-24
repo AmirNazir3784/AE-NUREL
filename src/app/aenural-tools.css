@@ -1178,3 +1178,46 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-vx-meta, .aen-hero-entered .aen-vx-ruler, .aen-hero-entered .aen-vx-track, .aen-hero-entered .aen-vx-b1, .aen-hero-entered .aen-vx-b2, .aen-hero-entered .aen-vx-t1, .aen-hero-entered .aen-vx-t2, .aen-hero-entered .aen-vx-frame { animation: none; }
 }
+
+/* --- SBV to SRT 100%: YouTube Caption Reformat (base = final SRT cues;
+   entered plays once 3.2s; hover replays the pair unfolding) --- */
+.art-sbvin .aen-sv-strip1, .art-sbvin .aen-sv-strip2 { fill: var(--surface); stroke: var(--border); stroke-width: 1.2; opacity: 0; }
+.art-sbvin .aen-sv-n1 rect, .art-sbvin .aen-sv-n2 rect { fill: var(--accent); stroke: none; }
+.art-sbvin .aen-sv-n1 text, .art-sbvin .aen-sv-n2 text { fill: #fff; stroke: none; font-size: 10px; font-weight: 800; text-anchor: middle; }
+.art-sbvin .aen-sv-n1, .art-sbvin .aen-sv-n2 { transform-box: fill-box; transform-origin: center; }
+.art-sbvin .aen-sv-s1a, .art-sbvin .aen-sv-s1b, .art-sbvin .aen-sv-s2a, .art-sbvin .aen-sv-s2b { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 10px; opacity: 0; }
+.art-sbvin .aen-sv-c1, .art-sbvin .aen-sv-c2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 10px; opacity: 0; }
+.art-sbvin .aen-sv-a1, .art-sbvin .aen-sv-a2 { fill: var(--accent); stroke: none; font-family: monospace; font-size: 10px; font-weight: 700; opacity: 0; }
+.art-sbvin .aen-sv-r1, .art-sbvin .aen-sv-r2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 9px; }
+.art-sbvin .aen-sv-d1, .art-sbvin .aen-sv-d2 { fill: var(--muted); stroke: none; font-size: 10px; }
+.aen-hero-entered .aen-sv-c1 { animation: aen-sv-c1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-a1 { animation: aen-sv-a1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-s1b { animation: aen-sv-s1b 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-c2 { animation: aen-sv-c2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-a2 { animation: aen-sv-a2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-s2b { animation: aen-sv-s2b 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-s1a { animation: aen-sv-s1a 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-s2a { animation: aen-sv-s2a 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-n1 { animation: aen-sv-n1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-n2 { animation: aen-sv-n2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-r1 { animation: aen-sv-r1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-r2 { animation: aen-sv-r2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-strip1 { animation: aen-sv-strip1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sv-strip2 { animation: aen-sv-strip2 3.2s ease-in-out 1 forwards; }
+@keyframes aen-sv-c1 { 0%, 18% { opacity: 1 } 28%, 100% { opacity: 0 } }
+@keyframes aen-sv-a1 { 0%, 18% { opacity: 0 } 28%, 38%, 100% { opacity: 1 } }
+@keyframes aen-sv-s1b { 0%, 18% { transform: translateX(0) } 28%, 38%, 100% { transform: translateX(30px) } }
+@keyframes aen-sv-c2 { 0%, 26% { opacity: 1 } 36%, 100% { opacity: 0 } }
+@keyframes aen-sv-a2 { 0%, 26% { opacity: 0 } 36%, 46%, 100% { opacity: 1 } }
+@keyframes aen-sv-s2b { 0%, 26% { transform: translateX(0) } 36%, 46%, 100% { transform: translateX(30px) } }
+@keyframes aen-sv-s1a { 0%, 45% { opacity: 1 } 58%, 100% { opacity: 0 } }
+@keyframes aen-sv-s2a { 0%, 55% { opacity: 1 } 68%, 100% { opacity: 0 } }
+@keyframes aen-sv-n1 { 0%, 40% { opacity: 0; transform: translateY(-12px) } 52%, 100% { opacity: 1; transform: translateY(0) } }
+@keyframes aen-sv-n2 { 0%, 52% { opacity: 0; transform: translateY(-12px) } 64%, 100% { opacity: 1; transform: translateY(0) } }
+@keyframes aen-sv-r1 { 0%, 45% { opacity: 0 } 58%, 100% { opacity: 1 } }
+@keyframes aen-sv-r2 { 0%, 55% { opacity: 0 } 68%, 100% { opacity: 1 } }
+@keyframes aen-sv-strip1 { 0%, 45% { opacity: 1 } 58%, 100% { opacity: 0 } }
+@keyframes aen-sv-strip2 { 0%, 55% { opacity: 1 } 68%, 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-sv-c1, .aen-hero-entered .aen-sv-a1, .aen-hero-entered .aen-sv-s1b, .aen-hero-entered .aen-sv-c2, .aen-hero-entered .aen-sv-a2, .aen-hero-entered .aen-sv-s2b, .aen-hero-entered .aen-sv-s1a, .aen-hero-entered .aen-sv-s2a, .aen-hero-entered .aen-sv-n1, .aen-hero-entered .aen-sv-n2, .aen-hero-entered .aen-sv-r1, .aen-hero-entered .aen-sv-r2, .aen-hero-entered .aen-sv-strip1, .aen-hero-entered .aen-sv-strip2 { animation: none; }
+}
