@@ -51,10 +51,10 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <text className="aen-ed-time-old" x="72" y="30">00:04 → 00:07</text>
         <text className="aen-ed-time-new" x="72" y="30">00:04 → 00:09</text>
         <text className="aen-ed-t1" x="72" y="52">I lov</text>
-        <text className="aen-ed-te" x="107" y="52">e</text>
-        <text className="aen-ed-t2" x="117" y="52">this video</text>
-        <rect className="aen-ed-under" x="84" y="58" width="22" height="2" rx="1" />
-        <g className="aen-ed-caret-wrap"><rect className="aen-ed-caret" x="106" y="40" width="2.5" height="16" rx="1.25" /></g>
+        <text className="aen-ed-te" x="111" y="52">e</text>
+        <text className="aen-ed-t2" x="119" y="52"> this video</text>
+        <rect className="aen-ed-under" x="88" y="58" width="23" height="2" rx="1" />
+        <g className="aen-ed-caret-wrap"><rect className="aen-ed-caret" x="110" y="40" width="2.5" height="16" rx="1.25" /></g>
         <line className="aen-ed-ruler" x1="60" y1="104" x2="260" y2="104" />
         <path className="aen-ed-ticks" d="M60 100v8M100 100v8M140 100v8M180 100v8M220 100v8M260 100v8" />
         <rect className="aen-ed-cue" x="80" y="92" width="90" height="14" rx="4" />
@@ -229,14 +229,14 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <text className="aen-so-ar1" x="122" y="44">--&gt;</text>
         <text className="aen-so-cm1" x="122" y="44">,</text>
         <text className="aen-so-t1b" x="146" y="44">00:00:04,000</text>
-        <text className="aen-so-d1" x="48" y="58">Hello, welcome!</text>
         <text className="aen-so-n2" x="48" y="88">2</text>
         <text className="aen-so-t2a" x="64" y="88">00:00:05,000</text>
         <text className="aen-so-ar2" x="122" y="88">--&gt;</text>
         <text className="aen-so-cm2" x="122" y="88">,</text>
         <text className="aen-so-t2b" x="146" y="88">00:00:09,000</text>
-        <text className="aen-so-d2" x="48" y="102">Thanks for watching.</text>
         <g className="aen-so-frame"><rect x="40" y="26" width="240" height="88" rx="8" /><rect x="246" y="32" width="26" height="16" rx="4" fill="#e62117" /><path d="M256 36l8 4-8 4z" fill="#fff" /></g>
+        <text className="aen-so-d1" x="48" y="58">Hello, welcome!</text>
+        <text className="aen-so-d2" x="48" y="102">Thanks for watching.</text>
         <text className="aen-so-p1" x="52" y="44">0:00:01.000,0:00:04.000</text>
         <text className="aen-so-p2" x="52" y="88">0:00:05.000,0:00:09.000</text>
       </svg>
