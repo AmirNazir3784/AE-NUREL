@@ -154,13 +154,16 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <rect className="aen-style-line" x="86" y="22" width="48" height="5.5" rx="2.75" />
       </svg>
     </div>
-    : art === "text" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <rect className="aen-txt-frame" x="50" y="11" width="120" height="50" rx="7" />
-        <text className="aen-txt-num" x="62" y="26">1</text>
-        <text className="aen-txt-time" x="76" y="26">00:01,000</text>
-        <rect className="aen-txt-l1" x="62" y="33" width="72" height="5.5" rx="2.75" />
-        <rect className="aen-txt-l2" x="62" y="46" width="54" height="5.5" rx="2.75" />
+    : art === "text" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <rect className="aen-tx-frame" x="70" y="16" width="180" height="108" rx="10" />
+        <g className="aen-tx-r1"><text x="82" y="44">1</text><text className="aen-tx-time" x="98" y="44">00:01,000</text></g>
+        <text className="aen-tx-d1" x="154" y="44">Hello, welcome!</text>
+        <g className="aen-tx-r2"><text x="82" y="72">2</text><text className="aen-tx-time" x="98" y="72">00:05,000</text></g>
+        <text className="aen-tx-d2" x="154" y="72">Thanks, everyone!</text>
+        <g className="aen-tx-r3"><text x="82" y="100">3</text><text className="aen-tx-time" x="98" y="100">00:09,000</text></g>
+        <text className="aen-tx-d3" x="154" y="100">See you soon!</text>
+        <line className="aen-tx-scan" x1="70" y1="20" x2="250" y2="20" />
       </svg>
     </div>
     : <div key={playKey} className="aen-hero-merge" aria-hidden="true">
