@@ -13,7 +13,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap" | "json"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap" | "json" | "vtxt"; badgeFrom?: string; badgeTo?: string }) {
   const heroRef = useRef<HTMLElement | null>(null);
   const [entered, setEntered] = useState(false);
   const [playKey, setPlayKey] = useState(0);
@@ -186,6 +186,18 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <text className="aen-js-r5" x="188" y="88"><tspan>"endMs"</tspan>: 4000,</text>
         <text className="aen-js-r6" x="188" y="101"><tspan>"text"</tspan>: "Hello!"</text>
         <text className="aen-js-br" x="298" y="75">{"}"}</text>
+      </svg>
+    </div>
+    : art === "vtxt" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <rect className="aen-vx-frame" x="70" y="28" width="180" height="84" rx="10" />
+        <g className="aen-vx-meta"><rect x="180" y="12" width="60" height="14" rx="7" /><text x="210" y="22">WEBVTT</text><rect x="246" y="12" width="56" height="14" rx="7" /><text x="274" y="22">captions</text></g>
+        <g className="aen-vx-ruler"><line x1="40" y1="30" x2="280" y2="30" /><path d="M40 26v8M80 26v8M120 26v8M160 26v8M200 26v8M240 26v8M280 26v8" /></g>
+        <rect className="aen-vx-track" x="36" y="38" width="248" height="64" rx="8" />
+        <rect className="aen-vx-b1" x="40" y="44" width="120" height="18" rx="4" />
+        <text className="aen-vx-t1" x="48" y="57">Hello, welcome!</text>
+        <rect className="aen-vx-b2" x="40" y="72" width="150" height="18" rx="4" />
+        <text className="aen-vx-t2" x="48" y="85">Thanks for watching.</text>
       </svg>
     </div>
     : <div key={playKey} className="aen-hero-merge" aria-hidden="true">
