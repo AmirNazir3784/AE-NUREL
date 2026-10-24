@@ -1293,3 +1293,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-vi-r1, .aen-hero-entered .aen-vi-r2, .aen-hero-entered .aen-vi-play, .aen-hero-entered .aen-vi-cap1, .aen-hero-entered .aen-vi-cap2, .aen-hero-entered .aen-vi-done, .aen-hero-entered .aen-vi-f1, .aen-hero-entered .aen-vi-f2, .aen-hero-entered .aen-vi-f3 { animation: none; }
 }
+
+/* --- Overlap improvement: ghost outline of B's original spot (shows the move in stills) --- */
+.art-overlap .aen-ov-ghost { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 3; opacity: .55; }
+.art-overlap .aen-ov-check path { stroke-width: 2.5; }
