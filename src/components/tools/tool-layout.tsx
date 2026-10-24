@@ -73,14 +73,15 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <rect className="aen-web-cap" x="86" y="47.5" width="48" height="4.5" rx="2.25" />
       </svg>
     </div>
-    : art === "shift" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <path className="aen-tl-line" d="M10 47h200" />
-        <path className="aen-tl-ticks" d="M22 43v8M47 43v8M72 43v8M97 43v8M122 43v8M147 43v8M172 43v8M197 43v8" />
-        <g className="aen-shift-blocks"><rect x="28" y="27" width="34" height="13" rx="4" /><rect className="aen-shift-mid" x="72" y="27" width="44" height="13" rx="4" /><rect x="126" y="27" width="30" height="13" rx="4" /></g>
-        <text className="aen-shift-label" x="146" y="17">+2.0s</text>
-        <circle className="aen-shift-ring" cx="94" cy="31" r="5" />
-        <g className="aen-shift-cursor"><path d="M0 0v13l3.5-3 2 4.5 2.2-1-2-4.5H10z" /></g>
+    : art === "shift" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <line className="aen-sh-ruler" x1="20" y1="108" x2="300" y2="108" />
+        <path className="aen-sh-ticks" d="M20 104v8M40 104v8M60 104v8M80 104v8M100 104v8M120 104v8M140 104v8M160 104v8M180 104v8M200 104v8M220 104v8M240 104v8M260 104v8M280 104v8M300 104v8" />
+        <g className="aen-sh-ghost"><rect x="40" y="55" width="60" height="18" rx="5" /><rect x="120" y="55" width="60" height="18" rx="5" /><rect x="200" y="55" width="60" height="18" rx="5" /></g>
+        <g className="aen-sh-blocks"><rect x="40" y="55" width="60" height="18" rx="5" /><rect x="120" y="55" width="60" height="18" rx="5" /><rect x="200" y="55" width="60" height="18" rx="5" /></g>
+        <g className="aen-sh-chip"><rect x="130" y="12" width="60" height="20" rx="10" /><text className="aen-sh-plus" x="160" y="26">+2.0s</text><text className="aen-sh-minus" x="160" y="26">−2.0s</text></g>
+        <text className="aen-sh-old" x="70" y="92">00:01</text><text className="aen-sh-old" x="150" y="92">00:05</text><text className="aen-sh-old" x="230" y="92">00:09</text>
+        <text className="aen-sh-new" x="110" y="92">00:03</text><text className="aen-sh-new" x="190" y="92">00:07</text><text className="aen-sh-new" x="270" y="92">00:11</text>
       </svg>
     </div>
     : art === "sync" ? <div className="aen-hero-merge" aria-hidden="true">
