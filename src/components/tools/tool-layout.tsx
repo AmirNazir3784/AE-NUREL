@@ -53,7 +53,7 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <text className="aen-ed-time-new" x="72" y="30">00:04 → 00:09</text>
         <text className="aen-ed-t1" x="72" y="52">I lov</text>
         <text className="aen-ed-te" x="111" y="52">e</text>
-        <text className="aen-ed-t2" x="119" y="52"> this video</text>
+        <text className="aen-ed-t2" x="127" y="52">this video</text>
         <rect className="aen-ed-under" x="88" y="58" width="23" height="2" rx="1" />
         <g className="aen-ed-caret-wrap"><rect className="aen-ed-caret" x="110" y="40" width="2.5" height="16" rx="1.25" /></g>
         <line className="aen-ed-ruler" x1="60" y1="104" x2="260" y2="104" />
