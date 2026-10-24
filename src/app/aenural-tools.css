@@ -1247,3 +1247,32 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .srt-converter { margin-bottom: 110px; }
   .srt-converter .conversion-download { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 80; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-overlay); margin: 0; }
 }
+
+/* --- VTT to SRT 100%: Structure Rebuild (base = final SRT form; entered
+   plays once 3.2s; hover replays the number tiles snapping in) --- */
+.art-list .aen-ls-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-list .aen-ls-header { fill: var(--accent); stroke: none; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-anchor: middle; opacity: 0; }
+.art-list .aen-ls-t1 rect, .art-list .aen-ls-t2 rect { fill: var(--accent); stroke: none; }
+.art-list .aen-ls-t1 text, .art-list .aen-ls-t2 text { fill: #fff; stroke: none; font-size: 10px; font-weight: 800; text-anchor: middle; }
+.art-list .aen-ls-t1, .art-list .aen-ls-t2 { transform-box: fill-box; transform-origin: center; }
+.art-list .aen-ls-ts { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 10px; font-weight: 600; }
+.art-list .aen-ls-d1, .art-list .aen-ls-d2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 10px; font-weight: 600; opacity: 0; }
+.art-list .aen-ls-c1, .art-list .aen-ls-c2 { fill: var(--accent); stroke: none; font-family: monospace; font-size: 10px; font-weight: 700; }
+.art-list .aen-ls-line { fill: var(--muted); stroke: none; font-size: 9px; }
+.aen-hero-entered .aen-ls-header { animation: aen-ls-header 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-ls-t1 { animation: aen-ls-t1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-ls-t2 { animation: aen-ls-t2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-ls-d1 { animation: aen-ls-d1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-ls-c1 { animation: aen-ls-c1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-ls-d2 { animation: aen-ls-d2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-ls-c2 { animation: aen-ls-c2 3.2s ease-in-out 1 forwards; }
+@keyframes aen-ls-header { 0%, 20% { opacity: 1; transform: translateY(0) } 32%, 48%, 100% { opacity: 0; transform: translateY(-8px) } }
+@keyframes aen-ls-t1 { 0%, 28% { opacity: 0; transform: translateX(-10px) scale(.8) } 38%, 48%, 100% { opacity: 1; transform: translateX(0) scale(1) } }
+@keyframes aen-ls-t2 { 0%, 40% { opacity: 0; transform: translateX(-10px) scale(.8) } 50%, 60%, 100% { opacity: 1; transform: translateX(0) scale(1) } }
+@keyframes aen-ls-d1 { 0%, 45% { opacity: 1 } 55%, 100% { opacity: 0 } }
+@keyframes aen-ls-c1 { 0%, 45% { opacity: 0 } 55%, 100% { opacity: 1 } }
+@keyframes aen-ls-d2 { 0%, 55% { opacity: 1 } 65%, 100% { opacity: 0 } }
+@keyframes aen-ls-c2 { 0%, 55% { opacity: 0 } 65%, 100% { opacity: 1 } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-ls-header, .aen-hero-entered .aen-ls-t1, .aen-hero-entered .aen-ls-t2, .aen-hero-entered .aen-ls-d1, .aen-hero-entered .aen-ls-c1, .aen-hero-entered .aen-ls-d2, .aen-hero-entered .aen-ls-c2 { animation: none; }
+}
