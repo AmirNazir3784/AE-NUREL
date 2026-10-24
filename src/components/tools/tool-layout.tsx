@@ -36,16 +36,17 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
   return <header ref={heroRef} className={"aen-tool-hero art-" + art + (entered ? " aen-hero-entered" : "") + (rev ? " aen-shift-rev" : "")} onMouseEnter={replay} onMouseLeave={unreplay} onFocus={replay} onBlur={unreplay}>
     {chipA && <span className="aen-hero-chip aen-hero-chip-a" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipA}</span>}{chipB && <span className="aen-hero-chip aen-hero-chip-b" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipB}</span>}{chipC && <span className="aen-hero-chip aen-hero-chip-c" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipC}</span>}{art === "split" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 320 140" role="presentation" focusable="false">
-        <g className="aen-sp-p1"><rect x="110" y="12" width="100" height="34" rx="7" /><rect x="122" y="22" width="76" height="5" rx="2.5" /><rect x="122" y="32" width="60" height="5" rx="2.5" /></g>
-        <g className="aen-sp-p2"><rect x="110" y="52" width="100" height="34" rx="7" /><rect x="122" y="62" width="76" height="5" rx="2.5" /><rect x="122" y="72" width="60" height="5" rx="2.5" /></g>
-        <g className="aen-sp-p3"><rect x="110" y="92" width="100" height="34" rx="7" /><rect x="122" y="102" width="76" height="5" rx="2.5" /><rect x="122" y="112" width="60" height="5" rx="2.5" /></g>
-        <path className="aen-sp-cut" d="M104 46h112M104 80h112" />
-        <text className="aen-sp-label" x="232" y="30">Part 1</text>
-        <text className="aen-sp-label" x="232" y="74">Part 2</text>
-        <text className="aen-sp-label" x="232" y="118">Part 3</text>
+        <g className="aen-sp-s1"><rect x="70" y="20" width="180" height="32" rx="7" /><rect x="82" y="30" width="120" height="5" rx="2.5" /><rect x="82" y="40" width="96" height="5" rx="2.5" /></g>
+        <g className="aen-sp-s2"><rect x="70" y="52" width="180" height="32" rx="7" /><rect x="82" y="62" width="120" height="5" rx="2.5" /><rect x="82" y="72" width="96" height="5" rx="2.5" /></g>
+        <g className="aen-sp-s3"><rect x="70" y="84" width="180" height="36" rx="7" /><rect x="82" y="94" width="120" height="5" rx="2.5" /><rect x="82" y="104" width="96" height="5" rx="2.5" /></g>
+        <line className="aen-sp-cut1" x1="70" y1="52" x2="250" y2="52" />
+        <line className="aen-sp-cut2" x1="70" y1="84" x2="250" y2="84" />
+        <text className="aen-sp-l1" x="258" y="40">Part 1</text>
+        <text className="aen-sp-l2" x="258" y="72">Part 2</text>
+        <text className="aen-sp-l3" x="258" y="104">Part 3</text>
       </svg>
     </div>
-    : art === "edit" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+        : art === "edit" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 320 140" role="presentation" focusable="false">
         <rect className="aen-ed-card" x="60" y="12" width="200" height="56" rx="10" />
         <text className="aen-ed-time-old" x="72" y="30">00:04 → 00:07</text>
