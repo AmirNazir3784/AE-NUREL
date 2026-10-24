@@ -20,10 +20,13 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
       <svg viewBox="0 0 220 64" role="presentation" focusable="false">
         <path className="aen-cut-line" d="M12 48h196" />
         <path className="aen-cut-ticks" d="M32 44v8M57 44v8M82 44v8M107 44v8M132 44v8M157 44v8M182 44v8" />
-        <rect className="aen-cut-l" x="42" y="27" width="55" height="14" rx="4" />
-        <g className="aen-cut-rwrap"><rect className="aen-cut-r" x="99" y="27" width="55" height="14" rx="4" /></g>
-        <path className="aen-cut-mark" d="M98 12v29" />
-        <path className="aen-cut-chev" d="M93 6l5 5 5-5" />
+        <g className="aen-cut3-p1"><rect x="34" y="27" width="48" height="14" rx="4" /></g>
+        <g className="aen-cut3-p2"><rect x="84" y="27" width="48" height="14" rx="4" /></g>
+        <g className="aen-cut3-p3"><rect x="134" y="27" width="48" height="14" rx="4" /></g>
+        <path className="aen-cut3-mark" d="M83 13v28M133 13v28" />
+        <text className="aen-cut3-label" x="58" y="59">Part 1</text>
+        <text className="aen-cut3-label" x="108" y="59">Part 2</text>
+        <text className="aen-cut3-label" x="158" y="59">Part 3</text>
       </svg>
     </div>
     : art === "edit" ? <div className="aen-hero-merge" aria-hidden="true">
