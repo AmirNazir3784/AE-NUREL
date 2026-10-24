@@ -1205,11 +1205,11 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .aen-hero-entered .aen-sv-strip1 { animation: aen-sv-strip1 3.2s ease-in-out 1 forwards; }
 .aen-hero-entered .aen-sv-strip2 { animation: aen-sv-strip2 3.2s ease-in-out 1 forwards; }
 @keyframes aen-sv-c1 { 0%, 18% { opacity: 1 } 28%, 100% { opacity: 0 } }
-@keyframes aen-sv-a1 { 0%, 18% { opacity: 0 } 28%, 38%, 100% { opacity: 1 } }
-@keyframes aen-sv-s1b { 0%, 18% { transform: translateX(0) } 28%, 38%, 100% { transform: translateX(30px) } }
+@keyframes aen-sv-a1 { 0%, 18% { opacity: 0 } 28%, 38% { opacity: 1 } 48%, 58%, 100% { opacity: 0 } }
+@keyframes aen-sv-s1b { 0%, 18% { opacity: 1; transform: translateX(0) } 28%, 38%, 45% { opacity: 1; transform: translateX(30px) } 58%, 100% { opacity: 0; transform: translateX(30px) } }
 @keyframes aen-sv-c2 { 0%, 26% { opacity: 1 } 36%, 100% { opacity: 0 } }
-@keyframes aen-sv-a2 { 0%, 26% { opacity: 0 } 36%, 46%, 100% { opacity: 1 } }
-@keyframes aen-sv-s2b { 0%, 26% { transform: translateX(0) } 36%, 46%, 100% { transform: translateX(30px) } }
+@keyframes aen-sv-a2 { 0%, 26% { opacity: 0 } 36%, 46% { opacity: 1 } 58%, 68%, 100% { opacity: 0 } }
+@keyframes aen-sv-s2b { 0%, 26% { opacity: 1; transform: translateX(0) } 36%, 46%, 55% { opacity: 1; transform: translateX(30px) } 68%, 100% { opacity: 0; transform: translateX(30px) } }
 @keyframes aen-sv-s1a { 0%, 45% { opacity: 1 } 58%, 100% { opacity: 0 } }
 @keyframes aen-sv-s2a { 0%, 55% { opacity: 1 } 68%, 100% { opacity: 0 } }
 @keyframes aen-sv-n1 { 0%, 40% { opacity: 0; transform: translateY(-12px) } 52%, 100% { opacity: 1; transform: translateY(0) } }
