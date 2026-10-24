@@ -773,7 +773,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 /* ASS to SRT scene — the style decorations (colour dots and { }
 
 /* --- Merger 100%: Magnetic Merge (new animation doc; base = final state,
-   .aen-hero-entered plays it once, 3.2s, forwards; hover/focus replays) --- */
+   .aen-hero-entered loops 6s; hover/focus restarts) --- */
 .art-merge .aen-mg-beam { fill: none; stroke: var(--action); stroke-width: 1.4; stroke-dasharray: 4 4; opacity: 0; }
 .art-merge .aen-mg-s1 > rect:first-child, .art-merge .aen-mg-s2 > rect:first-child, .art-merge .aen-mg-s3 > rect:first-child { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
 .art-merge .aen-mg-s1 > rect:not(:first-child), .art-merge .aen-mg-s2 > rect:not(:first-child), .art-merge .aen-mg-s3 > rect:not(:first-child) { fill: var(--foreground); opacity: .55; }
@@ -814,7 +814,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .aen-tool-page .srt-converter .upload-zone:not(.has-file) .button { margin: 4px 0 0; max-width: 100%; }
 .aen-tool-page .srt-converter .upload-zone:not(.has-file) .upload-note { margin: 0; }
 
-/* --- Timing 100%: Time Warp (base = final state; entered plays once 3.2s;
+/* --- Timing 100%: Time Warp (base = final state; entered loops 6s;
    hover shows the reverse -2.0s shift via .aen-shift-rev) --- */
 .art-shift .aen-sh-ruler { fill: none; stroke: var(--border-strong); stroke-width: 1.4; }
 .art-shift .aen-sh-ticks { fill: none; stroke: var(--border); stroke-width: 1.2; }
@@ -879,7 +879,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .aen-hero-entered .aen-sp-cut1, .aen-hero-entered .aen-sp-cut2, .aen-hero-entered .aen-sp-s1, .aen-hero-entered .aen-sp-s3, .aen-hero-entered .aen-sp-l1, .aen-hero-entered .aen-sp-l2, .aen-hero-entered .aen-sp-l3 { animation: none; }
 }
 /* --- Editor 100%: Live Correction (base = final corrected state; entered
-   plays once 3.2s; hover replays the correction) --- */
+   loops 6s; hover restarts the correction) --- */
 .art-edit .aen-ed-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
 .art-edit .aen-ed-time-old { fill: var(--muted); stroke: none; font-size: 8.5px; font-weight: 600; opacity: 0; }
 .art-edit .aen-ed-time-new { fill: var(--muted); stroke: none; font-size: 8.5px; font-weight: 600; }
@@ -914,7 +914,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 }
 
 /* --- Sync 100%: Dual Anchor Alignment (base = final aligned state; entered
-   plays once 3.2s; hover replays the correction) --- */
+   loops 6s; hover restarts the correction) --- */
 .art-sync .aen-sy-ruler { fill: none; stroke: var(--border-strong); stroke-width: 1.4; }
 .art-sync .aen-sy-guide { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 3 4; opacity: .55; }
 .art-sync .aen-sy-top rect { fill: var(--accent); opacity: .85; }
@@ -942,7 +942,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 }
 
 /* --- Overlap 100%: Collision Rescue (base = final repaired state; entered
-   plays once 3.2s; hover replays the collision + correction) --- */
+   loops 6s; hover restarts the collision + correction) --- */
 .art-overlap .aen-ov-a { fill: var(--accent); opacity: .85; }
 .art-overlap .aen-ov-b rect { fill: var(--action); opacity: .9; }
 .art-overlap .aen-ov-b { transform: translateX(38px); }
@@ -995,7 +995,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .aen-hero-entered .aen-vt-bar, .aen-hero-entered .aen-vt-header, .aen-hero-entered .aen-vt-num, .aen-hero-entered .aen-vt-c1, .aen-hero-entered .aen-vt-d1, .aen-hero-entered .aen-vt-c2, .aen-hero-entered .aen-vt-d2, .aen-hero-entered .aen-vt-cue2 { animation: none; }
 }
 /* --- VTT to SRT 100%: Structure Rebuild (base = final SRT form; entered
-   plays once 3.2s; hover replays the number tiles snapping in) --- */
+   loops 6s; hover restarts the number tiles snapping in) --- */
 .art-list .aen-ls-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
 .art-list .aen-ls-header { fill: var(--accent); stroke: none; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-anchor: middle; opacity: 0; }
 .art-list .aen-ls-t1 rect, .art-list .aen-ls-t2 rect { fill: var(--accent); stroke: none; }
@@ -1024,7 +1024,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 }
 
 /* --- SRT to TXT 100%: Dialogue Extraction (base = final clean transcript;
-   entered plays once 3.2s; hover replays the scan + regroup) --- */
+   entered loops 6s; hover replays the scan + regroup) --- */
 .art-text .aen-tx-frame { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; opacity: 1; }
 .art-text .aen-tx-r1 text, .art-text .aen-tx-r2 text, .art-text .aen-tx-r3 text { fill: var(--muted); stroke: none; font-size: 10px; font-weight: 700; opacity: 0; }
 .art-text .aen-tx-r1 .aen-tx-time, .art-text .aen-tx-r2 .aen-tx-time, .art-text .aen-tx-r3 .aen-tx-time { font-family: monospace; font-size: 9px; font-weight: 600; }
@@ -1051,7 +1051,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 }
 
 /* --- ASS to SRT 100%: Strip the Layers (base = final clean SRT cue; entered
-   plays once 3.2s; hover replays the rich-to-clean transition) --- */
+   loops 6s; hover restarts the rich-to-clean transition) --- */
 .art-plain .aen-as-card { fill: #14181d; stroke: none; }
 .art-plain .aen-as-rich { fill: var(--action); stroke: none; font-size: 13px; font-weight: 800; text-anchor: middle; opacity: 0; }
 .art-plain .aen-as-plain { fill: #fff; stroke: none; font-size: 13px; font-weight: 600; text-anchor: middle; opacity: 0; }
@@ -1078,7 +1078,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 }
 
 /* --- SRT to ASS 100%: Style Blueprint (base = final styled preview; entered
-   plays once 3.2s; hover replays the layers building) --- */
+   loops 6s; hover restarts the layers building) --- */
 .art-style .aen-st-srccard { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
 .art-style .aen-st-src text { fill: var(--foreground); stroke: none; font-size: 10px; font-weight: 600; }
 .art-style .aen-st-src text:first-child { fill: var(--muted); font-size: 9px; font-weight: 700; }
@@ -1137,7 +1137,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .aen-hero-entered .aen-js-s1, .aen-hero-entered .aen-js-s2, .aen-hero-entered .aen-js-s3, .aen-hero-entered .aen-js-bl, .aen-hero-entered .aen-js-br, .aen-hero-entered .aen-js-r1, .aen-hero-entered .aen-js-r2, .aen-hero-entered .aen-js-r3, .aen-hero-entered .aen-js-r4, .aen-hero-entered .aen-js-r5, .aen-hero-entered .aen-js-r6 { animation: none; }
 }
 /* --- VTT to TXT 100%: Transcript Reveal (base = final clean text stack;
-   entered plays once 3.2s; hover replays captions becoming text) --- */
+   entered loops 6s; hover replays captions becoming text) --- */
 .art-vtxt .aen-vx-frame { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
 .art-vtxt .aen-vx-meta rect { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.2; }
 .art-vtxt .aen-vx-meta text { fill: var(--muted); stroke: none; font-size: 7px; font-weight: 700; text-anchor: middle; }
@@ -1170,7 +1170,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 }
 
 /* --- SBV to SRT 100%: YouTube Caption Reformat (base = final SRT cues;
-   entered plays once 3.2s; hover replays the pair unfolding) --- */
+   entered loops 6s; hover replays the pair unfolding) --- */
 .art-sbvin .aen-sv-strip1, .art-sbvin .aen-sv-strip2 { fill: var(--surface); stroke: var(--border); stroke-width: 1.2; opacity: 0; }
 .art-sbvin .aen-sv-n1 rect, .art-sbvin .aen-sv-n2 rect { fill: var(--accent); stroke: none; }
 .art-sbvin .aen-sv-n1 text, .art-sbvin .aen-sv-n2 text { fill: #fff; stroke: none; font-size: 10px; font-weight: 800; text-anchor: middle; }
