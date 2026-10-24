@@ -13,7 +13,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap" | "json" | "vtxt" | "sbvin" | "sbvout"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap" | "json" | "vtxt" | "sbvin" | "sbvout" | "video"; badgeFrom?: string; badgeTo?: string }) {
   const heroRef = useRef<HTMLElement | null>(null);
   const [entered, setEntered] = useState(false);
   const [playKey, setPlayKey] = useState(0);
@@ -239,6 +239,24 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <g className="aen-so-frame"><rect x="40" y="26" width="240" height="88" rx="8" /><rect x="246" y="32" width="26" height="16" rx="4" fill="#e62117" /><path d="M256 36l8 4-8 4z" fill="#fff" /></g>
         <text className="aen-so-p1" x="52" y="44">0:00:01.000,0:00:04.000</text>
         <text className="aen-so-p2" x="52" y="88">0:00:05.000,0:00:09.000</text>
+      </svg>
+    </div>
+    : art === "video" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <rect className="aen-vi-doc" x="24" y="28" width="100" height="84" rx="8" />
+        <rect className="aen-vi-r1" x="34" y="44" width="80" height="6" rx="3" />
+        <rect className="aen-vi-r2" x="34" y="58" width="80" height="6" rx="3" />
+        <rect className="aen-vi-r3" x="34" y="72" width="80" height="6" rx="3" />
+        <path d="M128 70h18m-5-5 5 5-5 5" stroke="var(--accent)" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <rect className="aen-vi-canvas" x="150" y="28" width="146" height="84" rx="8" />
+        <g className="aen-vi-play"><line x1="158" y1="28" x2="158" y2="112" stroke="var(--action)" strokeWidth="2" /><path d="M153 28h10l-5 9z" fill="var(--action)" /></g>
+        <text className="aen-vi-cap1" x="160" y="100">Hello, welcome!</text>
+        <text className="aen-vi-cap2" x="160" y="100">Thanks for watching.</text>
+        <g className="aen-vi-done"><circle cx="223" cy="62" r="13" fill="#fff" opacity="0.92" /><path d="M219 55l13 7-13 7z" fill="#141c2b" /></g>
+        <text className="aen-vi-done" x="272" y="42">MP4</text>
+        <rect className="aen-vi-f1" x="150" y="118" width="24" height="12" rx="2" />
+        <rect className="aen-vi-f2" x="178" y="118" width="24" height="12" rx="2" />
+        <rect className="aen-vi-f3" x="206" y="118" width="24" height="12" rx="2" />
       </svg>
     </div>
     : <div key={playKey} className="aen-hero-merge" aria-hidden="true">
