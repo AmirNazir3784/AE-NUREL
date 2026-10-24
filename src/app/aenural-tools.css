@@ -1271,3 +1271,35 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-so-n1, .aen-hero-entered .aen-so-n2, .aen-hero-entered .aen-so-ar1, .aen-hero-entered .aen-so-t1b, .aen-hero-entered .aen-so-cm1, .aen-hero-entered .aen-so-t1a, .aen-hero-entered .aen-so-ar2, .aen-hero-entered .aen-so-t2b, .aen-hero-entered .aen-so-cm2, .aen-hero-entered .aen-so-t2a, .aen-hero-entered .aen-so-c1, .aen-hero-entered .aen-so-c2, .aen-hero-entered .aen-so-p1, .aen-hero-entered .aen-so-p2, .aen-hero-entered .aen-so-d1, .aen-hero-entered .aen-so-d2, .aen-hero-entered .aen-so-frame { animation: none; }
 }
+
+/* --- SRT to MP4 100%: Caption Frames Come Alive (base = finished MP4 card; loops) --- */
+.art-video .aen-vi-doc { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-video .aen-vi-r1, .art-video .aen-vi-r2 { fill: var(--muted); opacity: 0; }
+.art-video .aen-vi-r3 { fill: var(--muted); opacity: .45; }
+.art-video .aen-vi-canvas { fill: #141c2b; }
+.art-video .aen-vi-play { transform: translateX(130px); }
+.art-video .aen-vi-cap1 { fill: #fff; font-size: 11px; opacity: 0; }
+.art-video .aen-vi-cap2 { fill: #fff; font-size: 11px; }
+.art-video .aen-vi-done { fill: #fff; font-size: 8px; font-weight: 700; }
+.art-video .aen-vi-f1, .art-video .aen-vi-f2, .art-video .aen-vi-f3 { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.2; }
+.aen-hero-entered .aen-vi-r1 { animation: aen-vi-r1 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-r2 { animation: aen-vi-r2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-play { animation: aen-vi-play 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-cap1 { animation: aen-vi-cap1 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-cap2 { animation: aen-vi-cap2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-done { animation: aen-vi-done 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-f1 { animation: aen-vi-f1 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-f2 { animation: aen-vi-f2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-f3 { animation: aen-vi-f3 3.2s ease-in-out infinite; }
+@keyframes aen-vi-r1 { 0%, 12% { opacity: 1 } 22%, 100% { opacity: 0 } }
+@keyframes aen-vi-r2 { 0%, 30% { opacity: 1 } 40%, 100% { opacity: 0 } }
+@keyframes aen-vi-play { 0%, 15% { transform: translateX(0) } 35%, 50% { transform: translateX(70px) } 70%, 100% { transform: translateX(130px) } }
+@keyframes aen-vi-cap1 { 0%, 22% { opacity: 0 } 32%, 48% { opacity: 1 } 58%, 100% { opacity: 0 } }
+@keyframes aen-vi-cap2 { 0%, 52% { opacity: 0 } 62%, 100% { opacity: 1 } }
+@keyframes aen-vi-done { 0%, 74% { opacity: 0 } 86%, 100% { opacity: 1 } }
+@keyframes aen-vi-f1 { 0%, 18% { opacity: 0 } 28%, 100% { opacity: 1 } }
+@keyframes aen-vi-f2 { 0%, 42% { opacity: 0 } 52%, 100% { opacity: 1 } }
+@keyframes aen-vi-f3 { 0%, 66% { opacity: 0 } 76%, 100% { opacity: 1 } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-vi-r1, .aen-hero-entered .aen-vi-r2, .aen-hero-entered .aen-vi-play, .aen-hero-entered .aen-vi-cap1, .aen-hero-entered .aen-vi-cap2, .aen-hero-entered .aen-vi-done, .aen-hero-entered .aen-vi-f1, .aen-hero-entered .aen-vi-f2, .aen-hero-entered .aen-vi-f3 { animation: none; }
+}
