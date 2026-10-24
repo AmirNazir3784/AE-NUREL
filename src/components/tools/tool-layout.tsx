@@ -99,12 +99,13 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
       <svg viewBox="0 0 320 140" role="presentation" focusable="false">
         <defs><pattern id="aen-ov-cross" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--action)" strokeWidth="2" /></pattern></defs>
         <rect className="aen-ov-a" x="70" y="52" width="100" height="22" rx="5" />
+        <rect className="aen-ov-ghost" x="140" y="52" width="100" height="22" rx="5" />
         <g className="aen-ov-b"><rect x="140" y="52" width="100" height="22" rx="5" /></g>
         <g className="aen-ov-zone"><rect x="140" y="52" width="30" height="22" fill="var(--action)" opacity=".25" /><rect x="140" y="52" width="30" height="22" fill="url(#aen-ov-cross)" /></g>
         <rect className="aen-ov-gap" x="170" y="52" width="8" height="22" rx="2" />
         <line className="aen-ov-ruler" x1="30" y1="92" x2="290" y2="92" />
         <path className="aen-ov-ticks" d="M30 88v8M70 88v8M110 88v8M150 88v8M190 88v8M230 88v8M270 88v8" />
-        <g className="aen-ov-check"><circle cx="278" cy="30" r="8" /><path d="M274.5 30l2.5 2.5 5-5" /></g>
+        <g className="aen-ov-check"><circle cx="278" cy="30" r="10" /><path d="M273 30l3.5 3.5 7-7" /></g>
       </svg>
     </div>
     : art === "list" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
