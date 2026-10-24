@@ -1052,3 +1052,12 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-mg-beam, .aen-hero-entered .aen-mg-s1, .aen-hero-entered .aen-mg-s2, .aen-hero-entered .aen-mg-s3, .aen-hero-entered .aen-mg-doc, .aen-hero-entered .aen-mg-doc text { animation: none; }
 }
+
+/* SRT to VTT fix: its root is .srt-converter (not .aen-file-converter), so it
+   missed the centered dropzone rule and fell through to the left-aligned
+   strip layout. Give it the same centered empty-state as the other converters. */
+.aen-tool-page .srt-converter .upload-zone:not(.has-file) { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; text-align: center; }
+.aen-tool-page .srt-converter .upload-zone:not(.has-file) .upload-icon { margin: 0; }
+.aen-tool-page .srt-converter .upload-zone:not(.has-file) > div[aria-live] { width: 100%; min-width: 0; }
+.aen-tool-page .srt-converter .upload-zone:not(.has-file) .button { margin: 4px 0 0; max-width: 100%; }
+.aen-tool-page .srt-converter .upload-zone:not(.has-file) .upload-note { margin: 0; }
