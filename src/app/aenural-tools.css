@@ -1019,3 +1019,36 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-edit .aen-fix-wrong, .art-edit .aen-fix-under, .art-edit .aen-fix-caret-wrap, .art-edit .aen-fix-undo { opacity: 0; }
   .art-edit .aen-fix-new { transform: scaleX(1); fill: var(--foreground); opacity: .65; }
 }
+
+/* --- Merger 100%: Magnetic Merge (new animation doc; base = final state,
+   .aen-hero-entered plays it once, 3.2s, forwards; hover/focus replays) --- */
+.art-merge .aen-mg-beam { fill: none; stroke: var(--action); stroke-width: 1.4; stroke-dasharray: 4 4; opacity: 0; }
+.art-merge .aen-mg-s1 > rect:first-child, .art-merge .aen-mg-s2 > rect:first-child, .art-merge .aen-mg-s3 > rect:first-child { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-merge .aen-mg-s1 > rect:not(:first-child), .art-merge .aen-mg-s2 > rect:not(:first-child), .art-merge .aen-mg-s3 > rect:not(:first-child) { fill: var(--foreground); opacity: .55; }
+.art-merge .aen-mg-s1 { transform: translate(105px, 0); opacity: 0; }
+.art-merge .aen-mg-s2 { opacity: 0; }
+.art-merge .aen-mg-s3 { transform: translate(-105px, 0); opacity: 0; }
+.art-merge .aen-mg-doc > rect:first-child { fill: var(--surface); stroke: var(--action); stroke-width: 1.6; }
+.art-merge .aen-mg-doc > rect:not(:first-child) { fill: var(--foreground); opacity: .65; }
+.art-merge .aen-mg-doc text { fill: var(--muted); stroke: none; font-size: 7px; font-weight: 700; }
+.aen-hero-entered .aen-mg-beam { animation: aen-mg-beam 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-mg-s1 { animation: aen-mg-s1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-mg-s2 { animation: aen-mg-s2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-mg-s3 { animation: aen-mg-s3 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-mg-doc { animation: aen-mg-doc 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-mg-doc text { animation: aen-mg-num .3s ease-in-out 1 both; }
+.aen-hero-entered .aen-mg-doc text:nth-of-type(1) { animation-delay: 2.45s; }
+.aen-hero-entered .aen-mg-doc text:nth-of-type(2) { animation-delay: 2.54s; }
+.aen-hero-entered .aen-mg-doc text:nth-of-type(3) { animation-delay: 2.63s; }
+.aen-hero-entered .aen-mg-doc text:nth-of-type(4) { animation-delay: 2.72s; }
+.aen-hero-entered .aen-mg-doc text:nth-of-type(5) { animation-delay: 2.81s; }
+.aen-hero-entered .aen-mg-doc text:nth-of-type(6) { animation-delay: 2.90s; }
+@keyframes aen-mg-beam { 0%, 15% { opacity: 0 } 30%, 55% { opacity: .9 } 70%, 100% { opacity: 0 } }
+@keyframes aen-mg-s1 { 0% { transform: translate(0, 0); opacity: 1 } 55% { transform: translate(105px, 0); opacity: 1 } 70%, 100% { transform: translate(105px, 0); opacity: 0 } }
+@keyframes aen-mg-s2 { 0%, 55% { opacity: 1 } 70%, 100% { opacity: 0 } }
+@keyframes aen-mg-s3 { 0% { transform: translate(0, 0); opacity: 1 } 55% { transform: translate(-105px, 0); opacity: 1 } 70%, 100% { transform: translate(-105px, 0); opacity: 0 } }
+@keyframes aen-mg-doc { 0%, 68% { opacity: 0 } 82%, 100% { opacity: 1 } }
+@keyframes aen-mg-num { 0% { opacity: 0 } 100% { opacity: 1 } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-mg-beam, .aen-hero-entered .aen-mg-s1, .aen-hero-entered .aen-mg-s2, .aen-hero-entered .aen-mg-s3, .aen-hero-entered .aen-mg-doc, .aen-hero-entered .aen-mg-doc text { animation: none; }
+}
