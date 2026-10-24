@@ -1158,3 +1158,31 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-ed-time-old, .aen-hero-entered .aen-ed-time-new, .aen-hero-entered .aen-ed-under, .aen-hero-entered .aen-ed-caret-wrap, .aen-hero-entered .aen-ed-caret, .aen-hero-entered .aen-ed-te, .aen-hero-entered .aen-ed-t2, .aen-hero-entered .aen-ed-cue, .aen-hero-entered .aen-ed-handle { animation: none; }
 }
+
+/* --- Sync 100%: Dual Anchor Alignment (base = final aligned state; entered
+   plays once 3.2s; hover replays the correction) --- */
+.art-sync .aen-sy-ruler { fill: none; stroke: var(--border-strong); stroke-width: 1.4; }
+.art-sync .aen-sy-guide { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 3 4; opacity: .55; }
+.art-sync .aen-sy-top rect { fill: var(--accent); opacity: .85; }
+.art-sync .aen-sy-pin circle { fill: var(--action); stroke: none; }
+.art-sync .aen-sy-pin path { fill: none; stroke: var(--action); stroke-width: 1.4; }
+.art-sync .aen-sy-b1, .art-sync .aen-sy-b2, .art-sync .aen-sy-b3, .art-sync .aen-sy-b4 { fill: var(--accent); }
+.art-sync .aen-sy-check circle { fill: var(--accent); stroke: none; }
+.art-sync .aen-sy-check path { fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.aen-hero-entered .aen-sy-pin { animation: aen-sy-pin 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sy-guide { animation: aen-sy-guide 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sy-b1 { animation: aen-sy-b1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sy-b2 { animation: aen-sy-b2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sy-b3 { animation: aen-sy-b3 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sy-b4 { animation: aen-sy-b4 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-sy-check { animation: aen-sy-check 3.2s ease-in-out 1 forwards; }
+@keyframes aen-sy-pin { 0%, 8% { opacity: 0; transform: scale(.6) } 18%, 100% { opacity: 1; transform: scale(1) } }
+@keyframes aen-sy-guide { 0%, 12% { opacity: 0 } 25%, 100% { opacity: .55 } }
+@keyframes aen-sy-b1 { 0%, 32% { transform: translateX(8px); fill: var(--action) } 52%, 100% { transform: translateX(0); fill: var(--accent) } }
+@keyframes aen-sy-b2 { 0%, 40% { transform: translateX(16px); fill: var(--action) } 60%, 100% { transform: translateX(0); fill: var(--accent) } }
+@keyframes aen-sy-b3 { 0%, 48% { transform: translateX(26px); fill: var(--action) } 68%, 100% { transform: translateX(0); fill: var(--accent) } }
+@keyframes aen-sy-b4 { 0%, 56% { transform: translateX(38px); fill: var(--action) } 76%, 100% { transform: translateX(0); fill: var(--accent) } }
+@keyframes aen-sy-check { 0%, 76% { opacity: 0; transform: scale(.6) } 86%, 100% { opacity: 1; transform: scale(1) } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-sy-pin, .aen-hero-entered .aen-sy-guide, .aen-hero-entered .aen-sy-b1, .aen-hero-entered .aen-sy-b2, .aen-hero-entered .aen-sy-b3, .aen-hero-entered .aen-sy-b4, .aen-hero-entered .aen-sy-check { animation: none; }
+}
