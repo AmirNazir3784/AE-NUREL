@@ -1303,3 +1303,30 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-tx-frame, .aen-hero-entered .aen-tx-r1, .aen-hero-entered .aen-tx-r2, .aen-hero-entered .aen-tx-r3, .aen-hero-entered .aen-tx-d1, .aen-hero-entered .aen-tx-d2, .aen-hero-entered .aen-tx-d3, .aen-hero-entered .aen-tx-scan { animation: none; }
 }
+
+/* --- ASS to SRT 100%: Strip the Layers (base = final clean SRT cue; entered
+   plays once 3.2s; hover replays the rich-to-clean transition) --- */
+.art-plain .aen-as-card { fill: #14181d; stroke: none; }
+.art-plain .aen-as-rich { fill: var(--action); stroke: none; font-size: 13px; font-weight: 800; text-anchor: middle; opacity: 0; }
+.art-plain .aen-as-plain { fill: #fff; stroke: none; font-size: 13px; font-weight: 600; text-anchor: middle; opacity: 0; }
+.art-plain .aen-as-frame { fill: none; stroke: var(--action); stroke-width: 1.4; stroke-dasharray: 4 3; opacity: 0; }
+.art-plain .aen-as-arrow { fill: none; stroke: var(--muted); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; opacity: .8; }
+.art-plain .aen-as-outcard { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-plain .aen-as-out text { fill: var(--foreground); stroke: none; font-size: 10px; font-weight: 600; }
+.art-plain .aen-as-out text:first-child { fill: var(--muted); font-size: 9px; font-weight: 700; }
+.art-plain .aen-as-out .aen-as-time { font-family: monospace; font-size: 8px; }
+.aen-hero-entered .aen-as-rich { animation: aen-as-rich 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-as-chips { animation: aen-as-chips 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-as-frame { animation: aen-as-frame 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-as-plain { animation: aen-as-plain 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-as-arrow { animation: aen-as-arrow 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-as-out { animation: aen-as-out 3.2s ease-in-out 1 forwards; }
+@keyframes aen-as-rich { 0%, 20% { opacity: 1; transform: translate(0, 0) } 28%, 42%, 100% { opacity: 0; transform: translate(10px, -14px) } }
+@keyframes aen-as-chips { 0%, 35% { opacity: 1; transform: translate(0, 0) } 42%, 56%, 100% { opacity: 0; transform: translate(8px, -10px) } }
+@keyframes aen-as-frame { 0%, 50% { opacity: 1; transform: translate(0, 0) } 58%, 70%, 100% { opacity: 0; transform: translate(6px, -8px) } }
+@keyframes aen-as-plain { 0%, 60% { opacity: 1; transform: translateX(0) } 62%, 80%, 100% { opacity: 0; transform: translateX(30px) } }
+@keyframes aen-as-arrow { 0%, 42% { opacity: 0 } 52%, 100% { opacity: .8 } }
+@keyframes aen-as-out { 0%, 66% { opacity: 0; transform: translateX(-10px) } 78%, 100% { opacity: 1; transform: translateX(0) } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-as-rich, .aen-hero-entered .aen-as-chips, .aen-hero-entered .aen-as-frame, .aen-hero-entered .aen-as-plain, .aen-hero-entered .aen-as-arrow, .aen-hero-entered .aen-as-out { animation: none; }
+}
