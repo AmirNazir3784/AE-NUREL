@@ -11,7 +11,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "convert" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
   const words = title.split(" ");
   const last = words.length > 1 ? words[words.length - 1] : null;
   const head = last ? words.slice(0, -1).join(" ") : title;
@@ -36,12 +36,18 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <rect className="aen-type-caret" x="99" y="36.5" width="2.6" height="11" rx="1.3" />
       </svg>
     </div>
-    : art === "convert" ? <div className="aen-hero-merge" aria-hidden="true">
+    : art === "web" ? <div className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <g className="aen-hero-doc aen-convert-doc"><rect x="85" y="10" width="50" height="46" rx="9" /><path d="M93 28h34M93 38h34M93 48h20" /></g>
-        <circle className="aen-badge-pulse" cx="135" cy="10" r="10" />
-        <g className="aen-badge aen-badge-from"><rect x="118" y="2" width="34" height="16" rx="8" /><text x="135" y="13.5" textAnchor="middle">{badgeFrom}</text></g>
-        <g className="aen-badge aen-badge-to"><rect x="118" y="2" width="34" height="16" rx="8" /><text x="135" y="13.5" textAnchor="middle">{badgeTo}</text></g>
+        <rect className="aen-web-frame" x="45" y="6" width="130" height="52" rx="9" />
+        <path className="aen-web-bar" d="M45 19h130" />
+        <circle className="aen-web-dot" cx="55" cy="12.5" r="2.2" /><circle className="aen-web-dot" cx="64" cy="12.5" r="2.2" /><circle className="aen-web-dot" cx="73" cy="12.5" r="2.2" />
+        <rect className="aen-web-url" x="83" y="9" width="56" height="7" rx="3.5" />
+        <text className="aen-web-head" x="54" y="31">WEBVTT</text>
+        <text className="aen-web-t1" x="166" y="31">00:01,000</text>
+        <text className="aen-web-t2" x="166" y="31">00:01.000</text>
+        <path className="aen-web-play" d="M104 34l13 7-13 7z" />
+        <rect className="aen-web-band" x="53" y="45" width="114" height="9" rx="4.5" />
+        <rect className="aen-web-cap" x="86" y="47.5" width="48" height="4.5" rx="2.25" />
       </svg>
     </div>
     : art === "shift" ? <div className="aen-hero-merge" aria-hidden="true">
