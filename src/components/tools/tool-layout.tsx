@@ -11,7 +11,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
   const words = title.split(" ");
   const last = words.length > 1 ? words[words.length - 1] : null;
   const head = last ? words.slice(0, -1).join(" ") : title;
@@ -92,6 +92,16 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <g className="aen-list-row aen-list-r1"><text className="aen-list-num" x="94" y="21">1</text><rect className="aen-list-line" x="106" y="14" width="66" height="5.5" rx="2.75" /><text className="aen-list-time" x="106" y="30">00:01,000</text></g>
         <g className="aen-list-row aen-list-r2"><text className="aen-list-num" x="94" y="42">2</text><rect className="aen-list-line" x="106" y="35" width="52" height="5.5" rx="2.75" /></g>
         <g className="aen-list-row aen-list-r3"><text className="aen-list-num" x="94" y="58">3</text><rect className="aen-list-line" x="106" y="51" width="60" height="5.5" rx="2.75" /></g>
+      </svg>
+    </div>
+    : art === "plain" ? <div className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
+        <g className="aen-plain-deco">
+          <circle cx="80" cy="14" r="2.6" /><circle cx="94" cy="14" r="2.6" /><circle cx="108" cy="14" r="2.6" />
+          <text x="56" y="33">{</text><text x="158" y="33">}</text><text x="64" y="49">{</text><text x="150" y="49">}</text>
+        </g>
+        <rect className="aen-plain-line" x="70" y="26" width="80" height="6" rx="3" />
+        <rect className="aen-plain-line" x="78" y="42" width="64" height="6" rx="3" />
       </svg>
     </div>
     : <div className="aen-hero-merge" aria-hidden="true">
