@@ -787,13 +787,18 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-sync .aen-sync-b1 { animation-name: aen-sync-b1; }
 .art-sync .aen-sync-b2 { animation-name: aen-sync-b2; }
 .art-sync .aen-sync-b3 { animation-name: aen-sync-b3; }
-@keyframes aen-sync-b1 { 0%, 28% { transform: translateX(5px) } 48%, 78% { transform: translateX(0) } 92%, 100% { transform: translateX(5px) } }
-@keyframes aen-sync-b2 { 0%, 28% { transform: translateX(11px) } 48%, 78% { transform: translateX(0) } 92%, 100% { transform: translateX(11px) } }
-@keyframes aen-sync-b3 { 0%, 28% { transform: translateX(18px) } 48%, 78% { transform: translateX(0) } 92%, 100% { transform: translateX(18px) } }
+@keyframes aen-sync-b1 { 0%, 24% { transform: translateX(5px); fill: var(--action) } 44%, 78% { transform: translateX(0); fill: var(--accent) } 92%, 100% { transform: translateX(5px); fill: var(--action) } }
+@keyframes aen-sync-b2 { 0%, 30% { transform: translateX(11px); fill: var(--action) } 52%, 78% { transform: translateX(0); fill: var(--accent) } 92%, 100% { transform: translateX(11px); fill: var(--action) } }
+@keyframes aen-sync-b3 { 0%, 36% { transform: translateX(18px); fill: var(--action) } 60%, 78% { transform: translateX(0); fill: var(--accent) } 92%, 100% { transform: translateX(18px); fill: var(--action) } }
 .art-sync .aen-sync-check { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0; animation: aen-sync-check 8s ease-in-out infinite; }
-@keyframes aen-sync-check { 0%, 46% { opacity: 0 } 56%, 78% { opacity: 1 } 90%, 100% { opacity: 0 } }
+@keyframes aen-sync-check { 0%, 60% { opacity: 0 } 68%, 78% { opacity: 1 } 90%, 100% { opacity: 0 } }
+
+/* Sync Fixer — direction doc: anchor pins mark the two anchor points. */
+.art-sync .aen-sync-pin circle { fill: var(--action); stroke: none; }
+.art-sync .aen-sync-pin { animation: aen-sync-pin 8s ease-in-out infinite; }
+@keyframes aen-sync-pin { 0%, 8% { opacity: 0 } 14%, 88% { opacity: 1 } 95%, 100% { opacity: 0 } }
 @media (prefers-reduced-motion: reduce) {
-  .art-sync .aen-sync-low rect, .art-sync .aen-sync-check { animation: none; }
+  .art-sync .aen-sync-low rect, .art-sync .aen-sync-check, .art-sync .aen-sync-pin { animation: none; }
   .art-sync .aen-sync-check { opacity: 1; }
 }
 
