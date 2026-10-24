@@ -277,7 +277,7 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
    can adopt them; workspace rules stay scoped to .aen-merger. */
 .aen-tool-hero { text-align: center; padding: 16px 0 28px; animation: aen-rise .6s cubic-bezier(.2,.8,.2,1) both; }
 .aen-hero-merge { display: flex; justify-content: center; margin-bottom: 18px; }
-.aen-hero-merge svg { width: 220px; max-width: 70vw; height: auto; overflow: visible; }
+.aen-hero-merge svg { width: 320px; max-width: 92vw; height: auto; overflow: visible; }
 .aen-hero-doc rect { fill: var(--surface); stroke-width: 1.5; }
 .aen-hero-doc path { fill: none; stroke-width: 2.4; stroke-linecap: round; }
 .aen-hero-doc-a rect { stroke: var(--action); } .aen-hero-doc-a path { stroke: var(--action); }
@@ -330,7 +330,6 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
 .aen-tool-page:has(.aen-merger) .tool-frame { border-radius: 24px; border-color: var(--border); box-shadow: 0 30px 60px -28px rgb(15 23 42 / .20), 0 4px 16px -6px rgb(15 23 42 / .07); animation: aen-rise .6s cubic-bezier(.2,.8,.2,1) .05s both; }
 .aen-tool-page .aen-merger .editor-panel { padding: 30px; }
 .aen-tool-hero { position: relative; }
-.aen-hero-merge svg { width: 190px; }
 .aen-hero-chip { position: absolute; display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 9px 13px; font-family: var(--font-platform); font-size: 13px; font-weight: 600; box-shadow: 0 16px 32px -16px rgb(15 23 42 / .28); z-index: 1; }
 .aen-hero-chip-a { left: calc(50% - 440px); top: 2px; color: var(--action); transform: rotate(-6deg); animation: aen-float 6s ease-in-out infinite alternate; }
 .aen-hero-chip-b { left: calc(50% - 392px); top: 62px; color: var(--accent); transform: rotate(4deg); animation: aen-float 6s ease-in-out -3s infinite alternate; }
@@ -401,7 +400,7 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .aen-tool-page:has(.aen-merger) { background-image: none; position: relative; z-index: 0; }
 .aen-tool-page:has(.aen-merger)::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 100vw; z-index: -1; pointer-events: none; background-image: radial-gradient(680px 400px at 18% -60px, color-mix(in srgb, var(--action) 13%, transparent), transparent 70%), radial-gradient(760px 440px at 84% -40px, color-mix(in srgb, var(--accent) 12%, transparent), transparent 72%); background-repeat: no-repeat; animation: aen-wash 14s ease-in-out infinite alternate; }
 @keyframes aen-wash { from { opacity: .72; } to { opacity: 1; } }
-.aen-hero-merge svg { width: 228px; filter: drop-shadow(0 18px 26px rgb(15 23 42 / .13)); }
+.aen-hero-merge svg { width: 320px; filter: drop-shadow(0 18px 26px rgb(15 23 42 / .13)); }
 .aen-hero-arrow { stroke-dasharray: 5 6; animation: aen-dash 1.4s linear infinite; }
 @keyframes aen-dash { to { stroke-dashoffset: -11; } }
 .aen-hero-chip-a { left: calc(50% - 402px); }
