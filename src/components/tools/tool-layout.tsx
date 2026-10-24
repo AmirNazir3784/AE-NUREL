@@ -100,16 +100,16 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <g className="aen-sy-check"><circle cx="296" cy="64" r="8" /><path d="M292.5 64l2.5 2.5 5-5" /></g>
       </svg>
     </div>
-    : art === "overlap" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <path className="aen-ovl-line" d="M12 48h196" />
-        <path className="aen-ovl-ticks" d="M32 44v8M57 44v8M82 44v8M107 44v8M132 44v8M157 44v8M182 44v8" />
-        <rect className="aen-ovl-gap" x="101" y="27" width="12" height="14" rx="3" />
-        <rect className="aen-ovl-a" x="46" y="27" width="54" height="14" rx="4" />
-        <g className="aen-ovl-bwrap"><rect className="aen-ovl-b" x="84" y="27" width="54" height="14" rx="4" /></g>
-        <rect className="aen-ovl-zone" x="84" y="27" width="16" height="14" rx="3" />
-        <path className="aen-ovl-posts" d="M101 22v5M113 22v5" />
-        <g className="aen-ovl-fixed"><circle cx="200" cy="13" r="7" /><path d="M196.5 13l2.5 2.5 4.5-5" /></g>
+    : art === "overlap" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <defs><pattern id="aen-ov-cross" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--action)" strokeWidth="2" /></pattern></defs>
+        <rect className="aen-ov-a" x="70" y="52" width="100" height="22" rx="5" />
+        <g className="aen-ov-b"><rect x="140" y="52" width="100" height="22" rx="5" /></g>
+        <g className="aen-ov-zone"><rect x="140" y="52" width="30" height="22" fill="var(--action)" opacity=".25" /><rect x="140" y="52" width="30" height="22" fill="url(#aen-ov-cross)" /></g>
+        <rect className="aen-ov-gap" x="170" y="52" width="8" height="22" rx="2" />
+        <line className="aen-ov-ruler" x1="30" y1="92" x2="290" y2="92" />
+        <path className="aen-ov-ticks" d="M30 88v8M70 88v8M110 88v8M150 88v8M190 88v8M230 88v8M270 88v8" />
+        <g className="aen-ov-check"><circle cx="278" cy="30" r="8" /><path d="M274.5 30l2.5 2.5 5-5" /></g>
       </svg>
     </div>
     : art === "list" ? <div className="aen-hero-merge" aria-hidden="true">
