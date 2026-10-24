@@ -86,14 +86,18 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <text className="aen-sh-new" x="110" y="92">00:03</text><text className="aen-sh-new" x="190" y="92">00:07</text><text className="aen-sh-new" x="270" y="92">00:11</text>
       </svg>
     </div>
-    : art === "sync" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <path className="aen-tl-line" d="M12 22h196M12 48h196" />
-        <path className="aen-sync-guide" d="M34 10v46M160 10v46" />
-        <g className="aen-sync-pin"><circle cx="34" cy="8" r="3.5" /><circle cx="160" cy="8" r="3.5" /></g>
-        <g className="aen-sync-top"><rect x="34" y="16" width="30" height="11" rx="3.5" /><rect x="78" y="16" width="40" height="11" rx="3.5" /><rect x="132" y="16" width="28" height="11" rx="3.5" /></g>
-        <g className="aen-sync-low"><rect className="aen-sync-b1" x="34" y="42" width="30" height="11" rx="3.5" /><rect className="aen-sync-b2" x="78" y="42" width="40" height="11" rx="3.5" /><rect className="aen-sync-b3" x="132" y="42" width="28" height="11" rx="3.5" /></g>
-        <path className="aen-sync-check" d="M186 30l5 5 9-10" />
+    : art === "sync" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <line className="aen-sy-ruler" x1="30" y1="40" x2="290" y2="40" />
+        <line className="aen-sy-ruler" x1="30" y1="92" x2="290" y2="92" />
+        <path className="aen-sy-guide" d="M50 24v76M230 24v76" />
+        <g className="aen-sy-top"><rect x="50" y="32" width="12" height="16" rx="3" /><rect x="110" y="32" width="12" height="16" rx="3" /><rect x="170" y="32" width="12" height="16" rx="3" /><rect x="230" y="32" width="12" height="16" rx="3" /></g>
+        <g className="aen-sy-pin"><circle cx="50" cy="18" r="5" /><path d="M50 23v9" /><circle cx="230" cy="18" r="5" /><path d="M230 23v9" /></g>
+        <rect className="aen-sy-b1" x="50" y="84" width="12" height="16" rx="3" />
+        <rect className="aen-sy-b2" x="110" y="84" width="12" height="16" rx="3" />
+        <rect className="aen-sy-b3" x="170" y="84" width="12" height="16" rx="3" />
+        <rect className="aen-sy-b4" x="230" y="84" width="12" height="16" rx="3" />
+        <g className="aen-sy-check"><circle cx="296" cy="64" r="8" /><path d="M292.5 64l2.5 2.5 5-5" /></g>
       </svg>
     </div>
     : art === "overlap" ? <div className="aen-hero-merge" aria-hidden="true">
