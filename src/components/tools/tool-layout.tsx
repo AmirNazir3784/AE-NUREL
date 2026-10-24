@@ -11,7 +11,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "convert" | "shift"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "convert" | "shift" | "sync"; badgeFrom?: string; badgeTo?: string }) {
   const words = title.split(" ");
   const last = words.length > 1 ? words[words.length - 1] : null;
   const head = last ? words.slice(0, -1).join(" ") : title;
@@ -46,6 +46,15 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <text className="aen-shift-label" x="146" y="17">+2.0s</text>
         <circle className="aen-shift-ring" cx="94" cy="31" r="5" />
         <g className="aen-shift-cursor"><path d="M0 0v13l3.5-3 2 4.5 2.2-1-2-4.5H10z" /></g>
+      </svg>
+    </div>
+    : art === "sync" ? <div className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
+        <path className="aen-tl-line" d="M12 22h196M12 48h196" />
+        <path className="aen-sync-guide" d="M34 10v46M160 10v46" />
+        <g className="aen-sync-top"><rect x="34" y="16" width="30" height="11" rx="3.5" /><rect x="78" y="16" width="40" height="11" rx="3.5" /><rect x="132" y="16" width="28" height="11" rx="3.5" /></g>
+        <g className="aen-sync-low"><rect className="aen-sync-b1" x="34" y="42" width="30" height="11" rx="3.5" /><rect className="aen-sync-b2" x="78" y="42" width="40" height="11" rx="3.5" /><rect className="aen-sync-b3" x="132" y="42" width="28" height="11" rx="3.5" /></g>
+        <path className="aen-sync-check" d="M186 30l5 5 9-10" />
       </svg>
     </div>
     : <div className="aen-hero-merge" aria-hidden="true">
