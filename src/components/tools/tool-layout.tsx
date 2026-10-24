@@ -69,6 +69,7 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
       <svg viewBox="0 0 220 64" role="presentation" focusable="false">
         <path className="aen-tl-line" d="M12 22h196M12 48h196" />
         <path className="aen-sync-guide" d="M34 10v46M160 10v46" />
+        <g className="aen-sync-pin"><circle cx="34" cy="8" r="3.5" /><circle cx="160" cy="8" r="3.5" /></g>
         <g className="aen-sync-top"><rect x="34" y="16" width="30" height="11" rx="3.5" /><rect x="78" y="16" width="40" height="11" rx="3.5" /><rect x="132" y="16" width="28" height="11" rx="3.5" /></g>
         <g className="aen-sync-low"><rect className="aen-sync-b1" x="34" y="42" width="30" height="11" rx="3.5" /><rect className="aen-sync-b2" x="78" y="42" width="40" height="11" rx="3.5" /><rect className="aen-sync-b3" x="132" y="42" width="28" height="11" rx="3.5" /></g>
         <path className="aen-sync-check" d="M186 30l5 5 9-10" />
