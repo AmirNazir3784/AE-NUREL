@@ -18,10 +18,12 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
   return <header className={"aen-tool-hero art-" + art}>
     {chipA && <span className="aen-hero-chip aen-hero-chip-a" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipA}</span>}{chipB && <span className="aen-hero-chip aen-hero-chip-b" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipB}</span>}{chipC && <span className="aen-hero-chip aen-hero-chip-c" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipC}</span>}{art === "split" ? <div className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <g className="aen-hero-doc aen-split-src"><rect x="38" y="9" width="40" height="46" rx="9" /><path d="M46 25h24M46 35h24M46 45h15" /><path className="aen-split-cut" d="M58 13v38" /></g>
-        <path className="aen-hero-arrow" d="M84 32h26m0 0-8-7m8 7-8 7" />
-        <g className="aen-hero-doc aen-split-p1"><rect x="118" y="6" width="36" height="24" rx="7" /><path d="M125 15h22M125 22h14" /></g>
-        <g className="aen-hero-doc aen-split-p2"><rect x="118" y="34" width="36" height="24" rx="7" /><path d="M125 43h22M125 50h14" /></g>
+        <path className="aen-cut-line" d="M12 48h196" />
+        <path className="aen-cut-ticks" d="M32 44v8M57 44v8M82 44v8M107 44v8M132 44v8M157 44v8M182 44v8" />
+        <rect className="aen-cut-l" x="42" y="27" width="55" height="14" rx="4" />
+        <g className="aen-cut-rwrap"><rect className="aen-cut-r" x="99" y="27" width="55" height="14" rx="4" /></g>
+        <path className="aen-cut-mark" d="M98 12v29" />
+        <path className="aen-cut-chev" d="M93 6l5 5 5-5" />
       </svg>
     </div>
     : art === "edit" ? <div className="aen-hero-merge" aria-hidden="true">
