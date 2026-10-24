@@ -62,37 +62,26 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <rect className="aen-ed-handle" x="168" y="90" width="6" height="18" rx="3" />
       </svg>
     </div>
-    : art === "web" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+        : art === "web" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 320 140" role="presentation" focusable="false">
-        <text className="aen-vt-header" x="160" y="22">WEBVTT</text>
-        <rect className="aen-vt-card" x="70" y="30" width="180" height="80" rx="10" />
-        <text className="aen-vt-num" x="82" y="52">1</text>
-        <text className="aen-vt-ts" x="82" y="76">00:01</text>
-        <text className="aen-vt-c1" x="115" y="76">,</text>
-        <text className="aen-vt-d1" x="116" y="76">.</text>
-        <text className="aen-vt-ts" x="121" y="76">500</text>
-        <text className="aen-vt-ts" x="141" y="76">--&gt;</text>
-        <text className="aen-vt-ts" x="174" y="76">00:04</text>
-        <text className="aen-vt-c2" x="207" y="76">,</text>
-        <text className="aen-vt-d2" x="208" y="76">.</text>
-        <text className="aen-vt-ts" x="213" y="76">200</text>
-        <text className="aen-vt-line" x="82" y="98">Hello, welcome!</text>
-        <circle className="aen-vt-p1" cx="117" cy="72" r="6" />
-        <circle className="aen-vt-p2" cx="209" cy="72" r="6" />
+        <rect className="aen-vt-bar" x="70" y="14" width="180" height="16" rx="8" />
+        <text className="aen-vt-header" x="160" y="26">WEBVTT</text>
+        <rect className="aen-vt-card" x="70" y="34" width="180" height="98" rx="10" />
+        <g className="aen-vt-num"><rect x="82" y="42" width="16" height="13" rx="3" /><text x="90" y="52">1</text></g>
+        <text className="aen-vt-ts" x="82" y="72">00:01</text>
+        <text className="aen-vt-c1" x="115" y="72">,</text>
+        <text className="aen-vt-d1" x="116" y="72">.</text>
+        <text className="aen-vt-ts" x="121" y="72">500</text>
+        <text className="aen-vt-ts" x="141" y="72">--&gt;</text>
+        <text className="aen-vt-ts" x="174" y="72">00:04</text>
+        <text className="aen-vt-c2" x="207" y="72">,</text>
+        <text className="aen-vt-d2" x="208" y="72">.</text>
+        <text className="aen-vt-ts" x="213" y="72">200</text>
+        <text className="aen-vt-line" x="82" y="90">Hello, welcome!</text>
+        <g className="aen-vt-cue2"><text className="aen-vt-ts2" x="82" y="108">00:05.000 --&gt; 00:08.500</text><text className="aen-vt-line2" x="82" y="124">Thanks for watching.</text></g>
       </svg>
     </div>
-    : art === "shift" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
-        <line className="aen-sh-ruler" x1="20" y1="108" x2="300" y2="108" />
-        <path className="aen-sh-ticks" d="M20 104v8M40 104v8M60 104v8M80 104v8M100 104v8M120 104v8M140 104v8M160 104v8M180 104v8M200 104v8M220 104v8M240 104v8M260 104v8M280 104v8M300 104v8" />
-        <g className="aen-sh-ghost"><rect x="40" y="55" width="60" height="18" rx="5" /><rect x="120" y="55" width="60" height="18" rx="5" /><rect x="200" y="55" width="60" height="18" rx="5" /></g>
-        <g className="aen-sh-blocks"><rect x="40" y="55" width="60" height="18" rx="5" /><rect x="120" y="55" width="60" height="18" rx="5" /><rect x="200" y="55" width="60" height="18" rx="5" /></g>
-        <g className="aen-sh-chip"><rect x="130" y="12" width="60" height="20" rx="10" /><text className="aen-sh-plus" x="160" y="26">+2.0s</text><text className="aen-sh-minus" x="160" y="26">−2.0s</text></g>
-        <text className="aen-sh-old" x="70" y="92">00:01</text><text className="aen-sh-old" x="150" y="92">00:05</text><text className="aen-sh-old" x="230" y="92">00:09</text>
-        <text className="aen-sh-new" x="110" y="92">00:03</text><text className="aen-sh-new" x="190" y="92">00:07</text><text className="aen-sh-new" x="270" y="92">00:11</text>
-      </svg>
-    </div>
-    : art === "sync" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+: art === "sync" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 320 140" role="presentation" focusable="false">
         <line className="aen-sy-ruler" x1="30" y1="40" x2="290" y2="40" />
         <line className="aen-sy-ruler" x1="30" y1="92" x2="290" y2="92" />
