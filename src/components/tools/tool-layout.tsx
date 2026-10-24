@@ -135,14 +135,16 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <text className="aen-ls-line" x="106" y="100">Thanks for watching.</text>
       </svg>
     </div>
-    : art === "plain" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <g className="aen-plain-deco">
-          <circle cx="80" cy="14" r="2.6" /><circle cx="94" cy="14" r="2.6" /><circle cx="108" cy="14" r="2.6" />
-          <text x="56" y="33">{"{"}</text><text x="158" y="33">{"}"}</text><text x="64" y="49">{"{"}</text><text x="150" y="49">{"}"}</text>
-        </g>
-        <rect className="aen-plain-line" x="70" y="26" width="80" height="6" rx="3" />
-        <rect className="aen-plain-line" x="78" y="42" width="64" height="6" rx="3" />
+    : art === "plain" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <rect className="aen-as-card" x="40" y="30" width="120" height="60" rx="8" />
+        <text className="aen-as-rich" x="100" y="66">Hello!</text>
+        <text className="aen-as-plain" x="100" y="66">Hello!</text>
+        <g className="aen-as-chips"><circle cx="56" cy="20" r="4" fill="var(--accent)" /><circle cx="68" cy="20" r="4" fill="#7c5cf0" /><circle cx="80" cy="20" r="4" fill="var(--action)" /><path d="M148 14l6 6-6 6-6-6z" fill="var(--action)" /></g>
+        <rect className="aen-as-frame" x="36" y="26" width="128" height="68" rx="10" />
+        <path className="aen-as-arrow" d="M164 60h20m-6-5 6 5-6 5" />
+        <rect className="aen-as-outcard" x="190" y="30" width="90" height="60" rx="8" />
+        <g className="aen-as-out"><text x="198" y="48">1</text><text className="aen-as-time" x="198" y="62">00:01,000</text><text x="198" y="76">Hello!</text></g>
       </svg>
     </div>
     : art === "style" ? <div className="aen-hero-merge" aria-hidden="true">
