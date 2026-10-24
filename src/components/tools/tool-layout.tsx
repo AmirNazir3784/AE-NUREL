@@ -13,7 +13,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap" | "json"; badgeFrom?: string; badgeTo?: string }) {
   const heroRef = useRef<HTMLElement | null>(null);
   const [entered, setEntered] = useState(false);
   const [playKey, setPlayKey] = useState(0);
@@ -169,6 +169,23 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <g className="aen-tx-r3"><text x="82" y="100">3</text><text className="aen-tx-time" x="98" y="100">00:09,000</text></g>
         <text className="aen-tx-d3" x="154" y="100">See you soon!</text>
         <line className="aen-tx-scan" x1="70" y1="20" x2="250" y2="20" />
+      </svg>
+    </div>
+    : art === "json" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <rect className="aen-js-src" x="30" y="35" width="110" height="70" rx="8" />
+        <g className="aen-js-ci"><rect x="40" y="44" width="20" height="14" rx="7" /><text x="50" y="54">1</text></g>
+        <g className="aen-js-ct"><rect x="40" y="62" width="52" height="14" rx="7" /><text x="66" y="72">00:01,000</text></g>
+        <g className="aen-js-cx"><rect x="40" y="80" width="44" height="14" rx="7" /><text x="62" y="90">Hello!</text></g>
+        <text className="aen-js-bl" x="172" y="75">{"{"}</text>
+        <rect className="aen-js-card" x="180" y="20" width="110" height="100" rx="8" />
+        <text className="aen-js-r1" x="188" y="36"><tspan>"index"</tspan>: 1,</text>
+        <text className="aen-js-r2" x="188" y="49"><tspan>"start"</tspan>: "00:01,000",</text>
+        <text className="aen-js-r3" x="188" y="62"><tspan>"end"</tspan>: "00:04,000",</text>
+        <text className="aen-js-r4" x="188" y="75"><tspan>"startMs"</tspan>: 1000,</text>
+        <text className="aen-js-r5" x="188" y="88"><tspan>"endMs"</tspan>: 4000,</text>
+        <text className="aen-js-r6" x="188" y="101"><tspan>"text"</tspan>: "Hello!"</text>
+        <text className="aen-js-br" x="298" y="75">{"}"}</text>
       </svg>
     </div>
     : <div key={playKey} className="aen-hero-merge" aria-hidden="true">
