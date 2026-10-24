@@ -917,3 +917,23 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-plain .aen-plain-deco { opacity: 0; }
   .art-plain .aen-plain-line { fill: var(--foreground); opacity: .6; }
 }
+
+/* SRT to ASS scene — inside a video frame, a plain line settles at the
+   bottom centre and takes on the default style: white on a dark band,
+   with the style name appearing beside it. */
+.art-style .aen-style-frame { fill: var(--surface-soft); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-style .aen-style-play { fill: var(--muted); stroke: none; opacity: .35; }
+.art-style .aen-style-band { fill: #14181d; stroke: none; opacity: 0; animation: aen-style-band 7.5s ease-in-out infinite; }
+@keyframes aen-style-band { 0%, 34% { opacity: 0 } 50%, 86% { opacity: .88 } 95%, 100% { opacity: 0 } }
+.art-style .aen-style-line { animation: aen-style-line 7.5s ease-in-out infinite; }
+@keyframes aen-style-line { 0%, 26% { transform: translateY(0); fill: var(--foreground); opacity: .55 } 48%, 86% { transform: translateY(20.5px); fill: #fff; opacity: 1 } 95%, 100% { transform: translateY(0); fill: var(--foreground); opacity: .55 } }
+.art-style .aen-style-chip rect { fill: var(--accent); stroke: none; }
+.art-style .aen-style-chip text { fill: #fff; stroke: none; font-size: 7.5px; font-weight: 700; text-anchor: middle; }
+.art-style .aen-style-chip { opacity: 0; animation: aen-style-chip 7.5s ease-in-out infinite; }
+@keyframes aen-style-chip { 0%, 52% { opacity: 0; transform: translateY(3px) } 64%, 86% { opacity: 1; transform: translateY(0) } 95%, 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .art-style .aen-style-band, .art-style .aen-style-line, .art-style .aen-style-chip { animation: none; }
+  .art-style .aen-style-band { opacity: .88; }
+  .art-style .aen-style-line { transform: translateY(20.5px); fill: #fff; opacity: 1; }
+  .art-style .aen-style-chip { opacity: 1; }
+}
