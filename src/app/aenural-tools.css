@@ -1276,3 +1276,30 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-ls-header, .aen-hero-entered .aen-ls-t1, .aen-hero-entered .aen-ls-t2, .aen-hero-entered .aen-ls-d1, .aen-hero-entered .aen-ls-c1, .aen-hero-entered .aen-ls-d2, .aen-hero-entered .aen-ls-c2 { animation: none; }
 }
+
+/* --- SRT to TXT 100%: Dialogue Extraction (base = final clean transcript;
+   entered plays once 3.2s; hover replays the scan + regroup) --- */
+.art-text .aen-tx-frame { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; opacity: 1; }
+.art-text .aen-tx-r1 text, .art-text .aen-tx-r2 text, .art-text .aen-tx-r3 text { fill: var(--muted); stroke: none; font-size: 10px; font-weight: 700; opacity: 0; }
+.art-text .aen-tx-r1 .aen-tx-time, .art-text .aen-tx-r2 .aen-tx-time, .art-text .aen-tx-r3 .aen-tx-time { font-family: monospace; font-size: 9px; font-weight: 600; }
+.art-text .aen-tx-d1, .art-text .aen-tx-d2, .art-text .aen-tx-d3 { fill: var(--foreground); stroke: none; font-size: 10px; transform: translateX(-72px); }
+.art-text .aen-tx-scan { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0; }
+.aen-hero-entered .aen-tx-frame { animation: aen-tx-frame 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-tx-r1 { animation: aen-tx-r1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-tx-r2 { animation: aen-tx-r2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-tx-r3 { animation: aen-tx-r3 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-tx-d1 { animation: aen-tx-d1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-tx-d2 { animation: aen-tx-d2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-tx-d3 { animation: aen-tx-d3 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-tx-scan { animation: aen-tx-scan 3.2s ease-in-out 1 forwards; }
+@keyframes aen-tx-frame { 0%, 60% { opacity: 0 } 75%, 100% { opacity: 1 } }
+@keyframes aen-tx-r1 { 0%, 25% { opacity: 1 } 40%, 100% { opacity: 0 } }
+@keyframes aen-tx-r2 { 0%, 35% { opacity: 1 } 50%, 100% { opacity: 0 } }
+@keyframes aen-tx-r3 { 0%, 45% { opacity: 1 } 60%, 100% { opacity: 0 } }
+@keyframes aen-tx-d1 { 0%, 30% { transform: translateX(0) } 50%, 100% { transform: translateX(-72px) } }
+@keyframes aen-tx-d2 { 0%, 40% { transform: translateX(0) } 60%, 100% { transform: translateX(-72px) } }
+@keyframes aen-tx-d3 { 0%, 50% { transform: translateX(0) } 70%, 100% { transform: translateX(-72px) } }
+@keyframes aen-tx-scan { 0%, 15% { opacity: 0; transform: translateY(0) } 20% { opacity: 1 } 55% { opacity: 1; transform: translateY(100px) } 65%, 100% { opacity: 0; transform: translateY(100px) } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-tx-frame, .aen-hero-entered .aen-tx-r1, .aen-hero-entered .aen-tx-r2, .aen-hero-entered .aen-tx-r3, .aen-hero-entered .aen-tx-d1, .aen-hero-entered .aen-tx-d2, .aen-hero-entered .aen-tx-d3, .aen-hero-entered .aen-tx-scan { animation: none; }
+}
