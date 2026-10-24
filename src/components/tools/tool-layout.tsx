@@ -11,7 +11,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
   const words = title.split(" ");
   const last = words.length > 1 ? words[words.length - 1] : null;
   const head = last ? words.slice(0, -1).join(" ") : title;
@@ -78,6 +78,20 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <g className="aen-ovl-bwrap"><rect className="aen-ovl-b" x="84" y="27" width="54" height="14" rx="4" /></g>
         <rect className="aen-ovl-zone" x="84" y="27" width="16" height="14" rx="3" />
         <path className="aen-ovl-posts" d="M101 22v5M113 22v5" />
+      </svg>
+    </div>
+    : art === "list" ? <div className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
+        <g className="aen-list-web">
+          <rect className="aen-list-frame" x="12" y="13" width="58" height="38" rx="7" />
+          <path className="aen-list-bar" d="M12 23h58" />
+          <circle className="aen-list-dot" cx="19" cy="18" r="1.7" /><circle className="aen-list-dot" cx="26" cy="18" r="1.7" />
+          <rect className="aen-list-extra" x="20" y="29" width="26" height="4.5" rx="2.25" />
+          <rect className="aen-list-extra" x="20" y="38" width="18" height="4.5" rx="2.25" />
+        </g>
+        <g className="aen-list-row aen-list-r1"><text className="aen-list-num" x="94" y="21">1</text><rect className="aen-list-line" x="106" y="14" width="66" height="5.5" rx="2.75" /><text className="aen-list-time" x="106" y="30">00:01,000</text></g>
+        <g className="aen-list-row aen-list-r2"><text className="aen-list-num" x="94" y="42">2</text><rect className="aen-list-line" x="106" y="35" width="52" height="5.5" rx="2.75" /></g>
+        <g className="aen-list-row aen-list-r3"><text className="aen-list-num" x="94" y="58">3</text><rect className="aen-list-line" x="106" y="51" width="60" height="5.5" rx="2.75" /></g>
       </svg>
     </div>
     : <div className="aen-hero-merge" aria-hidden="true">
