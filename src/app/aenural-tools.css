@@ -1221,3 +1221,53 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-sv-c1, .aen-hero-entered .aen-sv-a1, .aen-hero-entered .aen-sv-s1b, .aen-hero-entered .aen-sv-c2, .aen-hero-entered .aen-sv-a2, .aen-hero-entered .aen-sv-s2b, .aen-hero-entered .aen-sv-s1a, .aen-hero-entered .aen-sv-s2a, .aen-hero-entered .aen-sv-n1, .aen-hero-entered .aen-sv-n2, .aen-hero-entered .aen-sv-r1, .aen-hero-entered .aen-sv-r2, .aen-hero-entered .aen-sv-strip1, .aen-hero-entered .aen-sv-strip2 { animation: none; }
 }
+
+/* --- SRT to SBV 100%: Caption Timeline Export (base = final SBV card;
+   loops continuously; hover restarts it) --- */
+.art-sbvout .aen-so-c1, .art-sbvout .aen-so-c2 { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; opacity: 0; }
+.art-sbvout .aen-so-n1, .art-sbvout .aen-so-n2 { fill: var(--muted); stroke: none; font-size: 9px; font-weight: 700; opacity: 0; }
+.art-sbvout .aen-so-t1a, .art-sbvout .aen-so-t1b, .art-sbvout .aen-so-t2a, .art-sbvout .aen-so-t2b { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 8px; opacity: 0; }
+.art-sbvout .aen-so-ar1, .art-sbvout .aen-so-ar2 { fill: var(--accent); stroke: none; font-family: monospace; font-size: 8px; font-weight: 700; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.art-sbvout .aen-so-cm1, .art-sbvout .aen-so-cm2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 8px; opacity: 0; }
+.art-sbvout .aen-so-t1b { transform: translateX(-24px); }
+.art-sbvout .aen-so-t2b { transform: translateX(-24px); }
+.art-sbvout .aen-so-d1, .art-sbvout .aen-so-d2 { fill: var(--muted); stroke: none; font-size: 10px; transform: translate(4px, 4px); }
+.art-sbvout .aen-so-frame > rect:first-child { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-sbvout .aen-so-p1, .art-sbvout .aen-so-p2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 9px; }
+.aen-hero-entered .aen-so-n1 { animation: aen-so-n1 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-n2 { animation: aen-so-n2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-ar1 { animation: aen-so-ar1 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-t1b { animation: aen-so-t1b 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-cm1 { animation: aen-so-cm1 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-t1a { animation: aen-so-t1a 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-ar2 { animation: aen-so-ar2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-t2b { animation: aen-so-t2b 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-cm2 { animation: aen-so-cm2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-t2a { animation: aen-so-t2a 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-c1 { animation: aen-so-c1 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-c2 { animation: aen-so-c2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-p1 { animation: aen-so-p1 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-p2 { animation: aen-so-p2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-d1 { animation: aen-so-d1 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-d2 { animation: aen-so-d2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-frame { animation: aen-so-frame 3.2s ease-in-out infinite; }
+@keyframes aen-so-n1 { 0%, 12% { opacity: 1; transform: translateX(0) } 22%, 100% { opacity: 0; transform: translateX(-10px) } }
+@keyframes aen-so-n2 { 0%, 20% { opacity: 1; transform: translateX(0) } 30%, 100% { opacity: 0; transform: translateX(-10px) } }
+@keyframes aen-so-ar1 { 0%, 18% { opacity: 1; transform: scaleX(1) } 28%, 38%, 100% { opacity: 0; transform: scaleX(0) } }
+@keyframes aen-so-t1b { 0%, 18% { opacity: 1; transform: translateX(0) } 28%, 38%, 45% { opacity: 1; transform: translateX(-24px) } 55%, 100% { opacity: 0; transform: translateX(-24px) } }
+@keyframes aen-so-cm1 { 0%, 24% { opacity: 0 } 32%, 45% { opacity: 1 } 55%, 100% { opacity: 0 } }
+@keyframes aen-so-t1a { 0%, 45% { opacity: 1 } 55%, 100% { opacity: 0 } }
+@keyframes aen-so-ar2 { 0%, 26% { opacity: 1; transform: scaleX(1) } 36%, 46%, 100% { opacity: 0; transform: scaleX(0) } }
+@keyframes aen-so-t2b { 0%, 26% { opacity: 1; transform: translateX(0) } 36%, 46%, 55% { opacity: 1; transform: translateX(-24px) } 65%, 100% { opacity: 0; transform: translateX(-24px) } }
+@keyframes aen-so-cm2 { 0%, 32% { opacity: 0 } 40%, 55% { opacity: 1 } 65%, 100% { opacity: 0 } }
+@keyframes aen-so-t2a { 0%, 55% { opacity: 1 } 65%, 100% { opacity: 0 } }
+@keyframes aen-so-c1 { 0%, 42% { opacity: 1 } 55%, 100% { opacity: 0 } }
+@keyframes aen-so-c2 { 0%, 52% { opacity: 1 } 65%, 100% { opacity: 0 } }
+@keyframes aen-so-p1 { 0%, 48% { opacity: 0 } 60%, 100% { opacity: 1 } }
+@keyframes aen-so-p2 { 0%, 58% { opacity: 0 } 70%, 100% { opacity: 1 } }
+@keyframes aen-so-d1 { 0%, 48% { transform: translate(0, 0) } 60%, 100% { transform: translate(4px, 4px) } }
+@keyframes aen-so-d2 { 0%, 58% { transform: translate(0, 0) } 70%, 100% { transform: translate(4px, 4px) } }
+@keyframes aen-so-frame { 0%, 52% { opacity: 0 } 68%, 100% { opacity: 1 } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-so-n1, .aen-hero-entered .aen-so-n2, .aen-hero-entered .aen-so-ar1, .aen-hero-entered .aen-so-t1b, .aen-hero-entered .aen-so-cm1, .aen-hero-entered .aen-so-t1a, .aen-hero-entered .aen-so-ar2, .aen-hero-entered .aen-so-t2b, .aen-hero-entered .aen-so-cm2, .aen-hero-entered .aen-so-t2a, .aen-hero-entered .aen-so-c1, .aen-hero-entered .aen-so-c2, .aen-hero-entered .aen-so-p1, .aen-hero-entered .aen-so-p2, .aen-hero-entered .aen-so-d1, .aen-hero-entered .aen-so-d2, .aen-hero-entered .aen-so-frame { animation: none; }
+}
