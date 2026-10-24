@@ -796,3 +796,21 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-sync .aen-sync-low rect, .art-sync .aen-sync-check { animation: none; }
   .art-sync .aen-sync-check { opacity: 1; }
 }
+
+/* Overlap Fixer scene — one timeline: two blocks collide (the overlap
+   glows), then the later block slides away and leaves a clean gap. */
+.art-overlap .aen-ovl-line, .art-overlap .aen-ovl-ticks { fill: none; stroke: var(--border-strong); stroke-width: 1.6; stroke-linecap: round; }
+.art-overlap .aen-ovl-ticks { opacity: .6; }
+.art-overlap .aen-ovl-a { fill: var(--accent); opacity: .85; }
+.art-overlap .aen-ovl-b { fill: var(--action); }
+.art-overlap .aen-ovl-bwrap { animation: aen-ovl-move 8s ease-in-out infinite; }
+@keyframes aen-ovl-move { 0%, 30% { transform: translateX(0) } 50%, 78% { transform: translateX(30px) } 92%, 100% { transform: translateX(0) } }
+.art-overlap .aen-ovl-zone { fill: #ff5d3a; animation: aen-ovl-zone 8s ease-in-out infinite; }
+@keyframes aen-ovl-zone { 0%, 12% { opacity: .25 } 20% { opacity: .65 } 28% { opacity: .3 } 34% { opacity: .65 } 46%, 80% { opacity: 0 } 93%, 100% { opacity: .3 } }
+.art-overlap .aen-ovl-gap { fill: var(--accent); opacity: 0; animation: aen-ovl-gap 8s ease-in-out infinite; }
+@keyframes aen-ovl-gap { 0%, 46% { opacity: 0 } 58%, 78% { opacity: .3 } 90%, 100% { opacity: 0 } }
+.art-overlap .aen-ovl-posts { fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; opacity: 0; animation: aen-ovl-gap 8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .art-overlap .aen-ovl-bwrap, .art-overlap .aen-ovl-zone, .art-overlap .aen-ovl-gap, .art-overlap .aen-ovl-posts { animation: none; }
+  .art-overlap .aen-ovl-zone { opacity: .35; }
+}
