@@ -968,3 +968,21 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .art-overlap .aen-ovl-fixed { animation: none; opacity: 1; }
 }
+
+/* Splitter — direction doc: one long file, two dotted cut markers, then
+   three pieces move apart and settle with Part 1 / Part 2 / Part 3 labels. */
+.art-split .aen-cut3-p1 rect { fill: var(--accent); stroke: none; }
+.art-split .aen-cut3-p2 rect { fill: var(--action); stroke: none; }
+.art-split .aen-cut3-p3 rect { fill: var(--foreground); opacity: .55; stroke: none; }
+.art-split .aen-cut3-p1 { animation: aen-cut3-p1 8s ease-in-out infinite; }
+.art-split .aen-cut3-p3 { animation: aen-cut3-p3 8s ease-in-out infinite; }
+@keyframes aen-cut3-p1 { 0%, 40% { transform: translateX(0) } 55%, 85% { transform: translateX(-10px) } 94%, 100% { transform: translateX(0) } }
+@keyframes aen-cut3-p3 { 0%, 40% { transform: translateX(0) } 55%, 85% { transform: translateX(10px) } 94%, 100% { transform: translateX(0) } }
+.art-split .aen-cut3-mark { fill: none; stroke: var(--action); stroke-width: 1.4; stroke-dasharray: 3 3; animation: aen-cut3-mark 8s ease-in-out infinite; }
+@keyframes aen-cut3-mark { 0%, 12% { opacity: 0 } 22%, 80% { opacity: 1 } 90%, 100% { opacity: 0 } }
+.art-split .aen-cut3-label { fill: var(--muted); stroke: none; font-size: 7.5px; font-weight: 700; text-anchor: middle; opacity: 0; animation: aen-cut3-label 8s ease-in-out infinite; }
+@keyframes aen-cut3-label { 0%, 55% { opacity: 0 } 65%, 88% { opacity: 1 } 95%, 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .art-split .aen-cut3-p1, .art-split .aen-cut3-p3, .art-split .aen-cut3-mark, .art-split .aen-cut3-label { animation: none; }
+  .art-split .aen-cut3-mark, .art-split .aen-cut3-label { opacity: 1; }
+}
