@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import Link from "@/components/site/page-link";
 import type { ComponentProps, ReactNode } from "react";
 import { Icon } from "@/components/ui/icon";
@@ -11,11 +12,27 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "text" | "shift" | "sync" | "overlap" | "video"; badgeFrom?: string; badgeTo?: string }) {
+  const heroRef = useRef<HTMLElement | null>(null);
+  const [entered, setEntered] = useState(false);
+  const [playKey, setPlayKey] = useState(0);
+  const [rev, setRev] = useState(false);
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") { setEntered(true); return; }
+    const ob = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { setEntered(true); ob.disconnect(); }
+    }, { threshold: 0.2 });
+    ob.observe(el);
+    return () => ob.disconnect();
+  }, []);
+  const replay = () => { if (art === "shift") { setRev(true); } else { setPlayKey((k) => k + 1); } };
+  const unreplay = () => { if (art === "shift") setRev(false); };
   const words = title.split(" ");
   const last = words.length > 1 ? words[words.length - 1] : null;
   const head = last ? words.slice(0, -1).join(" ") : title;
-  return <header className={"aen-tool-hero art-" + art}>
+  return <header ref={heroRef} className={"aen-tool-hero art-" + art + (entered ? " aen-hero-entered" : "") + (rev ? " aen-shift-rev" : "")} onMouseEnter={replay} onMouseLeave={unreplay} onFocus={replay} onBlur={unreplay}>
     {chipA && <span className="aen-hero-chip aen-hero-chip-a" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipA}</span>}{chipB && <span className="aen-hero-chip aen-hero-chip-b" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipB}</span>}{chipC && <span className="aen-hero-chip aen-hero-chip-c" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" /></svg>{chipC}</span>}{art === "split" ? <div className="aen-hero-merge" aria-hidden="true">
       <svg viewBox="0 0 220 64" role="presentation" focusable="false">
         <path className="aen-cut-line" d="M12 48h196" />
@@ -55,14 +72,15 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <rect className="aen-web-cap" x="86" y="47.5" width="48" height="4.5" rx="2.25" />
       </svg>
     </div>
-    : art === "shift" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <path className="aen-tl-line" d="M10 47h200" />
-        <path className="aen-tl-ticks" d="M22 43v8M47 43v8M72 43v8M97 43v8M122 43v8M147 43v8M172 43v8M197 43v8" />
-        <g className="aen-shift-blocks"><rect x="28" y="27" width="34" height="13" rx="4" /><rect className="aen-shift-mid" x="72" y="27" width="44" height="13" rx="4" /><rect x="126" y="27" width="30" height="13" rx="4" /></g>
-        <text className="aen-shift-label" x="146" y="17">+2.0s</text>
-        <circle className="aen-shift-ring" cx="94" cy="31" r="5" />
-        <g className="aen-shift-cursor"><path d="M0 0v13l3.5-3 2 4.5 2.2-1-2-4.5H10z" /></g>
+    : art === "shift" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <line className="aen-sh-ruler" x1="20" y1="108" x2="300" y2="108" />
+        <path className="aen-sh-ticks" d="M20 104v8M40 104v8M60 104v8M80 104v8M100 104v8M120 104v8M140 104v8M160 104v8M180 104v8M200 104v8M220 104v8M240 104v8M260 104v8M280 104v8M300 104v8" />
+        <g className="aen-sh-ghost"><rect x="40" y="55" width="60" height="18" rx="5" /><rect x="120" y="55" width="60" height="18" rx="5" /><rect x="200" y="55" width="60" height="18" rx="5" /></g>
+        <g className="aen-sh-blocks"><rect x="40" y="55" width="60" height="18" rx="5" /><rect x="120" y="55" width="60" height="18" rx="5" /><rect x="200" y="55" width="60" height="18" rx="5" /></g>
+        <g className="aen-sh-chip"><rect x="130" y="12" width="60" height="20" rx="10" /><text className="aen-sh-plus" x="160" y="26">+2.0s</text><text className="aen-sh-minus" x="160" y="26">−2.0s</text></g>
+        <text className="aen-sh-old" x="70" y="92">00:01</text><text className="aen-sh-old" x="150" y="92">00:05</text><text className="aen-sh-old" x="230" y="92">00:09</text>
+        <text className="aen-sh-new" x="110" y="92">00:03</text><text className="aen-sh-new" x="190" y="92">00:07</text><text className="aen-sh-new" x="270" y="92">00:11</text>
       </svg>
     </div>
     : art === "sync" ? <div className="aen-hero-merge" aria-hidden="true">
@@ -120,22 +138,39 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <rect className="aen-style-line" x="86" y="22" width="48" height="5.5" rx="2.75" />
       </svg>
     </div>
-    : art === "text" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <rect className="aen-txt-frame" x="50" y="11" width="120" height="50" rx="7" />
-        <text className="aen-txt-num" x="62" y="26">1</text>
-        <text className="aen-txt-time" x="76" y="26">00:01,000</text>
-        <rect className="aen-txt-l1" x="62" y="33" width="72" height="5.5" rx="2.75" />
-        <rect className="aen-txt-l2" x="62" y="46" width="54" height="5.5" rx="2.75" />
+    : art === "text" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <rect className="aen-tx-frame" x="18" y="18" width="170" height="76" rx="8" />
+        <g className="aen-tx-c1"><text className="aen-tx-num" x="28" y="30">1</text><text className="aen-tx-time" x="46" y="30">00:01,000</text></g>
+        <g className="aen-tx-c2"><text className="aen-tx-num" x="28" y="65">2</text><text className="aen-tx-time" x="46" y="65">00:04,000</text></g>
+        <g className="aen-tx-c3"><text className="aen-tx-num" x="28" y="100">3</text><text className="aen-tx-time" x="46" y="100">00:08,000</text></g>
+        <rect className="aen-tx-b1" x="46" y="38" width="130" height="6" rx="3" />
+        <rect className="aen-tx-b2" x="46" y="73" width="100" height="6" rx="3" />
+        <rect className="aen-tx-b3" x="46" y="108" width="115" height="6" rx="3" />
+        <rect className="aen-tx-scan" x="20" y="0" width="280" height="1.5" rx="0.75" />
       </svg>
     </div>
-    : <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <g className="aen-hero-doc aen-hero-doc-a"><rect x="6" y="8" width="40" height="48" rx="9" /><path d="M14 24h24M14 34h24M14 44h15" /></g>
-        <g className="aen-hero-doc aen-hero-doc-b"><rect x="58" y="8" width="40" height="48" rx="9" /><path d="M66 24h24M66 34h24M66 44h15" /></g>
-        <path className="aen-hero-arrow" d="M104 32h34m0 0-9-8m9 8-9 8" />
-        <g className="aen-hero-doc aen-hero-doc-c"><rect x="146" y="4" width="46" height="56" rx="10" /><path d="M155 21h28M155 32h28M155 43h19" /></g>
-      <circle className="aen-hero-ripple" cx="169" cy="32" r="12" /><circle className="aen-hero-dot" cx="150" cy="32" r="3.5" /></svg>
+    : art === "video" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <g className="aen-vd-doc"><rect x="20" y="18" width="88" height="104" rx="8" /><rect x="32" y="36" width="64" height="6" rx="3" /><rect x="32" y="56" width="64" height="6" rx="3" /><rect x="32" y="76" width="64" height="6" rx="3" /></g>
+        <rect className="aen-vd-canvas" x="132" y="18" width="168" height="88" rx="8" />
+        <rect className="aen-vd-track" x="144" y="98" width="144" height="4" rx="2" />
+        <rect className="aen-vd-fill" x="144" y="98" width="144" height="4" rx="2" />
+        <rect className="aen-vd-cap1" x="172" y="88" width="88" height="7" rx="3.5" />
+        <rect className="aen-vd-cap2" x="172" y="88" width="88" height="7" rx="3.5" />
+        <g className="aen-vd-strip"><rect x="132" y="118" width="26" height="14" rx="3" /><rect x="166" y="118" width="26" height="14" rx="3" /><rect x="200" y="118" width="26" height="14" rx="3" /></g>
+        <path className="aen-vd-play" d="M222 40l22 13-22 13z" />
+        <g className="aen-vd-chip"><rect x="252" y="24" width="40" height="16" rx="8" /><text x="272" y="35">MP4</text></g>
+      </svg>
+    </div>
+    : <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <line className="aen-mg-beam" x1="160" y1="18" x2="160" y2="122" />
+        <g className="aen-mg-s1"><rect x="20" y="35" width="70" height="70" rx="8" /><rect x="30" y="47" width="50" height="6" rx="3" /><rect x="30" y="60" width="50" height="6" rx="3" /><rect x="30" y="73" width="36" height="6" rx="3" /></g>
+        <g className="aen-mg-s2"><rect x="125" y="35" width="70" height="70" rx="8" /><rect x="135" y="47" width="50" height="6" rx="3" /><rect x="135" y="60" width="50" height="6" rx="3" /><rect x="135" y="73" width="36" height="6" rx="3" /></g>
+        <g className="aen-mg-s3"><rect x="230" y="35" width="70" height="70" rx="8" /><rect x="240" y="47" width="50" height="6" rx="3" /><rect x="240" y="60" width="50" height="6" rx="3" /><rect x="240" y="73" width="36" height="6" rx="3" /></g>
+        <g className="aen-mg-doc"><rect x="110" y="20" width="100" height="100" rx="8" /><rect x="126" y="32" width="68" height="6" rx="3" /><rect x="126" y="45" width="68" height="6" rx="3" /><rect x="126" y="58" width="68" height="6" rx="3" /><rect x="126" y="71" width="68" height="6" rx="3" /><rect x="126" y="84" width="68" height="6" rx="3" /><rect x="126" y="97" width="50" height="6" rx="3" /><text x="116" y="38">1</text><text x="116" y="51">2</text><text x="116" y="64">3</text><text x="116" y="77">4</text><text x="116" y="90">5</text><text x="116" y="103">6</text></g>
+      </svg>
     </div>}
     <h1>{head}{last ? <> <span className="aen-hero-accent">{last}</span></> : null}</h1>
     <p>{description}</p>
