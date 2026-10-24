@@ -777,3 +777,22 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .art-shift .aen-shift-blocks, .art-shift .aen-shift-label, .art-shift .aen-shift-ring, .art-shift .aen-shift-cursor { animation: none; }
 }
+
+/* Sync Fixer scene — two timelines: the lower blocks start drifted (each
+   further out than the last) and glide into line with the top row. */
+.art-sync .aen-tl-line { fill: none; stroke: var(--border-strong); stroke-width: 1.6; stroke-linecap: round; }
+.art-sync .aen-sync-guide { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 3 5; opacity: .55; }
+.art-sync .aen-sync-top rect { fill: var(--accent); opacity: .8; }
+.art-sync .aen-sync-low rect { fill: var(--action); animation-duration: 8s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.art-sync .aen-sync-b1 { animation-name: aen-sync-b1; }
+.art-sync .aen-sync-b2 { animation-name: aen-sync-b2; }
+.art-sync .aen-sync-b3 { animation-name: aen-sync-b3; }
+@keyframes aen-sync-b1 { 0%, 28% { transform: translateX(5px) } 48%, 78% { transform: translateX(0) } 92%, 100% { transform: translateX(5px) } }
+@keyframes aen-sync-b2 { 0%, 28% { transform: translateX(11px) } 48%, 78% { transform: translateX(0) } 92%, 100% { transform: translateX(11px) } }
+@keyframes aen-sync-b3 { 0%, 28% { transform: translateX(18px) } 48%, 78% { transform: translateX(0) } 92%, 100% { transform: translateX(18px) } }
+.art-sync .aen-sync-check { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0; animation: aen-sync-check 8s ease-in-out infinite; }
+@keyframes aen-sync-check { 0%, 46% { opacity: 0 } 56%, 78% { opacity: 1 } 90%, 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .art-sync .aen-sync-low rect, .art-sync .aen-sync-check { animation: none; }
+  .art-sync .aen-sync-check { opacity: 1; }
+}
