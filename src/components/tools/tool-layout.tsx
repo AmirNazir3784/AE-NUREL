@@ -147,13 +147,16 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <g className="aen-as-out"><text x="198" y="48">1</text><text className="aen-as-time" x="198" y="62">00:01,000</text><text x="198" y="76">Hello!</text></g>
       </svg>
     </div>
-    : art === "style" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <rect className="aen-style-frame" x="45" y="9" width="130" height="46" rx="8" />
-        <path className="aen-style-play" d="M104 20l12 7-12 7z" />
-        <g className="aen-style-chip"><rect x="128" y="13" width="41" height="13" rx="6.5" /><text x="148.5" y="22">Arial 48</text></g>
-        <rect className="aen-style-band" x="76" y="40" width="68" height="11" rx="5.5" />
-        <rect className="aen-style-line" x="86" y="22" width="48" height="5.5" rx="2.75" />
+    : art === "style" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <rect className="aen-st-srccard" x="40" y="30" width="120" height="60" rx="8" />
+        <g className="aen-st-src"><text x="48" y="48">1</text><text className="aen-st-time" x="48" y="62">00:01,000</text><text x="48" y="76">Hello!</text></g>
+        <path className="aen-st-arrow" d="M164 60h20m-6-5 6 5-6 5" />
+        <rect className="aen-st-frame" x="190" y="30" width="90" height="60" rx="8" />
+        <rect className="aen-st-blue" x="210" y="62" width="50" height="20" rx="4" />
+        <text className="aen-st-shadow" x="237" y="80">Hello!</text>
+        <text className="aen-st-text" x="235" y="78">Hello!</text>
+        <g className="aen-st-tag"><rect x="228" y="34" width="48" height="14" rx="7" /><text x="252" y="44">Arial 48</text></g>
       </svg>
     </div>
     : art === "text" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
