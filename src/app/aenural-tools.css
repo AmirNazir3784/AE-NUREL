@@ -277,7 +277,7 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
    can adopt them; workspace rules stay scoped to .aen-merger. */
 .aen-tool-hero { text-align: center; padding: 16px 0 28px; animation: aen-rise .6s cubic-bezier(.2,.8,.2,1) both; }
 .aen-hero-merge { display: flex; justify-content: center; margin-bottom: 18px; }
-.aen-hero-merge svg { width: 320px; max-width: 92vw; height: auto; overflow: visible; }
+.aen-hero-merge svg { display: block; margin: 0 auto; width: 320px; max-width: 100%; height: auto; overflow: visible; }
 .aen-hero-doc rect { fill: var(--surface); stroke-width: 1.5; }
 .aen-hero-doc path { fill: none; stroke-width: 2.4; stroke-linecap: round; }
 .aen-hero-doc-a rect { stroke: var(--action); } .aen-hero-doc-a path { stroke: var(--action); }
@@ -783,11 +783,11 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-merge .aen-mg-doc > rect:first-child { fill: var(--surface); stroke: var(--action); stroke-width: 1.6; }
 .art-merge .aen-mg-doc > rect:not(:first-child) { fill: var(--foreground); opacity: .65; }
 .art-merge .aen-mg-doc text { fill: var(--muted); stroke: none; font-size: 7px; font-weight: 700; }
-.aen-hero-entered .aen-mg-beam { animation: aen-mg-beam 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-mg-s1 { animation: aen-mg-s1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-mg-s2 { animation: aen-mg-s2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-mg-s3 { animation: aen-mg-s3 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-mg-doc { animation: aen-mg-doc 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-mg-beam { animation: aen-mg-beam 6s ease-in-out infinite; }
+.aen-hero-entered .aen-mg-s1 { animation: aen-mg-s1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-mg-s2 { animation: aen-mg-s2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-mg-s3 { animation: aen-mg-s3 6s ease-in-out infinite; }
+.aen-hero-entered .aen-mg-doc { animation: aen-mg-doc 6s ease-in-out infinite; }
 .aen-hero-entered .aen-mg-doc text { animation: aen-mg-num .3s ease-in-out 1 both; }
 .aen-hero-entered .aen-mg-doc text:nth-of-type(1) { animation-delay: 2.45s; }
 .aen-hero-entered .aen-mg-doc text:nth-of-type(2) { animation-delay: 2.54s; }
@@ -827,12 +827,12 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-shift .aen-sh-minus { opacity: 0; }
 .art-shift .aen-sh-old { fill: var(--muted); stroke: none; font-size: 8.5px; font-weight: 600; text-anchor: middle; opacity: 0; }
 .art-shift .aen-sh-new { fill: var(--accent); stroke: none; font-size: 8.5px; font-weight: 700; text-anchor: middle; }
-.aen-hero-entered .aen-sh-ghost { animation: aen-sh-ghost 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sh-blocks { animation: aen-sh-blocks 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sh-chip { animation: aen-sh-chip 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sh-plus { animation: aen-sh-plus 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sh-old { animation: aen-sh-old 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sh-new { animation: aen-sh-new 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-sh-ghost { animation: aen-sh-ghost 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sh-blocks { animation: aen-sh-blocks 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sh-chip { animation: aen-sh-chip 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sh-plus { animation: aen-sh-plus 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sh-old { animation: aen-sh-old 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sh-new { animation: aen-sh-new 6s ease-in-out infinite; }
 @keyframes aen-sh-ghost { 0%, 18% { opacity: 0 } 30%, 100% { opacity: .8 } }
 @keyframes aen-sh-blocks { 0%, 18% { transform: translate(0, 0) } 60%, 100% { transform: translate(40px, 0) } }
 @keyframes aen-sh-chip { 0%, 15% { opacity: 0; transform: scale(.8) } 28%, 100% { opacity: 1; transform: scale(1) } }
@@ -862,11 +862,11 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-split .aen-sp-p3 { transform: translate(16px, 6px); }
 .art-split .aen-sp-cut { fill: none; stroke: var(--action); stroke-width: 1.4; stroke-dasharray: 4 3; opacity: 0; }
 .art-split .aen-sp-label { fill: var(--muted); stroke: none; font-size: 8px; font-weight: 700; }
-.aen-hero-entered .aen-sp-p1 { animation: aen-sp-p1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sp-p2 { animation: aen-sp-p2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sp-p3 { animation: aen-sp-p3 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sp-cut { animation: aen-sp-cut 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sp-label { animation: aen-sp-label 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-sp-p1 { animation: aen-sp-p1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sp-p2 { animation: aen-sp-p2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sp-p3 { animation: aen-sp-p3 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sp-cut { animation: aen-sp-cut 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sp-label { animation: aen-sp-label 6s ease-in-out infinite; }
 @keyframes aen-sp-p1 { 0%, 35% { transform: translate(0, 0) } 50%, 75%, 100% { transform: translate(-16px, -2px) } }
 @keyframes aen-sp-p2 { 0%, 35% { transform: translate(0, -6px) } 50%, 75%, 100% { transform: translate(0, 2px) } }
 @keyframes aen-sp-p3 { 0%, 35% { transform: translate(0, -12px) } 50%, 75%, 100% { transform: translate(16px, 6px) } }
@@ -881,8 +881,8 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-edit .aen-ed-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
 .art-edit .aen-ed-time-old { fill: var(--muted); stroke: none; font-size: 8.5px; font-weight: 600; opacity: 0; }
 .art-edit .aen-ed-time-new { fill: var(--muted); stroke: none; font-size: 8.5px; font-weight: 600; }
-.art-edit .aen-ed-t1, .art-edit .aen-ed-t2 { fill: var(--foreground); stroke: none; font-size: 13px; font-weight: 600; }
-.art-edit .aen-ed-te { fill: var(--foreground); stroke: none; font-size: 13px; font-weight: 700; transform-box: fill-box; transform-origin: center; }
+.art-edit .aen-ed-t1, .art-edit .aen-ed-t2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 13px; font-weight: 600; }
+.art-edit .aen-ed-te { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 13px; font-weight: 700; transform-box: fill-box; transform-origin: center; }
 .art-edit .aen-ed-under { fill: var(--action); opacity: 0; }
 .art-edit .aen-ed-caret { fill: var(--action); animation: aen-ed-blink .8s step-end infinite; }
 .art-edit .aen-ed-caret-wrap { opacity: 0; }
@@ -890,21 +890,21 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-edit .aen-ed-ticks { fill: none; stroke: var(--border); stroke-width: 1.2; }
 .art-edit .aen-ed-cue { fill: var(--action); opacity: .85; transform-box: fill-box; transform-origin: left center; transform: scaleX(1.333); }
 .art-edit .aen-ed-handle { fill: var(--accent); stroke: none; transform: translateX(30px); }
-.aen-hero-entered .aen-ed-time-old { animation: aen-ed-time-old 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ed-time-new { animation: aen-ed-time-new 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ed-under { animation: aen-ed-under 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ed-caret-wrap { animation: aen-ed-caret-wrap 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ed-te { animation: aen-ed-te 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ed-t2 { animation: aen-ed-t2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ed-cue { animation: aen-ed-cue 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ed-handle { animation: aen-ed-handle 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-ed-time-old { animation: aen-ed-time-old 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ed-time-new { animation: aen-ed-time-new 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ed-under { animation: aen-ed-under 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ed-caret-wrap { animation: aen-ed-caret-wrap 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ed-te { animation: aen-ed-te 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ed-t2 { animation: aen-ed-t2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ed-cue { animation: aen-ed-cue 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ed-handle { animation: aen-ed-handle 6s ease-in-out infinite; }
 @keyframes aen-ed-time-old { 0%, 60% { opacity: 1 } 72%, 100% { opacity: 0 } }
 @keyframes aen-ed-time-new { 0%, 60% { opacity: 0 } 72%, 100% { opacity: 1 } }
 @keyframes aen-ed-under { 0%, 10% { opacity: 0 } 15%, 40% { opacity: 1 } 50%, 100% { opacity: 0 } }
-@keyframes aen-ed-caret-wrap { 0%, 8% { opacity: 0; transform: translateX(-34px) } 12% { opacity: 1 } 28%, 45% { opacity: 1; transform: translateX(0) } 52%, 100% { opacity: 0; transform: translateX(0) } }
+@keyframes aen-ed-caret-wrap { 0%, 8% { opacity: 0; transform: translateX(-38px) } 12% { opacity: 1 } 28%, 45% { opacity: 1; transform: translateX(0) } 52%, 100% { opacity: 0; transform: translateX(0) } }
 @keyframes aen-ed-blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
 @keyframes aen-ed-te { 0%, 42% { opacity: 0; transform: scale(.6); fill: var(--accent) } 52% { opacity: 1; transform: scale(1); fill: var(--accent) } 68%, 100% { opacity: 1; transform: scale(1); fill: var(--foreground) } }
-@keyframes aen-ed-t2 { 0%, 42% { transform: translateX(-7px) } 55%, 70%, 100% { transform: translateX(0) } }
+@keyframes aen-ed-t2 { 0%, 42% { transform: translateX(-8px) } 55%, 70%, 100% { transform: translateX(0) } }
 @keyframes aen-ed-cue { 0%, 50% { transform: scaleX(1) } 62%, 80%, 100% { transform: scaleX(1.333) } }
 @keyframes aen-ed-handle { 0%, 50% { transform: translateX(0) } 62%, 80%, 100% { transform: translateX(30px) } }
 @media (prefers-reduced-motion: reduce) {
@@ -921,13 +921,13 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-sync .aen-sy-b1, .art-sync .aen-sy-b2, .art-sync .aen-sy-b3, .art-sync .aen-sy-b4 { fill: var(--accent); }
 .art-sync .aen-sy-check circle { fill: var(--accent); stroke: none; }
 .art-sync .aen-sy-check path { fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.aen-hero-entered .aen-sy-pin { animation: aen-sy-pin 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sy-guide { animation: aen-sy-guide 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sy-b1 { animation: aen-sy-b1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sy-b2 { animation: aen-sy-b2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sy-b3 { animation: aen-sy-b3 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sy-b4 { animation: aen-sy-b4 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sy-check { animation: aen-sy-check 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-sy-pin { animation: aen-sy-pin 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sy-guide { animation: aen-sy-guide 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sy-b1 { animation: aen-sy-b1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sy-b2 { animation: aen-sy-b2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sy-b3 { animation: aen-sy-b3 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sy-b4 { animation: aen-sy-b4 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sy-check { animation: aen-sy-check 6s ease-in-out infinite; }
 @keyframes aen-sy-pin { 0%, 8% { opacity: 0; transform: scale(.6) } 18%, 100% { opacity: 1; transform: scale(1) } }
 @keyframes aen-sy-guide { 0%, 12% { opacity: 0 } 25%, 100% { opacity: .55 } }
 @keyframes aen-sy-b1 { 0%, 32% { transform: translateX(8px); fill: var(--action) } 52%, 100% { transform: translateX(0); fill: var(--accent) } }
@@ -950,10 +950,10 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-overlap .aen-ov-ticks { fill: none; stroke: var(--border); stroke-width: 1.2; }
 .art-overlap .aen-ov-check circle { fill: var(--accent); stroke: none; }
 .art-overlap .aen-ov-check path { fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.aen-hero-entered .aen-ov-b { animation: aen-ov-b 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ov-zone { animation: aen-ov-zone 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ov-gap { animation: aen-ov-gap 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ov-check { animation: aen-ov-check 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-ov-b { animation: aen-ov-b 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ov-zone { animation: aen-ov-zone 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ov-gap { animation: aen-ov-gap 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ov-check { animation: aen-ov-check 6s ease-in-out infinite; }
 @keyframes aen-ov-b { 0%, 40% { transform: translateX(0) } 55%, 78%, 100% { transform: translateX(38px) } }
 @keyframes aen-ov-zone { 0% { opacity: .7; transform: scaleX(1) } 15% { opacity: 1; transform: scaleX(1) } 30% { opacity: .7; transform: scaleX(1) } 45%, 70% { opacity: 0; transform: scaleX(0) } 100% { opacity: 0; transform: scaleX(0) } }
 @keyframes aen-ov-gap { 0%, 65% { opacity: 0 } 78%, 100% { opacity: .35 } }
@@ -972,14 +972,14 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-web .aen-vt-d1, .art-web .aen-vt-d2 { fill: var(--accent); stroke: none; font-family: monospace; font-size: 11px; font-weight: 700; }
 .art-web .aen-vt-line { fill: var(--muted); stroke: none; font-size: 11px; }
 .art-web .aen-vt-p1, .art-web .aen-vt-p2 { fill: none; stroke: var(--action); stroke-width: 1.4; opacity: 0; transform-box: fill-box; transform-origin: center; }
-.aen-hero-entered .aen-vt-num { animation: aen-vt-num 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-c1 { animation: aen-vt-c1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-d1 { animation: aen-vt-d1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-c2 { animation: aen-vt-c2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-d2 { animation: aen-vt-d2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-p1 { animation: aen-vt-p1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-p2 { animation: aen-vt-p2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-header { animation: aen-vt-header 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vt-num { animation: aen-vt-num 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vt-c1 { animation: aen-vt-c1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vt-d1 { animation: aen-vt-d1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vt-c2 { animation: aen-vt-c2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vt-d2 { animation: aen-vt-d2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vt-p1 { animation: aen-vt-p1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vt-p2 { animation: aen-vt-p2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vt-header { animation: aen-vt-header 6s ease-in-out infinite; }
 @keyframes aen-vt-num { 0%, 30% { opacity: 1; transform: translateX(0) } 45%, 60%, 100% { opacity: 0; transform: translateX(-4px) } }
 @keyframes aen-vt-c1 { 0%, 38% { opacity: 1 } 48%, 100% { opacity: 0 } }
 @keyframes aen-vt-d1 { 0%, 38% { opacity: 0 } 48%, 100% { opacity: 1 } }
@@ -1011,13 +1011,13 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-list .aen-ls-d1, .art-list .aen-ls-d2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 10px; font-weight: 600; opacity: 0; }
 .art-list .aen-ls-c1, .art-list .aen-ls-c2 { fill: var(--accent); stroke: none; font-family: monospace; font-size: 10px; font-weight: 700; }
 .art-list .aen-ls-line { fill: var(--muted); stroke: none; font-size: 9px; }
-.aen-hero-entered .aen-ls-header { animation: aen-ls-header 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ls-t1 { animation: aen-ls-t1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ls-t2 { animation: aen-ls-t2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ls-d1 { animation: aen-ls-d1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ls-c1 { animation: aen-ls-c1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ls-d2 { animation: aen-ls-d2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-ls-c2 { animation: aen-ls-c2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-ls-header { animation: aen-ls-header 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ls-t1 { animation: aen-ls-t1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ls-t2 { animation: aen-ls-t2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ls-d1 { animation: aen-ls-d1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ls-c1 { animation: aen-ls-c1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ls-d2 { animation: aen-ls-d2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-ls-c2 { animation: aen-ls-c2 6s ease-in-out infinite; }
 @keyframes aen-ls-header { 0%, 20% { opacity: 1; transform: translateY(0) } 32%, 48%, 100% { opacity: 0; transform: translateY(-8px) } }
 @keyframes aen-ls-t1 { 0%, 28% { opacity: 0; transform: translateX(-10px) scale(.8) } 38%, 48%, 100% { opacity: 1; transform: translateX(0) scale(1) } }
 @keyframes aen-ls-t2 { 0%, 40% { opacity: 0; transform: translateX(-10px) scale(.8) } 50%, 60%, 100% { opacity: 1; transform: translateX(0) scale(1) } }
@@ -1036,14 +1036,14 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-text .aen-tx-r1 .aen-tx-time, .art-text .aen-tx-r2 .aen-tx-time, .art-text .aen-tx-r3 .aen-tx-time { font-family: monospace; font-size: 9px; font-weight: 600; }
 .art-text .aen-tx-d1, .art-text .aen-tx-d2, .art-text .aen-tx-d3 { fill: var(--foreground); stroke: none; font-size: 10px; transform: translateX(-72px); }
 .art-text .aen-tx-scan { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0; }
-.aen-hero-entered .aen-tx-frame { animation: aen-tx-frame 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-tx-r1 { animation: aen-tx-r1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-tx-r2 { animation: aen-tx-r2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-tx-r3 { animation: aen-tx-r3 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-tx-d1 { animation: aen-tx-d1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-tx-d2 { animation: aen-tx-d2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-tx-d3 { animation: aen-tx-d3 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-tx-scan { animation: aen-tx-scan 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-tx-frame { animation: aen-tx-frame 6s ease-in-out infinite; }
+.aen-hero-entered .aen-tx-r1 { animation: aen-tx-r1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-tx-r2 { animation: aen-tx-r2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-tx-r3 { animation: aen-tx-r3 6s ease-in-out infinite; }
+.aen-hero-entered .aen-tx-d1 { animation: aen-tx-d1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-tx-d2 { animation: aen-tx-d2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-tx-d3 { animation: aen-tx-d3 6s ease-in-out infinite; }
+.aen-hero-entered .aen-tx-scan { animation: aen-tx-scan 6s ease-in-out infinite; }
 @keyframes aen-tx-frame { 0%, 60% { opacity: 0 } 75%, 100% { opacity: 1 } }
 @keyframes aen-tx-r1 { 0%, 25% { opacity: 1 } 40%, 100% { opacity: 0 } }
 @keyframes aen-tx-r2 { 0%, 35% { opacity: 1 } 50%, 100% { opacity: 0 } }
@@ -1067,12 +1067,12 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-plain .aen-as-out text { fill: var(--foreground); stroke: none; font-size: 10px; font-weight: 600; }
 .art-plain .aen-as-out text:first-child { fill: var(--muted); font-size: 9px; font-weight: 700; }
 .art-plain .aen-as-out .aen-as-time { font-family: monospace; font-size: 8px; }
-.aen-hero-entered .aen-as-rich { animation: aen-as-rich 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-as-chips { animation: aen-as-chips 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-as-frame { animation: aen-as-frame 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-as-plain { animation: aen-as-plain 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-as-arrow { animation: aen-as-arrow 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-as-out { animation: aen-as-out 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-as-rich { animation: aen-as-rich 6s ease-in-out infinite; }
+.aen-hero-entered .aen-as-chips { animation: aen-as-chips 6s ease-in-out infinite; }
+.aen-hero-entered .aen-as-frame { animation: aen-as-frame 6s ease-in-out infinite; }
+.aen-hero-entered .aen-as-plain { animation: aen-as-plain 6s ease-in-out infinite; }
+.aen-hero-entered .aen-as-arrow { animation: aen-as-arrow 6s ease-in-out infinite; }
+.aen-hero-entered .aen-as-out { animation: aen-as-out 6s ease-in-out infinite; }
 @keyframes aen-as-rich { 0%, 20% { opacity: 1; transform: translate(0, 0) } 28%, 42%, 100% { opacity: 0; transform: translate(10px, -14px) } }
 @keyframes aen-as-chips { 0%, 35% { opacity: 1; transform: translate(0, 0) } 42%, 56%, 100% { opacity: 0; transform: translate(8px, -10px) } }
 @keyframes aen-as-frame { 0%, 50% { opacity: 1; transform: translate(0, 0) } 58%, 70%, 100% { opacity: 0; transform: translate(6px, -8px) } }
@@ -1096,11 +1096,11 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-style .aen-st-text { fill: #fff; stroke: none; font-size: 11px; font-weight: 800; text-anchor: middle; }
 .art-style .aen-st-tag rect { fill: var(--accent); stroke: none; }
 .art-style .aen-st-tag text { fill: #fff; stroke: none; font-size: 7px; font-weight: 800; text-anchor: middle; }
-.aen-hero-entered .aen-st-arrow { animation: aen-st-arrow 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-st-blue { animation: aen-st-blue 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-st-shadow { animation: aen-st-shadow 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-st-text { animation: aen-st-text 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-st-tag { animation: aen-st-tag 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-st-arrow { animation: aen-st-arrow 6s ease-in-out infinite; }
+.aen-hero-entered .aen-st-blue { animation: aen-st-blue 6s ease-in-out infinite; }
+.aen-hero-entered .aen-st-shadow { animation: aen-st-shadow 6s ease-in-out infinite; }
+.aen-hero-entered .aen-st-text { animation: aen-st-text 6s ease-in-out infinite; }
+.aen-hero-entered .aen-st-tag { animation: aen-st-tag 6s ease-in-out infinite; }
 @keyframes aen-st-arrow { 0%, 20% { opacity: 0 } 32%, 100% { opacity: .8 } }
 @keyframes aen-st-blue { 0%, 28% { opacity: 0; transform: scale(.9) } 42%, 100% { opacity: 1; transform: scale(1) } }
 @keyframes aen-st-shadow { 0%, 40% { opacity: 0 } 54%, 100% { opacity: .5 } }
@@ -1120,17 +1120,17 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-json .aen-js-bl, .art-json .aen-js-br { fill: var(--accent); stroke: none; font-size: 20px; font-weight: 800; text-anchor: middle; }
 .art-json .aen-js-r1, .art-json .aen-js-r2, .art-json .aen-js-r3, .art-json .aen-js-r4, .art-json .aen-js-r5, .art-json .aen-js-r6 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 8px; }
 .art-json .aen-js-r1 tspan, .art-json .aen-js-r2 tspan, .art-json .aen-js-r3 tspan, .art-json .aen-js-r4 tspan, .art-json .aen-js-r5 tspan, .art-json .aen-js-r6 tspan { fill: var(--accent); }
-.aen-hero-entered .aen-js-ci { animation: aen-js-ci 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-ct { animation: aen-js-ct 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-cx { animation: aen-js-cx 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-bl { animation: aen-js-bl 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-br { animation: aen-js-br 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-r1 { animation: aen-js-r1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-r2 { animation: aen-js-r2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-r3 { animation: aen-js-r3 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-r4 { animation: aen-js-r4 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-r5 { animation: aen-js-r5 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-js-r6 { animation: aen-js-r6 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-js-ci { animation: aen-js-ci 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-ct { animation: aen-js-ct 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-cx { animation: aen-js-cx 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-bl { animation: aen-js-bl 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-br { animation: aen-js-br 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-r1 { animation: aen-js-r1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-r2 { animation: aen-js-r2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-r3 { animation: aen-js-r3 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-r4 { animation: aen-js-r4 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-r5 { animation: aen-js-r5 6s ease-in-out infinite; }
+.aen-hero-entered .aen-js-r6 { animation: aen-js-r6 6s ease-in-out infinite; }
 @keyframes aen-js-ci { 0%, 18% { opacity: 1; transform: translate(0, 0) } 38%, 100% { opacity: 0; transform: translate(150px, -12px) } }
 @keyframes aen-js-ct { 0%, 26% { opacity: 1; transform: translate(0, 0) } 44%, 100% { opacity: 0; transform: translate(150px, 2px) } }
 @keyframes aen-js-cx { 0%, 32% { opacity: 1; transform: translate(0, 0) } 50%, 100% { opacity: 0; transform: translate(150px, 14px) } }
@@ -1159,14 +1159,14 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-vtxt .aen-vx-t1, .art-vtxt .aen-vx-t2 { fill: var(--foreground); stroke: none; font-size: 10px; font-weight: 600; }
 .art-vtxt .aen-vx-t1 { transform: translate(34px, 1px); }
 .art-vtxt .aen-vx-t2 { transform: translate(34px, 3px); }
-.aen-hero-entered .aen-vx-meta { animation: aen-vx-meta 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vx-ruler { animation: aen-vx-ruler 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vx-track { animation: aen-vx-track 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vx-b1 { animation: aen-vx-b1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vx-b2 { animation: aen-vx-b2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vx-t1 { animation: aen-vx-t1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vx-t2 { animation: aen-vx-t2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vx-frame { animation: aen-vx-frame 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vx-meta { animation: aen-vx-meta 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vx-ruler { animation: aen-vx-ruler 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vx-track { animation: aen-vx-track 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vx-b1 { animation: aen-vx-b1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vx-b2 { animation: aen-vx-b2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vx-t1 { animation: aen-vx-t1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vx-t2 { animation: aen-vx-t2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vx-frame { animation: aen-vx-frame 6s ease-in-out infinite; }
 @keyframes aen-vx-meta { 0%, 15% { opacity: 1; transform: translateY(0) } 25%, 40%, 100% { opacity: 0; transform: translateY(-12px) } }
 @keyframes aen-vx-ruler { 0%, 22% { opacity: 1; transform: translateX(0) } 32%, 45%, 100% { opacity: 0; transform: translateX(-40px) } }
 @keyframes aen-vx-track { 0%, 30% { opacity: 1 } 45%, 60%, 100% { opacity: 0 } }
@@ -1190,20 +1190,20 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-sbvin .aen-sv-a1, .art-sbvin .aen-sv-a2 { fill: var(--accent); stroke: none; font-family: monospace; font-size: 10px; font-weight: 700; opacity: 0; }
 .art-sbvin .aen-sv-r1, .art-sbvin .aen-sv-r2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 9px; }
 .art-sbvin .aen-sv-d1, .art-sbvin .aen-sv-d2 { fill: var(--muted); stroke: none; font-size: 10px; }
-.aen-hero-entered .aen-sv-c1 { animation: aen-sv-c1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-a1 { animation: aen-sv-a1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-s1b { animation: aen-sv-s1b 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-c2 { animation: aen-sv-c2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-a2 { animation: aen-sv-a2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-s2b { animation: aen-sv-s2b 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-s1a { animation: aen-sv-s1a 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-s2a { animation: aen-sv-s2a 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-n1 { animation: aen-sv-n1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-n2 { animation: aen-sv-n2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-r1 { animation: aen-sv-r1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-r2 { animation: aen-sv-r2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-strip1 { animation: aen-sv-strip1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-sv-strip2 { animation: aen-sv-strip2 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-c1 { animation: aen-sv-c1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-a1 { animation: aen-sv-a1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-s1b { animation: aen-sv-s1b 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-c2 { animation: aen-sv-c2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-a2 { animation: aen-sv-a2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-s2b { animation: aen-sv-s2b 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-s1a { animation: aen-sv-s1a 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-s2a { animation: aen-sv-s2a 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-n1 { animation: aen-sv-n1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-n2 { animation: aen-sv-n2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-r1 { animation: aen-sv-r1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-r2 { animation: aen-sv-r2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-strip1 { animation: aen-sv-strip1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-sv-strip2 { animation: aen-sv-strip2 6s ease-in-out infinite; }
 @keyframes aen-sv-c1 { 0%, 18% { opacity: 1 } 28%, 100% { opacity: 0 } }
 @keyframes aen-sv-a1 { 0%, 18% { opacity: 0 } 28%, 38% { opacity: 1 } 48%, 58%, 100% { opacity: 0 } }
 @keyframes aen-sv-s1b { 0%, 18% { opacity: 1; transform: translateX(0) } 28%, 38%, 45% { opacity: 1; transform: translateX(30px) } 58%, 100% { opacity: 0; transform: translateX(30px) } }
@@ -1234,23 +1234,23 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-sbvout .aen-so-d1, .art-sbvout .aen-so-d2 { fill: var(--muted); stroke: none; font-size: 10px; transform: translate(4px, 4px); }
 .art-sbvout .aen-so-frame > rect:first-child { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
 .art-sbvout .aen-so-p1, .art-sbvout .aen-so-p2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 9px; }
-.aen-hero-entered .aen-so-n1 { animation: aen-so-n1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-n2 { animation: aen-so-n2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-ar1 { animation: aen-so-ar1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-t1b { animation: aen-so-t1b 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-cm1 { animation: aen-so-cm1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-t1a { animation: aen-so-t1a 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-ar2 { animation: aen-so-ar2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-t2b { animation: aen-so-t2b 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-cm2 { animation: aen-so-cm2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-t2a { animation: aen-so-t2a 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-c1 { animation: aen-so-c1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-c2 { animation: aen-so-c2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-p1 { animation: aen-so-p1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-p2 { animation: aen-so-p2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-d1 { animation: aen-so-d1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-d2 { animation: aen-so-d2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-so-frame { animation: aen-so-frame 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-so-n1 { animation: aen-so-n1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-n2 { animation: aen-so-n2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-ar1 { animation: aen-so-ar1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-t1b { animation: aen-so-t1b 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-cm1 { animation: aen-so-cm1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-t1a { animation: aen-so-t1a 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-ar2 { animation: aen-so-ar2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-t2b { animation: aen-so-t2b 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-cm2 { animation: aen-so-cm2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-t2a { animation: aen-so-t2a 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-c1 { animation: aen-so-c1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-c2 { animation: aen-so-c2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-p1 { animation: aen-so-p1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-p2 { animation: aen-so-p2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-d1 { animation: aen-so-d1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-d2 { animation: aen-so-d2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-so-frame { animation: aen-so-frame 6s ease-in-out infinite; }
 @keyframes aen-so-n1 { 0%, 12% { opacity: 1; transform: translateX(0) } 22%, 100% { opacity: 0; transform: translateX(-10px) } }
 @keyframes aen-so-n2 { 0%, 20% { opacity: 1; transform: translateX(0) } 30%, 100% { opacity: 0; transform: translateX(-10px) } }
 @keyframes aen-so-ar1 { 0%, 18% { opacity: 1; transform: scaleX(1) } 28%, 38%, 100% { opacity: 0; transform: scaleX(0) } }
@@ -1282,15 +1282,15 @@ html:has(.aen-merger) body { overflow-x: clip; }
 .art-video .aen-vi-cap2 { fill: #fff; font-size: 11px; }
 .art-video .aen-vi-done { fill: #fff; font-size: 8px; font-weight: 700; }
 .art-video .aen-vi-f1, .art-video .aen-vi-f2, .art-video .aen-vi-f3 { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.2; }
-.aen-hero-entered .aen-vi-r1 { animation: aen-vi-r1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vi-r2 { animation: aen-vi-r2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vi-play { animation: aen-vi-play 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vi-cap1 { animation: aen-vi-cap1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vi-cap2 { animation: aen-vi-cap2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vi-done { animation: aen-vi-done 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vi-f1 { animation: aen-vi-f1 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vi-f2 { animation: aen-vi-f2 3.2s ease-in-out infinite; }
-.aen-hero-entered .aen-vi-f3 { animation: aen-vi-f3 3.2s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-r1 { animation: aen-vi-r1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-r2 { animation: aen-vi-r2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-play { animation: aen-vi-play 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-cap1 { animation: aen-vi-cap1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-cap2 { animation: aen-vi-cap2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-done { animation: aen-vi-done 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-f1 { animation: aen-vi-f1 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-f2 { animation: aen-vi-f2 6s ease-in-out infinite; }
+.aen-hero-entered .aen-vi-f3 { animation: aen-vi-f3 6s ease-in-out infinite; }
 @keyframes aen-vi-r1 { 0%, 12% { opacity: 1 } 22%, 100% { opacity: 0 } }
 @keyframes aen-vi-r2 { 0%, 30% { opacity: 1 } 40%, 100% { opacity: 0 } }
 @keyframes aen-vi-play { 0%, 15% { transform: translateX(0) } 35%, 50% { transform: translateX(70px) } 70%, 100% { transform: translateX(130px) } }
