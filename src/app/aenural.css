@@ -63,7 +63,7 @@
 .aen-mobile-menu { display: none; }
 .aen-mobile-toggle { width: 44px; height: 44px; border: 1.5px solid var(--dark-border); border-radius: 10px; color: var(--nav-text); display: flex; align-items: center; justify-content: center; cursor: pointer; background: transparent; }
 .aen-mobile-panel { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); color: var(--foreground); border-bottom: 1px solid var(--border-strong); box-shadow: var(--shadow-overlay); padding: 16px 16px 24px; max-height: calc(100dvh - 130px); overflow-y: auto; }
-.aen-mobile-panel-head { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 16px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+.aen-mobile-panel-head { display: flex; align-items: center; justify-content: flex-end; padding: 0 4px 12px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
 .aen-mobile-close { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground); background: transparent; border: 1px solid var(--border); cursor: pointer; }
 .aen-mobile-panel .aen-sign-in-mobile { width: 100%; justify-content: flex-start; gap: 12px; margin-bottom: 16px; }
 .aen-mobile-panel .aen-sign-in-mobile svg:last-child { margin-left: auto; }
@@ -76,7 +76,7 @@
 .aen-mobile-group-body a svg:last-child, .aen-mobile-row svg:last-child { margin-left: auto; color: var(--muted); }
 .aen-mobile-row { border: 1px solid var(--border); margin-bottom: 12px; }
 .aen-mobile-panel :focus-visible { outline-color: var(--focus); }
-.aen-mobile-search { margin-top: 4px; border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.aen-mobile-search { margin-bottom: 16px; border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .aen-mobile-search > svg { color: var(--muted); flex: none; }
 .aen-mobile-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--foreground); font-size: 14px; }
 .aen-mobile-search ul { width: 100%; list-style: none; margin: 0; padding: 0; }
