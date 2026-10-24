@@ -123,7 +123,7 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
       <svg viewBox="0 0 220 64" role="presentation" focusable="false">
         <g className="aen-plain-deco">
           <circle cx="80" cy="14" r="2.6" /><circle cx="94" cy="14" r="2.6" /><circle cx="108" cy="14" r="2.6" />
-          <text x="56" y="33">{</text><text x="158" y="33">}</text><text x="64" y="49">{</text><text x="150" y="49">}</text>
+          <text x="56" y="33">{"{"}</text><text x="158" y="33">{"}"}</text><text x="64" y="49">{"{"}</text><text x="150" y="49">{"}"}</text>
         </g>
         <rect className="aen-plain-line" x="70" y="26" width="80" height="6" rx="3" />
         <rect className="aen-plain-line" x="78" y="42" width="64" height="6" rx="3" />
