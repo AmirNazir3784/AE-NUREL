@@ -1145,3 +1145,36 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .aen-hero-entered .aen-js-ci, .aen-hero-entered .aen-js-ct, .aen-hero-entered .aen-js-cx, .aen-hero-entered .aen-js-bl, .aen-hero-entered .aen-js-br, .aen-hero-entered .aen-js-r1, .aen-hero-entered .aen-js-r2, .aen-hero-entered .aen-js-r3, .aen-hero-entered .aen-js-r4, .aen-hero-entered .aen-js-r5, .aen-hero-entered .aen-js-r6 { animation: none; }
 }
+
+/* --- VTT to TXT 100%: Transcript Reveal (base = final clean text stack;
+   entered plays once 3.2s; hover replays captions becoming text) --- */
+.art-vtxt .aen-vx-frame { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-vtxt .aen-vx-meta rect { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.2; }
+.art-vtxt .aen-vx-meta text { fill: var(--muted); stroke: none; font-size: 7px; font-weight: 700; text-anchor: middle; }
+.art-vtxt .aen-vx-meta, .art-vtxt .aen-vx-ruler, .art-vtxt .aen-vx-track, .art-vtxt .aen-vx-b1, .art-vtxt .aen-vx-b2 { opacity: 0; }
+.art-vtxt .aen-vx-ruler line { fill: none; stroke: var(--border-strong); stroke-width: 1.4; }
+.art-vtxt .aen-vx-ruler path { fill: none; stroke: var(--border); stroke-width: 1.2; }
+.art-vtxt .aen-vx-track { fill: var(--surface); stroke: var(--border); stroke-width: 1.2; }
+.art-vtxt .aen-vx-b1, .art-vtxt .aen-vx-b2 { fill: var(--accent); opacity: 0; }
+.art-vtxt .aen-vx-t1, .art-vtxt .aen-vx-t2 { fill: var(--foreground); stroke: none; font-size: 10px; font-weight: 600; }
+.art-vtxt .aen-vx-t1 { transform: translate(34px, 1px); }
+.art-vtxt .aen-vx-t2 { transform: translate(34px, 3px); }
+.aen-hero-entered .aen-vx-meta { animation: aen-vx-meta 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-vx-ruler { animation: aen-vx-ruler 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-vx-track { animation: aen-vx-track 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-vx-b1 { animation: aen-vx-b1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-vx-b2 { animation: aen-vx-b2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-vx-t1 { animation: aen-vx-t1 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-vx-t2 { animation: aen-vx-t2 3.2s ease-in-out 1 forwards; }
+.aen-hero-entered .aen-vx-frame { animation: aen-vx-frame 3.2s ease-in-out 1 forwards; }
+@keyframes aen-vx-meta { 0%, 15% { opacity: 1; transform: translateY(0) } 25%, 40%, 100% { opacity: 0; transform: translateY(-12px) } }
+@keyframes aen-vx-ruler { 0%, 22% { opacity: 1; transform: translateX(0) } 32%, 45%, 100% { opacity: 0; transform: translateX(-40px) } }
+@keyframes aen-vx-track { 0%, 30% { opacity: 1 } 45%, 60%, 100% { opacity: 0 } }
+@keyframes aen-vx-b1 { 0%, 35% { opacity: 1 } 48%, 60%, 100% { opacity: 0 } }
+@keyframes aen-vx-b2 { 0%, 42% { opacity: 1 } 55%, 68%, 100% { opacity: 0 } }
+@keyframes aen-vx-t1 { 0%, 38% { transform: translate(0, 0) } 52%, 66%, 100% { transform: translate(34px, 1px) } }
+@keyframes aen-vx-t2 { 0%, 48% { transform: translate(0, 0) } 62%, 76%, 100% { transform: translate(34px, 3px) } }
+@keyframes aen-vx-frame { 0%, 52% { opacity: 0 } 68%, 100% { opacity: 1 } }
+@media (prefers-reduced-motion: reduce) {
+  .aen-hero-entered .aen-vx-meta, .aen-hero-entered .aen-vx-ruler, .aen-hero-entered .aen-vx-track, .aen-hero-entered .aen-vx-b1, .aen-hero-entered .aen-vx-b2, .aen-hero-entered .aen-vx-t1, .aen-hero-entered .aen-vx-t2, .aen-hero-entered .aen-vx-frame { animation: none; }
+}
