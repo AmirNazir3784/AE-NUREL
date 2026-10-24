@@ -875,3 +875,28 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-web .aen-web-t2 { opacity: 1; }
   .art-web .aen-web-band { opacity: .85; }
 }
+
+/* VTT to SRT scene — the web window recedes (its extras drop away) while a
+   plain numbered SRT list appears, row by row. */
+.art-list .aen-list-frame { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
+.art-list .aen-list-bar { fill: none; stroke: var(--border); stroke-width: 1.2; }
+.art-list .aen-list-dot { fill: var(--border-strong); stroke: none; }
+.art-list .aen-list-extra { fill: var(--foreground); opacity: .5; animation: aen-list-extra 8s ease-in-out infinite; }
+@keyframes aen-list-extra { 0%, 12% { opacity: .5 } 24%, 88% { opacity: .12 } 96%, 100% { opacity: .5 } }
+.art-list .aen-list-web { transform-box: fill-box; transform-origin: center; animation: aen-list-web 8s ease-in-out infinite; }
+@keyframes aen-list-web { 0%, 14% { opacity: 1; transform: scale(1) } 30%, 86% { opacity: .45; transform: scale(.93) } 95%, 100% { opacity: 1; transform: scale(1) } }
+.art-list .aen-list-row { opacity: 0; animation-duration: 8s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.art-list .aen-list-r1 { animation-name: aen-row-1; }
+.art-list .aen-list-r2 { animation-name: aen-row-2; }
+.art-list .aen-list-r3 { animation-name: aen-row-3; }
+@keyframes aen-row-1 { 0%, 16% { opacity: 0; transform: translateX(7px) } 26%, 86% { opacity: 1; transform: translateX(0) } 95%, 100% { opacity: 0 } }
+@keyframes aen-row-2 { 0%, 28% { opacity: 0; transform: translateX(7px) } 38%, 86% { opacity: 1; transform: translateX(0) } 95%, 100% { opacity: 0 } }
+@keyframes aen-row-3 { 0%, 40% { opacity: 0; transform: translateX(7px) } 50%, 86% { opacity: 1; transform: translateX(0) } 95%, 100% { opacity: 0 } }
+.art-list .aen-list-num { fill: var(--action); stroke: none; font-size: 10px; font-weight: 800; }
+.art-list .aen-list-line { fill: var(--foreground); opacity: .6; }
+.art-list .aen-list-time { fill: var(--muted); stroke: none; font-size: 7.5px; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) {
+  .art-list .aen-list-web, .art-list .aen-list-extra, .art-list .aen-list-row { animation: none; }
+  .art-list .aen-list-row { opacity: 1; }
+  .art-list .aen-list-web { opacity: .45; }
+}
