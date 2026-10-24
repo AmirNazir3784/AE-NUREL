@@ -937,3 +937,24 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .art-style .aen-style-line { transform: translateY(20.5px); fill: #fff; opacity: 1; }
   .art-style .aen-style-chip { opacity: 1; }
 }
+
+/* SRT to TXT scene — setup: a cue with number and timing; action: the
+   number fades out and the timing slides away; result: the dialogue
+   regroups as a neat text stack inside a transcript page. */
+.art-text .aen-txt-frame { fill: none; stroke: var(--border-strong); stroke-width: 1.4; opacity: 0; animation: aen-txt-frame 3.5s ease-in-out infinite; }
+@keyframes aen-txt-frame { 0%, 50% { opacity: 0 } 62%, 90% { opacity: 1 } 97%, 100% { opacity: 0 } }
+.art-text .aen-txt-num { fill: var(--action); stroke: none; font-size: 10px; font-weight: 800; animation: aen-txt-num 3.5s ease-in-out infinite; }
+@keyframes aen-txt-num { 0%, 20% { opacity: 1 } 32%, 94% { opacity: 0 } 100% { opacity: 1 } }
+.art-text .aen-txt-time { fill: var(--muted); stroke: none; font-size: 8px; font-weight: 600; animation: aen-txt-time 3.5s ease-in-out infinite; }
+@keyframes aen-txt-time { 0%, 24% { opacity: 1; transform: translateX(0) } 42%, 94% { opacity: 0; transform: translateX(-9px) } 100% { opacity: 1; transform: translateX(0) } }
+.art-text .aen-txt-l1 { fill: var(--foreground); opacity: .65; animation: aen-txt-l1 3.5s ease-in-out infinite; }
+@keyframes aen-txt-l1 { 0%, 44% { transform: translateY(0) } 60%, 90% { transform: translateY(-7px) } 97%, 100% { transform: translateY(0) } }
+.art-text .aen-txt-l2 { fill: var(--foreground); opacity: 0; animation: aen-txt-l2 3.5s ease-in-out infinite; }
+@keyframes aen-txt-l2 { 0%, 50% { opacity: 0 } 62%, 90% { opacity: .65 } 97%, 100% { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) {
+  .art-text .aen-txt-frame, .art-text .aen-txt-num, .art-text .aen-txt-time, .art-text .aen-txt-l1, .art-text .aen-txt-l2 { animation: none; }
+  .art-text .aen-txt-frame { opacity: 1; }
+  .art-text .aen-txt-num, .art-text .aen-txt-time { opacity: 0; }
+  .art-text .aen-txt-l1 { transform: translateY(-7px); }
+  .art-text .aen-txt-l2 { opacity: .65; }
+}
