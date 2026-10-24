@@ -11,7 +11,7 @@ export function ToolHeader({ title, description, toolIcon }: { title: string; de
   const icon = toolIcon ?? tools.find(tool => tool.title === title)?.icon;
   return <header className="tool-header aen-tool-heading">{icon ? <div className="tool-title-line"><ToolIcon name={icon} /><h1>{title}</h1></div> : <h1>{title}</h1>}<p>{description}</p></header>;
 }
-export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
+export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt", chipB = "Part 2.srt", chipC = "Merged.srt", art = "merge", badgeFrom = "SRT", badgeTo = "VTT" }: { title: string; description: string; ticks?: readonly string[]; chipA?: string | null; chipB?: string | null; chipC?: string | null; art?: "merge" | "transform" | "split" | "edit" | "web" | "list" | "plain" | "style" | "shift" | "sync" | "overlap"; badgeFrom?: string; badgeTo?: string }) {
   const words = title.split(" ");
   const last = words.length > 1 ? words[words.length - 1] : null;
   const head = last ? words.slice(0, -1).join(" ") : title;
@@ -102,6 +102,15 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         </g>
         <rect className="aen-plain-line" x="70" y="26" width="80" height="6" rx="3" />
         <rect className="aen-plain-line" x="78" y="42" width="64" height="6" rx="3" />
+      </svg>
+    </div>
+    : art === "style" ? <div className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
+        <rect className="aen-style-frame" x="45" y="9" width="130" height="46" rx="8" />
+        <path className="aen-style-play" d="M104 20l12 7-12 7z" />
+        <g className="aen-style-chip"><rect x="128" y="13" width="41" height="13" rx="6.5" /><text x="148.5" y="22">Arial 48</text></g>
+        <rect className="aen-style-band" x="76" y="40" width="68" height="11" rx="5.5" />
+        <rect className="aen-style-line" x="86" y="22" width="48" height="5.5" rx="2.75" />
       </svg>
     </div>
     : <div className="aen-hero-merge" aria-hidden="true">
