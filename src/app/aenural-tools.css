@@ -1326,3 +1326,11 @@ html:has(.aen-merger) body { overflow-x: clip; }
 @keyframes aen-au-cue1 { 0%, 38% { opacity: 0 } 52%, 92% { opacity: 1 } 100% { opacity: 0 } }
 @keyframes aen-au-cue2 { 0%, 58% { opacity: 0 } 72%, 92% { opacity: 1 } 100% { opacity: 0 } }
 @keyframes aen-au-label { 0%, 70% { opacity: 0 } 82%, 92% { opacity: 1 } 100% { opacity: 0 } }
+
+/* --- Audio workspace: centered dropzone (same pattern as converters /
+   srt-converter; the shared tool-page rule left-aligns it) --- */
+.aen-tool-page .aen-audio .upload-zone:not(.has-file) { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; text-align: center; }
+.aen-tool-page .aen-audio .upload-zone:not(.has-file) .upload-icon { margin: 0; }
+.aen-tool-page .aen-audio .upload-zone:not(.has-file) > div[aria-live] { width: 100%; min-width: 0; }
+.aen-tool-page .aen-audio .upload-zone:not(.has-file) .button { margin: 4px 0 0; max-width: 100%; }
+.aen-tool-page .aen-audio .upload-zone:not(.has-file) .upload-note { margin: 0; }
