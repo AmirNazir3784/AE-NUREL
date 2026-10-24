@@ -78,6 +78,7 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <g className="aen-ovl-bwrap"><rect className="aen-ovl-b" x="84" y="27" width="54" height="14" rx="4" /></g>
         <rect className="aen-ovl-zone" x="84" y="27" width="16" height="14" rx="3" />
         <path className="aen-ovl-posts" d="M101 22v5M113 22v5" />
+        <g className="aen-ovl-fixed"><circle cx="200" cy="13" r="7" /><path d="M196.5 13l2.5 2.5 4.5-5" /></g>
       </svg>
     </div>
     : art === "list" ? <div className="aen-hero-merge" aria-hidden="true">
