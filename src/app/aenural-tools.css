@@ -964,44 +964,36 @@ html:has(.aen-merger) body { overflow-x: clip; }
   .aen-hero-entered .aen-ov-b, .aen-hero-entered .aen-ov-zone, .aen-hero-entered .aen-ov-gap, .aen-hero-entered .aen-ov-check { animation: none; }
 }
 
-/* --- SRT to VTT 100%: Timestamp Morph (base = final VTT form; entered
-   plays once 3.2s; hover replays the comma-to-dot morph) --- */
+/* --- SRT to VTT redesign: Format Header (filled WEBVTT bar, cue 1 morphs comma to dot,
+   cue number fades, second cue arrives converted; base = final VTT state; 6s loop) --- */
+.art-web .aen-vt-bar { fill: var(--accent); }
+.art-web .aen-vt-header { fill: #fff; stroke: none; font-size: 9px; font-weight: 800; letter-spacing: .12em; text-anchor: middle; }
 .art-web .aen-vt-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
-.art-web .aen-vt-header { fill: var(--accent); stroke: none; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-anchor: middle; }
-.art-web .aen-vt-num { fill: var(--muted); stroke: none; font-size: 12px; font-weight: 700; opacity: 0; }
-.art-web .aen-vt-ts { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 11px; font-weight: 600; }
-.art-web .aen-vt-c1, .art-web .aen-vt-c2 { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 11px; font-weight: 600; opacity: 0; }
-.art-web .aen-vt-d1, .art-web .aen-vt-d2 { fill: var(--accent); stroke: none; font-family: monospace; font-size: 11px; font-weight: 700; }
-.art-web .aen-vt-line { fill: var(--muted); stroke: none; font-size: 11px; }
-.art-web .aen-vt-p1, .art-web .aen-vt-p2 { fill: none; stroke: var(--action); stroke-width: 1.4; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.art-web .aen-vt-num rect { fill: var(--accent); opacity: .18; }
+.art-web .aen-vt-num text { fill: var(--accent); stroke: none; font-size: 9px; font-weight: 700; text-anchor: middle; }
+.art-web .aen-vt-ts { fill: var(--foreground); stroke: none; font-family: monospace; font-size: 8px; }
+.art-web .aen-vt-c1, .art-web .aen-vt-c2 { fill: var(--action); stroke: none; font-family: monospace; font-size: 8px; font-weight: 700; opacity: 0; }
+.art-web .aen-vt-d1, .art-web .aen-vt-d2 { fill: var(--accent); stroke: none; font-family: monospace; font-size: 8px; font-weight: 700; }
+.art-web .aen-vt-line { fill: var(--foreground); stroke: none; font-size: 10px; }
+.art-web .aen-vt-ts2 { fill: var(--muted); stroke: none; font-family: monospace; font-size: 8px; }
+.art-web .aen-vt-line2 { fill: var(--foreground); stroke: none; font-size: 10px; }
+.aen-hero-entered .aen-vt-bar, .aen-hero-entered .aen-vt-header { animation: aen-vt-header 6s ease-in-out infinite; }
 .aen-hero-entered .aen-vt-num { animation: aen-vt-num 6s ease-in-out infinite; }
 .aen-hero-entered .aen-vt-c1 { animation: aen-vt-c1 6s ease-in-out infinite; }
 .aen-hero-entered .aen-vt-d1 { animation: aen-vt-d1 6s ease-in-out infinite; }
 .aen-hero-entered .aen-vt-c2 { animation: aen-vt-c2 6s ease-in-out infinite; }
 .aen-hero-entered .aen-vt-d2 { animation: aen-vt-d2 6s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-p1 { animation: aen-vt-p1 6s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-p2 { animation: aen-vt-p2 6s ease-in-out infinite; }
-.aen-hero-entered .aen-vt-header { animation: aen-vt-header 6s ease-in-out infinite; }
-@keyframes aen-vt-num { 0%, 30% { opacity: 1; transform: translateX(0) } 45%, 60%, 100% { opacity: 0; transform: translateX(-4px) } }
-@keyframes aen-vt-c1 { 0%, 38% { opacity: 1 } 48%, 100% { opacity: 0 } }
-@keyframes aen-vt-d1 { 0%, 38% { opacity: 0 } 48%, 100% { opacity: 1 } }
-@keyframes aen-vt-c2 { 0%, 48% { opacity: 1 } 58%, 100% { opacity: 0 } }
-@keyframes aen-vt-d2 { 0%, 48% { opacity: 0 } 58%, 100% { opacity: 1 } }
-@keyframes aen-vt-p1 { 0%, 36% { opacity: 0; transform: scale(.6) } 42%, 52% { opacity: 1; transform: scale(1) } 58%, 100% { opacity: 0 } }
-@keyframes aen-vt-p2 { 0%, 48% { opacity: 0; transform: scale(.6) } 54%, 64% { opacity: 1; transform: scale(1) } 70%, 100% { opacity: 0 } }
-@keyframes aen-vt-header { 0%, 65% { opacity: 0; transform: translateY(-6px) } 78%, 100% { opacity: 1; transform: translateY(0) } }
+.aen-hero-entered .aen-vt-cue2 { animation: aen-vt-cue2 6s ease-in-out infinite; }
+@keyframes aen-vt-header { 0%, 8% { opacity: 0; transform: translateY(-4px) } 18%, 100% { opacity: 1; transform: translateY(0) } }
+@keyframes aen-vt-num { 0%, 10% { opacity: 1 } 22%, 100% { opacity: 0 } }
+@keyframes aen-vt-c1 { 0%, 20% { opacity: 1 } 32%, 100% { opacity: 0 } }
+@keyframes aen-vt-d1 { 0%, 28% { opacity: 0 } 40%, 100% { opacity: 1 } }
+@keyframes aen-vt-c2 { 0%, 32% { opacity: 1 } 44%, 100% { opacity: 0 } }
+@keyframes aen-vt-d2 { 0%, 40% { opacity: 0 } 52%, 100% { opacity: 1 } }
+@keyframes aen-vt-cue2 { 0%, 50% { opacity: 0 } 64%, 100% { opacity: 1 } }
 @media (prefers-reduced-motion: reduce) {
-  .aen-hero-entered .aen-vt-num, .aen-hero-entered .aen-vt-c1, .aen-hero-entered .aen-vt-d1, .aen-hero-entered .aen-vt-c2, .aen-hero-entered .aen-vt-d2, .aen-hero-entered .aen-vt-p1, .aen-hero-entered .aen-vt-p2, .aen-hero-entered .aen-vt-header { animation: none; }
+  .aen-hero-entered .aen-vt-bar, .aen-hero-entered .aen-vt-header, .aen-hero-entered .aen-vt-num, .aen-hero-entered .aen-vt-c1, .aen-hero-entered .aen-vt-d1, .aen-hero-entered .aen-vt-c2, .aen-hero-entered .aen-vt-d2, .aen-hero-entered .aen-vt-cue2 { animation: none; }
 }
-
-/* SRT to VTT responsive gap: same class mismatch as the dropzone fix — its
-   root is .srt-converter, so it missed the shared 940px fixed bottom bar.
-   Mirror the .aen-file-converter rule for its .conversion-download area. */
-@media (max-width: 940px) {
-  .srt-converter { margin-bottom: 110px; }
-  .srt-converter .conversion-download { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 80; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 18px; padding: 12px 14px; box-shadow: var(--shadow-overlay); margin: 0; }
-}
-
 /* --- VTT to SRT 100%: Structure Rebuild (base = final SRT form; entered
    plays once 3.2s; hover replays the number tiles snapping in) --- */
 .art-list .aen-ls-card { fill: var(--surface); stroke: var(--border-strong); stroke-width: 1.4; }
