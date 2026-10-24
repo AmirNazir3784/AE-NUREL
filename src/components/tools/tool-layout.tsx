@@ -45,16 +45,20 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <text className="aen-sp-label" x="232" y="118">Part 3</text>
       </svg>
     </div>
-    : art === "edit" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <rect className="aen-fix-card" x="52" y="8" width="116" height="48" rx="10" />
-        <g className="aen-fix-time"><text x="62" y="21">00:04 → 00:07</text></g>
-        <rect className="aen-fix-line" x="62" y="27" width="34" height="5.5" rx="2.75" />
-        <rect className="aen-fix-wrong" x="99" y="27" width="30" height="5.5" rx="2.75" />
-        <rect className="aen-fix-under" x="99" y="34.5" width="30" height="2" rx="1" />
-        <rect className="aen-fix-new" x="99" y="27" width="38" height="5.5" rx="2.75" />
-        <g className="aen-fix-caret-wrap"><rect className="aen-fix-caret" x="66" y="24" width="2.6" height="11" rx="1.3" /></g>
-        <g className="aen-fix-undo"><path d="M146 16h6M152 13l3 3-3 3" /><path d="M164 16h-6M158 13l-3 3 3 3" /></g>
+    : art === "edit" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <rect className="aen-ed-card" x="60" y="12" width="200" height="56" rx="10" />
+        <text className="aen-ed-time-old" x="72" y="30">00:04 → 00:07</text>
+        <text className="aen-ed-time-new" x="72" y="30">00:04 → 00:09</text>
+        <text className="aen-ed-t1" x="72" y="52">I lov</text>
+        <text className="aen-ed-te" x="107" y="52">e</text>
+        <text className="aen-ed-t2" x="117" y="52">this video</text>
+        <rect className="aen-ed-under" x="84" y="58" width="22" height="2" rx="1" />
+        <g className="aen-ed-caret-wrap"><rect className="aen-ed-caret" x="106" y="40" width="2.5" height="16" rx="1.25" /></g>
+        <line className="aen-ed-ruler" x1="60" y1="104" x2="260" y2="104" />
+        <path className="aen-ed-ticks" d="M60 100v8M100 100v8M140 100v8M180 100v8M220 100v8M260 100v8" />
+        <rect className="aen-ed-cue" x="80" y="92" width="90" height="14" rx="4" />
+        <rect className="aen-ed-handle" x="168" y="90" width="6" height="18" rx="3" />
       </svg>
     </div>
     : art === "web" ? <div className="aen-hero-merge" aria-hidden="true">
