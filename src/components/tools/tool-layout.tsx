@@ -117,18 +117,22 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <g className="aen-ov-check"><circle cx="278" cy="30" r="8" /><path d="M274.5 30l2.5 2.5 5-5" /></g>
       </svg>
     </div>
-    : art === "list" ? <div className="aen-hero-merge" aria-hidden="true">
-      <svg viewBox="0 0 220 64" role="presentation" focusable="false">
-        <g className="aen-list-web">
-          <rect className="aen-list-frame" x="12" y="13" width="58" height="38" rx="7" />
-          <path className="aen-list-bar" d="M12 23h58" />
-          <circle className="aen-list-dot" cx="19" cy="18" r="1.7" /><circle className="aen-list-dot" cx="26" cy="18" r="1.7" />
-          <rect className="aen-list-extra" x="20" y="29" width="26" height="4.5" rx="2.25" />
-          <rect className="aen-list-extra" x="20" y="38" width="18" height="4.5" rx="2.25" />
-        </g>
-        <g className="aen-list-row aen-list-r1"><text className="aen-list-num" x="94" y="21">1</text><rect className="aen-list-line" x="106" y="14" width="66" height="5.5" rx="2.75" /><text className="aen-list-time" x="106" y="30">00:01,000</text></g>
-        <g className="aen-list-row aen-list-r2"><text className="aen-list-num" x="94" y="42">2</text><rect className="aen-list-line" x="106" y="35" width="52" height="5.5" rx="2.75" /></g>
-        <g className="aen-list-row aen-list-r3"><text className="aen-list-num" x="94" y="58">3</text><rect className="aen-list-line" x="106" y="51" width="60" height="5.5" rx="2.75" /></g>
+    : art === "list" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">
+      <svg viewBox="0 0 320 140" role="presentation" focusable="false">
+        <text className="aen-ls-header" x="160" y="18">WEBVTT</text>
+        <rect className="aen-ls-card" x="70" y="26" width="180" height="88" rx="10" />
+        <g className="aen-ls-t1"><rect x="82" y="36" width="16" height="16" rx="4" /><text x="90" y="48">1</text></g>
+        <text className="aen-ls-ts" x="106" y="48">00:01</text>
+        <text className="aen-ls-d1" x="136" y="48">.</text>
+        <text className="aen-ls-c1" x="135" y="48">,</text>
+        <text className="aen-ls-ts" x="141" y="48">000</text>
+        <text className="aen-ls-line" x="106" y="64">Hello, welcome!</text>
+        <g className="aen-ls-t2"><rect x="82" y="72" width="16" height="16" rx="4" /><text x="90" y="84">2</text></g>
+        <text className="aen-ls-ts" x="106" y="84">00:05</text>
+        <text className="aen-ls-d2" x="136" y="84">.</text>
+        <text className="aen-ls-c2" x="135" y="84">,</text>
+        <text className="aen-ls-ts" x="141" y="84">000</text>
+        <text className="aen-ls-line" x="106" y="100">Thanks for watching.</text>
       </svg>
     </div>
     : art === "plain" ? <div className="aen-hero-merge" aria-hidden="true">
