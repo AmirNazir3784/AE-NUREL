@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { validatedSiteOrigin } from "./site-origin";
+import { PRODUCTION_SITE_ORIGIN, validatedSiteOrigin } from "./site-origin";
 export function pageMetadata(title: string, description: string, route: string): Metadata {
-  const origin = validatedSiteOrigin(process.env.SITE_URL);
+  const origin = validatedSiteOrigin(process.env.SITE_URL) ?? PRODUCTION_SITE_ORIGIN;
   const socialTitle = title + " | AENural";
   return {
     title: route === "/" ? { absolute: socialTitle } : title, description,

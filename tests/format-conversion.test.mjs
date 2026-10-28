@@ -37,7 +37,9 @@ describe("completed Format Conversion discovery", () => {
       const urls = sitemap().map(entry => entry.url);
       assert.equal(urls.length, 26);
       for (const route of expected) assert.ok(urls.includes("https://tools.example/tools/" + route));
-      delete process.env.SITE_URL; assert.deepEqual(sitemap(), []);
+      delete process.env.SITE_URL;
+      assert.equal(sitemap().length, 26);
+      for (const route of expected) assert.ok(sitemap().some(entry => entry.url === "https://aenural.com/tools/" + route));
     } finally { if (previous === undefined) delete process.env.SITE_URL; else process.env.SITE_URL = previous; }
   });
   it("loads video encoding only after rendering is requested, with no file-upload endpoint", async () => {
