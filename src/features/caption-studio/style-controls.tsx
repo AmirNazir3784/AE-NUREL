@@ -36,7 +36,7 @@ export function StyleControls({ style, disabled, access, wordTimingAvailable = f
     </fieldset>
     <fieldset className={styles.customize} disabled={disabled||!!access&&!access.advanced}>
       <legend>Advanced styling {access&&!access.advanced&&<Icon name="lock" size={14}/>}</legend>
-      <label className={styles.inline}><input type="checkbox" checked={style.wordHighlight && wordTimingAvailable} disabled={!wordTimingAvailable} onChange={event => onChange({ wordHighlight: event.target.checked })} />Highlight spoken words</label>
+      <label className={styles.inline}><input type="checkbox" checked={style.wordHighlight && wordTimingAvailable} disabled={!wordTimingAvailable||!!access&&!access.advanced} onChange={event => onChange({ wordHighlight: event.target.checked })} />Highlight spoken words {access&&!access.advanced&&<span className={styles.featureLock}><Icon name="lock" size={12}/> Premium</span>}</label>
       {wordTimingAvailable ? <>
         <div className={styles.colors}>{color("Active word color", "wordColor")}</div>
         <label className={styles.inline}><input type="checkbox" checked={style.wordBackground} disabled={!style.wordHighlight} onChange={event => onChange({ wordBackground: event.target.checked })} />Background behind active word only</label>

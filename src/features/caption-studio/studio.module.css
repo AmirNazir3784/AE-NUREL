@@ -365,5 +365,8 @@
 .membershipStatus a { display:inline-flex; min-height:32px; align-items:center; color:var(--accent); }
 .presets .preset:disabled { cursor:not-allowed; opacity:1; }
 .presets .preset:disabled > span { opacity:.55; }
-.presets .preset small { display:flex; align-items:center; justify-content:space-between; gap:5px; flex-wrap:wrap; }
-.presets .preset .presetLock { display:inline-flex; align-items:center; gap:3px; color:#ffda62; background:#453300; border:1px solid #967400; border-radius:4px; padding:2px 4px; font-size:10px; }
+.presets .preset { position:relative; }
+.presets .preset > span { min-height:78px; padding-top:24px; }
+.presets .preset small { display:block; min-height:32px; }
+.presets .preset .presetLock { position:absolute; top:6px; right:6px; display:inline-flex; align-items:center; gap:3px; color:#f8d475; background:#232a25; border:1px solid #a1843e; border-radius:5px; padding:3px 5px; font:600 9px/1.2 var(--font-platform); letter-spacing:.02em; white-space:nowrap; box-shadow:0 1px 3px #0002; }
+.featureLock { display:inline-flex; align-items:center; gap:3px; color:#f8d475; background:#232a25; border:1px solid #a1843e; border-radius:5px; padding:3px 5px; font:600 10px/1.2 var(--font-platform); white-space:nowrap; }
