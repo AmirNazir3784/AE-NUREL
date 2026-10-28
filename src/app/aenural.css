@@ -214,6 +214,10 @@
 .aen-home section[id] { scroll-margin-top: 90px; }
 .skip-link { z-index: 100; }
 @media (max-width: 1100px) { .aen-nav-inner { gap: 16px; } .aen-nav-links > a, .aen-tools-menu > summary { padding-inline: 10px; } .aen-nav-right { gap: 4px; } }
+@media (max-width: 380px) {
+  .aen-nav .aen-nav-inner { padding-inline: 12px; }
+  .aen-nav .aen-official-logo { width: 120px; }
+}
 @media (max-width: 960px) {
   .aen-sign-in-desktop { display: none; }
   .aen-nav-right { margin-left: auto; }

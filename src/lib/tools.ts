@@ -6,7 +6,7 @@ export const categories = [
   { id: "subtitle-tools", title: "Subtitle Tools", icon: "subtitle", description: "Get your words in sync and ready to watch." },
 ] as const;
 
-export type CategoryId = (typeof categories)[number]["id"] | "caption-generation" | "ai-tools";
+export type CategoryId = (typeof categories)[number]["id"] | "caption-generation" | "ai-tools" | "video-tools";
 export type Tool = {
   title: string;
   description: string;
@@ -14,7 +14,7 @@ export type Tool = {
   category: string;
   categoryId: CategoryId;
   icon: ProductIconName;
-  group?: "Timing & Editing" | "Format Conversion" | "Caption Generation";
+  group?: "Timing & Editing" | "Format Conversion" | "Caption Generation" | "Video Tools";
   processing: "local" | "cloud";
 };
 

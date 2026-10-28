@@ -4,7 +4,8 @@ AENural is a Next.js 16 / React 19 / TypeScript site with browser-based subtitle
 
 ## Development branch and release safety
 
-- Development: `faisalhere-afk/aenural-website`, branch `dev/aenural-hybrid`.
+- Current tool-completion development: work locally on `dev/tools-completion`; publish completed work only to `faisalhere-afk/aenural-website` (`origin`). Complete and browser-test each tool's design, content and functionality before moving to the next.
+- The synchronized AmirNazir `main` baseline is the starting point. During this development phase, do not copy unfinished development work back into production.
 - Separate production Hostinger repository: `AmirNazir3784/AE-NUREL`. **Do not push, merge, deploy or synchronize it without explicit approval and verified release checks.**
 - Existing local Codex changes might not be pushed. Before syncing, always inspect the local branch, remotes and working-tree diffs; avoid reset/forced checkout/automatic overwrite.
 

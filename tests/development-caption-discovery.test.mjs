@@ -6,7 +6,7 @@ import {tools,categories,searchTools} from '../src/lib/tools.ts';
 describe('development caption directory and production hold',()=>{
  it('keeps Podcast and Lyrics development-only while AI tools use their separate directory',async()=>{
   const catalog=directoryTools('development'),previews=catalog.filter(tool=>tool.categoryId==='caption-generation');
-  assert.equal(catalog.length,18);assert.deepEqual(previews.map(tool=>tool.href),['/tools/lyrics-to-captions','/tools/podcast-to-captions']);
+  assert.equal(catalog.length,19);assert.deepEqual(previews.map(tool=>tool.href),['/tools/lyrics-to-captions','/tools/podcast-to-captions']);
   assert.ok(previews.every(tool=>tool.group==='Caption Generation'&&tool.processing==='local'));
   assert.deepEqual(searchTools('caption generation',catalog),previews);
   for(const tool of previews){await access(new URL('../src/app'+tool.href+'/page.tsx',import.meta.url));const page=await readFile(new URL('../src/app'+tool.href+'/page.tsx',import.meta.url),'utf8');assert.match(page,/process\.env\.NODE_ENV (?:=== "production"|!== "development")\) notFound\(\)/);assert.match(page,/index: false, follow: false/)}
