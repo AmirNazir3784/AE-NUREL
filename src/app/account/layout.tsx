@@ -10,5 +10,5 @@ export const dynamic = "force-dynamic";
 export default async function Layout({ children }: { children: React.ReactNode }) {
   if (!accountPreviewAvailable()) notFound();
   const connected=membershipEnabled();if(connected)await requireMember();
-  return <main id="main-content" className="cm-page cm-account-page">{(!connected||process.env.NODE_ENV==='development')&&<div className="cm-account-preview">{connected?'Local development accounts. Package switches here are for testing.':'Account preview. Account services are not connected.'}<Link href="/pricing">Plans &amp; pricing</Link></div>}<div className="cm-account-shell"><AccountNavigation/><section className="cm-account-content">{children}</section></div></main>;
+  return <main id="main-content" className="cm-page cm-account-page">{connected&&process.env.NODE_ENV==='development'&&<div className="cm-account-preview">{connected?'Local development accounts. Package switches here are for testing.':'Account preview. Account services are not connected.'}<Link href="/pricing">Plans &amp; pricing</Link></div>}<div className="cm-account-shell"><AccountNavigation/><section className="cm-account-content">{children}</section></div></main>;
 }

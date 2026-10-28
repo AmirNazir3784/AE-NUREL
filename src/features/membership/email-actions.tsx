@@ -1,9 +1,10 @@
 "use client";
 import { useState, type FormEvent } from "react";
 import { authRequest } from "./member-client";
-export function EmailActions({reset=false}:{reset?:boolean}){
+export function EmailActions({reset=false,connected=true}:{reset?:boolean;connected?:boolean}){
   const [email,setEmail]=useState(''),[password,setPassword]=useState(''),[confirmation,setConfirmation]=useState(''),[notice,setNotice]=useState(''),[pending,setPending]=useState(false),[done,setDone]=useState(false);
   async function submit(event:FormEvent<HTMLFormElement>){event.preventDefault();if(pending)return;setNotice('');
+    if(!connected){setPassword('');setConfirmation('');setNotice('Password recovery is currently unavailable. Nothing was sent or saved.');return;}
     if(reset&&(password.length<12||password.length>128||password!==confirmation)){setNotice('Use 12–128 characters and make sure both passwords match.');return;}
     setPending(true);try{
       if(reset){const token=new URLSearchParams(location.search).get('token');if(!token||token.length>1024)throw new Error('This reset link is invalid. Request a new one.');await authRequest('reset-password',{newPassword:password,token});setPassword('');setConfirmation('');history.replaceState(null,'','/reset-password');setDone(true);setNotice('Your password has been reset. Sign in with your new password.');}

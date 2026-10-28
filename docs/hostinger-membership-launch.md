@@ -2,6 +2,10 @@
 
 The owner authorized real application implementation, while retaining responsibility for creating the Hostinger database and external accounts. This replaces the previous design-only restriction. No hosted database, merchant account, live payment, push or deployment was performed.
 
+**Later owner-authorized live testing:** both GitHub `main` branches were updated. Public caption, pricing and account pages are now visible by default in production, independently of backend configuration. The homepage/AI directory/mobile navigation offer a working caption link instead of a Coming soon card. Caption processing/styles/exports work locally without sign-in, with all styles available and no enforced account quota or watermark. The normal tool interface has no testing/development banner. Pricing reflects the current open caption access; unavailable sign-in, cloud saving and purchasing remain honestly unavailable, without fabricating accounts or payments. Preview pages remain noindex; the temporary caption preview is not added to the released-tool registry or sitemap. Set `NEXT_PUBLIC_AENURAL_SITE_PREVIEW=0` during both build and runtime to restore the previous route hold. Enabling real membership restores server-authorized plan controls; no test purchase grants or private hybrid APIs are opened by this preview switch.
+
+Public-visibility checkpoint: 43 focused tests passed; edited files passed ESLint; the final production build and TypeScript passed. With membership disabled and no QA override, all 16 checked public/account/checkout pages returned 200. The AI directory has an Open tool link and no Coming soon card. Chrome accepted a real video, enabled Generate captions and both quality options, and made zero membership API requests. Auth/payment/private hybrid APIs remain gated; checkout POST returned 404. No new transcription model or inference engine changes were made.
+
 ## Responsibility split
 
 | Work | Application work completed here | Owner setup |

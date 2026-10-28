@@ -22,7 +22,7 @@ export function AccessForm({ view, product, connected = false }: { view: AuthVie
       }catch(failure){setNotice(failure instanceof Error?failure.message:'Please try again.');}
       finally{setPending(false);}return;
     }
-    setFields({ name: "", email: "", password: "", confirmation: "" }); setNotice("Account services are not connected yet. Nothing was sent or saved. Please use sample details while this page is a preview.");
+    setFields({ name: "", email: "", password: "", confirmation: "" }); setNotice("Account sign-in is currently unavailable. Nothing was sent or saved. You can continue using the caption tools without an account.");
   }
   // Preview fields have no names, so a pre-hydration native submission cannot
   // serialize sample credentials into a URL or request body.
@@ -33,5 +33,5 @@ export function AccessForm({ view, product, connected = false }: { view: AuthVie
     {view === "login" && <Link className="cm-forgot" href="/forgot-password">Forgot password?</Link>}
     <button type="submit" className="aen-btn aen-btn-primary" disabled={pending}>{pending?'Please wait…':view === "signup" ? "Create account" : view === "recovery" ? "Send recovery link" : "Sign in"}<Icon name="arrow" size={16} /></button>
     {notice && <p className="cm-form-notice" role="status">{notice}</p>}{Object.values(errors).some(Boolean) && <p className="sr-only" role="alert">Please check the highlighted fields.</p>}
-  </form><p className="cm-access-switch">{view === "signup" ? <>Already have an account? <Link href={`/sign-in${suffix}`}>Sign in</Link></> : view === "recovery" ? <Link href={`/sign-in${suffix}`}>Back to sign in</Link> : <>New to AENural? <Link href={`/sign-up${suffix}`}>Create an account</Link></>}</p><Link className="cm-text-link" href="/account">Explore the account preview <Icon name="arrow" size={15} /></Link></>;
+  </form><p className="cm-access-switch">{view === "signup" ? <>Already have an account? <Link href={`/sign-in${suffix}`}>Sign in</Link></> : view === "recovery" ? <Link href={`/sign-in${suffix}`}>Back to sign in</Link> : <>New to AENural? <Link href={`/sign-up${suffix}`}>Create an account</Link></>}</p><Link className="cm-text-link" href="/account">Your account workspace <Icon name="arrow" size={15} /></Link></>;
 }
