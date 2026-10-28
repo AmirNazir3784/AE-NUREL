@@ -16,6 +16,7 @@ const inter = localFont({ src: "./fonts/Inter-Variable.woff2", weight: "100 900"
 
 export const metadata = {
   ...pageMetadata("Tools for People Who Edit", "AENural Source Window and free browser-based tools for editors.", "/"),
+  verification: { google: "brqYgF8ye20H38M5iyS57eBtuvy2Ucna4Okpnr9owpE" },
   title: { default: "AENural — Tools for People Who Edit", template: "%s | AENural" },
   applicationName: "AENural", icons: {
     icon: [{ url: "/favicon.ico", sizes: "32x32 48x48 96x96", type: "image/x-icon" }, { url: "/branding/aenural-icon-96.png", sizes: "96x96", type: "image/png" }],
