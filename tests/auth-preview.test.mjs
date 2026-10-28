@@ -50,7 +50,7 @@ describe('real Header and AuthPreviewModal component interactions', () => {
     // jsdom has no showModal/top-layer layout implementation. These shims test our wiring only.
     dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
     dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;};
-    dom.window.HTMLElement.prototype.getClientRects=function(){return this.hidden?[]:[{left:0,right:440,top:0,bottom:600}];};
+    dom.window.HTMLElement.prototype.getClientRects=function(){return this.hidden||!this.isConnected?[]:[{left:0,right:440,top:0,bottom:600}];};
     errors=[];root=createRoot(query('#root'),{onRecoverableError:error=>errors.push(error)});
     await act(()=>root.render(React.createElement(React.StrictMode,null,React.createElement(Header))));
   });
@@ -102,9 +102,10 @@ describe('real Header and AuthPreviewModal component interactions', () => {
     await open();assert.equal(query('[name="password"]').value,'');
   });
   it('handles the native Escape cancel event and mobile focus restoration',async()=>{
-    query('.aen-mobile-menu').open=true;await click('.aen-sign-in-mobile');assert.equal(query('.aen-mobile-menu').open,false);
+    query('.aen-sign-in-desktop').getClientRects=()=>[];
+    await click('[aria-label="Navigation menu"]');await click('.aen-sign-in-mobile');assert.equal(query('.aen-mobile-toggle').getAttribute('aria-expanded'),'false');
     await act(()=>query('dialog[open]').dispatchEvent(new dom.window.Event('cancel',{cancelable:true})));
-    assert.equal(query('#auth-title'),null);assert.equal(query('.aen-mobile-menu').open,true);assert.ok(document.activeElement.classList.contains('aen-sign-in-mobile'));
+    assert.equal(query('#auth-title'),null);assert.equal(document.activeElement.getAttribute('aria-label'),'Navigation menu');
   });
   it('wraps Tab in both directions',async()=>{
     await open();const first=query('[aria-label="Close account dialog"]'),last=query('.footer button');
@@ -150,7 +151,7 @@ describe('preview design and isolation contracts',()=>{
   it('has no backend/storage/session side effects and guards all entry points',()=>{
     const modal=read('src/components/site/auth-preview-modal.tsx'),header=read('src/components/site/header.tsx');
     assert.doesNotMatch(modal,/fetch\(|localStorage|sessionStorage|document\.cookie|console\.|supabase|signIn\.email/);
-    assert.equal((header.match(/process\.env\.NODE_ENV === "development"/g)||[]).length,3);
+    assert.match(header,/NODE_ENV === "development" && <button className="aen-sign-in/);assert.match(header,/NODE_ENV === "development" && authOpen/);
     assert.match(header,/aen-sign-in-desktop/);assert.match(header,/aen-sign-in-mobile/);
   });
 });

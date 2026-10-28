@@ -37,7 +37,7 @@ export function AuthPreviewModal({ onDismiss, returnFocus }: Props) {
         if (returnFocus?.getClientRects().length) returnFocus.focus();
         else {
           // A viewport change can hide the original desktop/mobile entry.
-          const entries = document.querySelectorAll<HTMLElement>('.aen-sign-in-desktop, summary[aria-label="Navigation menu"]');
+          const entries = document.querySelectorAll<HTMLElement>('.aen-sign-in-desktop, [aria-label="Navigation menu"]');
           Array.from(entries).find(entry => entry.getClientRects().length)?.focus();
         }
       });
@@ -117,6 +117,7 @@ export function AuthPreviewModal({ onDismiss, returnFocus }: Props) {
       <button type="button" className={styles.close} aria-label="Close account dialog" onClick={onDismiss}><Icon name="close" size={20} /></button>
       <h2 id="auth-title">Welcome to AENural</h2>
       <p id="auth-subtitle" className={styles.subtitle}>Sign in or create your account.</p>
+      <p className={styles.footer}><a href="/sign-in" className={styles.textButton}>Open sign-in page</a> ? <a href="/account" className={styles.textButton}>Account preview</a></p>
       <p id="auth-preview-note" className={styles.note}>Use sample details only. Account access is unavailable.</p>
       {view !== "recovery" ? <div className={styles.tabs} role="tablist" aria-label="Account access">
         {(["login", "signup"] as const).map(tab => <button key={tab} id={`auth-tab-${tab}`} type="button" role="tab" aria-selected={view === tab} aria-controls="auth-panel" tabIndex={view === tab ? 0 : -1} onKeyDown={tabKey} onClick={() => changeView(tab)}>{tab === "login" ? "Log in" : "Sign up"}</button>)}

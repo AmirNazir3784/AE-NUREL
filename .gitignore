@@ -56,3 +56,6 @@ next-env.d.ts
 # User-provided local audio fixtures; never include recordings in a code backup.
 /references/Audio/
 /references/audio/
+
+# Local account database, secrets and development mail; never publish user data.
+/.aenural-local/

@@ -15,7 +15,7 @@ describe('canonical subtitle generator scope and release hold',()=>{
   let urls;
   try {process.env.SITE_URL='https://tools.example';urls=sitemap().map(entry=>new URL(entry.url).pathname);}
   finally {if(previous===undefined)delete process.env.SITE_URL;else process.env.SITE_URL=previous;}
-  assert.equal(urls.length,24);
+  assert.equal(urls.length,26);
   assert.equal(tools.length,16);
   for(const route of ['/tools/podcast-to-captions','/tools/free-subtitle-generator']){
    assert.equal(tools.some(tool=>tool.href===route),false);

@@ -1,5 +1,7 @@
 ﻿# AENural account architecture
 
+**28 October 2026 update:** The owner authorized account/database integration code, saved projects, allowances, watermarks and purchase unlocking. Application implementation and local acceptance are now complete; actual Hostinger/SMTP/merchant setup is still pending. The older blocked/design-only instructions below are historical and superseded. See [current handoff](./hostinger-membership-launch.md).
+
 Revised 12 October 2026. **Phase 2 design only; real Phase 3 authentication blocked.** Hostinger-managed MySQL + Better Auth supersedes the earlier Supabase/PostgreSQL decision at the user's request. On 13 October the user separately authorized a development-only frontend preview: the modal/validation are now implemented without auth dependencies, database, migration, credentials or deployment. Public tools and local-media processing stay independent of accounts. See the pre-launch progress checkpoint for test evidence and browser QA limitations; remaining backend flows below are still planned.
 
 ## Decision and inspected baseline

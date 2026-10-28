@@ -1,0 +1,3 @@
+# Preserve the exact upstream font/license bytes checked by the installer.
+public/studio-fonts/*.txt text eol=lf
+public/studio-fonts/*.ttf binary

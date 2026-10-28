@@ -81,9 +81,9 @@ describe('two homepage previews and shared video modal',()=>{
     await mount();visible();await Promise.resolve();assert.equal(document.querySelectorAll('button[aria-haspopup="dialog"]').length,2);
   });
 });
-it('keeps exactly two homepage paths, one static illustration and no third video deployment',()=>{
+it('retains the homepage design and video previews with the approved caption tool shortcut',()=>{
   const read=file=>readFileSync(new URL('../'+file,import.meta.url),'utf8');const home=read('src/app/page.tsx');
-  assert.equal((home.match(/<HomeVideo /g)||[]).length,2);assert.equal((home.match(/<SubtitleConversionIllustration /g)||[]).length,1);
+  assert.equal((home.match(/<HomeVideo /g)||[]).length,2);assert.equal((home.match(/<SubtitleConversionIllustration /g)||[]).length,1);assert.match(home,/Try Auto Caption Generator/);
   assert.doesNotMatch(home,/subtitle-tools\.mp4|HomeVideo utility/);assert.match(home,/<HomeVideoProvider>/);
   for(const name of ['source-window','source-window-feature']){
     assert.ok(home.includes('src="/videos/'+name+'.mp4"'));const poster=readFileSync(new URL('../public/videos/'+name+'-poster.jpg',import.meta.url));assert.equal(poster.readUInt16BE(0),0xffd8);

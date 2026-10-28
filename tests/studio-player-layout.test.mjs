@@ -51,7 +51,8 @@ describe("Caption Studio player + guidance visual structure",()=>{
   });
   it("provides a larger, spacious and icon-free title",()=>{
     assert.match(ui,/<h1>Auto Caption Generator<\/h1>/);
-    assert.ok(!ui.includes('<Icon name="subtitle"'));
+    const heading=ui.slice(ui.indexOf('<header className={styles.heading}>'),ui.indexOf('</header>'));
+    assert.ok(!heading.includes('<Icon name="subtitle"'));
     assert.match(css,/font-size:clamp\(31px,3\.8vw,48px\)/);
   });
   it("clips two readable lines per timeline row and avoids overflowing caption cards",()=>{
@@ -59,12 +60,9 @@ describe("Caption Studio player + guidance visual structure",()=>{
     assert.match(css,/\.cueList > button > div \{ min-width:0; flex:1; overflow:hidden/);
     assert.match(ui,/aria-label="Caption timeline"/);
   });
-  it("adds directly relevant guidance, FAQ and privacy caveats beneath the tool",()=>{
-    assert.match(page,/<StudioGuidance \/>/);
-    assert.match(guidance,/Frequently asked questions/);
-    assert.match(guidance,/Your video remains on your device/);
-    assert.match(guidance,/Private server transcription mode/);
-    assert.match(guidance,/supports videos up to 2 minutes/);
-    assert.match(guidance,/captioned MP4 or WebM/);
+  it("renders only the supplied editorial FAQ and retains visible upload limits",()=>{
+    assert.doesNotMatch(page,/<StudioGuidance/);
+    assert.match(page,/<CaptionEditorial \/>/);
+    assert.match(page,/Up to 2 minutes/);
   });
 });

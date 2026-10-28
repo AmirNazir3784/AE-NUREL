@@ -5,7 +5,8 @@ import { studioWordSpans, type StudioAlignment } from "./studio-alignment.ts";
 import { measureStudioTextRange, drawStudioHighlightedLine, drawStudioWordBackground, type StudioRangeMeasurer } from "./studio-text-ranges.ts";
 import { STUDIO_ANIMATIONS, studioMotionFrame, type StudioAnimation } from "./studio-motion.ts";
 
-export const STUDIO_LIMITS = { bytes: 200 * 1024 ** 2, seconds: 120, pixels: 1920 * 1080, cues: 500, outputBytes: 256 * 1024 ** 2 } as const;
+import { STUDIO_LIMITS } from "./studio-limits.ts";
+export { STUDIO_LIMITS, validateStudioFile } from "./studio-limits.ts";
 // Inter/Sora are bundled. Other fonts rely on locally installed device fonts.
 export const STUDIO_FONTS = ["Inter", "Sora", "Arial", "Georgia", "Times New Roman", "Verdana", "Courier New", "Trebuchet MS", "Segoe UI", "Tahoma", "Impact", "Arial Black", "Palatino Linotype", "Cambria", "Consolas", "Franklin Gothic Medium", "Anton", "Bebas Neue", "Oswald", "Playfair Display", "DM Sans"] as const;
 export type StudioStyle = {
@@ -70,11 +71,6 @@ export function parseStudioStyle(text: string): StudioStyle {
   validateStudioStyle(style); return style;
 }
 export type StudioMedia = { width: number; height: number; duration: number; audioTracks: number; videoCodec: string; audioCodec: string | null };
-export function validateStudioFile(file: Pick<File, "size" | "name" | "type">) {
-  if (!file.size) throw new Error("This video is empty.");
-  if (file.size > STUDIO_LIMITS.bytes) throw new Error("Choose a video smaller than 200 MiB.");
-  if (!/\.(mp4|mov|webm)$/i.test(file.name) || (file.type && !/^(video\/|application\/octet-stream$)/.test(file.type))) throw new Error("Choose an MP4, MOV or WebM video. Codec support is checked on your device.");
-}
 export function validateStudioMedia(media: StudioMedia) {
   if (![media.width, media.height, media.duration].every(Number.isFinite) || media.duration <= 0 || media.width <= 0 || media.height <= 0) throw new Error("This video has invalid dimensions or duration.");
   if (media.duration > STUDIO_LIMITS.seconds) throw new Error("This studio currently supports videos up to 2 minutes.");

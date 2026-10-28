@@ -5,6 +5,8 @@ import { Footer } from "@/components/site/footer";
 import { JsonLd } from "@/components/site/json-ld";
 import { siteJsonLd } from "@/lib/structured-data";
 import { historyInitializationScript } from "@/lib/history-navigation";
+import { accountPreviewAvailable } from "@/lib/account-preview";
+import { membershipEnabled } from "@/lib/membership-config";
 import "./globals.css";
 import "./aenural.css";
 import "./aenural-tools.css";
@@ -31,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script id="aenural-history-init" dangerouslySetInnerHTML={{ __html: historyInitializationScript }} />
       </head>
-      <body className="min-h-full flex flex-col"><a href="#main-content" className="skip-link">Skip to content</a><JsonLd data={siteJsonLd()} /><Header />{children}<Footer /></body>
+      <body className="min-h-full flex flex-col"><a href="#main-content" className="skip-link">Skip to content</a><JsonLd data={siteJsonLd()} /><Header membershipPreview={accountPreviewAvailable()} accountsEnabled={membershipEnabled()} />{children}<Footer /></body>
     </html>
   );
 }

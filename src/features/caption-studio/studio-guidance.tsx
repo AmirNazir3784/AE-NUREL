@@ -14,10 +14,10 @@ const faqs = [
   { question: "What are the video size limits?", answer: "The current development studio supports videos up to 2 minutes, 200 MiB and 1080p. Export also depends on your browser's available video encoders." },
 ];
 
-export function StudioGuidance() {
+export function StudioGuidance({ compact = false }: { compact?: boolean } = {}) {
   return <section aria-label="Caption Studio guide" className={styles.guide}>
-    <div className={styles.guideIntro}><span className={styles.guideEyebrow}>HOW IT WORKS</span><h2>Great captions in three steps.</h2><p>Everything you need to move from raw video to readable, styled captions.</p></div>
-    <div className={styles.guideSteps}>{steps.map(step => <article className={styles.guideStep} key={step.number}><span>{step.number}</span><span className={styles.guideStepMotif} aria-hidden="true"><i /><i /><i /><i /><i /></span><h3>{step.heading}</h3><p>{step.description}</p></article>)}</div>
+    {!compact && <><div className={styles.guideIntro}><span className={styles.guideEyebrow}>HOW IT WORKS</span><h2>Great captions in three steps.</h2><p>Everything you need to move from raw video to readable, styled captions.</p></div>
+    <div className={styles.guideSteps}>{steps.map(step => <article className={styles.guideStep} key={step.number}><span>{step.number}</span><span className={styles.guideStepMotif} aria-hidden="true"><i /><i /><i /><i /><i /></span><h3>{step.heading}</h3><p>{step.description}</p></article>)}</div></>}
     <div className={styles.guideFaq}><div><span className={styles.guideEyebrow}>NEED HELP?</span><h2>Frequently asked questions</h2><p>Helpful answers before you start exporting.</p></div><div className={styles.guideQuestions}>{faqs.map(item => <details key={item.question}><summary>{item.question}</summary><p>{item.answer}</p></details>)}</div></div>
   </section>;
 }

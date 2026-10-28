@@ -114,7 +114,7 @@ describe('persistent speech worker lifecycle',()=>{
   for(let i=0;i<2;i++){const p=client.run(new Float32Array(1),'wasm',signal,()=>{},{keepAlive:true});const w=workers[0];w.onmessage({data:{id:w.message.id,type:'result',result:{chunks:[],text:''}}});await p;assert.ok(!w.terminated)}
   assert.equal(workers.length,1);client.cancel();assert.equal(workers[0].terminated,true);
  });
- it('times out an unresponsive section and releases its worker',async()=>{let terminated=false;const client=new AsrClient(()=>({onmessage:null,onerror:null,postMessage(){},terminate(){terminated=true}}));await assert.rejects(client.run(new Float32Array(1),'wasm',new AbortController().signal,()=>{},{timeoutMs:5}),/timed out/);assert.equal(terminated,true)});
+ it('times out an unresponsive section and releases its worker',async()=>{let terminated=false;const client=new AsrClient(()=>({onmessage:null,onerror:null,postMessage(){},terminate(){terminated=true}}));await assert.rejects(client.run(new Float32Array(1),'wasm',new AbortController().signal,()=>{},{timeoutMs:5}),/took too long/);assert.equal(terminated,true)});
  it('counts real model download activity when timing out a larger model',async t=>{
   t.mock.timers.enable({apis:['setTimeout']});let worker;
   const client=new AsrClient(()=>worker={onmessage:null,onerror:null,postMessage(m){this.message=m},terminate(){this.terminated=true}});

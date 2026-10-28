@@ -27,7 +27,7 @@ describe('separate product and free tool navigation',()=>{
   assert.deepEqual([...product.querySelectorAll('a')].map(a=>a.getAttribute('href')),['/source-window','/premium-tools']);
   assert.deepEqual([...free.querySelectorAll('section a')].map(a=>a.getAttribute('href')).sort(),tools.map(t=>t.href).sort());
   assert.equal(free.querySelector('.aen-mega-footer a').getAttribute('href'),'/tools');
-  assert.equal(q('.aen-mobile-free').querySelectorAll('section a').length,16);
+  assert.equal(free.querySelectorAll('section a').length,16);
   assert.doesNotMatch(document.body.textContent,/Speech to Captions|Podcast to Captions/);
  });
  it('pins click, closes the other menu, supports outside click and restores Escape focus',async()=>{

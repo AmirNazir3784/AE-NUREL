@@ -8,7 +8,7 @@ describe("Caption Studio uncluttered editing workspace",()=>{
   const motion=read("src/features/caption-studio/style-controls.tsx");
   it("groups generation separately without removing ASR controls or import",()=>{
     assert.match(ui,/className=\{styles\.workflowSection\}/);
-    assert.match(ui,/open=\{!document\.cues\.length \? true : undefined\}/);
+    assert.match(ui,/open=\{!document\.cues\.length \|\| busy === "transcribing" \? true : undefined\}/);
     assert.match(ui,/Generate \/ import/);
     assert.match(ui,/<GenerationControls/);
     assert.match(ui,/Import SRT \/ VTT/);

@@ -18,7 +18,7 @@ describe("completed Format Conversion discovery", () => {
       const page = await readFile(new URL("../src/app/tools/" + route + "/page.tsx", import.meta.url), "utf8");
       const title = /pageMetadata\("([^"]+)"/.exec(page)?.[1];
       assert.ok(title); titles.add(title);
-      assert.ok(page.includes('ToolHeader title="' + title.split(" — ")[0] + '"'));
+      assert.ok(['ToolHeader','ToolHero'].some(tag=>page.includes(tag+' title="' + title.split(" — ")[0] + '"')));
       assert.match(page, /<ToolLayout/); assert.match(page, /<RelatedTools/);
       assert.ok(page.includes('"/tools/' + route + '"'));
       assert.doesNotMatch(page, /index: false/);
@@ -35,7 +35,7 @@ describe("completed Format Conversion discovery", () => {
     try {
       process.env.SITE_URL = "https://tools.example";
       const urls = sitemap().map(entry => entry.url);
-      assert.equal(urls.length, 24);
+      assert.equal(urls.length, 26);
       for (const route of expected) assert.ok(urls.includes("https://tools.example/tools/" + route));
       delete process.env.SITE_URL; assert.deepEqual(sitemap(), []);
     } finally { if (previous === undefined) delete process.env.SITE_URL; else process.env.SITE_URL = previous; }

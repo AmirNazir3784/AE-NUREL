@@ -1,10 +1,28 @@
-import { notFound } from "next/navigation";
-import { RelatedTools, ToolBenefits, ToolFaq, ToolHero, ToolLayout, ToolWorkspace } from "@/components/tools/tool-layout";
-import { Icon } from "@/components/ui/icon";
+import Link from "@/components/site/page-link";
+import { RelatedTools } from "@/components/tools/tool-layout";
 import { SubtitleWorkspace } from "@/features/local-asr/subtitle-workspace";
+import { AudioBenefits, AudioEditorial, AudioHero } from "@/features/audio-to-text/audio-editorial";
+import { pageMetadata } from "@/lib/site-metadata";
 import { tools } from "@/lib/tools";
-export const metadata = { title: "Free Audio to Text Converter Online", description: "Generate editable SRT or VTT subtitles from audio with local transcription and optional local translation in supported languages.", robots: { index: false, follow: false } };
-export default function SubtitleGeneratorPage() {
-  if (process.env.NODE_ENV === "production") notFound();
-  return <ToolLayout title="Free Audio to Text Converter Online" category="Subtitle Tools" categoryHref="/tools/subtitle-tools"><ToolHero title="Free Audio to Text Converter Online" description="Turn audio into editable SRT or VTT subtitles." ticks={["MP3, WAV, M4A, AAC, FLAC, OGG", "Up to 5 hours per recording", "Edit every cue before download"]} art="audio" chipA={null} chipB={null} chipC={null} /><ToolWorkspace label="Free Audio to Text Converter Online"><div className="aen-audio"><SubtitleWorkspace /></div></ToolWorkspace><ToolBenefits items={[{ icon: <Icon name="clock" size={18} />, title: "Up to 5 hours", text: "Long recordings in MP3, WAV, M4A, AAC, FLAC or OGG." }, { icon: <Icon name="arrow" size={18} />, title: "Translate, timing kept", text: "Optional translation keeps every cue's timing." }, { icon: <Icon name="check" size={18} />, title: "Review before you save", text: "Correct any cue in the draft, then download." }, { icon: <Icon name="volume" size={18} />, title: "Fast or accurate", text: "Two transcription qualities to match your recording." }]} /><ToolFaq href="/tools/free-audio-to-text-converter-online" items={[{"q": "Which audio formats can I use?", "a": "MP3, PCM WAV, M4A, AAC, FLAC or OGG, up to 5 hours and 4 GiB per recording. Decoder support also depends on your browser."}, {"q": "Does translation change the timing?", "a": "No — optional translation changes the cue text while preserving the original timing."}, {"q": "Can I correct the subtitles before downloading?", "a": "Yes — review and correct the draft first, then download SRT or VTT."}]} /><RelatedTools title="More subtitle tools" tools={tools.filter(tool => ["/tools/srt-editor", "/tools/srt-to-txt", "/tools/srt-to-sbv"].includes(tool.href))} /></ToolLayout>;
+import "@/features/audio-to-text/audio-page.css";
+
+export const metadata = { ...pageMetadata(
+  "Free Audio to Text Converter Online | AI Transcription",
+  "Convert MP3 recordings and spoken audio into editable text online. Explore free AI transcription, video-to-text options, language support, and easy downloads.",
+  "/tools/free-audio-to-text-converter-online",
+), title: { absolute: "Free Audio to Text Converter Online | AI Transcription" } };
+
+export default function AudioToTextPage() {
+  return <main id="main-content" className="aen-audio-page">
+    <section className="tool-area" id="top">
+      <div className="narrow">
+        <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><Link href="/tools/ai-tools">AI Tools</Link><span>/</span><strong aria-current="page">Audio to Text</strong></nav>
+        <AudioHero />
+        <section className="upload-panel live-transcription" id="tool" aria-label="Audio to text converter"><SubtitleWorkspace transcript /></section>
+      </div>
+      <AudioBenefits />
+    </section>
+    <AudioEditorial />
+    <div className="wide audio-related"><RelatedTools title="More subtitle tools" tools={tools.filter(tool => ["/tools/srt-editor", "/tools/srt-to-txt", "/tools/srt-to-sbv"].includes(tool.href))} /></div>
+  </main>;
 }

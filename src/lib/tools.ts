@@ -1,10 +1,12 @@
 import type { ProductIconName } from "./icons";
+import { autoCaptionReleased } from "./caption-release.ts";
+import { autoCaptionTool } from "./ai-tools.ts";
 
 export const categories = [
   { id: "subtitle-tools", title: "Subtitle Tools", icon: "subtitle", description: "Get your words in sync and ready to watch." },
 ] as const;
 
-export type CategoryId = (typeof categories)[number]["id"] | "caption-generation";
+export type CategoryId = (typeof categories)[number]["id"] | "caption-generation" | "ai-tools";
 export type Tool = {
   title: string;
   description: string;
@@ -18,6 +20,7 @@ export type Tool = {
 
 // Only released tools and categories belong in this public registry.
 export const tools: readonly Tool[] = [
+  ...(autoCaptionReleased() ? [autoCaptionTool] : []),
   {
     title: "SRT Timing Adjuster",
     description: "Move all SRT subtitle timestamps earlier or later.",

@@ -14,7 +14,7 @@ import {preservationIssues} from '../src/features/local-asr/translation-integrit
 const require=createRequire(import.meta.url);
 const source=readFileSync(new URL('../src/features/local-asr/caption-review.tsx',import.meta.url),'utf8');
 const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
-function render(document,coverage,compare=false){
+function render(document,coverage,compare=false,transcript=false){
  const evaluated={exports:{}},downloads=[];let stateCalls=0;
  const dependencies={
   react:{...React,useReducer:()=>[{...sessionApi.initialEditorSession,document,saved:document},()=>{}],useState:()=>[stateCalls++===0?0:compare,()=>{}]},
@@ -26,11 +26,21 @@ function render(document,coverage,compare=false){
   './semantic-localization':localization,'./caption-review-hints':{captionReviewHints},'./translation-integrity':{preservationIssues},
  };
  new Function('require','module','exports',compiled)(id=>dependencies[id]??require(id),evaluated,evaluated.exports);
- return {html:renderToStaticMarkup(React.createElement(evaluated.exports.CaptionReview,{initialDocument:document,coverage})),downloads};
+ return {html:renderToStaticMarkup(React.createElement(evaluated.exports.CaptionReview,{initialDocument:document,coverage,transcript})),downloads};
 }
 const cue=(text,start=0,end=500,id='test')=>({id,text,start,end,identifier:'',srtSettings:'',vttSettings:''});
 const doc=cues=>({...editor.emptyEditor(),filename:'captions.ur.srt',cues});
 describe('calm caption review presentation',()=>{
+ it('exports corrected transcript text as UTF-8 TXT without subtitle timing',()=>{
+  const {html,downloads}=render(doc([cue('Hello world.'),cue('مرحبا',500,1000,'second')]),undefined,false,true);
+  assert.match(html,/Review your transcript/);
+  const txt=downloads.find(button=>button.label==='Download TXT');
+  assert.equal(txt.filename,'captions.ur.txt');
+  assert.equal(txt.mimeType,'text/plain;charset=utf-8');
+  assert.equal(txt.content(),'Hello world.\n\nمرحبا\n');
+  assert.equal(txt.disabled,false);
+  assert.ok(render(doc([cue('')]),undefined,false,true).downloads.filter(button=>button.label==='Download TXT').every(button=>button.disabled));
+ });
  it('makes reading advice optional and nonblocking, with no orange warning panel',()=>{
   const document=doc([cue('This caption is too long to read in half a second and needs review.')]),{html,downloads}=render(document);
   assert.match(html,/<details class="suggestions"><summary>Review suggestions \(1\)/);

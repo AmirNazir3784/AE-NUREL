@@ -81,7 +81,7 @@ describe('local ASR worker lifecycle', () => {
  });
  it('worker exceptions become explicit errors and release resources', async () => {
   const {client,workers}=setup(); const job=client.run(new Float32Array(1),'auto',new AbortController().signal,()=>{});
-  workers[0].onerror(new Error('test')); await assert.rejects(job,/worker stopped/); assert.equal(workers[0].terminated,true);
+  workers[0].onerror(new Error('test')); await assert.rejects(job,/Speech recognition stopped/); assert.equal(workers[0].terminated,true);
  });
  it('does not create a worker for an already cancelled job', () => {
   const {client,workers}=setup(), abort=new AbortController();abort.abort();

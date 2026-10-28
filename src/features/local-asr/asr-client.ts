@@ -26,7 +26,7 @@ export class AsrClient {
       const worker = this.idle?.worker ?? this.createWorker(); this.idle = null;
       const abort = () => this.cancel();
       let timeout: ReturnType<typeof setTimeout>;
-      const armTimeout = () => { clearTimeout(timeout); timeout = setTimeout(() => { if (this.job !== id) return; cleanup(); worker.terminate(); this.active = null; reject(new Error("This section timed out. Completed sections are kept; retry to continue.")); }, options.timeoutMs ?? 20 * 60 * 1000); };
+      const armTimeout = () => { clearTimeout(timeout); timeout = setTimeout(() => { if (this.job !== id) return; cleanup(); worker.terminate(); this.active = null; reject(new Error("Speech recognition took too long. Retry, choose Fast quality, or use a shorter recording.")); }, options.timeoutMs ?? 20 * 60 * 1000); };
       const cleanup = () => { clearTimeout(timeout); signal.removeEventListener("abort", abort); };
       armTimeout();
       this.active = { worker, reject, cleanup };
@@ -45,7 +45,7 @@ export class AsrClient {
         }
         else { finish(); reject(new Error(reply.message)); }
       };
-      worker.onerror = () => { if (this.job !== id) return; finish(); reject(new Error("The local AI worker stopped. Try CPU mode, a shorter file, or an updated Chrome/Edge browser.")); };
+      worker.onerror = () => { if (this.job !== id) return; finish(); reject(new Error("Speech recognition stopped. Try Fast quality, a shorter file, or an updated Chrome/Edge browser.")); };
       worker.postMessage({ id, samples, backend, ...options }, [samples.buffer]);
     });
   }

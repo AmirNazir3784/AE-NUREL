@@ -9,13 +9,19 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "membership:prepare-mysql": "node scripts/membership/prepare-mysql.mjs",
+    "release:check": "node scripts/membership/release-check.mjs"
   },
   "dependencies": {
     "@huggingface/transformers": "4.3.1",
+    "better-auth": "1.7.14",
     "fflate": "^0.8.3",
+    "kysely": "0.28.18",
     "mediabunny": "1.61.3",
-    "next": "16.3.8",
+    "mysql2": "3.24.6",
+    "next": "16.4.3",
+    "nodemailer": "10.2.1",
     "onnxruntime-web": "1.31.0-dev.20260914-8d85527a0",
     "react": "19.2.8",
     "react-dom": "19.2.8"
@@ -23,10 +29,11 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/nodemailer": "8.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.8",
+    "eslint-config-next": "16.4.3",
     "jsdom": "30.1.2",
     "tailwindcss": "^4",
     "typescript": "^5"

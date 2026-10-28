@@ -21,7 +21,7 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
-    if (typeof IntersectionObserver === "undefined") { setEntered(true); return; }
+    if (typeof IntersectionObserver === "undefined") { const timer = setTimeout(() => setEntered(true), 0); return () => clearTimeout(timer); }
     const ob = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) { setEntered(true); ob.disconnect(); }
     }, { threshold: 0.2 });
@@ -182,12 +182,12 @@ export function ToolHero({ title, description, ticks = [], chipA = "Part 1.srt",
         <text className="aen-js-s3" x="82" y="76">Hello!</text>
         <text className="aen-js-bl" x="58" y="70">{"{"}</text>
         <text className="aen-js-br" x="262" y="70">{"}"}</text>
-        <text className="aen-js-r1" x="82" y="40"><tspan>"index"</tspan>: 1,</text>
-        <text className="aen-js-r2" x="82" y="54"><tspan>"start"</tspan>: "00:01,000",</text>
-        <text className="aen-js-r3" x="82" y="68"><tspan>"end"</tspan>: "00:04,000",</text>
-        <text className="aen-js-r4" x="82" y="82"><tspan>"startMs"</tspan>: 1000,</text>
-        <text className="aen-js-r5" x="82" y="96"><tspan>"endMs"</tspan>: 4000,</text>
-        <text className="aen-js-r6" x="82" y="110"><tspan>"text"</tspan>: "Hello!"</text>
+        <text className="aen-js-r1" x="82" y="40"><tspan>&quot;index&quot;</tspan>: 1,</text>
+        <text className="aen-js-r2" x="82" y="54"><tspan>&quot;start&quot;</tspan>: &quot;00:01,000&quot;,</text>
+        <text className="aen-js-r3" x="82" y="68"><tspan>&quot;end&quot;</tspan>: &quot;00:04,000&quot;,</text>
+        <text className="aen-js-r4" x="82" y="82"><tspan>&quot;startMs&quot;</tspan>: 1000,</text>
+        <text className="aen-js-r5" x="82" y="96"><tspan>&quot;endMs&quot;</tspan>: 4000,</text>
+        <text className="aen-js-r6" x="82" y="110"><tspan>&quot;text&quot;</tspan>: &quot;Hello!&quot;</text>
       </svg>
     </div>
 : art === "vtxt" ? <div key={playKey} className="aen-hero-merge" aria-hidden="true">

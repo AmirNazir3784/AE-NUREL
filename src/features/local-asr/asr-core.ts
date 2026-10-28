@@ -15,7 +15,7 @@ export const ASR_MAX_SECONDS = 60;
 export const ASR_MAX_BYTES = 25 * 1024 * 1024;
 export type Backend = "auto" | "wasm" | "webgpu";
 export type TimedText = { text: string; timestamp: [number | null, number | null] };
-export type AsrProgress = { stage: "loading" | "download" | "detecting" | "transcribing" | "preparing" | "translating" | "building"; file?: string; loaded?: number; total?: number; completed?: number; sections?: number; unit?: "sections" | "captions" | "thoughts" | "sentences"; backend?: string; warning?: string };
+export type AsrProgress = { stage: "loading" | "download" | "detecting" | "transcribing" | "preparing" | "translating" | "building"; file?: string; loaded?: number; total?: number; preparation?: { loaded: number; total: number }; completed?: number; sections?: number; unit?: "sections" | "captions" | "thoughts" | "sentences"; backend?: string; warning?: string };
 export type AsrResult = { chunks: TimedText[]; text: string; language?: string; backend: string; loadMs: number; inferenceMs: number; cacheHits: number; downloadedBytes: number; speechActivity?: SpeechActivity & { elapsedMs: number }; requests: { method: string; url: string }[] };
 export type WorkerReply = { id: number } & ({ type: "progress"; progress: AsrProgress } | { type: "result"; result: AsrResult } | { type: "error"; message: string });
 

@@ -1,0 +1,15 @@
+import { notFound } from "next/navigation";
+import Link from "@/components/site/page-link";
+import { Icon } from "@/components/ui/icon";
+import { accountPreviewAvailable } from "@/lib/account-preview";
+import { AccessForm } from "./access-form";
+import type { PaidProduct } from "./plans";
+import { membershipEnabled } from "@/lib/membership-config";
+import { EmailActions } from "./email-actions";
+
+export function AccessPage({ view, product }: { view: "login" | "signup" | "recovery" | "verification"; product?: PaidProduct }) {
+  if (!accountPreviewAvailable()) notFound();
+  const connected=membershipEnabled();
+  const text = { login: ["Welcome back.", "Your projects and creative tools, in one place."], signup: ["Make room for your next idea.", "A free account will connect your projects, caption allowance and membership."], recovery: ["Back to creating.", "Request a secure link to choose a new password."], verification: ["One more step.", "Check your inbox for a verification link, then sign in to your account."] }[view];
+  return <main id="main-content" className="cm-page cm-access-page"><div className="cm-access-layout"><section className="cm-access-intro"><Link href="/pricing" className="cm-text-link">← Plans &amp; pricing</Link><h1>{text[0]}</h1><p>{text[1]}</p><div className="cm-access-benefits"><div><Icon name="file" size={23} /><span>Keep your caption projects together.</span></div><div><Icon name="clock" size={23} /><span>Return to your recent tool activity.</span></div><div><Icon name="shield" size={23} /><span>Review your package access and purchases clearly.</span></div></div><p className="cm-access-local">Your original videos stay on your device. Saved projects will contain captions, settings and a source-file reference.</p></section><section className="cm-access-card">{(!connected || process.env.NODE_ENV === "development") && <div className="cm-access-notice"><Icon name="info" size={18} /><p>{connected ? "Local development accounts. Verification and recovery messages are kept in the private local email outbox; no live purchase is made." : "Local preview. Account services are not connected. Use sample details; no information will be sent or saved."}</p></div>}{product && <p className="cm-selected-plan">Selected product: <strong>Source Window + Captions</strong></p>}<h2>{view === "signup" ? "Create your account" : view === "recovery" ? "Reset your password" : view === "verification" ? "Verify your email" : "Sign in to AENural"}</h2>{view === "verification" ? connected ? <EmailActions /> : <div className="cm-verification"><Icon name="shield" size={42} /><p>No verification message has been sent. This page will handle the secure email-verification flow after authentication is connected.</p><button disabled className="aen-btn aen-btn-primary">Resend verification email</button><Link href="/sign-in" className="cm-text-link">Back to sign in <Icon name="arrow" size={16} /></Link></div> : <AccessForm view={view} product={product} connected={connected} />}</section></div></main>;
+}

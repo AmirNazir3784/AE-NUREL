@@ -11,6 +11,7 @@ import { normalizeWordAlignment } from "./subtitle-timeline";
 import { downloadModel, clearModelParts } from "./model-download";
 import { ACCURATE_FILE_BYTES } from "./subtitle-capabilities";
 import type { AsrRunOptions } from "./asr-client";
+import { modelPreparation } from "./model-preparation";
 
 const scope = self as unknown as DedicatedWorkerGlobalScope;
 let busy = false;
@@ -26,7 +27,11 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
   const revision = quality === "accurate" ? multilingual ? ACCURATE_MULTILINGUAL_REVISION : ACCURATE_ENGLISH_REVISION : multilingual ? MULTILINGUAL_REVISION : wordTimestamps ? ENGLISH_TIMED_REVISION : ASR_REVISION;
   const modelCache = quality === "accurate" ? ACCURATE_CACHE : ASR_CACHE;
   const send = (reply: Omit<Extract<WorkerReply, { type: "progress" }>, "id"> | Omit<Extract<WorkerReply, { type: "result" }>, "id"> | Omit<Extract<WorkerReply, { type: "error" }>, "id">) => scope.postMessage({ id, ...reply });
-  const progress = (value: AsrProgress) => send({ type: "progress", progress: value });
+  const weightRoot = `https://huggingface.co/${modelName}/resolve/${revision}/onnx/`;
+  const encoder = quality === "accurate" ? "encoder_model_quantized.onnx" : "encoder_model.onnx";
+  const decoder = "decoder_model_merged_quantized.onnx";
+  const preparation = modelPreparation({ [encoder]: ACCURATE_FILE_BYTES[weightRoot + encoder], [decoder]: ACCURATE_FILE_BYTES[weightRoot + decoder] });
+  const progress = (value: AsrProgress) => send({ type: "progress", progress: preparation.progress(value) });
   let detector: InferenceSession | undefined;
   const requests: { method: string; url: string }[] = [];
   let downloadedBytes = 0;
@@ -73,7 +78,7 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
     env.cacheKey = modelCache;
     env.useWasmCache = true;
     const assetCache: AssetCache = {
-      async match(key: string) { try { const response = await (await caches.open(modelCache)).match(key) ?? (modelCache !== ASR_CACHE && (key.startsWith(runtimeBase) || key === VAD_URL) ? await (await caches.open(ASR_CACHE)).match(key) : undefined); if (response) cacheHits++; return response; } catch { warn(); return undefined; } },
+      async match(key: string) { try { const response = await (await caches.open(modelCache)).match(key) ?? (modelCache !== ASR_CACHE && (key.startsWith(runtimeBase) || key === VAD_URL) ? await (await caches.open(ASR_CACHE)).match(key) : undefined); if (response) { cacheHits++; if (key.startsWith(weightRoot)) { const size = ACCURATE_FILE_BYTES[key] ?? Number(response.headers.get("content-length")); if (size > 0) { preparation.update(key.slice(weightRoot.length), size, size); progress({stage:"loading"}); } } } return response; } catch { warn(); return undefined; } },
       async put(key: string, response: Response) { try {
         const cache = await caches.open(modelCache); await cache.put(key, response);
         if (ACCURATE_FILE_BYTES[key]) await clearModelParts(key, ACCURATE_FILE_BYTES[key], part => cache.delete(part));
