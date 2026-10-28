@@ -5,6 +5,7 @@ import { STUDIO_FONTS, STUDIO_PRESETS, parseStudioStyle, type StudioStyle } from
 import { STUDIO_ANIMATIONS } from "./studio-motion";
 import styles from "./studio.module.css";
 import type { CaptionAccess } from "../membership/caption-policy";
+import { Icon } from "@/components/ui/icon";
 type NumericKey = { [K in keyof StudioStyle]: StudioStyle[K] extends number ? K : never }[keyof StudioStyle];
 type ColorKey = "color" | "highlight" | "outlineColor" | "shadowColor" | "wordColor" | "wordBackgroundColor";
 
@@ -14,8 +15,8 @@ export function StyleControls({ style, disabled, access, wordTimingAvailable = f
     return <label>{label}<span className={styles.rangeRow}><input type="range" min={min} max={max} step={step} value={style[key]} onChange={event => onChange({ [key]: Number(event.target.value) })} /><output>{style[key]}{unit}</output></span></label>;
   }
   function color(label: string, key: ColorKey) { return <label>{label}<input type="color" value={style[key]} onChange={event => onChange({ [key]: event.target.value, ...(key === "highlight" ? { background: true } : key === "wordColor" ? { wordHighlight: true } : {}) })} /></label>; }
-  function choice(label: string, key: keyof StudioStyle, options: readonly (readonly [string,string])[]) { return <label>{label}<select disabled={key==="animation"&&!!access&&!access.advanced} value={String(style[key])} onChange={event => onChange({ [key]: event.target.value })}>{options.map(([value,text]) => <option key={value} value={value}>{text}</option>)}</select></label>; }
-  function presetButton(preset: StudioStyle) { return <button type="button" key={preset.preset} aria-pressed={style.preset === preset.preset} disabled={disabled||!!access?.presets&&!access.presets.includes(preset.preset)} title={access?.presets&&!access.presets.includes(preset.preset)?"Included with the Source Window package":undefined} className={styles.preset} onClick={() => onPreset(preset)}><span style={{ fontFamily: ["Inter", "Sora"].includes(preset.font) ? `var(--font-${preset.font === "Sora" ? "heading" : "platform"})` : preset.font, fontWeight: preset.weight, color: preset.color, textShadow: preset.shadow ? `0 1px ${preset.shadowBlur / 10}px ${preset.shadowColor}` : "none", WebkitTextStroke: preset.outline ? `${preset.outline / 10}px ${preset.outlineColor}` : undefined, fontStyle: preset.italic ? "italic" : "normal", textDecoration: preset.underline ? "underline" : preset.strikethrough ? "line-through" : undefined, textTransform: preset.textCase === "upper" ? "uppercase" : preset.textCase === "lower" ? "lowercase" : undefined }}><b style={{ background: preset.background ? preset.highlight : undefined, borderRadius: preset.radius / 5, padding: preset.background ? "3px 6px" : undefined }}>Make it yours</b></span><small>{preset.preset}{access?.presets&&!access.presets.includes(preset.preset)?" ? Package":""}</small></button>; }
+  function choice(label: string, key: keyof StudioStyle, options: readonly (readonly [string,string])[]) { return <label>{label}<select disabled={key==="animation"&&!!access&&!access.advanced} value={String(style[key])} onChange={event => onChange({ [key]: event.target.value })}>{options.map(([value,text]) => <option key={value} value={value} disabled={key==="font"&&!!access&&!access.premium&&!["Inter","Sora","Arial"].includes(value)}>{text}{key==="font"&&!!access&&!access.premium&&!["Inter","Sora","Arial"].includes(value)?" ? Premium":""}</option>)}</select></label>; }
+  function presetButton(preset: StudioStyle) { const locked=!!access?.presets&&!access.presets.includes(preset.preset);return <button aria-label={preset.preset+(locked?" ? Premium, locked":"")} type="button" key={preset.preset} aria-pressed={style.preset === preset.preset} disabled={disabled||!!access?.presets&&!access.presets.includes(preset.preset)} title={access?.presets&&!access.presets.includes(preset.preset)?"Included with the Source Window package":undefined} className={styles.preset} onClick={() => onPreset(preset)}><span style={{ fontFamily: ["Inter", "Sora"].includes(preset.font) ? `var(--font-${preset.font === "Sora" ? "heading" : "platform"})` : preset.font, fontWeight: preset.weight, color: preset.color, textShadow: preset.shadow ? `0 1px ${preset.shadowBlur / 10}px ${preset.shadowColor}` : "none", WebkitTextStroke: preset.outline ? `${preset.outline / 10}px ${preset.outlineColor}` : undefined, fontStyle: preset.italic ? "italic" : "normal", textDecoration: preset.underline ? "underline" : preset.strikethrough ? "line-through" : undefined, textTransform: preset.textCase === "upper" ? "uppercase" : preset.textCase === "lower" ? "lowercase" : undefined }}><b style={{ background: preset.background ? preset.highlight : undefined, borderRadius: preset.radius / 5, padding: preset.background ? "3px 6px" : undefined }}>Make it yours</b></span><small>{preset.preset}{locked&&<span className={styles.presetLock}><Icon name="lock" size={12}/> Premium</span>}</small></button>; }
   return <>
     <h2 className={styles.styleHeading}>All caption styles <span>{STUDIO_PRESETS.length}</span></h2>
     {access&&!access.premium&&<p id="style-package" className={styles.note}>Five starter styles are included free. <a href="/pricing#plans">Unlock all styles and advanced controls with the Source Window package.</a></p>}<div className={styles.presets}>{STUDIO_PRESETS.map(presetButton)}</div>
@@ -23,7 +24,7 @@ export function StyleControls({ style, disabled, access, wordTimingAvailable = f
       <legend>Quick layout</legend>
       {choice("Placement", "position", [["top","Top"],["middle","Center"],["bottom","Bottom"],["custom","Custom"]])}
       <button className="button button-secondary" type="button" onClick={() => onChange({ x: 50, align: "center" })}>Center caption horizontally</button>
-      {choice("Font", "font", STUDIO_FONTS.filter(font=>!access||access.premium||["Inter","Sora","Arial"].includes(font)).map(font => [font,font] as const))}
+      {choice("Font", "font", STUDIO_FONTS.map(font => [font,font] as const))}
       {slider("Text size", "size", 2.5, 12, .1, "%")}
       {choice("Animation", "animation", STUDIO_ANIMATIONS)}
       {style.animation !== "none" && slider("Animation duration", "motionDuration", 80, 1000, 20, "ms")}
@@ -34,7 +35,7 @@ export function StyleControls({ style, disabled, access, wordTimingAvailable = f
       <div className={styles.colors}>{color("Text color", "color")}{color("Background color", "highlight")}</div>
     </fieldset>
     <fieldset className={styles.customize} disabled={disabled||!!access&&!access.advanced}>
-      <legend>Advanced styling</legend>
+      <legend>Advanced styling {access&&!access.advanced&&<Icon name="lock" size={14}/>}</legend>
       <label className={styles.inline}><input type="checkbox" checked={style.wordHighlight && wordTimingAvailable} disabled={!wordTimingAvailable} onChange={event => onChange({ wordHighlight: event.target.checked })} />Highlight spoken words</label>
       {wordTimingAvailable ? <>
         <div className={styles.colors}>{color("Active word color", "wordColor")}</div>

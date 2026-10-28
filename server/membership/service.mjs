@@ -5,17 +5,18 @@ export class MembershipError extends Error {
   constructor(message, status = 400, code = 'INVALID_REQUEST') { super(message); this.status = status; this.code = code; }
 }
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
-export function createMemberService(db, { local = false, testMode = local, now = () => new Date() } = {}) {
+export function createMemberService(db, { local = false, sqlite = local, ownerEmail = '', testMode = local, now = () => new Date() } = {}) {
   async function limitOperation(ownerId,scope,maximum=30,windowMs=60000){
     const id=ownerId+':'+scope,timestamp=now().toISOString(),expires=new Date((Math.floor(now().getTime()/windowMs)+1)*windowMs).toISOString();
-    await db.insertInto('aenural_operation_limits').values({id,owner_id:ownerId,used:0,expires_at:expires}).$if(local,q=>q.onConflict(c=>c.column('id').doNothing())).$if(!local,q=>q.onDuplicateKeyUpdate({id})).execute();
+    await db.insertInto('aenural_operation_limits').values({id,owner_id:ownerId,used:0,expires_at:expires}).$if(sqlite,q=>q.onConflict(c=>c.column('id').doNothing())).$if(!sqlite,q=>q.onDuplicateKeyUpdate({id})).execute();
     const changed=await db.updateTable('aenural_operation_limits').set(eb=>({used:eb.case().when('expires_at','<=',timestamp).then(1).else(eb('used','+',1)).end(),expires_at:eb.case().when('expires_at','<=',timestamp).then(expires).else(eb.ref('expires_at')).end()})).where('id','=',id).where(eb=>eb.or([eb('used','<',maximum),eb('expires_at','<=',timestamp)])).executeTakeFirst();
     if(!Number(changed.numUpdatedRows))throw new MembershipError('Too many requests. Please wait a minute and try again.',429,'RATE_LIMIT');
   }
   async function access(ownerId) {
-    const premium = !!await db.selectFrom('aenural_orders').select('id').where('owner_id','=',ownerId).where('status','=','paid').where('test_mode','=',testMode ? 1 : 0).executeTakeFirst();
+    const owner = !!ownerEmail && !!await db.selectFrom('user').select('id').where('id','=',ownerId).where('email','=',ownerEmail).where('emailVerified','=',1).executeTakeFirst();
+    const premium = owner || !!await db.selectFrom('aenural_orders').select('id').where('owner_id','=',ownerId).where('status','=','paid').where('test_mode','=',testMode ? 1 : 0).executeTakeFirst();
     const day = now().toISOString().slice(0,10), row = await db.selectFrom('aenural_daily_usage').select('used').where('id','=',ownerId+':'+day).executeTakeFirst();
-    return captionAccess(premium,true,row?.used || 0,now());
+    return {...captionAccess(premium,true,row?.used || 0,now()),owner};
   }
   async function activity(ownerId, action, projectId = null, transaction = db) {
     await transaction.insertInto('aenural_activity').values({ id:randomUUID(), owner_id:ownerId, action, project_id:projectId, created_at:now().toISOString() }).execute();
@@ -30,7 +31,7 @@ export function createMemberService(db, { local = false, testMode = local, now =
       // An insert-ignore plus conditional UPDATE provides a single shared daily
       // counter across tabs/processes. There is no localStorage quota authority.
       await tx.insertInto('aenural_daily_usage').values({id:dailyId,owner_id:ownerId,day,used:0})
-        .$if(local,q=>q.onConflict(c=>c.column('id').doNothing())).$if(!local,q=>q.onDuplicateKeyUpdate({id:dailyId})).execute();
+        .$if(sqlite,q=>q.onConflict(c=>c.column('id').doNothing())).$if(!sqlite,q=>q.onDuplicateKeyUpdate({id:dailyId})).execute();
       const increment = await tx.updateTable('aenural_daily_usage').set(eb=>({used:eb('used','+',1)})).where('id','=',dailyId).$if(!policy.premium,q=>q.where('used','<',3)).executeTakeFirst();
       const existing = await tx.selectFrom('aenural_caption_jobs').selectAll().where('owner_id','=',ownerId).where('video_id','=',input.videoId).where('day','=',day).executeTakeFirst();
       if (existing) {

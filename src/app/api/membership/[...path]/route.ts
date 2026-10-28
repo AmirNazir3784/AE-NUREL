@@ -1,4 +1,4 @@
-import { membershipEnabled } from "@/lib/membership-config";
+import { membershipEnabled, ownerTestEnabled } from "@/lib/membership-config";
 import { memberFromHeaders, memberService } from "@/lib/member-server";
 import { captionAccess } from "@/features/membership/caption-policy";
 import { validateProject } from "@/features/membership/project-validation";
@@ -22,6 +22,16 @@ async function handle(request: Request,context: Context) {
       if(request.headers.get("origin")!==new URL(expected).origin)return json({message:"This request could not be verified."},403);
     }
     const member=await memberFromHeaders(request.headers);
+    if(!member&&ownerTestEnabled()&&request.method==='POST'&&(route==='jobs'||route==='exports'||path.length===3&&path[0]==='jobs'&&path[2]==='complete')){
+      const service=await memberService();
+      const [{membershipDatabase},{guestIdentity,guestAccess}]=await Promise.all([import('../../../../../server/membership/database.mjs'),import('../../../../../server/membership/guest.mjs')]);
+      const {config}=await membershipDatabase(),guest=guestIdentity(request.headers,config);
+      if(!guest)return json({message:'Refresh this page to start your free caption session.'},401);
+      await service.limitOperation(guest.id,'api-write',30);
+      if(route==='jobs')return json({...await service.reserve(guest.id,await body(request)),access:guestAccess(await service.access(guest.id))});
+      if(route==='exports'){await service.activity(guest.id,'export');return json({access:guestAccess(await service.access(guest.id))});}
+      await service.complete(guest.id,path[1]);return json({ok:true});
+    }
     if(request.method==='GET'&&route==='access'&&!member)return json({access:captionAccess(false,false),user:null,local:process.env.NODE_ENV==='development'});
     if(!member)return json({message:"Sign in and verify your email to continue.",code:"SIGN_IN_REQUIRED"},401);
     const service=await memberService();

@@ -6,7 +6,7 @@ import { validateAuthPreview, type AuthView, type AuthErrors } from "@/component
 import type { PaidProduct } from "./plans";
 import { authRequest } from "./member-client";
 
-export function AccessForm({ view, product, connected = false }: { view: AuthView; product?: PaidProduct; connected?: boolean }) {
+export function AccessForm({ view, product, connected = false, ownerOnly=false }: { view: AuthView; product?: PaidProduct; connected?: boolean; ownerOnly?:boolean }) {
   const [fields, setFields] = useState({ name: "", email: "", password: "", confirmation: "" }), [errors, setErrors] = useState<AuthErrors>({}), [notice, setNotice] = useState(""), [visible, setVisible] = useState(false);
   const suffix = product ? `?product=${product}` : "";
   const [pending,setPending]=useState(false);
@@ -30,8 +30,8 @@ export function AccessForm({ view, product, connected = false }: { view: AuthVie
   return <><form className="cm-access-form" method="post" autoComplete="off" noValidate onSubmit={submit}>
     {view === "signup" && field("name", "Your name", "text")}{field("email", "Email address", "email")}
     {view !== "recovery" && <><div className="cm-password-label">{field("password", "Password", visible ? "text" : "password")}<button type="button" aria-label={visible ? "Hide password" : "Show password"} onClick={() => setVisible(previous => !previous)}>{visible ? "Hide" : "Show"}</button></div>{view === "signup" && field("confirmation", "Confirm password", visible ? "text" : "password")}</>}
-    {view === "login" && <Link className="cm-forgot" href="/forgot-password">Forgot password?</Link>}
+    {view === "login" && !ownerOnly && <Link className="cm-forgot" href="/forgot-password">Forgot password?</Link>}
     <button type="submit" className="aen-btn aen-btn-primary" disabled={pending}>{pending?'Please wait…':view === "signup" ? "Create account" : view === "recovery" ? "Send recovery link" : "Sign in"}<Icon name="arrow" size={16} /></button>
     {notice && <p className="cm-form-notice" role="status">{notice}</p>}{Object.values(errors).some(Boolean) && <p className="sr-only" role="alert">Please check the highlighted fields.</p>}
-  </form><p className="cm-access-switch">{view === "signup" ? <>Already have an account? <Link href={`/sign-in${suffix}`}>Sign in</Link></> : view === "recovery" ? <Link href={`/sign-in${suffix}`}>Back to sign in</Link> : <>New to AENural? <Link href={`/sign-up${suffix}`}>Create an account</Link></>}</p><Link className="cm-text-link" href="/account">Your account workspace <Icon name="arrow" size={15} /></Link></>;
+  </form><p className="cm-access-switch">{ownerOnly?<Link href="/tools/auto-caption-generator">Continue with free captions</Link>:view === "signup" ? <>Already have an account? <Link href={`/sign-in${suffix}`}>Sign in</Link></> : view === "recovery" ? <Link href={`/sign-in${suffix}`}>Back to sign in</Link> : <>New to AENural? <Link href={`/sign-up${suffix}`}>Create an account</Link></>}</p><Link className="cm-text-link" href="/account">Your account workspace <Icon name="arrow" size={15} /></Link></>;
 }

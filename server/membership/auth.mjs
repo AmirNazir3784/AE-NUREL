@@ -10,8 +10,9 @@ let authPromise;
 export function authOptions(database, config) {
   let transport;
   async function send(to, subject, url) {
+    if (config.ownerOnly) throw new APIError('SERVICE_UNAVAILABLE', { message: 'Email recovery is unavailable for this private owner account.' });
     if (new URL(url).origin !== config.origin) throw new Error('Unexpected account email origin.');
-    if (config.local) {
+    if (config.sqlite ?? config.local) {
       await writeFile(config.directory + '/mail-' + randomUUID() + '.json', JSON.stringify({ to, subject, url, createdAt: new Date().toISOString() }), { mode: 0o600 });
       return;
     }
@@ -21,9 +22,9 @@ export function authOptions(database, config) {
   return {
     appName: 'AENural', baseURL: config.origin, secret: config.secret, database,
     trustedOrigins: [config.origin],
-    emailAndPassword: { enabled: true, minPasswordLength: 12, maxPasswordLength: 128, requireEmailVerification: true, autoSignIn: false, revokeSessionsOnPasswordReset: true, resetPasswordTokenExpiresIn: 1800, sendResetPassword: async ({ user, url }) => send(user.email, 'Reset your AENural password', url) },
-    emailVerification: { sendOnSignUp: true, sendOnSignIn: true, autoSignInAfterVerification: false, expiresIn: 3600, sendVerificationEmail: async ({ user, url }) => send(user.email, 'Verify your AENural email', url) },
-    user: { changeEmail: { enabled: false }, deleteUser: { enabled: true } },
+    emailAndPassword: { enabled: true, disableSignUp: !!config.ownerOnly, minPasswordLength: 12, maxPasswordLength: 128, requireEmailVerification: true, autoSignIn: false, revokeSessionsOnPasswordReset: true, resetPasswordTokenExpiresIn: 1800, sendResetPassword: async ({ user, url }) => send(user.email, 'Reset your AENural password', url) },
+    emailVerification: { sendOnSignUp: !config.ownerOnly, sendOnSignIn: !config.ownerOnly, autoSignInAfterVerification: false, expiresIn: 3600, sendVerificationEmail: async ({ user, url }) => send(user.email, 'Verify your AENural email', url) },
+    user: { changeEmail: { enabled: false }, deleteUser: { enabled: !config.ownerOnly } },
     session: { expiresIn: 7 * 86400, updateAge: 86400, cookieCache: { enabled: false } },
     rateLimit: { enabled: true, storage: 'database', window: 60, max: 60, customRules: { '/sign-in/email': { window: 60, max: 8 }, '/sign-up/email': { window: 60, max: 4 }, '/request-password-reset': { window: 60, max: 3 }, '/send-verification-email': { window: 60, max: 3 } } },
     advanced: { useSecureCookies: !config.local, ipAddress: { ipAddressHeaders: [config.local?'x-forwarded-for':config.env.AUTH_TRUSTED_IP_HEADER||'x-real-ip'] } },
@@ -40,7 +41,7 @@ export async function membershipAuth() {
     const { authDatabase, config, db, dialect } = await membershipDatabase();
     const options = authOptions(authDatabase, config);
     const auth = betterAuth(options);
-    if (config.local) {
+    if (config.sqlite ?? config.local) {
       const { getMigrations } = await import('better-auth/db/migration');
       const migrations = await getMigrations(options); await migrations.runMigrations();
       const { ensureMembershipSchema } = await import('./schema.mjs');

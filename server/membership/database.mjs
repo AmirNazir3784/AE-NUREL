@@ -4,7 +4,7 @@ import { createPool } from 'mysql2';
 
 const key = Symbol.for('aenural.membership.database.v1');
 export async function openMembershipDatabase(config) {
-  if (!config.local) {
+  if (!(config.sqlite ?? config.local)) {
     const env = config.env;
     const pool = createPool({ host: env.DB_HOST || '127.0.0.1', port: Number(env.DB_PORT || 3306), user: env.DB_USER, password: env.DB_PASSWORD, database: env.DB_NAME, charset: 'utf8mb4', timezone: 'Z', connectionLimit: 5, waitForConnections: true, queueLimit: 20, connectTimeout: 10000, multipleStatements: false });
     return { db: new Kysely({ dialect: new MysqlDialect({ pool }) }), authDatabase: pool.promise(), dialect: 'mysql', config };

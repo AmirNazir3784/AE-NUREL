@@ -363,4 +363,7 @@
 .membershipStatus strong { color:var(--foreground); font-size:13px; }
 .membershipStatus p { margin:8px 0; color:var(--muted); line-height:1.7; }
 .membershipStatus a { display:inline-flex; min-height:32px; align-items:center; color:var(--accent); }
-.presets .preset:disabled { cursor:not-allowed; opacity:.55; }
+.presets .preset:disabled { cursor:not-allowed; opacity:1; }
+.presets .preset:disabled > span { opacity:.55; }
+.presets .preset small { display:flex; align-items:center; justify-content:space-between; gap:5px; flex-wrap:wrap; }
+.presets .preset .presetLock { display:inline-flex; align-items:center; gap:3px; color:#ffda62; background:#453300; border:1px solid #967400; border-radius:4px; padding:2px 4px; font-size:10px; }

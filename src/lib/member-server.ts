@@ -17,5 +17,5 @@ export async function memberService() {
   const [{ membershipAuth }, { membershipDatabase }, { createMemberService }] = await Promise.all([import("../../server/membership/auth.mjs"), import("../../server/membership/database.mjs"), import("../../server/membership/service.mjs")]);
   await membershipAuth();
   const { db, config } = await membershipDatabase();
-  return createMemberService(db, { local: config.local, testMode: config.local || config.env.LEMONSQUEEZY_TEST_MODE === "1" });
+  return createMemberService(db, { local: config.local, sqlite: config.sqlite, ownerEmail:config.ownerOnly?(await import('../../server/membership/owner-activation.mjs')).ownerEmail:undefined, testMode: config.local || config.env.LEMONSQUEEZY_TEST_MODE === "1" });
 }

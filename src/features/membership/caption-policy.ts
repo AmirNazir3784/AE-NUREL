@@ -1,5 +1,6 @@
 export const FREE_CAPTION_PRESETS = ["Clean", "Bold", "Outline", "Highlight", "Minimal"] as const;
 export type CaptionAccess = {
+  owner?: boolean; guest?: boolean;
   enabled: boolean; signedIn: boolean; premium: boolean; dailyLimit: number | null;
   used: number; remaining: number | null; resetsAt: string; maxSeconds: number;
   watermark: boolean; accurate: boolean; advanced: boolean; presets: readonly string[] | null;
