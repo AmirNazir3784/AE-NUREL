@@ -19,7 +19,7 @@ before(async()=>{
 });
 after(async()=>{await db?.destroy();if(directory&&path.resolve(directory).startsWith(path.join(tmpdir(),'aenural-owner-')))await rm(directory,{recursive:true,force:true});});
 function call(route,body){return auth.handler(new Request(origin+'/api/auth/'+route,{method:'POST',headers:{origin,'content-type':'application/json','x-forwarded-for':'127.0.0.1'},body:JSON.stringify(body)}));}
-it('disables public registration in the private owner database',async()=>{assert.equal((await call('sign-up/email',{email:'visitor@example.test',name:'Visitor',password})).status,400);assert.equal(await db.selectFrom('user').select('id').executeTakeFirst(),undefined);});
+it('disables public registration in the private owner database',async()=>{const response=await call('sign-up/email',{email:'visitor@example.test',name:'Visitor',password});assert.equal(response.status,400);assert.equal((await response.json()).code,'EMAIL_PASSWORD_SIGN_UP_DISABLED');assert.equal(await db.selectFrom('user').select('id').executeTakeFirst(),undefined);});
 it('requires the private activation token and stores only a hashed owner password',async()=>{
  await assert.rejects(activateOwner(db,config,{token:'wrong',password},setup),e=>e.status===403);
  assert.deepEqual(await activateOwner(db,config,{token,password},setup),{ok:true,email:setup.email});
@@ -27,6 +27,7 @@ it('requires the private activation token and stores only a hashed owner passwor
  await assert.rejects(activateOwner(db,config,{token,password:'New-password-that-must-not-replace!'},setup),e=>e.status===410);
 });
 it('issues a real session only after the correct owner email and password',async()=>{
+ assert.equal((await call('sign-in/email',{email:'not-owner@example.test',password})).status,401);
  assert.equal((await call('sign-in/email',{email:setup.email,password:'Wrong-Password-123456'})).status,401);
  const response=await call('sign-in/email',{email:setup.email,password});assert.equal(response.status,200,await response.clone().text());
  const cookie=response.headers.getSetCookie().map(v=>v.split(';')[0]).join('; ');const session=await auth.api.getSession({headers:new Headers({cookie})});assert.equal(session.user.email,setup.email);assert.equal(session.user.emailVerified,true);
