@@ -15,7 +15,7 @@ import { processingReviewNotes } from "./caption-review-hints";
 
 type Source = { file: File; duration: number; url: string };
 type Review = { document: EditorDocument; key: number; coverage?: CoverageEntry[]; failed?: number };
-const phaseNames: Record<AsrProgress["stage"], string> = { preparing: "Preparing audio", loading: "Loading local model", download: "Downloading processing files", detecting: "Checking for speech", transcribing: "Transcribing on your device", translating: "Translating on your device", building: "Building subtitles" };
+const phaseNames: Record<AsrProgress["stage"], string> = { preparing: "Preparing audio", loading: "Preparing transcription", download: "Downloading processing files", detecting: "Checking for speech", transcribing: "Transcribing, please wait…", translating: "Translating, please wait…", building: "Building subtitles" };
 
 export function SubtitleWorkspace({ transcript = false }: { transcript?: boolean } = {}) {
   const [source, setSource] = useState<Source | null>(null), [review, setReview] = useState<Review | null>(null);
@@ -100,7 +100,7 @@ export function SubtitleWorkspace({ transcript = false }: { transcript?: boolean
       const name = SPOKEN_LANGUAGES.find(item => item.code === result.language)?.name ?? result.language;
       setNotice(result.document.cues.length ? failed ? `${failed} sentences need a translation. Edit the blank captions or retry missing sentences.` : `Captions ready · ${name}` : "No speech detected. Try a recording with clearer speech.");
     } catch (error) {
-      if (request.current === id) setError((error instanceof Error ? error.message : "Local subtitle generation failed.") + " Completed sections are kept. Generate again to resume, or choose Same as spoken language to recover the source subtitles.");
+      if (request.current === id) setError((error instanceof Error ? error.message : "Subtitle generation failed.") + " Completed sections are kept. Generate again to resume, or choose Same as spoken language to recover the source subtitles.");
     } finally { if (request.current === id) { working.current = false; setBusy(false); setProgress(null); } }
   }
   function action(next: File | "generate" | "reset") {
@@ -115,7 +115,7 @@ export function SubtitleWorkspace({ transcript = false }: { transcript?: boolean
   const notes = processingReviewNotes(warnings);
   return <div className={styles.workspace}>
     <FileUpload accept={SUBTITLE_ACCEPT} title={transcript ? "Drop your audio file here" : "Choose audio for subtitles"} buttonLabel={source ? "Replace recording" : transcript ? "Upload Audio" : "Choose audio"} description="MP3, PCM WAV, M4A, AAC, FLAC or OGG · supported browser codecs" hint="Up to 5 hours · 4 GiB · mono/stereo at 8–48 kHz" filename={source?.file.name} detail={source ? `${(source.duration / 60).toFixed(1)} minutes` : undefined} validateFile={validateSubtitleFile} onFile={file => action(file)} onError={setError} />
-    <div className={styles.notes}><p>Your recording and captions stay on your device.</p><p className={styles.downloadNote}>First use downloads processing files, then reuses them. Translation adds about 650 MB and needs more free memory.</p></div>
+    <div className={styles.notes}><p>Review and edit your captions before downloading.</p><p className={styles.downloadNote}>First use downloads processing files, then reuses them. Translation adds about 650 MB and needs more free memory.</p></div>
     <div className={styles.actions}>
       <div className={styles.processing}><label htmlFor="subtitle-spoken">Spoken Language</label><select id="subtitle-spoken" value={spoken} disabled={busy} onChange={event => setSpoken(event.target.value)}><option value="auto">Auto Detect</option>{SPOKEN_LANGUAGES.map(item => <option key={item.code} value={item.code}>{item.name}</option>)}</select></div>
       <div className={styles.processing}><label htmlFor="subtitle-target">{transcript ? "Text Language" : "Subtitle Language"}</label><select id="subtitle-target" value={target} disabled={busy} aria-describedby={target !== "same" ? "subtitle-translation-note" : undefined} onChange={event => setTarget(event.target.value)}><option value="same">Same as spoken language</option>{SUBTITLE_LANGUAGES.map(item => <option key={item.code} value={item.code}>{item.name}</option>)}</select>{target !== "same" && <p id="subtitle-translation-note" className={styles.downloadNote}>Translation is a draft. Review its meaning against the source.</p>}</div>

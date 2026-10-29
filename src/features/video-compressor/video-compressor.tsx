@@ -142,12 +142,12 @@ export function VideoCompressor() {
   }
 
   const saved = file && result ? (1 - result.blob.size / file.size) * 100 : 0;
-  const stage = busy === "inspecting" ? "Checking your video…" : progress?.phase === "preparing" ? "Preparing your browser…" : progress?.phase === "finishing" ? "Finishing and checking the file…" : "Compressing on your device…";
+  const stage = busy === "inspecting" ? "Checking your video…" : progress?.phase === "preparing" ? "Preparing your video…" : progress?.phase === "finishing" ? "Finishing and checking the file…" : "Compressing, please wait…";
 
   return <section className={styles.workspace} aria-label="Video compressor workspace" aria-busy={!!busy}>
     <input ref={fileInput} className={styles.fileInput} type="file" accept=".mp4,.m4v,.mov,.webm,.mkv" aria-label="Choose video file" onChange={onFileChange} />
     <div className={styles.mainPanel}>
-      <div className={styles.panelHead}><span><Icon name="video" size={18} /> Your video</span><span className={styles.localBadge}><i /> Stays on this device</span></div>
+      <div className={styles.panelHead}><span><Icon name="video" size={18} /> Your video</span><span className={styles.localBadge}><i /> Original preserved</span></div>
       {!file ? <div className={`${styles.dropzone} ${dragging ? styles.dragging : ""}`} role="region" aria-label="Video file drop area" onDragOver={event => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={onDrop}>
         <span className={styles.uploadIcon}><Icon name="upload" size={29} /></span>
         <h2>Make room for a smaller video.</h2>
@@ -185,7 +185,7 @@ export function VideoCompressor() {
       <div className={styles.estimate}><span>ESTIMATED OUTPUT</span><strong>{plan ? `About ${formatVideoBytes(plan.estimatedBytes)}` : media ? "Adjust your settings" : "Choose a video"}</strong><small>{plan ? `${plan.width} × ${plan.height} · ${settings.format.toUpperCase()} · actual size checked after compression` : media ? "Check the message below to calculate a new estimate." : "See the estimated size before you start."}</small></div>
       {planError && <p className={styles.error} role="alert">{planError}</p>}
       <button className={`${styles.primary} ${styles.compressButton}`} type="button" disabled={!file || !plan || !!busy} onClick={() => void compress()}><Icon name="video" size={18} />{busy === "compressing" ? "Compressing…" : "Compress video"}<Icon name="arrow" size={18} /></button>
-      <p className={styles.privateNote}><Icon name="shield" size={15} />Free to use. Your video is never uploaded.</p>
+      <p className={styles.privateNote}><Icon name="shield" size={15} />Free to use. No account or watermark.</p>
     </aside>
   </section>;
 }

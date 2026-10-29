@@ -30,3 +30,11 @@ Auto Caption, Lyrics and Podcast previews are not released by this change. Accou
 Before release, Faisal main and development branch were `28162d0`; Amir main was `b7ddfc7`. Amir's tip is an ancestor of the completed video tool baseline. Fetch showed no remote divergence requiring overwriting work. Pushes must be normal fast-forwards, with no force option.
 
 Final commit, remote tips and live verification results are recorded after the actual operations. A push alone must not be reported as a verified live deployment.
+
+### Verified first release
+
+Release commit `64a76e9` was pushed normally to Faisal main/development and Amir main; local main was fast-forwarded to the same commit. All five new public routes returned live HTTP 200 with correct canonicals and indexing metadata, the live sitemap contained 31 URLs, and the contextual Step 1 link was present. Live Chrome displayed the new Blog header and all eight Free-mode crop controls with correct directional cursors on a 3840×2160 sample. No repeated export was performed.
+
+### Owner-requested wording follow-up
+
+The owner then explicitly requested removing browser/device-processing descriptions from article instructions and ordinary tool interfaces. Article #1 now links “audio-to-text converter”; its privacy paragraph asks readers to check file handling, retention and deletion. Progress and tool summaries focus on tasks and results. Formal privacy policy and actual optional-upload consent remain accurate, and algorithms/mode values/access rules are unchanged. The preference is saved in AGENTS.md. Future articles will be supplied individually as DOCX files and use the saved editorial/design references without repeating the full competitor audit.

@@ -17,7 +17,7 @@ export default function AudioToTextArticle() {
     <section id="convert-audio-to-text" className={styles.section}>
       <h2>How to Convert Audio to Text Online for Free</h2>
       <ol className={styles.steps}>
-        <li><p><strong>Choose a transcription tool.</strong> Find a <a href="/tools/free-audio-to-text-converter-online#tool">browser-based service</a> that accepts existing audio files, not just live dictation. Check supported languages, upload limits, and whether downloads cost extra.</p></li>
+        <li><p><strong>Choose a transcription tool.</strong> Find an <a href="/tools/free-audio-to-text-converter-online#tool">audio-to-text converter</a> that accepts existing audio files, not just live dictation. Check supported languages, upload limits, and whether downloads cost extra.</p></li>
         <li><p><strong>Upload your recording.</strong> Select an MP3, WAV, or saved voice memo. If uploading fails, confirm the actual file format and size instead of changing its filename extension.</p></li>
         <li><p><strong>Set the spoken language.</strong> Choose the recording&apos;s language when possible. Automatic detection is convenient but can struggle with short clips or conversations switching languages.</p></li>
         <li><p><strong>Start transcription and review the text.</strong> Speech recognition produces a draft transcript. Replay unclear passages; correct names, dates, technical terms, and speaker changes. Never rely on an unchecked transcript for exact quotations. If available, switch on speaker labels for interviews with several participants.</p></li>
@@ -38,7 +38,7 @@ export default function AudioToTextArticle() {
     <section id="choose-a-free-converter" className={styles.section}>
       <h2>How to Choose a Truly Free Audio to Text Converter</h2>
       <p>Compare what “free” includes. Some tools transcribe short recordings without registration; others require accounts or restrict free minutes. Check file sizes, languages, and whether TXT or subtitle exports are included.</p>
-      <p>Read the privacy policy before uploading. Cloud tools send recordings to servers, while some browser-based alternatives process files locally on your device.</p>
+      <p>Read the privacy policy before sharing a recording. Check how the service handles your files, how long it retains them, and how you can delete them.</p>
       <p><a href="https://support.google.com/docs/answer/4492226?hl=en">Google Docs voice typing</a> is designed for microphone dictation, not uploading an MP3. For saved recordings, choose a file-transcription tool. Check cancellation terms before paying for an upgrade.</p>
     </section>
 

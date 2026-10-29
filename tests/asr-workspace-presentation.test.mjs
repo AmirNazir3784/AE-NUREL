@@ -31,7 +31,7 @@ describe("AI preview presentation", () => {
     for (const kind of ["podcast", "subtitle"]) {
       const html = render(kind, { ...initialAsrSession, stage: "complete", result: { backend: "webgpu", loadMs: 123456, inferenceMs: 987654, cacheHits: 777, chunks: [] } });
       assert.doesNotMatch(html, /<pre|revision|Backend:|Cache reads:|123456|987654|777|webgpu/);
-      assert.match(html, /Your recording stays on your device/);
+      assert.match(html, /Review the generated text before downloading/);
       assert.match(html, /about 95 MB/);
       assert.match(html, /<details><summary>Advanced options/);
       assert.ok(html.indexOf("Generate ") < html.indexOf("Advanced options"));

@@ -25,3 +25,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Compressor, Cropper and Free Green Screen Remover are the completed video tools in this release. Auto Caption, Lyrics and Podcast previews remain unreleased unless separately completed and authorized.
 - The header uses Blog instead of About/Help; those pages remain in the footer. Blog Article #1 includes a contextual link to the audio tool in Step 1. Use authoritative primary-source citations; never call outbound citations acquired backlinks.
 - Keep credentials, runtime databases, private recordings and generated QA artifacts excluded from Git. The no-spending rule remains in force.
+
+## Product wording preference (29 October 2026)
+
+- Do not describe tools to users as browser-based, local, on-device, or processing on their computer. Keep ordinary tool UI, progress, navigation, marketing and blog instructions focused on the task and result (for example, “Compressing, please wait…”).
+- Use “audio-to-text converter” for Article #1's contextual tool link. The owner explicitly requested removing the processing-location wording from the supplied article too.
+- Keep privacy policies and any explicit upload consent accurate; never imply server processing or conceal an actual optional upload to satisfy this presentation preference. Processing algorithms, mode values and access controls stay unchanged.

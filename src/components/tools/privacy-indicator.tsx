@@ -1,7 +1,7 @@
 import { Icon } from "@/components/ui/icon";
 
-export function PrivacyIndicator({ compact = false, message = "Your file is processed locally in your browser and is not uploaded to our servers." }: { compact?: boolean; message?: string }) {
+export function PrivacyIndicator({ compact = false, message = "Your original file stays unchanged. Download and check your result before leaving." }: { compact?: boolean; message?: string }) {
   return <div className={`privacy-indicator ${compact ? "compact" : ""}`}><Icon name="shield" size={compact ? 16 : 20} />
-    <span>{compact ? "Private by design. Processed on your device." : message}</span>
+    <span>{compact ? "Your original file stays unchanged." : message}</span>
   </div>;
 }

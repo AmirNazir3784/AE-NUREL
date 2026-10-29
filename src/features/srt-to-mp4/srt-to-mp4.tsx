@@ -33,7 +33,7 @@ export function SrtToMp4Converter() {
   }
   return <div className="aen-file-converter"><section className="aen-conversion-panel aen-video-converter" aria-label="SRT caption video rendering">
     {busy ? <div><strong>{tool.state.file?.name}</strong><p>Rendering your caption video…</p></div> : <FileUpload accept=".srt" title="Add your SRT file" description="Create a silent caption video." buttonLabel="Choose SRT file" hint="SRT · up to 10 MB · 500 cues · 2-minute timeline" filename={tool.state.file?.name} detail={result ? result.cueCount + " cues · Ready to render" : undefined} busy={tool.state.busy} validateFile={file => validateConversionFile(file, ["srt"])} onFile={file => { clearVideo(); tool.readFile(file); }} onError={text => { clearVideo(); tool.reject(text); }} />}
-    <p className="aen-local-note">Your file stays in your browser. No signup required.</p>
+    <p className="aen-local-note">Your original file stays unchanged. No signup required.</p>
     {plan && <><p>{(plan.durationMs / 1000).toFixed(3)} seconds · From zero to the last cue’s end · No audio</p>
       <div className="aen-video-settings"><label>Resolution<select value={settings.resolution} disabled={busy} onChange={event => { clearVideo(); setSettings({ ...settings, resolution: event.target.value as VideoSettings["resolution"] }); }}><option value="480">480p · 854 × 480</option><option value="720">720p · 1280 × 720</option></select></label>
       <label>Background<select value={settings.background} disabled={busy} onChange={event => { clearVideo(); setSettings({ ...settings, background: event.target.value as VideoSettings["background"] }); }}><option value="black">Black with white text</option><option value="white">White with dark text</option></select></label></div></>}

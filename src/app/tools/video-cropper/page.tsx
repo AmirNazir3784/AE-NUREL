@@ -5,7 +5,7 @@ import { VideoCropper } from "@/features/video-cropper/video-cropper";
 import styles from "@/features/video-compressor/video-compressor.module.css";
 
 export const metadata = {
-  ...pageMetadata("Free Video Cropper — Precise Framing, No Upload", "Crop videos with exact pixel controls, aspect ratio presets and a live preview. Export MP4 or WebM, with optional audio. Free, no watermark or signup.", "/tools/video-cropper"),
+  ...pageMetadata("Free Video Cropper — Precise Framing, Easy Export", "Crop videos with exact pixel controls, aspect ratio presets and a live preview. Export MP4 or WebM, with optional audio. Free, no watermark or signup.", "/tools/video-cropper"),
   robots: { index: true, follow: true },
 };
 const questions = [

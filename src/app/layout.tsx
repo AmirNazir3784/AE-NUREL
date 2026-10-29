@@ -15,7 +15,7 @@ const sora = localFont({ src: "./fonts/Sora-Variable.woff2", weight: "100 800", 
 const inter = localFont({ src: "./fonts/Inter-Variable.woff2", weight: "100 900", display: "swap", variable: "--font-inter" });
 
 export const metadata = {
-  ...pageMetadata("Tools for People Who Edit", "AENural Source Window and free browser-based tools for editors.", "/"),
+  ...pageMetadata("Tools for People Who Edit", "AENural Source Window and free online tools for editors.", "/"),
   verification: { google: "brqYgF8ye20H38M5iyS57eBtuvy2Ucna4Okpnr9owpE" },
   title: { default: "AENural — Tools for People Who Edit", template: "%s | AENural" },
   applicationName: "AENural", icons: {

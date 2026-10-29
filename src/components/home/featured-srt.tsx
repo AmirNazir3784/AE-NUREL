@@ -12,7 +12,7 @@ export function FeaturedSrt() {
           <div className="example-cue"><div className="example-times"><div><span>Original</span><strong>00:00:12,000</strong></div><Icon name="arrow" size={20} /><div><span>Adjusted</span><strong>00:00:13,500</strong></div></div><p>Right words. Right moment.</p></div>
           <div className="example-ready"><Icon name="check" size={16} />Ready for your next playback</div>
         </div>
-        <div className="featured-copy"><span className="eyebrow">Featured tool</span><h2 id="featured-title">Good subtitles.<br />Better timing.</h2><p>When the words arrive before the voice—or a beat too late—one small adjustment makes a big difference.</p><ul className="feature-checks">{["Shift every subtitle timestamp at once", "Preview your changes before downloading", "Process the whole file locally in your browser"].map((benefit) => <li key={benefit}><Icon name="check" size={18} />{benefit}</li>)}</ul><Link href="/tools/srt-timing-adjuster" className="button button-primary">Open SRT Timing Adjuster<Icon name="arrow" size={18} /></Link></div>
+        <div className="featured-copy"><span className="eyebrow">Featured tool</span><h2 id="featured-title">Good subtitles.<br />Better timing.</h2><p>When the words arrive before the voice—or a beat too late—one small adjustment makes a big difference.</p><ul className="feature-checks">{["Shift every subtitle timestamp at once", "Preview your changes before downloading", "Apply changes to the whole file at once"].map((benefit) => <li key={benefit}><Icon name="check" size={18} />{benefit}</li>)}</ul><Link href="/tools/srt-timing-adjuster" className="button button-primary">Open SRT Timing Adjuster<Icon name="arrow" size={18} /></Link></div>
       </div>
     </section>
   );

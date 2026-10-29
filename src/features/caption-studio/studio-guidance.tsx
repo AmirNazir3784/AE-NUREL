@@ -1,12 +1,12 @@
 import styles from "./studio.module.css";
 
 const steps = [
-  { number: "01", heading: "Choose your video", description: "Open an MP4, MOV or WebM. Your video remains on your device." },
-  { number: "02", heading: "Generate or import", description: "Recognize speech locally, upload SRT/VTT subtitles, or write captions yourself." },
+  { number: "01", heading: "Choose your video", description: "Open an MP4, MOV or WebM and preview your video." },
+  { number: "02", heading: "Generate or import", description: "Generate captions from speech, add SRT/VTT subtitles, or write captions yourself." },
   { number: "03", heading: "Style and export", description: "Choose fonts, colors and motion. Review, then export captioned video or subtitle files." },
 ];
 const faqs = [
-  { question: "Is my video uploaded to a server?", answer: "On this device mode processes your video locally. The optional Private server transcription mode sends audio only after you explicitly choose it and approve upload." },
+  { question: "Is my video uploaded to a server?", answer: "Standard transcription is selected by default. Private server transcription sends audio only after you explicitly choose it and approve the upload." },
   { question: "Which files does Caption Studio support?", answer: "Import MP4, MOV or WebM video. You can import and download SRT/VTT captions and export captioned MP4 or WebM when your browser supports the encoder." },
   { question: "Can I correct a wrong word or timing?", answer: "Yes. Use the Captions tab to edit text and start/end times, split or merge captions, and undo changes." },
   { question: "Why is highlighted-word timing unavailable after editing?", answer: "Precise word highlighting uses measured speech timing. Editing text or timestamps pauses that effect for affected captions rather than inventing new word timings." },

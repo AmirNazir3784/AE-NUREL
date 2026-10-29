@@ -22,6 +22,6 @@ export function CaptionEntry({ transcriptionAvailable,projectId,accessEnabled=tr
     {accessEnabled&&projectId&&<p>Choose the original video to reopen your saved caption project.</p>}
     <FileUpload accept=".mp4,.mov,.webm,video/mp4,video/quicktime,video/webm" title="Start with your video" description="MP4, MOV or WebM with a codec your browser can decode." buttonLabel="Choose video" hint={accessEnabled?"Free: 60 seconds · Package: 2 minutes · 200 MiB · 1080p":"Up to 2 minutes · 200 MiB · 1080p"} busy={loading} validateFile={validateStudioFile} onFile={video => void openVideo(video)} onError={setError} />
     {loading && <p role="status">Opening your video editor…</p>}{error && <p role="alert">{error}</p>}
-    <div className="cap-entry-localSetupNote"><Icon name="volume" size={16} /><p>Generate captions when you’re ready. Your video stays on this device.</p></div>
+    <div className="cap-entry-localSetupNote"><Icon name="volume" size={16} /><p>Generate captions when you’re ready, then review and edit the result.</p></div>
   </section>;
 }

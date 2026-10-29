@@ -9,7 +9,7 @@ import type { ConversionSession } from "./use-conversion";
 export function ConversionInput({ tool, extensions, name, onFile }: { tool: ConversionSession; extensions: readonly string[]; name: string; onFile?: (file: File) => void }) {
   const { state } = tool;
   return <><FileUpload accept={extensions.map(e => "." + e).join(",")} title={"Add your " + name + " file"} description="Choose a file or drop it here." buttonLabel={"Choose " + name + " file"} hint={name + " · up to 10 MB · 10,000 cues"} filename={state.file?.name} detail={state.result ? state.result.cueCount + " cues · Ready" : undefined} busy={state.busy} validateFile={file => validateConversionFile(file, extensions)} onFile={onFile ?? tool.readFile} onError={tool.reject} />
-    <p className="aen-local-note">Your file stays in your browser. No signup required.</p></>;
+    <p className="aen-local-note">Your original file stays unchanged. No signup required.</p></>;
 }
 export function ConversionNotices({ tool }: { tool: ConversionSession }) {
   return <>{tool.state.result?.warnings.map(warning => <StatusMessage key={warning} tone="warning">{warning}</StatusMessage>)}{tool.state.error && <StatusMessage tone="error">{tool.state.error}</StatusMessage>}{tool.state.message && <StatusMessage tone="success">{tool.state.message}</StatusMessage>}</>;

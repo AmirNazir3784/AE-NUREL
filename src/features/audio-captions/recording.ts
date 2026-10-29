@@ -46,6 +46,6 @@ export async function transcribeRecording(file: File, quality: TranscriptionQual
 }
 export function recordingStage(progress: AsrProgress | null) {
   if (!progress) return "Preparing recording";
-  const names: Record<string, string> = { preparing: "Preparing recording", loading: "Loading speech model", download: "Downloading speech model", detecting: "Finding speech", transcribing: "Transcribing on your device", building: "Building captions" };
+  const names: Record<string, string> = { preparing: "Preparing recording", loading: "Loading speech model", download: "Downloading speech model", detecting: "Finding speech", transcribing: "Transcribing, please wait…", building: "Building captions" };
   return names[progress.stage] ?? "Processing recording";
 }

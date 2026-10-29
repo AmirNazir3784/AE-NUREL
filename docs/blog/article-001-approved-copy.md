@@ -4,7 +4,7 @@ A free audio to text converter online turns interviews, lectures, and voice note
 
 ## How to Convert Audio to Text Online for Free
 
-1. **Choose a transcription tool.** Find a browser-based service that accepts existing audio files, not just live dictation. Check supported languages, upload limits, and whether downloads cost extra.
+1. **Choose a transcription tool.** Find an audio-to-text converter that accepts existing audio files, not just live dictation. Check supported languages, upload limits, and whether downloads cost extra.
 2. **Upload your recording.** Select an MP3, WAV, or saved voice memo. If uploading fails, confirm the actual file format and size instead of changing its filename extension.
 3. **Set the spoken language.** Choose the recording's language when possible. Automatic detection is convenient but can struggle with short clips or conversations switching languages.
 4. **Start transcription and review the text.** Speech recognition produces a draft transcript. Replay unclear passages; correct names, dates, technical terms, and speaker changes. Never rely on an unchecked transcript for exact quotations. If available, switch on speaker labels for interviews with several participants.
@@ -30,7 +30,7 @@ On iPhone, Voice Memos recordings can be shared as M4A files. Android formats va
 
 Compare what “free” includes. Some tools transcribe short recordings without registration; others require accounts or restrict free minutes. Check file sizes, languages, and whether TXT or subtitle exports are included.
 
-Read the privacy policy before uploading. Cloud tools send recordings to servers, while some browser-based alternatives process files locally on your device.
+Read the privacy policy before sharing a recording. Check how the service handles your files, how long it retains them, and how you can delete them.
 
 Google Docs voice typing is designed for microphone dictation, not uploading an MP3. For saved recordings, choose a file-transcription tool. Check cancellation terms before paying for an upgrade.
 

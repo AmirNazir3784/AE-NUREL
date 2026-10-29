@@ -10,7 +10,7 @@ const {createRoot}=await import('react-dom/client');
 const {AudioCaptionEditor}=await import('../src/features/audio-captions/audio-caption-editor.tsx');
 describe('bounded audio caption input',()=>{
  it('keeps a genuine MP3/WAV-only size and duration contract',()=>{for(const name of ['clip.mp3','clip.WAV'])validateRecording({name,type:'',size:100});for(const file of [{name:'x.wav',type:'text/html',size:100},{name:'x.mp4',type:'audio/mpeg',size:100},{name:'x.wav',size:0},{name:'x.mp3',size:30*1024**2+1}])assert.throws(()=>validateRecording(file));for(const t of [1,60,300])recordingDuration(t);for(const t of [0,NaN,301,Infinity])assert.throws(()=>recordingDuration(t));});
- it('uses honest stage-based progress rather than an invented percentage',()=>{assert.equal(recordingStage(null),'Preparing recording');assert.equal(recordingStage({stage:'transcribing'}),'Transcribing on your device');});
+ it('uses honest stage-based progress rather than an invented percentage',()=>{assert.equal(recordingStage(null),'Preparing recording');assert.equal(recordingStage({stage:'transcribing'}),'Transcribing, please wait…');});
 });
 describe('shared audio caption editor interactions',()=>{
  let dom,root,seeks;

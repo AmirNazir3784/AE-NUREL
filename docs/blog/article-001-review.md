@@ -20,7 +20,7 @@ Date: 29 October 2026. Initial implementation was a local draft. The owner subse
 - Approved replacement: “Uncompressed PCM WAV recordings avoid lossy compression but can be larger.”
 - Reason: WAV is a wrapper that may contain different encodings. [Library of Congress WAVE](https://www.loc.gov/preservation/digital/formats/fdd/fdd000001.shtml) and [LPCM WAVE](https://www.loc.gov/preservation/digital/formats/fdd/fdd000002.shtml), checked 29 October 2026.
 
-No other article wording was substantively changed. Added navigation, a static workflow illustration, format labels, external references and a tool-action label are interface elements. All five supplied FAQs remain. No fabricated author, publication date, statistics, FAQ answer, testimonial or related article was added.
+At the owner's later explicit wording instruction, Step 1's linked “browser-based service” became “audio-to-text converter” and the implementation-focused privacy paragraph became a practical file-handling/retention/deletion checklist. These are recorded in the approved-copy file. Added navigation, a static workflow illustration, format labels, external references and a tool-action label are interface elements. All five supplied FAQs remain. No fabricated individual author, statistics, FAQ answer, testimonial or related article was added.
 
 Verified external references linked in context:
 

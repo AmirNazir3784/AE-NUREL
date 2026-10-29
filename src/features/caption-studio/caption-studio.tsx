@@ -180,7 +180,7 @@ export function CaptionStudio({ transcriptionAvailable = false, embedded = false
     try {
       let jobId:string|undefined;
       if(accessEnabled){const permission=await memberRequest<{jobId:string;access:CaptionAccess}>('jobs',{method:'POST',body:JSON.stringify({videoId:videoIdentity.current,duration:source.media.duration,quality:settings.quality}),signal:abort.signal});jobId=permission.jobId;setAccess(permission.access);}
-      setTranscriptionStage("Preparing audio on your device");
+      setTranscriptionStage("Preparing audio");
       let captions: EditorDocument, words: TimedText[];
       if (settings.mode === "server") {
         const audio = await extractStudioAudio(source.file, source.media.duration, abort.signal);
@@ -190,7 +190,7 @@ export function CaptionStudio({ transcriptionAvailable = false, embedded = false
       } else {
         const [{ AsrClient }, { transcribeStudioOnDevice }] = await Promise.all([import("../local-asr/asr-client"), import("./studio-transcription")]);
         abort.signal.throwIfAborted(); asr.current ??= new AsrClient();
-        const labels: Record<AsrProgress["stage"], string> = { preparing: "Preparing audio on your device", loading: "Loading speech model", download: "Downloading speech model", detecting: "Checking for speech", transcribing: "Transcribing on your device", translating: "Translating", building: "Preparing captions" };
+        const labels: Record<AsrProgress["stage"], string> = { preparing: "Preparing audio", loading: "Loading speech model", download: "Downloading speech model", detecting: "Checking for speech", transcribing: "Transcribing, please wait…", translating: "Translating", building: "Preparing captions" };
         const result = await transcribeStudioOnDevice(source.file, source.media.duration, settings, asr.current, abort.signal, value => { setTranscriptionStage(labels[value.stage]); setTranscriptionProgress(previous => ({ ...value, warning: value.warning ?? previous?.warning })); }, (navigator as Navigator & { deviceMemory?: number }).deviceMemory);
         captions = result.document; words = result.words;
       }
@@ -205,7 +205,7 @@ export function CaptionStudio({ transcriptionAvailable = false, embedded = false
   function cancel() { ++generation.current; if (job.current) job.current.abort(); else setBusy(null); asr.current?.cancel(); setError(""); dispatch({ type: "apply", document, notice: busy === "exporting" ? "Video export cancelled." : busy === "transcribing" ? "Transcription cancellation requested." : "File check cancelled." }); }
   async function saveProject(){
     if(!source||busy||projectBusy)return;setProjectBusy(true);setProjectNotice('');
-    try{const saved=await memberRequest<{id:string;revision:number;title:string}>(project?'projects/'+project.id:'projects',{method:project?'PUT':'POST',body:JSON.stringify({schemaVersion:1,title:project?.title||source.file.name.slice(0,100),revision:project?.revision,source:{filename:source.file.name,durationSeconds:source.media.duration,width:source.media.width,height:source.media.height,fingerprint:await sourceFingerprint(source.file)},captions:document,style,alignment:usableAlignment})});setProject(saved);setCloudSaved({document,styleSignature:JSON.stringify(style)});setProjectNotice('Project saved. Your original video stays on this device.');}
+    try{const saved=await memberRequest<{id:string;revision:number;title:string}>(project?'projects/'+project.id:'projects',{method:project?'PUT':'POST',body:JSON.stringify({schemaVersion:1,title:project?.title||source.file.name.slice(0,100),revision:project?.revision,source:{filename:source.file.name,durationSeconds:source.media.duration,width:source.media.width,height:source.media.height,fingerprint:await sourceFingerprint(source.file)},captions:document,style,alignment:usableAlignment})});setProject(saved);setCloudSaved({document,styleSignature:JSON.stringify(style)});setProjectNotice('Project saved. Keep the original video to reopen it later.');}
     catch(failure){setProjectNotice(failure instanceof Error?failure.message:'Your project could not be saved.');}
     finally{setProjectBusy(false);}
   }
@@ -214,7 +214,7 @@ export function CaptionStudio({ transcriptionAvailable = false, embedded = false
   return <section className={styles.studio} aria-label="Caption Studio" data-empty={!source || undefined} onKeyDown={event => { if (!busy && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") { event.preventDefault(); dispatch({ type: event.shiftKey ? "redo" : "undo" }); invalidate(); } }}>
     <UnsavedNavigation dirty={dirty} />
     {replacement && <ReplaceWorkDialog message={replacement.message} onCancel={() => setReplacement(null)} onConfirm={() => { const action = replacement.action; setReplacement(null); action(); }} />}
-    {!embedded && <header className={styles.heading}><div><Link href="/tools" className={styles.back}>Free tools <span aria-hidden="true">/</span> Video captions</Link><h1>Auto Caption Generator</h1><p>Create, edit and style captions directly in your browser.</p></div></header>}
+    {!embedded && <header className={styles.heading}><div><Link href="/tools" className={styles.back}>Free tools <span aria-hidden="true">/</span> Video captions</Link><h1>Auto Caption Generator</h1><p>Create, edit and style captions with straightforward controls.</p></div></header>}
       <div className={styles.workspace}>
         <section className={styles.previewPanel} aria-label={source ? "Video preview" : "Upload video"}>
           {source ? <>
@@ -262,7 +262,7 @@ export function CaptionStudio({ transcriptionAvailable = false, embedded = false
           </> : <div className={styles.emptyPreview}>
             <div className={styles.emptyPreviewHeader}><span>VIDEO</span><span>Ready for your footage</span></div>
             <div className={styles.upload}><FileUpload accept=".mp4,.mov,.webm,video/mp4,video/quicktime,video/webm" title="Start with your video" description="MP4, MOV or WebM with a codec your browser can decode." buttonLabel="Choose video" hint="Up to 2 minutes · 200 MiB · 1080p" busy={!!busy} validateFile={validateStudioFile} onFile={file => void loadVideo(file)} onError={setError} /></div>
-            <div className={styles.localSetupNote}><Icon name="volume" size={16} /><p>Generate captions when you’re ready. Your video stays on this device.</p></div>
+            <div className={styles.localSetupNote}><Icon name="volume" size={16} /><p>Generate captions when you’re ready, then review and edit the result.</p></div>
           </div>}
         </section>
         <aside className={`${styles.controls} ${styles.captionSide}`} aria-label="Caption controls">
