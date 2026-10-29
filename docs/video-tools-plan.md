@@ -44,3 +44,9 @@ Reference documentation: https://mediabunny.dev/guide/converting-media-files and
 - Native dark-mode and forced reduced-motion browser preference checks: **NOT RUN** because the connected browser interface has no media-preference emulation. The new page uses existing light/dark CSS tokens and has an explicit reduced-motion rule; these were reviewed in source. Do not report this as device-wide or all-browser certification.
 
 Ignored evidence lives in `artifacts/video-compressor/`: desktop/mobile screenshots, independently parsed export metadata, audio hashes and the full test log. Browser download notifications timed out for Blob URLs, but actual saved files were located and independently inspected; success is based on those bytes and browser playback metadata.
+
+## Second tool: Video Cropper completed (29 October 2026)
+
+Implemented `/tools/video-cropper` as a development-only tool with exact-ratio presets, draggable framing and corner resizing, keyboard controls, numeric geometry, undo/reset/centering, a live crop preview, MP4/WebM export and optional audio. See [video-cropper-qa.md](video-cropper-qa.md) for the implementation, actual export measurements, decoded-pixel verification and test results. Progress copy uses “Cropping, please wait…” and does not describe processing location.
+
+Wait for the owner to choose the next tool. Green Screen Remover is unfinished and must be ignored for now. Continue publishing completed development work only to Faisal; the Amir/Hostinger production release remains on hold.
