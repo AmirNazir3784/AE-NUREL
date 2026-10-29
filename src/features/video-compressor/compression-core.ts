@@ -2,7 +2,7 @@ export const COMPRESSION_LIMITS = {
   inputBytes: 500_000_000,
   outputBytes: 256_000_000,
   duration: 20 * 60,
-  pixels: 3840 * 2160,
+  pixels: 4096 * 2160,
   minimumBitrate: 64_000,
 } as const;
 

@@ -1,0 +1,31 @@
+import { notFound } from "next/navigation";
+import Link from "@/components/site/page-link";
+import { Icon } from "@/components/ui/icon";
+import { pageMetadata } from "@/lib/site-metadata";
+import { GreenScreenRemover } from "@/features/green-screen-remover/green-screen-remover";
+import styles from "@/features/video-compressor/video-compressor.module.css";
+
+export const metadata = {
+  ...pageMetadata("Free Green Screen Remover — Change Your Video Background", "Remove a green or blue screen, refine edges and replace the background with a color, gradient or image. Export MP4, WebM or a transparent PNG frame. No watermark.", "/tools/free-green-screen-remover"),
+  robots: { index: false, follow: false },
+};
+export const dynamic = "force-dynamic";
+const questions = [
+  ["How do I remove a green screen?", "Choose your video or try the sample, then check the Result preview. Select Green or Blue, use Auto-detect, or pick the exact screen color from a paused frame. Adjust Removal strength until the backdrop disappears, then refine Edge softness and Spill removal. Play through the footage before exporting."],
+  ["Can I replace the screen with my own picture?", "Yes. Choose Image and add a JPG, PNG or WebP up to 20 MB and 24 megapixels, with neither edge over 8192 pixels. Fill frame covers the scene and crops image edges; Fit entire image preserves the whole picture and uses Padding color for the remaining space. Color and two-color gradient backgrounds are also available, with optional gradient animation."],
+  ["Can I download a transparent video?", "Video exports include the selected background; MP4 and WebM exports here do not preserve transparency. For a transparent still, seek to a frame, keep Transparent PNG checked, then prepare and download the PNG frame. Cutout preview uses a checkerboard to show transparent areas; the checkerboard is not part of the PNG."],
+  ["What does the Matte preview show?", "The matte is a guide to the cutout: white pixels stay, black pixels are removed, and gray pixels are partly transparent. If you see black holes in your subject, reduce Removal strength or choose a more accurate screen color. Increase softness gently to avoid making the outline hazy."],
+  ["Does this remove any video background with AI?", "No. This is a chroma-key tool for footage filmed against a reasonably consistent color, usually green or blue. Matching clothing and objects can disappear too. Hair, motion blur, compression, strong shadows and reflected screen color may need careful adjustment; perfect separation is not guaranteed. It is not an automatic person-segmentation tool for ordinary rooms."],
+  ["Which files work, and is sound kept?", "Input supports MP4, MOV, M4V, WebM and MKV with browser-supported codecs, up to 500 MB, 20 minutes and 4K pixels. Use updated desktop Chrome or Edge as a starting point. One video track and at most one audio track are supported. Keep sound is on by default. Compatible AAC or Opus audio is copied; other supported audio is converted as needed. Export stops if the selected tracks cannot be retained."],
+  ["Will the quality or original file change?", "Your original file stays unchanged. The export is a newly encoded video at original size up to UHD 4K (3840 by 2160) or DCI 4K (4096 by 2160), including portrait equivalents, or a smaller 1080p, 720p or 480p size, without upscaling. 4K export needs a compatible encoder and takes more time and memory. Output is limited to 256 MB. Some detail can be lost and file size can increase; preview the export before sharing. Embedded subtitles, descriptive metadata and specialist HDR/color workflows are not preserved or guaranteed. There is no account, watermark or paid tier for this tool."],
+];
+export default function FreeGreenScreenRemoverPage() {
+  if (process.env.NODE_ENV !== "development" && process.env.AENURAL_VIDEO_TOOLS_QA !== "1") notFound();
+  return <main id="main-content" className={styles.page}>
+    <nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href="/">Home</Link><Icon name="chevron-right" size={12} /><Link href="/tools#video-tools">Video tools</Link><Icon name="chevron-right" size={12} /><span aria-current="page">Green screen remover</span></nav>
+    <header className={styles.hero}><div><span className={styles.eyebrow}>FREE GREEN SCREEN REMOVER</span><h1>Your subject stays.<br /><span>A new scene begins.</span></h1><p>Leave the green screen behind. Refine your cutout, choose a fresh backdrop, and make every frame feel like it belongs.</p><div className={styles.trust}><span><Icon name="check" size={15} /> Green & blue screens</span><span><Icon name="check" size={15} /> No watermark</span><span><Icon name="user" size={15} /> No sign-in</span></div></div><aside className={styles.heroNote}><Icon name="monitor" size={25} /><strong>A cleaner key. A fresh scene.</strong><p>Pick your color. Refine the edges. Bring your own background.</p></aside></header>
+    <GreenScreenRemover />
+    <section className={styles.explainer} aria-label="How to remove a green screen"><article><span>01 / START</span><h2>Bring your subject.</h2><p>Add footage filmed against a green or blue screen. Try the sample to explore the controls first.</p></article><article><span>02 / REFINE</span><h2>Keep a clean outline.</h2><p>Pick the screen color and tune the key. Switch between Original, Result and Matte to see what changes.</p></article><article><span>03 / REIMAGINE</span><h2>Build your new scene.</h2><p>Choose a color, gradient or your own image. Export a video with sound, or save a transparent PNG moment.</p></article></section>
+    <section className={styles.faq} aria-labelledby="green-faq"><div><span className={styles.eyebrow}>MAKE THE KEY WORK FOR YOU</span><h2 id="green-faq">A fresh background.<br />A clear next step.</h2><p>Know what the controls do and what your export will contain.</p></div><div>{questions.map(([question,answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div></section>
+  </main>;
+}

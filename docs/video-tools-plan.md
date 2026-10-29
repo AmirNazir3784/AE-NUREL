@@ -49,4 +49,12 @@ Ignored evidence lives in `artifacts/video-compressor/`: desktop/mobile screensh
 
 Implemented `/tools/video-cropper` as a development-only tool with exact-ratio presets, draggable framing and corner resizing, keyboard controls, numeric geometry, undo/reset/centering, a live crop preview, MP4/WebM export and optional audio. See [video-cropper-qa.md](video-cropper-qa.md) for the implementation, actual export measurements, decoded-pixel verification and test results. Progress copy uses “Cropping, please wait…” and does not describe processing location.
 
-Wait for the owner to choose the next tool. Green Screen Remover is unfinished and must be ignored for now. Continue publishing completed development work only to Faisal; the Amir/Hostinger production release remains on hold.
+Continue publishing completed development work only to Faisal; the Amir/Hostinger production release remains on hold. The owner selects each next tool.
+
+## Third tool: Free Green Screen Remover rebuilt (29 October 2026)
+
+The owner selected Free Green Screen Remover next and authorized a fresh implementation. Completed `/tools/free-green-screen-remover` with green/blue/custom keys, auto detection and sampling, edge/spill controls, original/result/matte/cutout previews, image/color/static or animated gradient backgrounds, MP4/WebM export, and transparent PNG frames. Rebuilt on this development baseline without importing the unfinished design-branch implementation. See [green-screen-remover-qa.md](green-screen-remover-qa.md) for actual export, pixel, audio, responsive and build evidence.
+
+Persistent owner requirement: video tools should support 4K clips, with true original-size/4K output where applicable, without silently downscaling. This tool was tested at **3840 × 2160** for both MP4 and WebM exports and transparent PNG frames. The existing cropper preserves source crop pixels and the compressor offers original resolution. Check input/output behavior on a real 4K clip when developing each remaining tool; do not imply that a smaller output has retained 4K resolution.
+
+No further tool is selected. Wait for the owner's next instruction; keep the production release on hold.
