@@ -3,11 +3,13 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import ts from "typescript";
 import { autoCaptionReleased } from "../src/lib/caption-release.ts";
+import { publishedPosts } from "../src/content/blog/registry.ts";
 
 async function metadataRoute(name) {
   const source = (await readFile(new URL(`../src/app/${name}.ts`, import.meta.url), "utf8"))
     .replace('"@/lib/tools"', JSON.stringify(new URL("../src/lib/tools.ts", import.meta.url).href))
-    .replace('"@/lib/site-origin"', JSON.stringify(new URL("../src/lib/site-origin.ts", import.meta.url).href));
+    .replace('"@/lib/site-origin"', JSON.stringify(new URL("../src/lib/site-origin.ts", import.meta.url).href))
+    .replace('"@/content/blog/registry"', JSON.stringify(new URL("../src/content/blog/registry.ts", import.meta.url).href));
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext } }).outputText;
   return (await import("data:text/javascript;base64," + Buffer.from(js).toString("base64"))).default;
 }
@@ -50,8 +52,13 @@ describe("public sitemap and robots discovery", () => {
   it("covers every existing indexable page and excludes private, noindex and redirect routes", async () => {
     const app = new URL("../src/app/", import.meta.url);
     const expected = [];
+    const posts = publishedPosts();
+    if (posts.length) expected.push("/blog", ...posts.map(post => `/blog/${post.slug}`));
     for (const path of await readdir(app, { recursive: true })) {
       if (!/(^|[\\/])page\.tsx$/.test(path)) continue;
+      // Blog visibility comes from the shared publication registry, not a
+      // literal pageMetadata route. Drafts deliberately produce no sitemap URLs.
+      if (["blog/page.tsx", "blog/[slug]/page.tsx"].includes(path.replaceAll("\\", "/"))) continue;
       const source = await readFile(new URL(path.replaceAll("\\", "/"), app), "utf8");
       if (/index:\s*false/.test(source)) continue;
       if (source.includes("index: autoCaptionReleased()") && !autoCaptionReleased()) continue;

@@ -8,15 +8,16 @@ describe('canonical subtitle generator scope and release hold',()=>{
  it('does not advertise either preview as a released tool or sitemap entry',async()=>{
   let source=await readFile(new URL('../src/app/sitemap.ts',import.meta.url),'utf8');
   source=source.replace('"@/lib/tools"',JSON.stringify(new URL('../src/lib/tools.ts',import.meta.url).href))
-   .replace('"@/lib/site-origin"',JSON.stringify(new URL('../src/lib/site-origin.ts',import.meta.url).href));
+   .replace('"@/lib/site-origin"',JSON.stringify(new URL('../src/lib/site-origin.ts',import.meta.url).href))
+      .replace('"@/content/blog/registry"', JSON.stringify(new URL('../src/content/blog/registry.ts', import.meta.url).href));
   const js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext}}).outputText;
   const {default:sitemap}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
   const previous=process.env.SITE_URL;
   let urls;
   try {process.env.SITE_URL='https://tools.example';urls=sitemap().map(entry=>new URL(entry.url).pathname);}
   finally {if(previous===undefined)delete process.env.SITE_URL;else process.env.SITE_URL=previous;}
-  assert.equal(urls.length,26);
-  assert.equal(tools.length,16);
+  assert.equal(urls.length,31);
+  assert.equal(tools.length,19);
   for(const route of ['/tools/podcast-to-captions','/tools/free-subtitle-generator']){
    assert.equal(tools.some(tool=>tool.href===route),false);
    assert.equal(urls.includes(route),false);

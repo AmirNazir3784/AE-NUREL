@@ -11,7 +11,7 @@ const {ToolHeader}=await import('../src/components/tools/tool-layout.tsx');
 
 describe('compact shared tool cards',()=>{
  it('keeps every released destination, full title and useful description accessible',()=>{
-  assert.equal(tools.length,16);
+  assert.equal(tools.length,19);
   for(const tool of tools){const dom=new JSDOM(renderToStaticMarkup(React.createElement(ToolCard,{tool})));const card=dom.window.document.querySelector('a');assert.equal(card.getAttribute('href'),tool.href);assert.equal(card.querySelector('h3').textContent,tool.title);assert.equal(card.querySelector('p').textContent,tool.description);assert.equal(card.querySelector('.icon-tile').getAttribute('aria-hidden'),'true');dom.window.close();}
  });
  it('uses coordinated category tones rather than position-dependent colors',()=>{

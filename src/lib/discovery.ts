@@ -1,8 +1,12 @@
 import { tools } from "./tools";
 export const toolGroups = ["Timing & Editing", "Format Conversion"] as const;
+export const allToolGroups = ["Video Tools", ...toolGroups] as const;
 export const curatedToolRoutes = ["/tools/srt-editor", "/tools/srt-timing-adjuster", "/tools/srt-to-vtt", "/tools/srt-merger"] as const;
 export const curatedTools = curatedToolRoutes.map((href) => tools.find((tool) => tool.href === href)!);
 export const menuNames: Record<string, string> = {
+  "/tools/video-compressor": "Video Compressor",
+  "/tools/video-cropper": "Video Cropper",
+  "/tools/free-green-screen-remover": "Green Screen Remover",
   "/tools/srt-to-mp4": "SRT to MP4",
   "/tools/srt-to-sbv": "SRT to SBV",
   "/tools/sbv-to-srt": "SBV to SRT",
@@ -32,6 +36,9 @@ export const subtitleTasks = [
   { label: "Get structured JSON cues", href: "/tools/srt-to-json" },
 ] as const;
 export const relevantRoutes: Record<string, readonly string[]> = {
+  "/tools/video-compressor": ["/tools/video-cropper", "/tools/free-green-screen-remover"],
+  "/tools/video-cropper": ["/tools/video-compressor", "/tools/free-green-screen-remover"],
+  "/tools/free-green-screen-remover": ["/tools/video-cropper", "/tools/video-compressor"],
   "/tools/srt-to-mp4": ["/tools/srt-to-txt", "/tools/srt-to-ass"],
   "/tools/srt-to-sbv": ["/tools/sbv-to-srt", "/tools/srt-to-txt"],
   "/tools/sbv-to-srt": ["/tools/vtt-to-srt", "/tools/srt-to-txt"],

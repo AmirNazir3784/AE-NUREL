@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import Link from "@/components/site/page-link";
 import { Icon } from "@/components/ui/icon";
 import { pageMetadata } from "@/lib/site-metadata";
@@ -7,9 +6,8 @@ import styles from "@/features/video-compressor/video-compressor.module.css";
 
 export const metadata = {
   ...pageMetadata("Free Video Compressor — Smaller Videos, No Upload", "Compress video locally in your browser. Choose MP4 or WebM, set a file-size target, keep or remove audio, and preview the result. Free, no watermark or signup.", "/tools/video-compressor"),
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
 };
-export const dynamic = "force-dynamic";
 
 const questions = [
   ["Does my video leave my device?", "No. Your browser reads and compresses the file on this device. The tool has no video-upload endpoint and does not send your recording to a processing server. Download your result before leaving; reloading clears the workspace."],
@@ -21,7 +19,6 @@ const questions = [
 ];
 
 export default function VideoCompressorPage() {
-  if (process.env.NODE_ENV !== "development" && process.env.AENURAL_VIDEO_TOOLS_QA !== "1") notFound();
   return <main id="main-content" className={styles.page}>
     <nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href="/">Home</Link><Icon name="chevron-right" size={12} /><Link href="/tools#video-tools">Video tools</Link><Icon name="chevron-right" size={12} /><span aria-current="page">Video compressor</span></nav>
     <header className={styles.hero}>

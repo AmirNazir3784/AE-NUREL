@@ -4,14 +4,12 @@ import { categories, tools, toolsInCategory, searchTools, relatedTools } from ".
 
 describe("released tool discovery", () => {
   it("lists the sixteen released subtitle tools, without invented future tools", () => {
-    assert.deepEqual(tools.map((tool) => tool.href), ["/tools/srt-timing-adjuster", "/tools/srt-merger", "/tools/srt-splitter", "/tools/srt-editor", "/tools/subtitle-sync-fixer", "/tools/subtitle-overlap-fixer", "/tools/srt-to-vtt", "/tools/vtt-to-srt", "/tools/srt-to-txt", "/tools/ass-to-srt", "/tools/srt-to-ass", "/tools/srt-to-json", "/tools/vtt-to-txt", "/tools/sbv-to-srt", "/tools/srt-to-sbv", "/tools/srt-to-mp4"]);
+    assert.deepEqual(tools.filter(tool => tool.categoryId === "subtitle-tools").map((tool) => tool.href), ["/tools/srt-timing-adjuster", "/tools/srt-merger", "/tools/srt-splitter", "/tools/srt-editor", "/tools/subtitle-sync-fixer", "/tools/subtitle-overlap-fixer", "/tools/srt-to-vtt", "/tools/vtt-to-srt", "/tools/srt-to-txt", "/tools/ass-to-srt", "/tools/srt-to-ass", "/tools/srt-to-json", "/tools/vtt-to-txt", "/tools/sbv-to-srt", "/tools/srt-to-sbv", "/tools/srt-to-mp4"]);
     assert.ok(tools.every((tool) => tool.processing === "local"));
   });
   it("derives category availability from released tools", () => {
     assert.equal(toolsInCategory("subtitle-tools").length, 16);
-    for (const category of categories.filter((category) => category.id !== "subtitle-tools")) {
-      assert.deepEqual(toolsInCategory(category.id), []);
-    }
+    assert.equal(toolsInCategory("video-tools").length, 3);
     assert.equal(categories.reduce((count, category) => count + toolsInCategory(category.id).length, 0), tools.length);
   });
   it("handles case, whitespace, and multiple search terms", () => {
@@ -27,7 +25,7 @@ describe("released tool discovery", () => {
     assert.deepEqual(searchTools("  "), tools);
   });
   it("links each SRT tool to the others through registry metadata", () => {
-    for (const tool of tools) assert.deepEqual(relatedTools(tool.href), tools.filter((other) => other !== tool));
+    for (const tool of tools) assert.deepEqual(relatedTools(tool.href), tools.filter((other) => other !== tool && other.categoryId === tool.categoryId));
     assert.deepEqual(relatedTools("/tools/not-released"), []);
   });
   it("does not return future categories or partial multi-term matches as tools", () => {

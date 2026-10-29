@@ -1,16 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent, type KeyboardEvent } from "react";
-import { ASPECTS, moveCrop, resizeCrop, type Aspect, type Crop, type Corner, type Frame } from "./crop-core";
+import { ASPECTS, moveCrop, resizeCrop, resizeCropEdge, type Aspect, type Crop, type Corner, type Edge, type Frame } from "./crop-core";
 import styles from "./video-cropper.module.css";
 
 const corners: Corner[] = ["nw", "ne", "sw", "se"];
+const edges: Edge[] = ["n", "e", "s", "w"];
+const edgeNames = { n: "top", e: "right", s: "bottom", w: "left" };
+type Handle = Corner | Edge | "move";
 const names = { nw: "top left", ne: "top right", sw: "bottom left", se: "bottom right" };
 const time = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
 
 export function CropStage({ url, frame, crop, aspect, duration, disabled, onStart, onChange }: { url: string; frame: Frame; crop: Crop; aspect: Aspect; duration: number; disabled: boolean; onStart: () => void; onChange: (crop: Crop) => void }) {
   const stage = useRef<HTMLDivElement>(null), video = useRef<HTMLVideoElement>(null), canvas = useRef<HTMLCanvasElement>(null);
-  const drag = useRef<{ crop: Crop; x: number; y: number; corner: Corner | "move"; id: number } | null>(null);
+  const drag = useRef<{ crop: Crop; x: number; y: number; corner: Handle; id: number } | null>(null);
   const [playing, setPlaying] = useState(false), [muted, setMuted] = useState(true), [position, setPosition] = useState(0);
 
   useEffect(() => {
@@ -32,9 +35,9 @@ export function CropStage({ url, frame, crop, aspect, duration, disabled, onStar
     const box = stage.current!.getBoundingClientRect();
     return { x: (event.clientX - box.left) * frame.width / box.width, y: (event.clientY - box.top) * frame.height / box.height };
   }
-  function start(event: PointerEvent<HTMLButtonElement>, corner: Corner | "move") {
+  function start(event: PointerEvent<HTMLButtonElement>, corner: Handle) {
     if (disabled || event.button !== 0) return;
-    event.preventDefault(); event.currentTarget.focus(); event.currentTarget.setPointerCapture(event.pointerId);
+    event.preventDefault(); event.currentTarget.focus({ preventScroll: true }); event.currentTarget.setPointerCapture(event.pointerId);
     drag.current = { ...point(event), crop, corner, id: event.pointerId }; onStart();
   }
   function move(event: PointerEvent<HTMLButtonElement>) {
@@ -45,22 +48,29 @@ export function CropStage({ url, frame, crop, aspect, duration, disabled, onStar
     else {
       const x = initial.crop.x + (initial.corner.includes("e") ? initial.crop.width : 0) + current.x - initial.x;
       const y = initial.crop.y + (initial.corner.includes("s") ? initial.crop.height : 0) + current.y - initial.y;
-      onChange(resizeCrop(initial.crop, frame, aspect, initial.corner, x, y));
+      onChange(initial.corner.length === 1
+        ? resizeCropEdge(initial.crop, frame, initial.corner as Edge, x, y)
+        : resizeCrop(initial.crop, frame, aspect, initial.corner as Corner, x, y));
     }
   }
-  function key(event: KeyboardEvent<HTMLButtonElement>, corner: Corner | "move") {
+  function key(event: KeyboardEvent<HTMLButtonElement>, corner: Handle) {
     const directions: Record<string, number[]> = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
     const direction = directions[event.key]; if (!direction || disabled) return;
+    if (corner.length === 1 && ((corner === "e" || corner === "w") ? !direction[0] : !direction[1])) return;
     event.preventDefault(); onStart();
     const amount = event.shiftKey ? 10 : 1;
     if (corner === "move") onChange(moveCrop(crop, frame, crop.x + direction[0] * amount, crop.y + direction[1] * amount));
-    else {
+    else if (corner.length === 1) {
+      onChange(resizeCropEdge(crop, frame, corner as Edge,
+        crop.x + (corner === "e" ? crop.width : 0) + direction[0] * 2 * amount,
+        crop.y + (corner === "s" ? crop.height : 0) + direction[1] * 2 * amount));
+    } else {
       const pair = ASPECTS[aspect];
       // A locked ratio must change both axes together; keep the opposite corner fixed.
       const sign = direction[0] ? direction[0] * (corner.includes("e") ? 1 : -1) : direction[1] * (corner.includes("s") ? 1 : -1);
       const dx = pair ? sign * pair[0] * 2 * amount * (corner.includes("e") ? 1 : -1) : direction[0] * 2 * amount;
       const dy = pair ? sign * pair[1] * 2 * amount * (corner.includes("s") ? 1 : -1) : direction[1] * 2 * amount;
-      onChange(resizeCrop(crop, frame, aspect, corner, crop.x + (corner.includes("e") ? crop.width : 0) + dx, crop.y + (corner.includes("s") ? crop.height : 0) + dy));
+      onChange(resizeCrop(crop, frame, aspect, corner as Corner, crop.x + (corner.includes("e") ? crop.width : 0) + dx, crop.y + (corner.includes("s") ? crop.height : 0) + dy));
     }
   }
   const left = crop.x / frame.width * 100, top = crop.y / frame.height * 100, width = crop.width / frame.width * 100, height = crop.height / frame.height * 100;
@@ -76,6 +86,7 @@ export function CropStage({ url, frame, crop, aspect, duration, disabled, onStar
         <div className={styles.selection} style={{ left: `${left}%`, top: `${top}%`, width: `${width}%`, height: `${height}%` }}>
           <button type="button" className={styles.move} aria-label="Move crop frame" aria-describedby="crop-keyboard-help" disabled={disabled} onPointerDown={event => start(event, "move")} onKeyDown={event => key(event, "move")} {...pointer}><span className={styles.grid} aria-hidden="true" /><span className={styles.cropLabel}>{crop.width} × {crop.height}</span></button>
           {corners.map(corner => <button type="button" key={corner} className={`${styles.handle} ${styles[corner]}`} aria-label={`Resize ${names[corner]} corner`} disabled={disabled} onPointerDown={event => start(event, corner)} onKeyDown={event => key(event, corner)} {...pointer}><span /></button>)}
+          {aspect === "free" && edges.map(edge => <button type="button" key={edge} className={`${styles.edge} ${styles[edge]}`} aria-label={`Resize ${edgeNames[edge]} edge`} aria-describedby="crop-keyboard-help" disabled={disabled} onPointerDown={event => start(event, edge)} onKeyDown={event => key(event, edge)} {...pointer}><span aria-hidden="true" /></button>)}
         </div>
       </div>
     </div>
@@ -84,7 +95,7 @@ export function CropStage({ url, frame, crop, aspect, duration, disabled, onStar
       <input type="range" aria-label="Preview position" min={0} max={duration} step={0.01} value={position} onChange={event => { if (video.current) video.current.currentTime = Number(event.target.value); setPosition(Number(event.target.value)); }} />
       <span>{time(position)} / {time(duration)}</span><button type="button" onClick={() => setMuted(!muted)} aria-label={muted ? "Unmute preview" : "Mute preview"}>{muted ? "Sound off" : "Sound on"}</button>
     </div>
-    <p className={styles.keyboardHelp} id="crop-keyboard-help">Drag the frame or its corners. Focus a handle and use arrow keys; Shift moves faster.</p>
+    <p className={styles.keyboardHelp} id="crop-keyboard-help">Drag inside to move. {aspect === "free" ? "Drag any edge or corner to resize." : "Drag a corner to resize with the ratio locked."} Focus a handle and use arrow keys; Shift moves faster.</p>
     <div className={styles.livePreview}><div><strong>Live crop preview</strong><span>Only this area will be exported.</span></div><canvas ref={canvas} width={Math.max(2, Math.round(260 * Math.min(1, crop.width / crop.height)))} height={Math.max(2, Math.round(260 * Math.min(1, crop.height / crop.width)))} aria-label="Live cropped frame preview" /></div>
   </>;
 }

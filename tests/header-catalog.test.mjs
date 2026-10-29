@@ -21,13 +21,13 @@ describe('separate product and free tool navigation',()=>{
   root=createRoot(q('#root'));await act(()=>root.render(React.createElement(Header)));
  });
  afterEach(async()=>{await act(()=>root.unmount());dom.window.close();});
- it('lists real product separately from all sixteen grouped public utilities',()=>{
+ it('lists real product separately from all nineteen grouped public utilities',()=>{
   const product=q('.aen-product-menu'),free=q('.aen-free-menu');
   assert.equal(product.querySelector('summary').textContent,'Tools');assert.equal(free.querySelector('summary').textContent,'Free Tools');
   assert.deepEqual([...product.querySelectorAll('a')].map(a=>a.getAttribute('href')),['/source-window','/premium-tools']);
   assert.deepEqual([...free.querySelectorAll('section a')].map(a=>a.getAttribute('href')).sort(),tools.map(t=>t.href).sort());
   assert.equal(free.querySelector('.aen-mega-footer a').getAttribute('href'),'/tools');
-  assert.equal(free.querySelectorAll('section a').length,16);
+  assert.equal(free.querySelectorAll('section a').length,19);
   assert.doesNotMatch(document.body.textContent,/Speech to Captions|Podcast to Captions/);
  });
  it('pins click, closes the other menu, supports outside click and restores Escape focus',async()=>{

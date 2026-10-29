@@ -1,9 +1,23 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { ASPECTS, DEFAULT_CROP_SETTINGS as settings, fullCrop, presetCrop, moveCrop, resizeCrop, editCrop, cropOutput, croppedFilename } from '../src/features/video-cropper/crop-core.ts';
+import { ASPECTS, DEFAULT_CROP_SETTINGS as settings, fullCrop, presetCrop, moveCrop, resizeCrop, resizeCropEdge, editCrop, cropOutput, croppedFilename } from '../src/features/video-cropper/crop-core.ts';
 
 describe('precise video crop geometry', () => {
  const frame = { width:1920, height:1080 };
+ it('resizes each free-mode edge independently and keeps the opposite edge anchored', () => {
+  const crop = { x:100, y:100, width:800, height:600 };
+  assert.deepEqual(resizeCropEdge(crop,frame,'e',1000,0), {...crop,width:900});
+  assert.deepEqual(resizeCropEdge(crop,frame,'w',200,0), {...crop,x:200,width:700});
+  assert.deepEqual(resizeCropEdge(crop,frame,'s',0,800), {...crop,height:700});
+  assert.deepEqual(resizeCropEdge(crop,frame,'n',0,200), {...crop,y:200,height:500});
+  for(const edge of ['n','e','s','w']) for(const value of [-10000,0,101,99999]) {
+   const result=resizeCropEdge(crop,frame,edge,value,value);
+   assert.ok(result.x>=0&&result.y>=0&&result.x+result.width<=frame.width&&result.y+result.height<=frame.height);
+   assert.ok(result.width>=2&&result.height>=2);assert.equal(result.width%2,0);assert.equal(result.height%2,0);
+   if(edge==='e'||edge==='w'){assert.equal(result.y,crop.y);assert.equal(result.height,crop.height);}
+   else {assert.equal(result.x,crop.x);assert.equal(result.width,crop.width);}
+  }
+ });
  const valid = (crop, source = frame) => {
   assert.ok(crop.x >= 0 && crop.y >= 0 && crop.x + crop.width <= source.width && crop.y + crop.height <= source.height);
   assert.equal(crop.width % 2, 0); assert.equal(crop.height % 2, 0);

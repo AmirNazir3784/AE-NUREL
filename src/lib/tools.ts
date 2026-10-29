@@ -4,6 +4,7 @@ import { autoCaptionTool } from "./ai-tools.ts";
 
 export const categories = [
   { id: "subtitle-tools", title: "Subtitle Tools", icon: "subtitle", description: "Get your words in sync and ready to watch." },
+  { id: "video-tools", title: "Video Tools", icon: "video", description: "Compress, crop and change your video's background." },
 ] as const;
 
 export type CategoryId = (typeof categories)[number]["id"] | "caption-generation" | "ai-tools" | "video-tools";
@@ -100,6 +101,9 @@ export const tools: readonly Tool[] = [
   { title: "SBV to SRT Converter", description: "Convert YouTube SBV captions to standard SRT subtitles.", href: "/tools/sbv-to-srt", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "vtt-to-srt", processing: "local" },
   { title: "SRT to SBV Converter", description: "Convert SRT subtitles to basic YouTube SBV captions.", href: "/tools/srt-to-sbv", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "srt-to-vtt", processing: "local" },
   { title: "SRT to MP4 Converter", description: "Render subtitle text as a silent MP4 video, in your browser.", href: "/tools/srt-to-mp4", category: "Subtitle Tools", categoryId: "subtitle-tools", group: "Format Conversion", icon: "video", processing: "local" },
+  { title: "Video Compressor", description: "Set a size target, compress your video and preview the result.", href: "/tools/video-compressor", category: "Video Tools", categoryId: "video-tools", group: "Video Tools", icon: "video", processing: "local" },
+  { title: "Video Cropper", description: "Frame precisely with social presets, pixel controls and a live crop preview.", href: "/tools/video-cropper", category: "Video Tools", categoryId: "video-tools", group: "Video Tools", icon: "video", processing: "local" },
+  { title: "Free Green Screen Remover", description: "Refine your cutout, replace the background and export a fresh scene.", href: "/tools/free-green-screen-remover", category: "Video Tools", categoryId: "video-tools", group: "Video Tools", icon: "video", processing: "local" },
 ];
 
 export function relatedTools(href: string): readonly Tool[] {

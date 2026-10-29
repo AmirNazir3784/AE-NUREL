@@ -1,0 +1,443 @@
+AENURAL: 50 RESEARCH-INFORMED BLOG TITLE IDEAS
+Prepared: 29 October 2026
+
+These are writing suggestions, not published articles or guaranteed ranking opportunities.
+Primary/supporting keywords are qualitative query targets, not measured search volumes.
+Titles are proposed editorial titles; do not force every supporting phrase into them.
+You will write and supply each article. Select the first 10 individually; this is a backlog.
+Do not publish near-duplicate pages if the supplied writing does not support distinct intent.
+“Free,” pricing, software menus, export policies and format support need current verification.
+No software tutorial implies that AENural has an Adobe/Resolve/CapCut plugin.
+
+Priority key:
+A = Strong fit with current public AENural tool candidates; test before promoting.
+B = Relevant educational coverage; verify native software workflows with primary sources.
+C = Useful comparison/feature topic, but needs original testing or release confirmation.
+
+Tool shorthand (availability must be rechecked at publication):
+AUDIO = /tools/free-audio-to-text-converter-online
+EDITOR = /tools/srt-editor
+SHIFT = /tools/srt-timing-adjuster
+SYNC = /tools/subtitle-sync-fixer
+OVERLAP = /tools/subtitle-overlap-fixer
+MERGE = /tools/srt-merger
+SPLIT = /tools/srt-splitter
+Format converter routes are spelled out per idea.
+AUTO CAPTION = conditional only; currently a reachable noindex preview, not an approved released CTA.
+
+RESEARCH SOURCE KEY
+R1: https://caption-x.com/blog/premiere-pro-transcription
+R2: https://caption-x.com/blog/animated-captions-premiere-pro
+R3: https://caption-x.com/blog/how-to-add-subtitles-in-after-effects
+R4: https://caption-x.com/blog/best-subtitle-translator
+R5: https://caption-x.com/blog/how-to-add-subtitles-premiere-pro
+R6: https://caption-x.com/blog/best-auto-caption-software
+R7: https://caption-x.com/blog/how-to-add-captions-youtube
+R8: https://caption-x.com/blog/how-to-add-captions-capcut
+R9: https://caption-x.com/blog/how-to-add-subtitles-in-davinci-resolve
+R10: https://caption-x.com/blog/how-to-caption-a-podcast-premiere-pro
+R11: https://www.kapwing.com/help/srt-file/
+R12: https://www.descript.com/blog/article/how-to-extract-audio-from-video
+R13: https://www.subtitlemedic.com/blog/fix-subtitles-out-of-sync
+R14: https://www.happyscribe.com/blog/vtt-vs-srt-key-differences-and-when-to-use-each-format
+R15: https://support.google.com/youtube/answer/2734698?hl=en
+R16: https://support.google.com/youtube/answer/6373554?hl=en
+R17: https://www.w3.org/TR/webvtt1/
+R18: https://community.adobe.com/questions-729/latest-premiere-pro-update-has-ruined-captions-1621883
+R19: https://www.reddit.com/r/premiere/comments/1qmvwke/missing_srt_exportimport_option/
+R20: https://www.reddit.com/r/PleX/comments/1v2b1ni/external_srt_subtitles_desync_after_seeking/
+R21: https://www.reddit.com/r/premiere/comments/1eb3t01
+R22: https://www.descript.com/blog/article/how-to-transcribe-a-video-to-text-and-boost-your-productivity
+R23: https://www.veed.io/learn/veed-vs-happyscribe
+R24: https://www.reddit.com/r/sideprojects/comments/1xg8myk/i_built_a_free_windows_video_editor_that_does/
+
+Sources demonstrate relevant topics, tasks or reported questions. A source does not validate
+every proposed title, prove demand volume, or substantiate every future article claim.
+Registry-led format tutorials also rely on AENural's inspected public tools. Forum reports
+are anecdotal; R24 is a comment in a promotional thread and is weak demand evidence.
+
+AUDIO TRANSCRIPTION AND VIDEO TO TEXT
+
+01. How to Convert MP3 to Text for Free: Review and Export Your Transcript
+Primary keyword: mp3 to text free
+Supporting: transcribe MP3, MP3 transcription, audio transcript export
+Intent: Practical MP3 workflow, not a generic software ranking.
+Category / priority: Audio Transcription / A
+Tool / evidence: AUDIO; R1, R22 and inspected audio tool. Verify actual MP3 and free-export behavior.
+
+02. WAV vs MP3 for Transcription: Does Audio Format Affect Accuracy?
+Primary keyword: wav vs mp3 transcription
+Supporting: audio quality for transcription, speech recognition audio format
+Intent: Input-quality decision using the same original recording and disclosed comparisons.
+Category / priority: Audio Transcription / B
+Tool / evidence: AUDIO if both formats tested; R12, R22. No invented accuracy percentages.
+
+03. How to Transcribe Video to Text: A Workflow for Creators
+Primary keyword: how to transcribe video to text
+Supporting: video transcript, video to text converter, edit video transcript
+Intent: Broad workflow hub; link to narrower file/export problems rather than duplicate them.
+Category / priority: Video to Text / B
+Tool / evidence: AUDIO only after video input testing; R22. No imaginary standalone video tool.
+
+04. MP4 Transcription Not Working? Check the Audio Track and File Format
+Primary keyword: mp4 transcription not working
+Supporting: MP4 to text error, video has no audio, unsupported audio codec
+Intent: Failed-input diagnosis, distinct from the general video transcription tutorial.
+Category / priority: Video to Text / B
+Tool / evidence: AUDIO only for confirmed supported inputs; R12, R22. Reproduce failures first.
+
+05. How to Improve Transcription Accuracy When Audio Is Noisy
+Primary keyword: improve transcription accuracy noisy audio
+Supporting: background noise transcription, incorrect transcript words
+Intent: Preparation and correction checklist; no claim to recover inaudible speech.
+Category / priority: Audio Transcription / A
+Tool / evidence: AUDIO; R16, R18. Do not imply AENural includes an audio denoiser.
+
+06. Private Audio Transcription: What to Check Before Using an Online Tool
+Primary keyword: private audio transcription
+Supporting: audio transcription privacy, confidential recordings, upload policy
+Intent: Evidence-based privacy checklist, not a claim that every online service is unsafe.
+Category / priority: Audio Transcription / B
+Tool / evidence: AUDIO only after verifying its complete data flow; R23, R24 (weak anecdote).
+
+07. How to Transcribe Long Audio Files Without Losing Your Place
+Primary keyword: transcribe long audio files
+Supporting: long recording transcript, split audio transcription, timestamp continuity
+Intent: Manage sections, review progress and preserve continuity; disclose tested limits.
+Category / priority: Audio Transcription / B
+Tool / evidence: AUDIO within verified duration/memory limits; R10, R22. No unlimited claim.
+
+08. How to Clean Up an AI Transcript Without Changing What Was Said
+Primary keyword: clean up AI transcript
+Supporting: edit automatic transcript, transcript proofreading, correct names in transcript
+Intent: Editorial accuracy workflow after recognition; preserve speaker meaning.
+Category / priority: Audio Transcription / A
+Tool / evidence: AUDIO transcript review where supported; R1, R18. No fabricated speaker labels.
+
+09. Transcript Timestamps Explained: When You Need Them and How to Check Them
+Primary keyword: transcript timestamps
+Supporting: timestamped transcript, transcript time codes, transcript vs subtitles
+Intent: Decide between plain text and timed output; check actual export semantics.
+Category / priority: Audio Transcription / A
+Tool / evidence: AUDIO; R11, R15. Distinct from transcript-cleanup and format-conversion guides.
+
+10. How to Extract Audio from Video: Choosing MP3 or WAV
+Primary keyword: how to extract audio from video
+Supporting: video to MP3, extract WAV from video, video to audio
+Intent: Save the existing audio track, not transcribe words or isolate a voice from music.
+Category / priority: Video & Audio Conversion / B
+Tool / evidence: No released AENural extraction CTA assumed; R12. Test free native alternatives.
+
+SUBTITLE EDITING AND SYNCHRONIZATION
+
+11. How to Fix Subtitles That Are Always Too Early or Too Late
+Primary keyword: fix subtitle delay
+Supporting: shift SRT timing, subtitles too early, subtitles too late
+Intent: Constant offset only; direct readers with changing delay to idea 12.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: SHIFT; R13. Include positive/negative offset examples and playback verification.
+
+12. Subtitles Start in Sync but Drift Later? Use Two Reference Points
+Primary keyword: fix subtitle drift
+Supporting: subtitles gradually out of sync, two-point subtitle synchronization
+Intent: Changing delay; distinguish speed differences, edits and playback problems.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: SYNC; R13. Do not assert every drift problem is a frame-rate mismatch.
+
+13. How to Fix Overlapping Subtitles in an SRT File
+Primary keyword: fix overlapping subtitles
+Supporting: SRT overlapping timestamps, subtitle overlap repair
+Intent: Conflicting cue intervals, not whole-file delay; preserve intentional timing choices.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: OVERLAP; R11 and inspected tool. Test before/after cue outputs.
+
+14. How to Retime Subtitles After Trimming a Video
+Primary keyword: retime subtitles after trimming video
+Supporting: rebase SRT timestamps, subtitle offset after cutting video
+Intent: Rebase clip timing or adjust affected sections after edits; not global drift.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: SHIFT or SPLIT as appropriate; R21. Explain original-time versus clip-relative output.
+
+15. Subtitles Go Out of Sync After Seeking? Check Playback Before Editing the SRT
+Primary keyword: subtitles out of sync after seeking
+Supporting: Plex subtitle desync, Jellyfin subtitles after skipping, transcoding captions
+Intent: Player/seek-specific failure; avoid damaging a subtitle file that is already correct.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: Diagnostic guide first; SHIFT only if constant file offset is confirmed; R20, R13.
+
+16. How to Merge SRT Files Without Mixing Up Their Timing
+Primary keyword: merge SRT files
+Supporting: combine subtitles, join SRT files, SRT merge timing
+Intent: Join files while deciding whether timestamps should stay original or move.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: MERGE; inspected registry. Verify supported merge/offset modes, do not invent them.
+
+17. How to Split an SRT File for Shorter Video Clips
+Primary keyword: split SRT file
+Supporting: divide subtitle file, subtitles for video clips, split caption timing
+Intent: Select portions and preserve/rebase timing according to actual tool options.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: SPLIT; R21, R10 and inspected registry. Explain boundary-crossing cues.
+
+18. How to Edit an SRT File Without Breaking Its Format
+Primary keyword: how to edit SRT file
+Supporting: SRT editor, edit subtitle text, SRT timestamp format
+Intent: Safely modify text/cues with one valid example and a final validation checklist.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: EDITOR; R11, R15. This is the editing hub, not another timing-fix article.
+
+CAPTION FORMATS AND CONVERSION
+
+19. SRT vs VTT: Which Subtitle Format Should You Use?
+Primary keyword: srt vs vtt
+Supporting: WebVTT vs SubRip, subtitle format comparison, caption format compatibility
+Intent: Format decision with paired original examples and platform-dependent limitations.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/srt-to-vtt and /tools/vtt-to-srt; R14, R15, R17.
+
+20. How to Convert SRT to VTT for a Web Video Player
+Primary keyword: srt to vtt
+Supporting: convert SRT to WebVTT, WEBVTT header, HTML video captions
+Intent: Direction-specific tutorial with header/timestamp conversion and playback check.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/srt-to-vtt; R17. Blog must add examples beyond the tool landing page.
+
+21. How to Convert VTT to SRT and Check What Changes
+Primary keyword: vtt to srt
+Supporting: WebVTT to SubRip, VTT cue settings, subtitle conversion loss
+Intent: Reverse direction, focusing on settings/metadata that cannot survive unchanged.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/vtt-to-srt; R17. Confirm actual converter behavior with fixtures.
+
+22. How to Convert SRT Subtitles to a Readable Text Transcript
+Primary keyword: srt to txt
+Supporting: remove subtitle timestamps, subtitles to plain text
+Intent: Produce readable prose from existing cues; no speech recognition is needed.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/srt-to-txt; R11 and inspected registry. Keep distinct from audio-to-text.
+
+23. How to Extract Text from a VTT File Without Caption Markup
+Primary keyword: vtt to txt
+Supporting: WebVTT transcript, remove VTT timestamps, VTT voice tags
+Intent: Explain VTT-specific headers/settings/markup handling; consolidate with 22 if too thin.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/vtt-to-txt; R17. Test notes/voice tags rather than assume removal.
+
+24. ASS to SRT: What Happens to Subtitle Styles and Positioning?
+Primary keyword: ass to srt
+Supporting: SSA to SRT, styled subtitles conversion, subtitle styling loss
+Intent: Convert dialogue and understand lost style features before delivery.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/ass-to-srt; inspected converter. Verify against original ASS documentation.
+
+25. How to Convert SRT to ASS and Apply a Consistent Subtitle Style
+Primary keyword: srt to ass
+Supporting: SubRip to ASS, ASS default style, subtitle font styling
+Intent: Add a default style without pretending to reconstruct previously lost formatting.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/srt-to-ass; inspected registry. Explain styling inside a compatible player.
+
+26. How to Convert YouTube SBV Captions to SRT
+Primary keyword: sbv to srt
+Supporting: YouTube SBV conversion, SubViewer to SubRip
+Intent: Reuse an existing SBV file in an SRT workflow with a timestamp example.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/sbv-to-srt; R15. No unauthorized download from someone else's channel.
+
+27. How to Convert SRT to SBV for a Caption Workflow
+Primary keyword: srt to sbv
+Supporting: SubRip to SubViewer, SBV timestamp format
+Intent: Reverse-direction interoperability; explain when conversion is actually needed.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/srt-to-sbv; R15. Do not imply YouTube requires SBV instead of SRT.
+
+28. How to Convert SRT to JSON for a Custom Caption Workflow
+Primary keyword: srt to json
+Supporting: subtitle JSON format, SRT cue data, subtitle timestamps JSON
+Intent: Developer/data workflow with an exact output schema and unit examples.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: /tools/srt-to-json; inspected registry. Verify actual field names/time units.
+
+PREMIERE PRO
+
+29. How to Transcribe Video in Premiere Pro with Speech to Text
+Primary keyword: premiere pro transcription
+Supporting: Premiere Speech to Text, transcribe sequence, export Premiere transcript
+Intent: Native transcription and review, distinct from SRT export and animation.
+Category / priority: Video to Text / B
+Tool / evidence: AUDIO as an optional external workflow only; R1, current Adobe help.
+
+30. Can't Export SRT from Premiere Pro? Check Transcript vs Captions
+Primary keyword: premiere pro SRT export missing
+Supporting: export subtitles Premiere Pro, transcript TXT JSON not SRT
+Intent: Solve missing file export; show the current version's caption-track workflow.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: EDITOR only after obtaining a subtitle file; R19, R5, current Adobe help.
+
+31. Animated Captions in Premiere Pro: Manual Graphics vs Caption Plugins
+Primary keyword: animated captions premiere pro
+Supporting: word by word captions Premiere, caption graphics, animated subtitle workflow
+Intent: Explain timing/editability trade-offs; disclose Adobe subscription and plugin costs.
+Category / priority: Auto Captions / B
+Tool / evidence: No AENural Premiere plugin CTA; R2. Verify native features in the tested version.
+
+32. Premiere Pro Captions Missing from Export? Check These Settings
+Primary keyword: premiere pro captions not exporting
+Supporting: burn captions into video, sidecar SRT export, embedded captions missing
+Intent: Captions exist in timeline but not final delivery; separate export/player modes.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: Native application diagnosis first; R5, current Adobe help and research forum evidence.
+
+AFTER EFFECTS
+
+33. How to Add Subtitles in After Effects with Text Layers
+Primary keyword: add subtitles after effects
+Supporting: manual captions After Effects, Source Text keyframes, subtitle layers
+Intent: Native manual method with editable text and explicit delivery limitations.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: EDITOR for preparing subtitle wording only; R3, current Adobe documentation.
+
+34. Can After Effects Import SRT? Scripts, Alternatives, and Limitations
+Primary keyword: after effects import SRT
+Supporting: SRT to After Effects, subtitle importer, caption file import
+Intent: File-import compatibility; independently check current native/script support.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: EDITOR for valid input; R3. No AENural importer/script claimed.
+
+35. Word-by-Word Captions in After Effects: Timing and Animation Workflow
+Primary keyword: word by word captions after effects
+Supporting: animated subtitles After Effects, word highlight captions
+Intent: Motion-design timing, distinct from basic text layers and SRT file import.
+Category / priority: Auto Captions / B
+Tool / evidence: No AENural extension CTA; R3. Use original demonstration and reduced-motion fallback.
+
+DAVINCI RESOLVE
+
+36. DaVinci Resolve Free vs Studio: Which Caption Features Do You Get?
+Primary keyword: davinci resolve free subtitles
+Supporting: Resolve Studio auto captions, Create Subtitles from Audio, free vs paid captions
+Intent: Capability decision, version/OS-specific; no assumption all automatic options are native/free.
+Category / priority: Auto Captions / B
+Tool / evidence: External SRT workflow only when tested; R9, current Blackmagic documentation.
+
+37. How to Import and Edit an SRT File in DaVinci Resolve
+Primary keyword: import SRT davinci resolve
+Supporting: Resolve subtitle track, edit imported subtitles, SRT timing Resolve
+Intent: Existing-file workflow; link feature comparison and export guide instead of repeating them.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: EDITOR or SHIFT for specific file repair; R9, current Blackmagic documentation.
+
+38. DaVinci Resolve Subtitles Not Exporting? Sidecar vs Burn-In Settings
+Primary keyword: davinci resolve subtitles not exporting
+Supporting: export SRT Resolve, burn subtitles Resolve, Deliver subtitle settings
+Intent: Delivery diagnosis and player verification, not another import tutorial.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: Native export steps first; R9. Verify free/Studio differences at writing time.
+
+CAPCUT
+
+39. Are CapCut Auto Captions Free? What to Check Before You Edit
+Primary keyword: are capcut auto captions free
+Supporting: CapCut captions Pro, free captions limits, CapCut watermark
+Intent: Account/region/version-dependent cost and output decision, with dated evidence.
+Category / priority: Auto Captions / B
+Tool / evidence: AUTO CAPTION only after release; R8. Never copy contradictory marketing as fact.
+
+40. How to Import SRT into CapCut: Desktop, Web, and Mobile Differences
+Primary keyword: import SRT capcut
+Supporting: CapCut upload subtitles, SRT import mobile, CapCut Desktop captions
+Intent: Bring an existing file into supported versions; clearly label unsupported paths.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: EDITOR or /tools/vtt-to-srt where needed; R8, official CapCut help.
+
+41. How to Export Captions from CapCut as SRT or TXT
+Primary keyword: export SRT capcut
+Supporting: CapCut caption export, download subtitles CapCut, CapCut TXT captions
+Intent: File delivery rather than video export; verify auto-recognized vs typed caption limits.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: Existing-file converters only after export; R8, official CapCut help.
+
+YOUTUBE
+
+42. How to Add an SRT File to YouTube and Check the Captions
+Primary keyword: add SRT to YouTube
+Supporting: upload subtitles YouTube Studio, YouTube caption file, SRT UTF-8
+Intent: Owner-controlled upload/review/publish workflow with actual file examples.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: EDITOR; R7, R15. No uploading to the owner's channel without permission.
+
+43. YouTube Auto Captions Not Showing? Check Language, Audio, and Processing
+Primary keyword: youtube auto captions not showing
+Supporting: YouTube automatic subtitles missing, captions processing, unsupported speech language
+Intent: Missing automatic track diagnosis, distinct from correcting an existing track.
+Category / priority: Auto Captions / B
+Tool / evidence: Official workflow first; R16. No guaranteed processing time.
+
+44. How to Correct YouTube Auto Captions Before Publishing
+Primary keyword: edit youtube auto captions
+Supporting: fix YouTube subtitles, correct automatic captions, YouTube caption errors
+Intent: Review and correct an existing track; distinguish text mistakes from timing mistakes.
+Category / priority: Subtitle Tutorials / B
+Tool / evidence: EDITOR if using an exported file; R16. Link 43 only when captions are missing.
+
+PODCAST CAPTIONS
+
+45. How to Caption a Podcast with Multiple Speakers
+Primary keyword: podcast captions multiple speakers
+Supporting: podcast speaker labels, interview captions, overlapping speech captions
+Intent: Readable identification and human review; no automatic diarization promised.
+Category / priority: Auto Captions / B
+Tool / evidence: AUDIO and EDITOR only for verified steps; R10, W3C caption guidance.
+
+46. Turn Podcast Captions into Short-Clip Subtitles Without Starting Over
+Primary keyword: podcast clip subtitles
+Supporting: repurpose podcast captions, split podcast SRT, caption timestamps for clips
+Intent: Reuse a full-episode subtitle file while rebasing a clip's timing.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: SPLIT plus SHIFT if appropriate; R10, R21. Do not claim a video clip generator.
+
+CAPTION SOFTWARE AND CAPTION STYLES
+
+47. Free Auto Caption Software Compared: Export Limits, Watermarks, and Editing
+Primary keyword: best free auto caption software
+Supporting: free caption generator comparison, caption watermark, subtitle export limits
+Intent: Evidence-led comparison using the same authorized clip, criteria and date for each tool.
+Category / priority: Auto Captions / C
+Tool / evidence: AUTO CAPTION only after release and comparable testing; R6, R11, R23.
+
+48. Animated vs Static Captions: Which Style Fits Your Video?
+Primary keyword: animated vs static captions
+Supporting: word highlight captions, readable video captions, caption animation
+Intent: Style/readability decision with original examples, not a second software ranking.
+Category / priority: Auto Captions / C
+Tool / evidence: AUTO CAPTION conditional; R2, R3. No untested engagement/ranking promises.
+
+SUBTITLE TRANSLATORS
+
+49. Subtitle Translators Compared: Timing, Text Quality, and Free Export Limits
+Primary keyword: best subtitle translator
+Supporting: SRT translator comparison, subtitle translation tools, translate subtitles
+Intent: Test original source/target text with qualified language review and disclosed limits.
+Category / priority: Subtitle Tutorials / C
+Tool / evidence: No AENural translation tool CTA; R4. Don't rank translation quality without review.
+
+50. Why Translated Subtitles Need Timing and Line-Length Checks
+Primary keyword: translated subtitle timing
+Supporting: subtitle translation reading speed, translated captions too long, subtitle line breaks
+Intent: Post-translation quality control, distinct from selecting or generating translations.
+Category / priority: Subtitle Tutorials / A
+Tool / evidence: EDITOR or SHIFT for appropriate corrections; R4, R17. Timing retention isn't readability.
+
+RECOMMENDED START
+Choose a balanced first ten after considering your supplied writing and confirmed tool behavior.
+Strong initial candidates: 01, 11, 12, 18, 19, 20, 29, 30, 37, 42.
+This is an editorial suggestion, not a volume/difficulty ranking or fixed publication order.
+Cover the remaining confirmed subjects through later approved selections; do not rush unsupported comparisons.
+
+WRITING NOTES
+Answer the actual question early; use original examples and verified official references.
+Record software version/platform and check live free/paid/export policies near publication.
+Avoid unsupported claims that captions guarantee rankings, legal compliance or engagement.
+Don't simply make articles longer than competitors; make the task easier to complete.
+Before assigning a final slug, compare supplied content with already accepted posts and tool pages.
+For the complete evidence and design/SEO rules, read the four companion Markdown documents.

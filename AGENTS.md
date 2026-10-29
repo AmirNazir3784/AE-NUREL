@@ -16,3 +16,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Do not push, merge, deploy, or synchronize development changes to `AmirNazir3784/AE-NUREL` (`hostinger`) during this phase. Its connected Hostinger deployment must wait until the tools are complete and the final production release is authorized.
 - Keep credentials and runtime databases private and excluded from Git.
 - Tool development has no spending budget: use existing/free libraries and browser processing; do not buy services, use paid APIs, or add paid processing infrastructure.
+
+## Authorized production workflow (29 October 2026)
+
+- The owner explicitly authorized releasing completed video tools and supplied blog articles to both Faisal (`origin`) and AmirNazir (`hostinger`) so they become live. This supersedes the preceding production hold for completed, verified work.
+- Publish only completed tools/articles after local functional/browser checks, relevant tests and an optimized build. Do not describe tests as proof of 100% reliability.
+- Fast-forward the reviewed release to both repositories' `main` branches, preserve the development branch, and verify actual production responses after the connected deployment. Never force-push or overwrite remote work.
+- Compressor, Cropper and Free Green Screen Remover are the completed video tools in this release. Auto Caption, Lyrics and Podcast previews remain unreleased unless separately completed and authorized.
+- The header uses Blog instead of About/Help; those pages remain in the footer. Blog Article #1 includes a contextual link to the audio tool in Step 1. Use authoritative primary-source citations; never call outbound citations acquired backlinks.
+- Keep credentials, runtime databases, private recordings and generated QA artifacts excluded from Git. The no-spending rule remains in force.

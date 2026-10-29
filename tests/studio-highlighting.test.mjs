@@ -65,7 +65,7 @@ describe('real style-control interactions',()=>{
  async function exercise(available,task){const dom=new JSDOM('<div id="root"></div>');globalThis.window=dom.window;globalThis.document=dom.window.document;globalThis.IS_REACT_ACT_ENVIRONMENT=true;const root=createRoot(document.querySelector('#root'));let style={...STUDIO_PRESETS[0]};function render(){root.render(React.createElement(StyleControls,{style,disabled:false,wordTimingAvailable:available,onChange:patch=>{style={...style,...patch};render();},onPreset:value=>{style=value;render();},onError:message=>{throw Error(message);}}));}await act(render);try{await task(dom,()=>style);}finally{await act(()=>root.unmount());dom.window.close();}}
  it('makes background color immediately visible and the background switch actually toggles it',()=>exercise(false,async(dom,style)=>{const label=text=>Array.from(document.querySelectorAll('label')).find(el=>el.firstChild.textContent===text);const input=label('Background color').querySelector('input');await act(()=>{Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype,'value').set.call(input,'#aa5500');input.dispatchEvent(new dom.window.Event('input',{bubbles:true}));});assert.equal(style().background,true);assert.equal(style().highlight,'#aa5500');const checkbox=Array.from(document.querySelectorAll('label')).find(el=>el.textContent==='Highlight background').querySelector('input');await act(()=>checkbox.click());assert.equal(style().background,false);}));
  it('toggles per-word background independently of the whole-caption highlight',()=>exercise(true,async(dom,style)=>{
-   const checkbox=label=>Array.from(document.querySelectorAll('label')).find(el=>el.textContent===label).querySelector('input');
+   const checkbox=label=>Array.from(document.querySelectorAll('label')).find(el=>el.textContent.trim()===label).querySelector('input');
    const colors=label=>Array.from(document.querySelectorAll('label')).find(el=>el.firstChild.textContent===label).querySelector('input');
    const word=checkbox('Highlight spoken words'),background=checkbox('Background behind active word only');
    assert.equal(background.disabled,true);
@@ -90,13 +90,13 @@ describe('real style-control interactions',()=>{
  it('supports new italic and underline settings without affecting original caption text',()=>exercise(false,async(_,style)=>{
    const labels=['Italic','Underline','Strikethrough'];
    for(const label of labels) {
-     const input=Array.from(document.querySelectorAll('label')).find(el=>el.textContent===label).querySelector('input');
+     const input=Array.from(document.querySelectorAll('label')).find(el=>el.textContent.trim()===label).querySelector('input');
      await act(()=>input.click());
    }
    assert.equal(style().italic,true);assert.equal(style().underline,true);assert.equal(style().strikethrough,true);
  }));
  it('controls spoken-word background opacity independently from the caption background',()=>exercise(true,async(_,style)=>{
-   const toggle=(label)=>Array.from(document.querySelectorAll('label')).find(el=>el.textContent===label).querySelector('input');
+   const toggle=(label)=>Array.from(document.querySelectorAll('label')).find(el=>el.textContent.trim()===label).querySelector('input');
    await act(()=>toggle('Highlight spoken words').click());
    await act(()=>toggle('Background behind active word only').click());
    const label=Array.from(document.querySelectorAll('label')).find(el=>el.firstChild.textContent==='Active word background opacity');
@@ -105,5 +105,5 @@ describe('real style-control interactions',()=>{
    await act(()=>{Object.getOwnPropertyDescriptor(input.ownerDocument.defaultView.HTMLInputElement.prototype,'value').set.call(input,'.4');input.dispatchEvent(new input.ownerDocument.defaultView.Event('input',{bubbles:true}));});
    assert.equal(style().wordBackgroundOpacity,.4);assert.equal(style().background,false);
  }));
- it('enables real word highlighting only with source alignment, rather than a permanently disabled control',async()=>{for(const available of [false,true])await exercise(available,async(_,style)=>{const checkbox=Array.from(document.querySelectorAll('label')).find(el=>el.textContent==='Highlight spoken words').querySelector('input');assert.equal(checkbox.disabled,!available);await act(()=>checkbox.click());assert.equal(style().wordHighlight,available);});});
+ it('enables real word highlighting only with source alignment, rather than a permanently disabled control',async()=>{for(const available of [false,true])await exercise(available,async(_,style)=>{const checkbox=Array.from(document.querySelectorAll('label')).find(el=>el.textContent.trim()==='Highlight spoken words').querySelector('input');assert.equal(checkbox.disabled,!available);await act(()=>checkbox.click());assert.equal(style().wordHighlight,available);});});
 });

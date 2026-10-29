@@ -73,14 +73,14 @@ describe('on-device video compression planning', () => {
   });
 });
 
-describe('video tool development release boundary', () => {
-  it('appears only in the development directory and never in the released public registry', async () => {
+describe('released video tool boundary', () => {
+  it('appears in public discovery and is indexable without a QA flag', async () => {
     assert.ok(directoryTools('development').some(tool=>tool.href==='/tools/video-compressor'));
-    for(const env of ['production','test',undefined]) assert.equal(directoryTools(env).some(tool=>tool.href==='/tools/video-compressor'),false);
-    assert.equal(tools.some(tool=>tool.href==='/tools/video-compressor'),false);
+    for(const env of ['production','test',undefined]) assert.equal(directoryTools(env).some(tool=>tool.href==='/tools/video-compressor'),true);
+    assert.equal(tools.some(tool=>tool.href==='/tools/video-compressor'),true);
     const page = await readFile(new URL('../src/app/tools/video-compressor/page.tsx',import.meta.url),'utf8');
-    assert.match(page,/robots: \{ index: false, follow: false \}/);
-    assert.match(page,/NODE_ENV !== "development"/);
+    assert.match(page,/robots: \{ index: true, follow: true \}/);
+    assert.doesNotMatch(page,/notFound|AENURAL_VIDEO_TOOLS_QA/);
     const engine = await readFile(new URL('../src/features/video-compressor/compression-media.ts',import.meta.url),'utf8');
     assert.doesNotMatch(engine,/\bfetch\(|XMLHttpRequest|FormData/);
   });

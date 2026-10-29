@@ -7,10 +7,10 @@ import { tools } from "../src/lib/tools.ts";
 const expected = ["srt-to-vtt", "vtt-to-srt", "srt-to-ass", "srt-to-txt", "srt-to-json", "vtt-to-txt", "srt-to-mp4", "sbv-to-srt", "srt-to-sbv", "ass-to-srt"];
 const added = ["vtt-to-txt", "sbv-to-srt", "srt-to-sbv", "srt-to-mp4"];
 describe("completed Format Conversion discovery", () => {
-  it("publishes exactly the ten approved format tools and sixteen free tools", () => {
+  it("publishes exactly the ten approved format tools and nineteen free tools", () => {
     assert.deepEqual(tools.filter(t => t.group === "Format Conversion").map(t => t.href.split("/").at(-1)).sort(), [...expected].sort());
-    assert.equal(tools.length, 16);
-    assert.equal(new Set(tools.map(t => t.href)).size, 16);
+    assert.equal(tools.length, 19);
+    assert.equal(new Set(tools.map(t => t.href)).size, 19);
   });
   it("gives the four new pages unique metadata, H1s, breadcrumbs and related tools", async () => {
     const titles = new Set();
@@ -28,17 +28,18 @@ describe("completed Format Conversion discovery", () => {
   it("includes all released converters in the sitemap when a real origin is configured", async () => {
     let source = await readFile(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");
     source = source.replace('"@/lib/tools"', JSON.stringify(new URL("../src/lib/tools.ts", import.meta.url).href))
-      .replace('"@/lib/site-origin"', JSON.stringify(new URL("../src/lib/site-origin.ts", import.meta.url).href));
+      .replace('"@/lib/site-origin"', JSON.stringify(new URL("../src/lib/site-origin.ts", import.meta.url).href))
+      .replace('"@/content/blog/registry"', JSON.stringify(new URL('../src/content/blog/registry.ts', import.meta.url).href));
     const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext } }).outputText;
     const { default: sitemap } = await import("data:text/javascript;base64," + Buffer.from(js).toString("base64"));
     const previous = process.env.SITE_URL;
     try {
       process.env.SITE_URL = "https://tools.example";
       const urls = sitemap().map(entry => entry.url);
-      assert.equal(urls.length, 26);
+      assert.equal(urls.length, 31);
       for (const route of expected) assert.ok(urls.includes("https://tools.example/tools/" + route));
       delete process.env.SITE_URL;
-      assert.equal(sitemap().length, 26);
+      assert.equal(sitemap().length, 31);
       for (const route of expected) assert.ok(sitemap().some(entry => entry.url === "https://aenural.com/tools/" + route));
     } finally { if (previous === undefined) delete process.env.SITE_URL; else process.env.SITE_URL = previous; }
   });

@@ -13,7 +13,7 @@ describe('development caption directory and production hold',()=>{
  });
  it('excludes previews from production/test/unknown directory, public search, registry and categories',()=>{
   for(const env of ['production','test',undefined,''])assert.equal(directoryTools(env),tools);
-  assert.equal(tools.length,16);assert.deepEqual(categories.map(c=>c.id),['subtitle-tools']);
+  assert.equal(tools.length,19);assert.deepEqual(categories.map(c=>c.id),['subtitle-tools','video-tools']);
   for(const query of ['Audio to SRT / VTT','Auto Caption Generator','Speech to Captions','Free Subtitle Generator','Podcast to Captions','Caption Generation'])assert.deepEqual(searchTools(query),[]);
  });
  it('uses server-selected serializable directory data and existing cards, leaving sitemap public-only',async()=>{

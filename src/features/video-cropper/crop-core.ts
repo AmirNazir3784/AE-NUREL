@@ -3,6 +3,7 @@ export type Frame = { width: number; height: number };
 export const ASPECTS = { free: null, "9:16": [9, 16], "1:1": [1, 1], "4:5": [4, 5], "16:9": [16, 9], "3:2": [3, 2] } as const;
 export type Aspect = keyof typeof ASPECTS;
 export type Corner = "nw" | "ne" | "sw" | "se";
+export type Edge = "n" | "e" | "s" | "w";
 export type CropSettings = { format: "mp4" | "webm"; resolution: "original" | "1080" | "720" | "480"; keepAudio: boolean };
 export const DEFAULT_CROP_SETTINGS: CropSettings = { format: "mp4", resolution: "original", keepAudio: true };
 const even = (value: number) => Math.floor(value / 2) * 2;
@@ -33,6 +34,21 @@ export function resizeCrop(crop: Crop, frame: Frame, aspect: Aspect, corner: Cor
   const pair = ASPECTS[aspect];
   const size = pair ? fitSize(maxW, maxH, aspect, Math.min(width / pair[0], height / pair[1])) : fitSize(width, height, "free");
   return { x: west ? anchorX - size.width : anchorX, y: north ? anchorY - size.height : anchorY, ...size };
+}
+// Free-mode edges move only their own axis, keeping the opposite edge fixed.
+export function resizeCropEdge(crop: Crop, frame: Frame, edge: Edge, x: number, y: number): Crop {
+  if (edge === "w") {
+    const right = crop.x + crop.width;
+    const width = Math.max(2, even(clamp(right - x, 2, right)));
+    return { ...crop, x: right - width, width };
+  }
+  if (edge === "e") return { ...crop, width: Math.max(2, even(clamp(x - crop.x, 2, frame.width - crop.x))) };
+  if (edge === "n") {
+    const bottom = crop.y + crop.height;
+    const height = Math.max(2, even(clamp(bottom - y, 2, bottom)));
+    return { ...crop, y: bottom - height, height };
+  }
+  return { ...crop, height: Math.max(2, even(clamp(y - crop.y, 2, frame.height - crop.y))) };
 }
 export function editCrop(crop: Crop, frame: Frame, aspect: Aspect, field: keyof Crop, value: number): Crop {
   if (!Number.isFinite(value)) throw new Error("Enter a finite pixel value.");
