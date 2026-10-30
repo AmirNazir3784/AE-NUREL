@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 import { Brand } from "./brand";
 import { Icon } from "@/components/ui/icon";
 import { ToolIcon } from "@/components/ui/icon-tile";
-import { tools, searchTools } from "@/lib/tools";
-import { menuNames, allToolGroups as toolGroups } from "@/lib/discovery";
-import { products } from "@/lib/products";
-import { NavigationMenu } from "./navigation-menu";
+import { searchTools } from "@/lib/tools";
+import { menuNames } from "@/lib/discovery";
+import { ToolsMenu } from "./tools-menu";
+import { FreeToolsMenu } from "./free-tools-menu";
 import { AuthPreviewModal } from "./auth-preview-modal";
 import styles from "./header-search.module.css";
 import { useMemberIdentity } from "./use-member-identity";
@@ -58,9 +58,8 @@ export function Header({ membershipPreview = process.env.NODE_ENV === "developme
     <header className="aen-nav"><div className="aen-wrap aen-nav-inner">
       <Link href="/" className="aen-brand" aria-label="AENural home" onClick={closeMenus}><Brand /></Link>
       <nav className="aen-nav-links" aria-label="Main navigation">
-        <NavigationMenu label="Tools" className="aen-product-menu"><section><h2>AENural products</h2>{products.map(product => <Link href={product.href} key={product.href} className="aen-mega-product" onClick={closeMenus}><span className="aen-menu-icon"><Icon name="video" size={17} /></span><span><b>{product.title}</b><small>{product.description}</small></span></Link>)}</section><div className="aen-mega-footer"><Link href="/premium-tools" onClick={closeMenus}>See all tools →</Link></div></NavigationMenu>
-        <NavigationMenu label="Free Tools" className="aen-free-menu"><div className="aen-menu-intro"><strong>Free tools</strong><span>{tools.length} free utilities</span></div><div className="aen-mega-grid">{toolGroups.map(group => <section key={group}><h2>{group}</h2>{tools.filter(tool => tool.group === group).map(tool => <Link href={tool.href} key={tool.href} onClick={closeMenus}><ToolIcon name={tool.icon} compact /><b>{tool.title}</b></Link>)}</section>)}</div><div className="aen-mega-footer"><Link href="/tools" onClick={closeMenus}>See all free tools →</Link></div></NavigationMenu>
-        <Link href="/tools/ai-tools" onClick={closeMenus} aria-current={pathname === "/tools/ai-tools" ? "page" : undefined}>AI Tools</Link>
+        <ToolsMenu pathname={pathname} onNavigate={closeMenus} />
+        <FreeToolsMenu pathname={pathname} onNavigate={closeMenus} />
         {membershipPreview && <Link href="/pricing" onClick={closeMenus} aria-current={pathname === "/pricing" ? "page" : undefined}>Pricing</Link>}
         <Link href="/blog" onClick={closeMenus} aria-current={pathname === "/blog" ? "page" : pathname.startsWith("/blog/") ? "true" : undefined}>Blog</Link>
       </nav>

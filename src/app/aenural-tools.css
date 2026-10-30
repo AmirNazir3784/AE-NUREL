@@ -193,6 +193,8 @@ body:has(.aen-tool-page) { background-color: var(--page-surface); }
 }
 /* Conversion stations share primitives. Transcript/JSON are the outputs themselves. */
 .aen-file-converter { width: 100%; max-width: 760px; margin: 0 auto; }
+/* Keep constrained converter frames on the same center line as their hero. */
+.aen-tool-page .tool-frame:has(> :is(.srt-converter, .aen-file-converter)) { width: 100%; margin-inline: auto; }
 .aen-transcript, .aen-json-converter { max-width: 960px; }
 .aen-conversion-panel { padding: 24px; background: var(--surface); border-radius: 16px; min-width: 0; }
 .aen-local-note { color: var(--muted); font-size: 14px; margin: 14px 0; }
