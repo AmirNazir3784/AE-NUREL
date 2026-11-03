@@ -4,6 +4,7 @@ import { toolGroups } from "@/lib/discovery";
 export function ToolDirectory({ catalog }: { catalog: readonly Tool[] }) {
   const groups = [
     ...(catalog.some(tool => tool.group === "Video Tools") ? ["Video Tools"] : []),
+    ...(catalog.some(tool => tool.group === "Image Tools") ? ["Image Tools"] : []),
     ...(catalog.some(tool => tool.group === "Caption Generation") ? ["Caption Generation"] : []),
     ...toolGroups,
   ];

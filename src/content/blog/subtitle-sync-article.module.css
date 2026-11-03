@@ -1,2 +1,52 @@
-.diagnosis{display:grid;gap:10px;margin:28px 0}.diagnosis a{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5px 20px;padding:20px 22px;border:1px solid var(--border-strong);border-left:3px solid var(--accent);border-radius:10px;background:var(--surface);text-decoration:none!important}.diagnosis a:hover{border-color:var(--accent)}.diagnosis span{color:var(--muted);font-size:13px}.diagnosis strong{font-size:16px}.diagnosis small{grid-column:1/-1;color:var(--muted);font-size:12px}.equation{padding:20px 24px;margin:24px 0;border-radius:10px;background:var(--accent-soft);display:grid;gap:8px}.equation span{font-size:12px;color:var(--muted)}.equation code{font-size:15px;overflow-wrap:anywhere}.instructions{padding-left:24px}.instructions li{padding:0 0 14px 6px}.workedExample{margin:28px 0;border:1px solid var(--border-strong);border-radius:12px;overflow:hidden;background:var(--surface)}.workedExample figcaption{display:grid;gap:8px;padding:22px;font-size:16px}.workedExample figcaption span{font-size:12px;color:var(--muted);line-height:1.7}.tableScroll{overflow-x:auto;overscroll-behavior-x:contain}.tableScroll:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}.tableScroll table{width:100%;min-width:600px;border-collapse:collapse;font-size:13px;text-align:left}.tableScroll th,.tableScroll td{padding:16px;border-top:1px solid var(--border);vertical-align:top}.tableScroll thead{background:var(--surface-soft)}.tableScroll td{font-variant-numeric:tabular-nums;white-space:nowrap}.checklist{padding-left:24px}.checklist li{padding:0 0 12px 6px}.checklist li::marker{color:var(--accent)}.nextAction{padding:26px;margin-top:28px;border:1px solid var(--border-strong);border-radius:12px;background:var(--surface)}.nextAction>strong{font-family:var(--font-heading);font-size:20px}.nextAction p{font-size:16px;margin:12px 0 20px}.nextAction a{font-size:14px}@media(max-width:699px){.diagnosis a{grid-template-columns:1fr;padding:18px}.diagnosis small{grid-column:auto}.equation{padding:18px}.equation code{font-size:13px}.nextAction{padding:20px}}
-.screenshot{margin:30px 0 38px;border:1px solid var(--border-strong);border-radius:12px;overflow:hidden;background:var(--surface)}.screenshotScroll{overflow-x:auto;overscroll-behavior-x:contain;background:#14201c}.screenshotScroll:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}.screenshotCanvas{position:relative}.screenshotCanvas img{display:block;width:100%;height:auto}.marker{position:absolute;display:grid;place-items:center;width:24px;height:24px;transform:translate(-50%,-50%);border:2px solid #fff;border-radius:50%;background:#e78217;color:#171209;box-shadow:0 1px 4px #0008;font:800 12px/1 var(--font-platform);pointer-events:none}.screenshot figcaption{padding:20px 22px;font-size:15px;line-height:1.75}.screenshot figcaption>strong{display:block;margin-bottom:8px;font-size:17px}.screenshot figcaption p{margin:0 0 10px}.screenshot figcaption>a{font-size:12px}@media(max-width:699px){.screenshotCanvas{min-width:740px}.screenshot figcaption{padding:18px}.screenshot figcaption>strong{font-size:16px}}
+.article > section { margin-bottom: 52px; }
+.article h2 { margin-bottom: 22px; }
+.article h3 { margin: 28px 0 12px; }
+.article p { margin-bottom: 22px; }
+.diagnosis { display: grid; gap: 12px; margin: 30px 0; }
+.diagnosis a { display: grid; justify-items: start; gap: 6px; padding: 22px 24px; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; background: var(--surface); text-decoration: none !important; }
+.diagnosis a:hover { border-color: var(--accent); }
+.diagnosis strong { color: var(--accent); font-size: 17px; line-height: 1.5; }
+.diagnosis span { color: var(--foreground); font-size: 14px; line-height: 1.6; }
+.diagnosis small { color: var(--muted); font-size: 13px; line-height: 1.6; }
+.equation { display: grid; gap: 10px; padding: 22px 24px; margin: 26px 0; border-radius: 10px; background: var(--accent-soft); }
+.equation span { font-size: 13px; color: var(--muted); }
+.equation code { font-size: 15px; overflow-wrap: anywhere; }
+.instructions, .checklist { padding-left: 24px; margin: 24px 0; }
+.instructions li, .checklist li { padding: 0 0 14px 8px; }
+.instructions li:last-child, .checklist li:last-child { padding-bottom: 0; }
+.checklist li::marker { color: var(--accent); }
+.workedExample { margin: 30px 0; border: 1px solid var(--border-strong); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.workedExample figcaption { display: grid; gap: 10px; padding: 24px; font-size: 16px; }
+.workedExample figcaption span { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.tableScroll { overflow-x: auto; overscroll-behavior-x: contain; }
+.tableScroll table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 13px; text-align: left; }
+.tableScroll th, .tableScroll td { padding: 16px; border-top: 1px solid var(--border); vertical-align: top; }
+.tableScroll thead { background: var(--surface-soft); }
+.tableScroll td { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tableScroll:focus-visible, .screenshotScroll:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+.nextAction { padding: 28px; margin-top: 30px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--surface); }
+.nextAction > strong { display: block; font-family: var(--font-heading); font-size: 20px; line-height: 1.5; }
+.nextAction p { font-size: 16px; margin: 12px 0 22px; }
+.nextAction a { font-size: 14px; }
+.screenshot { margin: 32px 0; border: 1px solid var(--border-strong); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.screenshotScroll { overflow-x: auto; overscroll-behavior-x: contain; background: #14201c; }
+.screenshotCanvas { position: relative; }
+.screenshotCanvas img { display: block; width: 100%; height: auto; }
+.marker { position: absolute; display: grid; place-items: center; width: 24px; height: 24px; transform: translate(-50%, -50%); border: 2px solid #fff; border-radius: 50%; background: #e78217; color: #171209; box-shadow: 0 1px 4px #0008; font: 800 12px/1 var(--font-platform); pointer-events: none; }
+.screenshot figcaption { padding: 24px; font-size: 15px; line-height: 1.8; }
+.screenshot figcaption > strong { display: block; margin-bottom: 12px; font-size: 17px; line-height: 1.5; }
+.screenshot figcaption p { margin: 0 0 14px; }
+.screenshot figcaption > a { display: inline-block; padding-block: 4px; font-size: 13px; }
+@media (max-width: 699px) {
+  .article > section { margin-bottom: 40px; }
+  .article h3 { margin-top: 24px; }
+  .diagnosis { margin-block: 24px; gap: 10px; }
+  .diagnosis a { padding: 20px; }
+  .equation { padding: 20px; }
+  .equation code { font-size: 13px; }
+  .nextAction { padding: 22px; }
+  .screenshotCanvas { min-width: 740px; }
+  .screenshot figcaption { padding: 20px; }
+  .screenshot figcaption > strong { font-size: 16px; }
+  .workedExample figcaption { padding: 20px; }
+}

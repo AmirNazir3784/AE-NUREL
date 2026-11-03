@@ -74,7 +74,7 @@ export type StudioMedia = { width: number; height: number; duration: number; aud
 export function validateStudioMedia(media: StudioMedia) {
   if (![media.width, media.height, media.duration].every(Number.isFinite) || media.duration <= 0 || media.width <= 0 || media.height <= 0) throw new Error("This video has invalid dimensions or duration.");
   if (media.duration > STUDIO_LIMITS.seconds) throw new Error("This studio currently supports videos up to 2 minutes.");
-  if (media.width * media.height > STUDIO_LIMITS.pixels || Math.max(media.width, media.height) > 1920) throw new Error("Choose a video up to 1080p, including portrait video.");
+  if (media.width * media.height > STUDIO_LIMITS.pixels || Math.max(media.width, media.height) > 4096) throw new Error("Choose a video up to 4K, including portrait video.");
   if (media.audioTracks > 1) throw new Error("Choose a video with one audio track. Multiple audio tracks are not supported yet.");
 }
 export function studioIssues(document: EditorDocument, duration: number): string[] {

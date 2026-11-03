@@ -352,3 +352,10 @@
 .cap-entry-localSetupNote { display:flex; align-items:flex-start; gap:10px; color:var(--muted); }
 .cap-entry-localSetupNote svg { flex-shrink:0; color:var(--accent); margin-top:3px; }
 .cap-entry-localSetupNote p { margin:0; }
+
+/* Once editing, reserve the page's space for the work rather than the upload chrome. */
+.cap-page:has([aria-label="Video preview"]) .cap-tool-hero { padding-block:12px 24px; }
+.cap-page:has([aria-label="Video preview"]) .cap-website-intro { margin-bottom:14px; }
+.cap-page:has([aria-label="Video preview"]) .cap-website-intro h1 { font-size:26px; }
+.cap-hero-stage:has([aria-label="Video preview"]) .cap-workbench-bar { display:none; }
+.cap-hero-stage:has([aria-label="Video preview"]) .cap-workbench { box-shadow:none; border-color:var(--border); }

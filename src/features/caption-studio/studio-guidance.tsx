@@ -11,7 +11,7 @@ const faqs = [
   { question: "Can I correct a wrong word or timing?", answer: "Yes. Use the Captions tab to edit text and start/end times, split or merge captions, and undo changes." },
   { question: "Why is highlighted-word timing unavailable after editing?", answer: "Precise word highlighting uses measured speech timing. Editing text or timestamps pauses that effect for affected captions rather than inventing new word timings." },
   { question: "Are animated captions included in my downloaded video?", answer: "Yes. When you export a video, selected caption styles and animations are drawn into the video. Subtitle-only SRT/VTT downloads contain text and timing, not styling." },
-  { question: "What are the video size limits?", answer: "The current development studio supports videos up to 2 minutes, 200 MiB and 1080p. Export also depends on your browser's available video encoders." },
+  { question: "What are the video size limits?", answer: "The current development studio supports videos up to 2 minutes, 200 MiB and 4K. Export also depends on your browser's available video encoders." },
 ];
 
 export function StudioGuidance({ compact = false }: { compact?: boolean } = {}) {

@@ -18,15 +18,15 @@ function GuideScreenshot({file,width,height,alt,markers,children}:{file:string;w
 }
 
 export default function SubtitleSyncArticle() {
-  return <div data-blog-content="subtitle-sync">
+  return <div data-blog-content="subtitle-sync" className={styles.article}>
     <section id="diagnose-the-pattern" className={shared.section}>
       <h2>Identify the timing pattern before changing anything</h2>
       <p>Keep an untouched copy of your subtitle file and use the exact video export you plan to deliver. A transcript timed against an earlier edit may no longer match the finished cut. You do not need to rewrite correct dialogue to repair its timestamps.</p>
       <p>Choose three short lines with an unmistakable beginning, preferably after a pause. Note the subtitle start time and when the corresponding speech actually starts. Avoid overlapping voices or a repeated phrase that could lead you to measure the wrong line.</p>
       <div className={styles.diagnosis} aria-label="Choose a subtitle timing correction">
-        <a href="#fix-a-constant-delay"><span>Same error throughout</span><strong>Shift the timestamps</strong><small>Example: always 1.5 seconds early</small></a>
-        <a href="#fix-gradual-drift"><span>Error grows steadily</span><strong>Use two reference points</strong><small>Example: aligned first, increasingly late</small></a>
-        <a href="#fix-a-sudden-jump"><span>Error changes suddenly</span><strong>Repair the affected section</strong><small>Example: fine until a removed scene</small></a>
+        <a href="#fix-a-constant-delay"><strong>Shift the timestamps</strong><span>Same error throughout</span><small>Example: always 1.5 seconds early</small></a>
+        <a href="#fix-gradual-drift"><strong>Use two reference points</strong><span>Error grows steadily</span><small>Example: aligned first, increasingly late</small></a>
+        <a href="#fix-a-sudden-jump"><strong>Repair the affected section</strong><span>Error changes suddenly</span><small>Example: fine until a removed scene</small></a>
       </div>
       <p>A mixed pattern can contain both an initial delay and drift. Two measurements describe a straight-line correction; the middle checkpoint tests whether that model is appropriate. Matching two endpoints alone does not prove that everything between them is correct.</p>
     </section>

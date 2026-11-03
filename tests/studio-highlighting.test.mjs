@@ -76,12 +76,18 @@ describe('real style-control interactions',()=>{
    assert.equal(style().wordBackgroundColor,'#24a06b');
    assert.equal(style().highlight,'#187e70');
  }));
- it('shows all premium presets without a hidden gallery and offers a one-click horizontal center action',()=>exercise(false,async(_,style)=>{
-   const buttons=Array.from(document.querySelectorAll('button[aria-pressed]'));
+ it('shows all presets in Templates and exposes the horizontal center action in Customize',()=>exercise(false,async(_,style)=>{
+   const buttons=Array.from(document.querySelectorAll('button[aria-pressed][aria-label]'));
    assert.equal(buttons.length,30);
+   assert.equal(buttons[0].closest('[hidden]'),null);
    assert.equal(Array.from(document.querySelectorAll('summary')).some(el=>el.textContent.includes('More styles')),false);
+   const customize=Array.from(document.querySelectorAll('button')).find(el=>el.textContent==='Customize');
+   await act(()=>customize.click());
+   assert.equal(customize.getAttribute('aria-pressed'),'true');
+   assert.ok(buttons[0].closest('[hidden]'));
    const center=Array.from(document.querySelectorAll('button')).find(el=>el.textContent==='Center caption horizontally');
    assert.ok(center);
+   assert.equal(center.closest('[hidden]'),null);
    await act(()=>center.click());
    assert.equal(style().x,50);assert.equal(style().align,'center');
    const font=Array.from(document.querySelectorAll('label')).find(el=>el.firstChild.textContent==='Font');

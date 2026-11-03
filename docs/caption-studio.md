@@ -1,5 +1,48 @@
 # Caption Studio development checkpoint
 
+## Current delta only — 2 November 2026
+
+Owner explicitly confirms transcription, timing, styling and the export workflow
+were already built and checked. Treat those as the accepted baseline; do not
+repeat the historical broad browser/export certification checklist below.
+
+Inspected CaptionX /studio using the authorized public Source Window demo.
+Its upload flow displays 10 minutes / under 2 GB and a spoken-language choice;
+no speech job was repeated. Do not claim our current duration/file limits exceed
+those, or that this inspection establishes superior transcription quality.
+
+Concrete remaining gaps addressed:
+- Font warning was a line-ending mismatch, not missing license text. Compared
+  with official pinned Google Fonts copies, then taught the checker to accept
+  their exact Git-normalized LF hashes. Binary font checks stay byte-exact.
+  All 12 font/license checks pass after normalizing back to repository LF.
+- Extended frame validation from 1080p to UHD/DCI 4K, landscape and portrait,
+  with both pixel and 4096-pixel-edge guards. Upload hints/FAQ match. Existing
+  duration, bytes, cue/output limits and account/payment controls are unchanged.
+- 21 scoped studio tests pass, including new 4K acceptance and over-limit cases.
+  Scoped lint and optimized build/TypeScript pass.
+- Real localhost input/playback: one-second 3840x2160 fixture opens in the
+  editor, verified from the loaded video element. It is an upscaled public
+  fixture for dimensions/codec QA, not native-4K visual-quality evidence.
+
+Owner subsequently authorized local access recovery after losing credentials.
+Enabled existing owner-only mode through ignored .env.local, generated a new
+password in the ignored private credentials file, and used its recovered
+activation token to initialize the previously absent local owner account.
+Actual API checks: owner premium/advanced/accurate/all-presets access enabled,
+watermark off, visitors nonpremium, public signup disabled, other-email login
+rejected; local owner database has no other password accounts. Browser signed
+in successfully. No production credentials/configuration were changed.
+
+Targeted 4K export now passes through the real owner-authenticated editor using
+one imported test SRT, without transcription: downloaded H.264 MP4 independently
+decoded at 3840x2160, 30 frames, duration 1.02s, AAC stereo retained. Extracted
+frame confirms the caption is burned in. This short upscaled fixture certifies
+the added dimensions/codec path, not native-4K visual quality or long-video load.
+No transcription or old 1080p/portrait/WebM export checks were repeated. No push
+or deployment; previous local review hold remains. Logs/screenshot are ignored
+under artifacts/tool-completion/studio-*.
+
 19 October 2026. Open `/tools/auto-caption-generator` on the local development server, or choose **Auto Caption Generator** in All Tools. Production remains 404; 16 public tools are unchanged.
 
 Working: local video import, SRT/VTT import and downloads, manual text/timing editing, undo/redo, search, explicit cursor/playhead split, merge, time shift, synchronized preview and real burned-caption video export. Thirty caption presets (15 original, 10 first-pass, five OFL-font looks), direct placement/centering controls, and italic, underline, strikethrough, and active-word background-opacity settings. Twenty-four entrance animations are integrated into the shared preview/export painter, and generation controls are grouped separately from a condensed, searchable caption timeline and focused editing fields. Twenty-one font choices are available: Inter/Sora are bundled; Anton, Bebas Neue, Oswald, Playfair Display, and DM Sans are SIL OFL fonts with a checksum-verified local installer (`node scripts/install-studio-fonts.mjs`); the remaining fonts depend on the visitor device. The five OFL assets and license files must be committed from the installation before a public release. Preview and export share the same caption painter. Original audio is copied when compatible, otherwise actually transcoded; discarded tracks fail export.

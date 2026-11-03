@@ -31,3 +31,20 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Do not describe tools to users as browser-based, local, on-device, or processing on their computer. Keep ordinary tool UI, progress, navigation, marketing and blog instructions focused on the task and result (for example, “Compressing, please wait…”).
 - Use “audio-to-text converter” for Article #1's contextual tool link. The owner explicitly requested removing the processing-location wording from the supplied article too.
 - Keep privacy policies and any explicit upload consent accurate; never imply server processing or conceal an actual optional upload to satisfy this presentation preference. Processing algorithms, mode values and access controls stay unchanged.
+
+## Current local review hold (30 October 2026)
+
+- The owner updated the homepage/header design in both repositories and explicitly requested updating this PC before integrating the next tool's entry point. Both remote `main` branches and local `main`/`dev/tools-completion` were synchronized to `ecbb757` while preserving all uncommitted tool work.
+- Preserve the updated Tools and Free Tools menu components and converter layouts. Integrate new tool links using that updated design.
+- Continue completing and testing AI Eye Contact locally. Do not push any changes to either repository or deploy until the owner reviews the combined local version and explicitly instructs a new push. This supersedes earlier standing release authorization while this review hold is active.
+
+## Competitor-first completion workflow (2 November 2026)
+
+- Before planning or implementing each new tool, actually use its CaptionX counterpart with authorized public fixtures, record observations and identify useful original improvements. Do not claim unmeasured superiority. Complete and test one tool before moving to the next.
+- Compress MP4, Reduce Video File Size, WhatsApp Compressor, MOV Compressor and Compress Image to 20KB now have local implementations and functional checks. Read `docs/compressor-competitor-research.md` and `docs/compression-tools-local-review.md` before further work. All remain under the local review/push hold above.
+
+## Owner-authorized synchronization (3 November 2026)
+
+- The owner explicitly requested fixing the blog's spacing and publishing all current local changes to both repositories. This supersedes the local push hold for this checked synchronization. Preserve private credentials, databases, recordings and generated QA artifacts outside Git.
+- Publish the current implementation state, retaining existing preview/access restrictions; a repository synchronization is not evidence that every preview is a completed public product. Do not remove feature guards as an incidental consequence of pushing code.
+- The blog autopilot is authorized for one original article per eligible Asia/Karachi day/run. Read `docs/blog/autopilot-workflow.md` and the four saved blog references. Reconcile the current private manifest and live article before starting another post. The owner requested actual screenshots with numbered instructions and consistent spacing.

@@ -8,6 +8,7 @@ import {
 } from "./compression-core";
 import type { CompressionProgress } from "./compression-media";
 import styles from "./video-compressor.module.css";
+import { compressorProfiles, validateProfileInput, type CompressorProfile } from "./compressor-profiles";
 
 type Result = { blob: Blob; url: string; filename: string; width: number; height: number; seconds: number };
 const modes: { id: CompressionMode; title: string; description: string }[] = [
@@ -21,7 +22,8 @@ function durationLabel(seconds: number) {
   return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60).toString().padStart(2, "0")}`;
 }
 
-export function VideoCompressor() {
+export function VideoCompressor({ tenMB = false, profile }: { tenMB?: boolean; profile?: CompressorProfile }) {
+  const preset = profile ? compressorProfiles[profile] : undefined;
   const fileInput = useRef<HTMLInputElement>(null);
   const sequence = useRef(0);
   const controller = useRef<AbortController | null>(null);
@@ -29,7 +31,7 @@ export function VideoCompressor() {
   const [file, setFile] = useState<File | null>(null);
   const [media, setMedia] = useState<CompressionMedia | null>(null);
   const [sourceUrl, setSourceUrl] = useState("");
-  const [settings, setSettings] = useState<CompressionSettings>(DEFAULT_COMPRESSION_SETTINGS);
+  const [settings, setSettings] = useState<CompressionSettings>(() => tenMB ? { ...DEFAULT_COMPRESSION_SETTINGS, mode: "target", targetMB: 10 } : preset?.initial ?? DEFAULT_COMPRESSION_SETTINGS);
   const [result, setResult] = useState<Result | null>(null);
   const [preview, setPreview] = useState<"original" | "compressed">("original");
   const [busy, setBusy] = useState<"inspecting" | "compressing" | null>(null);
@@ -61,14 +63,14 @@ export function VideoCompressor() {
 
   function changeSettings(patch: Partial<CompressionSettings>) {
     clearResult();
-    setSettings(previous => ({ ...previous, ...patch }));
+    setSettings(previous => ({ ...previous, ...patch, ...(preset?.format ? { format: preset.format } : {}), ...(tenMB ? { mode: "target" as const, targetMB: 10 } : {}) }));
     setError("");
     setNotice("");
   }
 
   async function chooseFile(candidate: File) {
     setDragging(false);
-    try { validateCompressionFile(candidate); }
+    try { validateCompressionFile(candidate); validateProfileInput(candidate.name, profile); }
     catch (failure) { setError(failure instanceof Error ? failure.message : "Choose a supported video."); return; }
     const operation = ++sequence.current;
     controller.current?.abort();
@@ -145,15 +147,15 @@ export function VideoCompressor() {
   const stage = busy === "inspecting" ? "Checking your video…" : progress?.phase === "preparing" ? "Preparing your video…" : progress?.phase === "finishing" ? "Finishing and checking the file…" : "Compressing, please wait…";
 
   return <section className={styles.workspace} aria-label="Video compressor workspace" aria-busy={!!busy}>
-    <input ref={fileInput} className={styles.fileInput} type="file" accept=".mp4,.m4v,.mov,.webm,.mkv" aria-label="Choose video file" onChange={onFileChange} />
+    <input ref={fileInput} className={styles.fileInput} type="file" accept={preset?.accept ?? ".mp4,.m4v,.mov,.webm,.mkv"} aria-label="Choose video file" onChange={onFileChange} />
     <div className={styles.mainPanel}>
       <div className={styles.panelHead}><span><Icon name="video" size={18} /> Your video</span><span className={styles.localBadge}><i /> Original preserved</span></div>
       {!file ? <div className={`${styles.dropzone} ${dragging ? styles.dragging : ""}`} role="region" aria-label="Video file drop area" onDragOver={event => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={onDrop}>
         <span className={styles.uploadIcon}><Icon name="upload" size={29} /></span>
-        <h2>Make room for a smaller video.</h2>
+        <h2>{tenMB ? "Make it fit a 10 MB limit." : preset?.heading ?? "Make room for a smaller video."}</h2>
         <p>Drop a video here, or choose one from your device.</p>
         <button className={styles.primary} type="button" onClick={() => fileInput.current?.click()}><Icon name="plus" size={18} /> Choose video</button>
-        <small>MP4, MOV, M4V, WebM or MKV<br />Up to 500 MB · 20 minutes · 4K input</small>
+        <small>{preset ? preset.accept.replaceAll(".", "").replaceAll(",", " · ").toUpperCase() : "MP4, MOV, M4V, WebM or MKV"}<br />Up to 500 MB · 20 minutes · 4K input</small>
       </div> : <>
         <div className={styles.fileRow}><div><strong title={file.name}>{file.name}</strong><span>{formatVideoBytes(file.size)} · {media ? durationLabel(media.duration) : ""}</span></div><button type="button" className={styles.textButton} onClick={() => fileInput.current?.click()}>Change video</button><button type="button" className={styles.iconButton} aria-label="Remove video" onClick={reset}><Icon name="close" size={18} /></button></div>
         <div className={styles.previewToolbar}><div role="group" aria-label="Video preview"><button type="button" aria-pressed={preview === "original"} onClick={() => setPreview("original")}>Original</button><button type="button" disabled={!result} aria-pressed={preview === "compressed"} onClick={() => setPreview("compressed")}>Compressed</button></div><span>{preview === "compressed" && result ? `${result.width} × ${result.height}` : media ? `${media.width} × ${media.height}` : ""}</span></div>
@@ -163,7 +165,9 @@ export function VideoCompressor() {
       {busy && <div className={styles.progressPanel} role="status" aria-live="polite"><div><strong>{stage}</strong><span>{progress?.pass === 2 ? "Pass 2 · " : ""}{progress?.percent !== null && progress?.percent !== undefined ? `${progress.percent}%` : ""}</span></div><progress max={100} value={progress?.percent ?? undefined} aria-label={stage} /><button type="button" className={styles.textButton} onClick={cancel}>Cancel {busy === "inspecting" ? "loading" : "compression"}</button></div>}
       {error && <p className={styles.error} role="alert"><Icon name="warning" size={18} />{error}</p>}
       {!busy && notice && <p className={styles.notice} role="status">{notice}</p>}
+      {tenMB && file && file.size <= 10_000_000 && !busy && !result && <p className={styles.notice}>Your original already fits: {file.size.toLocaleString("en-US")} bytes out of 10,000,000. <a href={sourceUrl} download={file.name}>Download original</a> to keep its quality, or compress a separate copy below.</p>}
       {result && file && <div className={styles.result}>
+        {settings.mode === "target" && <p className={styles.notice}><strong>{settings.targetMB} MB limit passed.</strong> {result.blob.size.toLocaleString("en-US")} / {Math.floor(settings.targetMB * 1_000_000).toLocaleString("en-US")} bytes · {formatVideoBytes(settings.targetMB * 1_000_000 - result.blob.size)} below the limit.</p>}
         <div className={styles.resultHeading}><div><span className={styles.eyebrow}>YOUR RESULT</span><h2>{saved > 0 ? "Ready to share." : "Your converted video is ready."}</h2></div><span className={saved > 0 ? styles.savings : styles.larger}>{saved > 0 ? `${saved.toFixed(0)}% smaller` : "Larger than original"}</span></div>
         <div className={styles.comparison}><div><span>Original <b>{formatVideoBytes(file.size)}</b></span><div><i style={{ width: `${file.size / Math.max(file.size, result.blob.size) * 100}%` }} /></div></div><div><span>Compressed <b>{formatVideoBytes(result.blob.size)}</b></span><div><i className={styles.resultBar} style={{ width: `${result.blob.size / Math.max(file.size, result.blob.size) * 100}%` }} /></div></div></div>
         {saved <= 0 && <p className={styles.notice}>This source was already efficiently encoded. Try Smaller file or a lower resolution to reduce it further.</p>}
@@ -172,19 +176,19 @@ export function VideoCompressor() {
     </div>
 
     <aside className={styles.settingsPanel} aria-label="Compression settings">
-      <div className={styles.settingsHeading}><span className={styles.eyebrow}>MAKE IT YOURS</span><h2>Smaller, your way.</h2><p>Start with a preset. Fine-tune the details.</p></div>
+      <div className={styles.settingsHeading}><span className={styles.eyebrow}>{tenMB ? "ONE CLEAR SIZE LIMIT" : "MAKE IT YOURS"}</span><h2>{tenMB ? "10 MB. Ready to send." : preset?.title ?? "Smaller, your way."}</h2><p>{tenMB ? "A fixed size budget. Choose the detail and sound you need." : preset?.note ?? "Start with a preset. Fine-tune the details."}</p></div>
       <fieldset disabled={!!busy} className={styles.settingsFields}>
         <legend className={styles.srOnly}>Compression settings</legend>
-        <span className={styles.label}>Compression mode</span>
+        {tenMB ? <div className={styles.estimate}><span>MAXIMUM FILE SIZE</span><strong>10 MB</strong><small>10,000,000 bytes. Actual output checked before download. A second pass runs if needed.</small></div> : <><span className={styles.label}>Compression mode</span>
         <div className={styles.modes} role="group" aria-label="Compression mode">{modes.map(mode => <button key={mode.id} type="button" aria-pressed={settings.mode === mode.id} onClick={() => changeSettings({ mode: mode.id })}><span>{mode.title}</span><small>{mode.description}</small><i aria-hidden="true">{settings.mode === mode.id ? <Icon name="check" size={13} /> : null}</i></button>)}</div>
-        {settings.mode === "target" && <div className={styles.target}><label className={styles.label} htmlFor="compression-target">Target file size (MB)</label><div><input id="compression-target" type="number" min="0.1" max="250" step="0.1" value={settings.targetMB || ""} onChange={event => changeSettings({ targetMB: event.target.valueAsNumber || 0 })} /><span>MB</span></div><div className={styles.quickTargets}>{[5, 10, 25].map(size => <button key={size} type="button" aria-pressed={settings.targetMB === size} onClick={() => changeSettings({ targetMB: size })}>{size} MB</button>)}</div></div>}
-        <div className={styles.selects}><label>Resolution<select aria-label="Resolution" value={settings.resolution} onChange={event => changeSettings({ resolution: event.target.value as CompressionSettings["resolution"] })}><option value="original">Keep source size</option><option value="1080">1080p · more detail</option><option value="720">720p · balanced</option><option value="480">480p · smaller</option></select></label><label>Output format<select aria-label="Output format" value={settings.format} onChange={event => changeSettings({ format: event.target.value as CompressionSettings["format"] })}><option value="mp4">MP4 · H.264</option><option value="webm">WebM</option></select></label></div>
+        {settings.mode === "target" && <div className={styles.target}><label className={styles.label} htmlFor="compression-target">Target file size (MB)</label><div><input id="compression-target" type="number" min="0.1" max="250" step="0.1" value={settings.targetMB || ""} onChange={event => changeSettings({ targetMB: event.target.valueAsNumber || 0 })} /><span>MB</span></div><div className={styles.quickTargets}>{[5, 10, 25].map(size => <button key={size} type="button" aria-pressed={settings.targetMB === size} onClick={() => changeSettings({ targetMB: size })}>{size} MB</button>)}</div></div>}</>}
+        <div className={styles.selects}><label>Resolution<select aria-label="Resolution" value={settings.resolution} onChange={event => changeSettings({ resolution: event.target.value as CompressionSettings["resolution"] })}><option value="original">Keep source size</option><option value="1080">1080p · more detail</option><option value="720">720p · balanced</option><option value="480">480p · smaller</option></select></label><label>Output format<select aria-label="Output format" disabled={!!preset?.format} value={settings.format} onChange={event => changeSettings({ format: event.target.value as CompressionSettings["format"] })}><option value="mp4">MP4 · H.264</option>{!preset?.format && <option value="webm">WebM</option>}</select></label></div>
         <small className={styles.hint}>Your video keeps its aspect ratio and is never upscaled.</small>
         <label className={styles.audio}><span><Icon name={settings.keepAudio ? "volume" : "volume-off"} size={19} /><span>Keep sound<small>{media && !media.audioTracks ? "This video has no audio track" : "Uncheck to create a silent video"}</small></span></span><input type="checkbox" checked={settings.keepAudio} disabled={!!media && !media.audioTracks} onChange={event => changeSettings({ keepAudio: event.target.checked })} /></label>
       </fieldset>
       <div className={styles.estimate}><span>ESTIMATED OUTPUT</span><strong>{plan ? `About ${formatVideoBytes(plan.estimatedBytes)}` : media ? "Adjust your settings" : "Choose a video"}</strong><small>{plan ? `${plan.width} × ${plan.height} · ${settings.format.toUpperCase()} · actual size checked after compression` : media ? "Check the message below to calculate a new estimate." : "See the estimated size before you start."}</small></div>
       {planError && <p className={styles.error} role="alert">{planError}</p>}
-      <button className={`${styles.primary} ${styles.compressButton}`} type="button" disabled={!file || !plan || !!busy} onClick={() => void compress()}><Icon name="video" size={18} />{busy === "compressing" ? "Compressing…" : "Compress video"}<Icon name="arrow" size={18} /></button>
+      <button className={`${styles.primary} ${styles.compressButton}`} type="button" disabled={!file || !plan || !!busy} onClick={() => void compress()}><Icon name="video" size={18} />{busy === "compressing" ? "Compressing…" : tenMB ? "Compress to 10 MB" : "Compress video"}<Icon name="arrow" size={18} /></button>
       <p className={styles.privateNote}><Icon name="shield" size={15} />Free to use. No account or watermark.</p>
     </aside>
   </section>;

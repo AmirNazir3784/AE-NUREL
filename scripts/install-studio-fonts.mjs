@@ -82,8 +82,19 @@ const FILES = [
   ]
 ];
 function gitBlobSha(buffer) { return createHash("sha1").update("blob " + buffer.length + "\0").update(buffer).digest("hex"); }
+// The upstream OFL files below use CRLF. Git deliberately stores license text
+// with LF; accept those exact normalized copies, never normalize font binaries.
+const LF_LICENSE_SHAS = {
+  "93feddee37145696e123ea65a6772cab09663f9e": "efd0dd80c2deafa962d86926d1f445a9aa7407c4",
+  "4d4e319b6114be0174e6de5d8090408f78dc65b8": "9d0219e980f80da5a504e3b397d6113adffd8d67",
+  "4430b85ac62998e2edb914360f9ebdfe43f4deaa": "441171d68ee2fcc970bd0ad894f815050ef895ae",
+};
 async function verifiedExisting(path, sha) {
-  try { return gitBlobSha(await readFile(path)) === sha; } catch (error) { if (error.code === "ENOENT") return false; throw error; }
+  try {
+    const buffer = await readFile(path);
+    if (gitBlobSha(buffer) === sha) return true;
+    return path.endsWith("-OFL.txt") && !!LF_LICENSE_SHAS[sha] && gitBlobSha(Buffer.from(buffer.toString("utf8").replace(/\r\n/g, "\n"))) === LF_LICENSE_SHAS[sha];
+  } catch (error) { if (error.code === "ENOENT") return false; throw error; }
 }
 const isDry = process.argv.includes("--dry-run");
 const isCheck = process.argv.includes("--check");

@@ -25,6 +25,8 @@ import { captionAccess, type CaptionAccess } from "../membership/caption-policy"
 import { memberRequest, type MemberStatus } from "../membership/member-client";
 import { accessibleStyle, type CaptionProjectData } from "../membership/project-validation";
 import { paintStudioWatermark } from "./studio-watermark";
+import { ProductivityControls } from "./productivity-controls";
+import { CaptionTimeline } from "./caption-timeline";
 
 type Source = { file: File; url: string; media: StudioMedia };
 function initialSession() { const document = emptyEditor(); return { ...initialEditorSession, document, saved: document }; }
@@ -238,11 +240,13 @@ export function CaptionStudio({ transcriptionAvailable = false, embedded = false
             <button type="button" aria-label={fullscreen ? "Exit fullscreen preview" : "Fullscreen preview"} onClick={() => void toggleFullscreen()}><Icon name="expand" size={17} /></button>
             </div>
           </div>
-          {style.wordHighlight && alignment.length > usableAlignment.length && <p className={styles.note} role="status">Word highlighting is paused for changed captions. Undo your edits or generate captions again to restore alignment.</p>}
+          {style.wordHighlight && alignment.length > 0 && usableAlignment.length < document.cues.length && <p className={styles.note} role="status">Word highlighting is paused for changed captions. Undo your edits or generate captions again to restore alignment.</p>}
           {layoutHint && <p className={styles.note} role="status">{layoutHint}</p>}
+          {!!document.cues.length && <div className={styles.exportBar}><label className={styles.inline}>Video format<select value={format} disabled={!!busy} onChange={event => { setFormat(event.target.value as "mp4" | "webm"); setOutput(null); }}><option value="mp4">MP4</option><option value="webm">WebM</option></select></label><button type="button" className="button button-primary" disabled={!!busy || !!issues.length} onClick={() => void render()}><Icon name="download" size={17} />Export video</button></div>}
+          {!!document.cues.length && <CaptionTimeline document={document} duration={source.media.duration} time={time} selected={selected} busy={!!busy} onSeek={seek} onSelect={id=>{setSelected(id);video.current?.pause();const item=document.cues.find(c=>c.id===id);if(item?.start!==null&&item?.start!==undefined)seek(item.start/1000);}} onApply={next=>applyEdit(()=>next)} />}
           
           <div className={styles.processingArea} aria-label="Video processing and downloads">
-            <h2 className={styles.centerTaskTitle}>{document.cues.length ? "Export your captions" : "Create captions"}</h2>
+            {!document.cues.length && <h2 className={styles.centerTaskTitle}>Create captions</h2>}
             <details className={styles.workflowSection} open={!document.cues.length || busy === "transcribing" ? true : undefined}>
               <summary><span>Generate / import</span><small>{document.cues.length ? "Replace or add captions" : "Start with your video"}</small></summary>
               <div className={styles.workflowBody}>
@@ -252,32 +256,34 @@ export function CaptionStudio({ transcriptionAvailable = false, embedded = false
               </div>
             </details>
           </div>
-          {!!document.cues.length && <div className={styles.exportBar}><label className={styles.inline}>Video format<select value={format} disabled={!!busy} onChange={event => { setFormat(event.target.value as "mp4" | "webm"); setOutput(null); }}><option value="mp4">MP4</option><option value="webm">WebM</option></select></label><button type="button" className="button button-primary" disabled={!!busy || !!issues.length} onClick={() => void render()}><Icon name="download" size={17} />Export video</button></div>}
           {busy === "exporting" && <div className={styles.progress} role="status"><progress max={100} value={progress} /><span>Exporting · {progress}%</span><button type="button" className="text-button" onClick={cancel}>Cancel export</button></div>}
           {output && <div className={styles.result}><video ref={exportedVideo} src={output.url} controls playsInline preload="metadata" aria-label="Exported captioned video" onPlay={() => video.current?.pause()} /><a className="button button-primary" href={output.url} download={output.name}>Download captioned video</a></div>}
-          {!!document.cues.length && <div className={styles.subtitleDownloads}>{captionDownloads}</div>}
-          {accessEnabled&&!!document.cues.length&&<div className={styles.membershipStatus}><button type="button" className="button button-secondary" onClick={()=>void saveProject()} disabled={!!busy||projectBusy||!access.signedIn}>{projectBusy?'Saving project…':project?'Save project changes':'Save caption project'}</button><a href="/account/projects" className="text-button">Your saved projects</a><p>Captions, timing and styles are saved. Reattach the original video when reopening.</p>{projectNotice&&<p role="status">{projectNotice}</p>}</div>}
+          {!!document.cues.length && <details className={styles.secondaryActions}><summary>Subtitle downloads &amp; saved projects</summary><div className={styles.subtitleDownloads}>{captionDownloads}</div>
+          {accessEnabled&&<div className={styles.membershipStatus}><button type="button" className="button button-secondary" onClick={()=>void saveProject()} disabled={!!busy||projectBusy||!access.signedIn}>{projectBusy?'Saving project…':project?'Save project changes':'Save caption project'}</button><a href="/account/projects" className="text-button">Your saved projects</a><p>Captions, timing and styles are saved. Reattach the original video when reopening.</p>{projectNotice&&<p role="status">{projectNotice}</p>}</div>}
+          </details>}
           {!!issues.length && <p className={styles.note}>{issues[0]}</p>}
           {!!document.cues.length && <details className={styles.details}><summary>Video and export details</summary><p>{source.media.width} × {source.media.height} · {source.media.audioTracks ? "Original audio included in video export" : "This source has no audio track"}. Encoding support is checked on export. The video includes your styles; SRT/VTT contain only text and timing.</p><p>Your work stays in this session—download before leaving. Use Change video to start another project.</p></details>}
           </> : <div className={styles.emptyPreview}>
             <div className={styles.emptyPreviewHeader}><span>VIDEO</span><span>Ready for your footage</span></div>
-            <div className={styles.upload}><FileUpload accept=".mp4,.mov,.webm,video/mp4,video/quicktime,video/webm" title="Start with your video" description="MP4, MOV or WebM with a codec your browser can decode." buttonLabel="Choose video" hint="Up to 2 minutes · 200 MiB · 1080p" busy={!!busy} validateFile={validateStudioFile} onFile={file => void loadVideo(file)} onError={setError} /></div>
+            <div className={styles.upload}><FileUpload accept=".mp4,.mov,.webm,video/mp4,video/quicktime,video/webm" title="Start with your video" description="MP4, MOV or WebM with a codec your browser can decode." buttonLabel="Choose video" hint="Up to 2 minutes · 200 MiB · 4K" busy={!!busy} validateFile={validateStudioFile} onFile={file => void loadVideo(file)} onError={setError} /></div>
             <div className={styles.localSetupNote}><Icon name="volume" size={16} /><p>Generate captions when you’re ready, then review and edit the result.</p></div>
           </div>}
         </section>
         <aside className={`${styles.controls} ${styles.captionSide}`} aria-label="Caption controls">
-          <div className={styles.sideHeading}><strong>Captions</strong><span>Transcript &amp; timing</span></div>
+          <div className={styles.sideHeading}><strong>Transcript</strong><span>Edit words and timing</span></div>
 
           <section id="studio-captions" aria-label="Caption timeline and editing">
             {document.cues.length ? <>
             <div className={styles.captionWorkspace}>
               <div className={styles.captionToolbar}>
-                <div><strong>Captions</strong><small>{document.cues.length} in timeline</small></div>
+                <div><small>{document.cues.length} caption{document.cues.length === 1 ? "" : "s"}</small></div>
                 <button type="button" className={styles.captionAdd} disabled={!!busy} onClick={addCaption} aria-label="Add caption"><Icon name="plus" size={17} /> Add</button>
                 <div className={styles.history}><button type="button" disabled={!!busy || !session.past.length && !session.pendingBase} onClick={() => { dispatch({ type: "undo" }); invalidate(); }}>Undo</button><button type="button" disabled={!!busy || !session.future.length} onClick={() => { dispatch({ type: "redo" }); invalidate(); }}>Redo</button></div>
               </div>
               <label className={styles.captionSearch}><span className="sr-only">Search caption text</span><input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Find a caption…" /></label>
+              <details className={styles.toolDrawer}><summary>Transcript tools</summary><ProductivityControls key={source?.url} document={document} alignment={alignment} busy={!!busy} makeId={()=>`studio-group-${++cueId.current}`} onApply={(next,addedAlignment)=>{applyEdit(()=>next);if(addedAlignment)setAlignment(previous=>[...previous,...addedAlignment]);}} onSelect={id=>{setSelected(id);setQuery("");video.current?.pause();const item=document.cues.find(c=>c.id===id);if(item?.start!==null&&item?.start!==undefined)seek(item.start/1000);}} />
 
+              </details>
               <div className={styles.cueList} aria-label="Caption timeline">{document.cues.map((item, index) => !item.text.toLocaleLowerCase().includes(query.toLocaleLowerCase()) ? null : <button key={item.id} type="button" className={selected === item.id ? styles.selectedCue : ""} title={item.text} aria-current={selected === item.id ? "true" : undefined} disabled={!!busy} onClick={() => { setSelected(item.id); if (item.start !== null) seek(item.start / 1000); }}><span className={styles.cueNumber}>{index + 1}</span><div><small>{item.start === null ? "Check timing" : formatEditorTime(item.start, "vtt")}</small><p dir="auto">{item.text || "Empty caption"}</p></div></button>)}</div>
               {query && !document.cues.some(item => item.text.toLocaleLowerCase().includes(query.toLocaleLowerCase())) && <p className={styles.emptySearch}>No captions match. Try a shorter search.</p>}
               {cue && <fieldset className={styles.cueEditor} disabled={!!busy}><legend>Edit caption {document.cues.indexOf(cue) + 1}</legend><div className={styles.times}>{(["start", "end"] as const).map(field => <label key={field}>{field === "start" ? "Start" : "End"}<input value={cue[`${field}Draft`] ?? (cue[field] === null ? "" : formatEditorTime(cue[field], document.format))} onChange={event => { dispatch({ type: "draft", id: cue.id, field, value: event.target.value }); invalidate(); }} onBlur={() => dispatch({ type: "commit" })} aria-invalid={cue[field] === null || cue.start !== null && cue.end !== null && cue.end <= cue.start} /></label>)}</div><label>Caption text<textarea ref={textSelection} rows={3} dir="auto" value={cue.text} maxLength={2000} onChange={event => { dispatch({ type: "draft", id: cue.id, field: "text", value: event.target.value }); invalidate(); }} onBlur={() => dispatch({ type: "commit" })} /></label><details className={styles.details}><summary>Edit tools</summary><div className={styles.actions}><button type="button" className="button button-secondary" onClick={() => applyEdit(() => splitStudioCue(document, cue.id, Math.round(time * 1000), textSelection.current?.selectionStart ?? 0, `studio-${++cueId.current}`))}>Split at playhead</button><button type="button" className="button button-secondary" onClick={() => applyEdit(() => mergeStudioCue(document, cue.id))}>Merge with next</button><button type="button" className="button button-secondary" onClick={() => applyEdit(() => ({ ...document, cues: [...document.cues].sort((a,b) => (a.start ?? Infinity) - (b.start ?? Infinity)) }))}>Sort by time</button></div><p className={styles.note}>Split at the playhead and text cursor.</p><label>Shift all (seconds)<input type="text" inputMode="decimal" value={shift} onChange={event => setShift(event.target.value)} /></label><button type="button" className="button button-secondary" onClick={() => applyEdit(() => shiftEditorCues(document, shift).document)}>Apply shift</button></details><button type="button" className="text-button destructive-action" onClick={() => { dispatch({ type: "apply", document: deleteEditorCue(document, cue.id) }); setSelected(""); invalidate(); }}>Delete caption</button></fieldset>}

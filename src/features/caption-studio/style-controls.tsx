@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { DownloadButton } from "@/components/tools/download-button";
 import { STUDIO_FONTS, STUDIO_PRESETS, parseStudioStyle, type StudioStyle } from "./studio-core";
 import { STUDIO_ANIMATIONS } from "./studio-motion";
@@ -11,6 +11,7 @@ type ColorKey = "color" | "highlight" | "outlineColor" | "shadowColor" | "wordCo
 
 export function StyleControls({ style, disabled, access, wordTimingAvailable = false, onChange, onPreset, onError }: { style: StudioStyle; disabled: boolean; access?:CaptionAccess; wordTimingAvailable?: boolean; onChange: (value: Partial<StudioStyle>) => void; onPreset: (value: StudioStyle) => void; onError: (message: string) => void }) {
   const fileInput = useRef<HTMLInputElement>(null);
+  const [panel, setPanel] = useState<"templates" | "customize">("templates");
   function slider(label: string, key: NumericKey, min: number, max: number, step = 1, unit = "") {
     return <label>{label}<span className={styles.rangeRow}><input type="range" min={min} max={max} step={step} value={style[key]} onChange={event => onChange({ [key]: Number(event.target.value) })} /><output>{style[key]}{unit}</output></span></label>;
   }
@@ -18,8 +19,12 @@ export function StyleControls({ style, disabled, access, wordTimingAvailable = f
   function choice(label: string, key: keyof StudioStyle, options: readonly (readonly [string,string])[]) { return <label>{label}<select disabled={key==="animation"&&!!access&&!access.advanced} value={String(style[key])} onChange={event => onChange({ [key]: event.target.value })}>{options.map(([value,text]) => <option key={value} value={value} disabled={key==="font"&&!!access&&!access.premium&&!["Inter","Sora","Arial"].includes(value)}>{text}{key==="font"&&!!access&&!access.premium&&!["Inter","Sora","Arial"].includes(value)?" ? Premium":""}</option>)}</select></label>; }
   function presetButton(preset: StudioStyle) { const locked=!!access?.presets&&!access.presets.includes(preset.preset);return <button aria-label={preset.preset+(locked?" ? Premium, locked":"")} type="button" key={preset.preset} aria-pressed={style.preset === preset.preset} disabled={disabled||!!access?.presets&&!access.presets.includes(preset.preset)} title={access?.presets&&!access.presets.includes(preset.preset)?"Included with the Source Window package":undefined} className={styles.preset} onClick={() => onPreset(preset)}><span style={{ fontFamily: ["Inter", "Sora"].includes(preset.font) ? `var(--font-${preset.font === "Sora" ? "heading" : "platform"})` : preset.font, fontWeight: preset.weight, color: preset.color, textShadow: preset.shadow ? `0 1px ${preset.shadowBlur / 10}px ${preset.shadowColor}` : "none", WebkitTextStroke: preset.outline ? `${preset.outline / 10}px ${preset.outlineColor}` : undefined, fontStyle: preset.italic ? "italic" : "normal", textDecoration: preset.underline ? "underline" : preset.strikethrough ? "line-through" : undefined, textTransform: preset.textCase === "upper" ? "uppercase" : preset.textCase === "lower" ? "lowercase" : undefined }}><b style={{ background: preset.background ? preset.highlight : undefined, borderRadius: preset.radius / 5, padding: preset.background ? "3px 6px" : undefined }}>Make it yours</b></span><small>{preset.preset}{locked&&<span className={styles.presetLock}><Icon name="lock" size={12}/> Premium</span>}</small></button>; }
   return <>
+    <div className={styles.styleSwitch} role="group" aria-label="Style panel"><button type="button" aria-pressed={panel === "templates"} onClick={() => setPanel("templates")}>Templates</button><button type="button" aria-pressed={panel === "customize"} onClick={() => setPanel("customize")}>Customize</button></div>
+    <div hidden={panel !== "templates"}>
     <h2 className={styles.styleHeading}>All caption styles <span>{STUDIO_PRESETS.length}</span></h2>
     {access&&!access.premium&&<p id="style-package" className={styles.note}>Five starter styles are included free. <a href="/pricing#plans">Unlock all styles and advanced controls with the Source Window package.</a></p>}<div className={styles.presets}>{STUDIO_PRESETS.map(presetButton)}</div>
+    </div>
+    <div hidden={panel !== "customize"}>
     <fieldset className={styles.quickControls} disabled={disabled}>
       <legend>Quick layout</legend>
       {choice("Placement", "position", [["top","Top"],["middle","Center"],["bottom","Bottom"],["custom","Custom"]])}
@@ -71,5 +76,6 @@ export function StyleControls({ style, disabled, access, wordTimingAvailable = f
 
     </fieldset>
     <details className={styles.details}><summary>Save or load your style</summary><div className={styles.actions}><DownloadButton label="Save style" filename="aenural-caption-style.json" content={() => JSON.stringify({ version: 1, style }, null, 2)} disabled={disabled} variant="secondary" onDownloaded={() => {}} onError={onError} /><button type="button" className="button button-secondary" disabled={disabled} onClick={() => fileInput.current?.click()}>Load style</button><input ref={fileInput} type="file" accept=".json" className="sr-only" aria-label="Load caption style" disabled={disabled} onChange={async event => { const file = event.target.files?.[0]; event.target.value = ""; if (!file) return; try { if (file.size > 32_768) throw new Error("Choose a style file smaller than 32 KiB."); onPreset(parseStudioStyle(await file.text())); } catch (error) { onError(error instanceof Error ? error.message : "This style could not be loaded."); } }} /></div></details>
+    </div>
   </>;
 }

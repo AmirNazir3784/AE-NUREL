@@ -370,3 +370,46 @@
 .presets .preset small { display:block; min-height:32px; }
 .presets .preset .presetLock { position:absolute; top:6px; right:6px; display:inline-flex; align-items:center; gap:3px; color:#f8d475; background:#232a25; border:1px solid #a1843e; border-radius:5px; padding:3px 5px; font:600 9px/1.2 var(--font-platform); letter-spacing:.02em; white-space:nowrap; box-shadow:0 1px 3px #0002; }
 .featureLock { display:inline-flex; align-items:center; gap:3px; color:#f8d475; background:#232a25; border:1px solid #a1843e; border-radius:5px; padding:3px 5px; font:600 10px/1.2 var(--font-platform); white-space:nowrap; }
+
+/* Keep the editing surface quiet; reveal secondary tasks when requested. */
+.styleSwitch { display:flex; gap:4px; padding:4px; margin-bottom:20px; border-radius:10px; background:var(--surface-soft); }
+.styleSwitch button { flex:1; min-height:40px; border:0; border-radius:7px; background:transparent; color:var(--muted); font:600 13px var(--font-platform); cursor:pointer; }
+.styleSwitch button[aria-pressed=true] { background:var(--surface); color:var(--foreground); box-shadow:0 1px 3px #0001; }
+.toolDrawer,.secondaryActions { margin:12px 0; border-block:1px solid var(--border); }
+.toolDrawer > summary,.secondaryActions > summary { padding:13px 2px; color:var(--muted); font-size:12px; font-weight:600; cursor:pointer; }
+.styleSwitch button:focus-visible,.toolDrawer > summary:focus-visible,.secondaryActions > summary:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.secondaryActions .subtitleDownloads { margin-top:4px; }
+.sideHeading { padding-bottom:14px; margin-bottom:16px; border-color:var(--border); }
+.sideHeading strong { font-size:16px; }
+.sideHeading span { font-size:12px; color:var(--muted); }
+.captionToolbar .history { grid-column:auto; }
+.captionToolbar { grid-template-columns:minmax(0,1fr) auto; }
+.captionToolbar > div:first-child { grid-column:1/-1; }
+.captionToolbar small { color:var(--muted); font-size:12px; }
+.captionSearch input { background:var(--surface-soft); }
+.previewPanel { border-color:var(--border); box-shadow:none; }
+.transport { border:0; padding-inline:0; background:transparent; }
+.styleHeading { font-size:13px; }
+.styleSide .presets { grid-template-columns:minmax(0,1fr); gap:12px; }
+.presets .preset { border-color:var(--border); border-radius:10px; }
+.presets .preset > span { min-height:96px; background:#101514; padding:24px 12px; font-size:18px; }
+.presets .preset small { padding:10px 12px; min-height:36px; font-size:11px; }
+.presets .preset[aria-pressed=true] { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+.emptyTranscript { padding-top:16px; }
+.emptyTranscriptIcon { width:34px; height:34px; border:0; margin-bottom:14px; }
+.emptyTranscript h3 { font-size:14px; margin-bottom:8px; }
+.emptyTranscript p { font-size:12px; line-height:1.7; }
+.transcriptSkeleton { display:none; }
+.cueList { gap:2px; padding-right:2px; }
+.cueList > button { min-height:58px; border:0; border-radius:6px; padding:10px 8px; background:transparent; }
+.cueList .selectedCue { box-shadow:inset 2px 0 var(--accent); background:var(--accent-soft); }
+.cueList p { font-size:12px; font-weight:500; }
+.cueList .cueNumber { width:20px; height:20px; border:0; background:transparent; font-weight:600; }
+.exportBar { margin-top:14px; padding-top:12px; }
+@media(min-width:1191px) {
+  .workspace { grid-template-columns:minmax(230px,270px) minmax(0,1fr) minmax(250px,300px); gap:14px; }
+  .controls { padding:14px; border-radius:10px; }
+  .previewPanel { padding:0; border:0; background:transparent; }
+  .sideHeading { gap:3px; padding-top:0; padding-bottom:12px; margin-bottom:12px; }
+  .sideHeading strong { font:650 14px/1.4 var(--font-platform); }
+}

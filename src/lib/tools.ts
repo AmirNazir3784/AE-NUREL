@@ -7,7 +7,7 @@ export const categories = [
   { id: "video-tools", title: "Video Tools", icon: "video", description: "Compress, crop and change your video's background." },
 ] as const;
 
-export type CategoryId = (typeof categories)[number]["id"] | "caption-generation" | "ai-tools" | "video-tools";
+export type CategoryId = (typeof categories)[number]["id"] | "caption-generation" | "ai-tools" | "video-tools" | "image-tools";
 export type Tool = {
   title: string;
   description: string;
@@ -15,7 +15,7 @@ export type Tool = {
   category: string;
   categoryId: CategoryId;
   icon: ProductIconName;
-  group?: "Timing & Editing" | "Format Conversion" | "Caption Generation" | "Video Tools";
+  group?: "Timing & Editing" | "Format Conversion" | "Caption Generation" | "Video Tools" | "Image Tools";
   processing: "local" | "cloud";
 };
 
