@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import ts from "typescript";
 import { tools } from "../src/lib/tools.ts";
+import { publishedPosts } from "../src/content/blog/registry.ts";
 
 const expected = ["srt-to-vtt", "vtt-to-srt", "srt-to-ass", "srt-to-txt", "srt-to-json", "vtt-to-txt", "srt-to-mp4", "sbv-to-srt", "srt-to-sbv", "ass-to-srt"];
 const added = ["vtt-to-txt", "sbv-to-srt", "srt-to-sbv", "srt-to-mp4"];
@@ -36,10 +37,10 @@ describe("completed Format Conversion discovery", () => {
     try {
       process.env.SITE_URL = "https://tools.example";
       const urls = sitemap().map(entry => entry.url);
-      assert.equal(urls.length, 31);
+      assert.equal(urls.length, 29 + (publishedPosts().length ? 1 : 0) + publishedPosts().length);
       for (const route of expected) assert.ok(urls.includes("https://tools.example/tools/" + route));
       delete process.env.SITE_URL;
-      assert.equal(sitemap().length, 31);
+      assert.equal(sitemap().length, 29 + (publishedPosts().length ? 1 : 0) + publishedPosts().length);
       for (const route of expected) assert.ok(sitemap().some(entry => entry.url === "https://aenural.com/tools/" + route));
     } finally { if (previous === undefined) delete process.env.SITE_URL; else process.env.SITE_URL = previous; }
   });

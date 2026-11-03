@@ -33,6 +33,26 @@ export const blogPosts: readonly BlogPost[] = [{
     { id: "start-transcribing", title: "Start transcribing" },
   ],
   relatedIds: [],
+}, {
+  id: "subtitle-sync-guide",
+  slug: "fix-subtitles-out-of-sync",
+  title: "How to Fix Subtitles Out of Sync: Delay, Drift and Cuts",
+  seoTitle: "How to Fix Subtitles Out of Sync: SRT Delay and Drift",
+  description: "Fix subtitles that appear early, late or drift over time. Diagnose the pattern, calculate a shift, use two reference points, and check your corrected SRT or VTT.",
+  category: "Subtitle Tutorials",
+  status: "published",
+  publishedAt: "2026-11-03T05:16:48.613Z",
+  author: { name: "AENural", type: "Organization", url: "https://aenural.com/about" },
+  sections: [
+    { id: "diagnose-the-pattern", title: "Identify the timing pattern" },
+    { id: "fix-a-constant-delay", title: "Fix a constant delay" },
+    { id: "fix-gradual-drift", title: "Fix gradual drift" },
+    { id: "fix-a-sudden-jump", title: "Fix a sudden jump" },
+    { id: "avoid-wrong-fixes", title: "Avoid the wrong fix" },
+    { id: "check-the-result", title: "Check the result" },
+    { id: "subtitle-sync-questions", title: "Subtitle sync questions" },
+  ],
+  relatedIds: [],
 }];
 
 export function publishedPosts(posts: readonly BlogPost[] = blogPosts): BlogPost[] {

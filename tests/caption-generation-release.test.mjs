@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { tools } from '../src/lib/tools.ts';
+import { publishedPosts } from '../src/content/blog/registry.ts';
 import { readFile } from 'node:fs/promises';
 import ts from 'typescript';
 import { captionDocument, captionExport, validateAsrFile } from '../src/features/local-asr/asr-core.ts';
@@ -16,7 +17,7 @@ describe('canonical subtitle generator scope and release hold',()=>{
   let urls;
   try {process.env.SITE_URL='https://tools.example';urls=sitemap().map(entry=>new URL(entry.url).pathname);}
   finally {if(previous===undefined)delete process.env.SITE_URL;else process.env.SITE_URL=previous;}
-  assert.equal(urls.length,31);
+  assert.equal(urls.length,29 + (publishedPosts().length ? 1 : 0) + publishedPosts().length);
   assert.equal(tools.length,19);
   for(const route of ['/tools/podcast-to-captions','/tools/free-subtitle-generator']){
    assert.equal(tools.some(tool=>tool.href===route),false);

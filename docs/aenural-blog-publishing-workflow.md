@@ -1,5 +1,14 @@
 # AENural blog publishing workflow
 
+**Autopilot assignments (owner authorization, 3 November 2026):** when the owner
+invokes the editorial autopilot, use [the saved autopilot workflow](blog/autopilot-workflow.md)
+alongside these four references. That explicit instruction authorizes original
+writing, internal title/outline approval and exactly one eligible article release
+per Asia/Karachi day. It supersedes this document's supplied-writing and manual
+approval requirements for those runs only. Preserve tool release holds. Tutorial
+screenshots should show actual tool controls with purposeful numbered guidance,
+as requested during the first autopilot run; never fabricate application screens.
+
 Permanent instructions for future Codex sessions. Established 29 October 2026. This phase created documentation only. No blog page, article, schema change, dependency, analytics installation, push or deployment is authorized by these documents themselves.
 
 Subsequent owner authorization, 29 October 2026: publish completed, verified tools and supplied blogs to both Faisal and AmirNazir so they become live, and push when work is ready. This standing instruction supersedes the research-phase push/deployment hold below. Do not request the same release permission again when that instruction still applies; substantive article corrections still require approval. Verify the actual live deployment and preserve unfinished-feature holds. See `AGENTS.md` and the release record in `docs/releases/`.
