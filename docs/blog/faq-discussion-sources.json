@@ -1,0 +1,1237 @@
+{
+  "researchedAt": "2026-11-10",
+  "method": "Article-specific searches of public discussions. FAQ wording is original paraphrase. Each item distinguishes a reported issue from an editorial practical follow-up; no question-frequency ranking or claim that all follow-ups were literally posted. Quora disallowed automated access and is excluded. Developer promotions are discovery evidence, never independent product benchmarks.",
+  "discussions": {
+    "fmt-lms": {
+      "title": "Converting SRT files to WebVTT",
+      "url": "https://www.reddit.com/r/instructionaldesign/comments/1lwig92/converting_srt_files_to_webvtt/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "formats-files-search.json",
+      "result": 12,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "fmt-powerpoint": {
+      "title": "TIP: Convert Caption/Subtitle File SRT to PowerPoint's WebVTT Format",
+      "url": "https://www.reddit.com/r/powerpoint/comments/11rov13",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "formats-files-search.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "fmt-premiere": {
+      "title": "Why SRT but no VTT support for captions?",
+      "url": "https://www.reddit.com/r/premiere/comments/1ban7po",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "formats-files-search.json",
+      "result": 8,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "encoding-questions": {
+      "title": "Subtitles with question marks",
+      "url": "https://www.reddit.com/r/PleX/comments/vs22b6",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "formats-files-search.json",
+      "result": 4,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "encoding-apps": {
+      "title": "Bug Report] Spanish subtitles missing or showing broken characters when encoded in ISO-8859-1 (works fine in official Plex app)",
+      "url": "https://www.reddit.com/r/bunnyearstv/comments/1wvkcop/bug_report_spanish_subtitles_missing_or_showing/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "formats-files-search.json",
+      "result": 5,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "encoding-spanish": {
+      "title": "Why do my subtitles appear sometimes with special characters",
+      "url": "https://www.reddit.com/r/PleX/comments/10axriw/why_do_my_subtitles_appear_sometimes_with_special/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "formats-files-search.json",
+      "result": 7,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "encoding-japanese": {
+      "title": "Any advice on de-glitching SRT files?",
+      "url": "https://www.reddit.com/r/subtitles/comments/1xe51ap/any_advice_on_deglitching_srt_files/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "syntax-split-data-search.json",
+      "result": 7,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "encoding-nonstandard": {
+      "title": "Mutliple lines of non-standard characters in SRT file",
+      "url": "https://www.reddit.com/r/SubtitleEdit/comments/1wh5dww/mutliple_lines_of_nonstandard_characters_in_srt/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "formats-files-search.json",
+      "result": 11,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "invalid-empty": {
+      "title": "Help with subtitles",
+      "url": "https://www.reddit.com/r/VLC/comments/1p5955c/help_with_subtitles/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "syntax-split-data-search.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "invalid-libsyn": {
+      "title": "Libsyn not accepting transcript files",
+      "url": "https://www.reddit.com/r/podcasting/comments/1d5s31b",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "syntax-split-data-search.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "merge-parts": {
+      "title": "How to combine multiple .srt files into one long continues subtitle file?",
+      "url": "https://www.reddit.com/r/techsupport/comments/iw8e71",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "formats-files-search.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "clip-selective": {
+      "title": "Is there a way to make multiple caption layers or cut them short so they only show up at specific time stamps? (This is a question meant for DESCRIPT. The descript sub is dead so I’m asking here)",
+      "url": "https://www.reddit.com/r/finalcutpro/comments/16o1p9k",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "split-ass-sbv-mp4-search.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ass-player": {
+      "title": "Kodi override .ass subtitle fonts !",
+      "url": "https://www.reddit.com/r/kodi/comments/mtmlj4",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "split-ass-sbv-mp4-search.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ass-ocr": {
+      "title": "Problem with OCR extraction of stylized subtitles using Subtitle Edit (Tesseract)",
+      "url": "https://www.reddit.com/r/SubtitleEdit/comments/1je9hdl",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "split-ass-sbv-mp4-search.json",
+      "result": 4,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ass-loss": {
+      "title": "How to get rid of ASS track name?",
+      "url": "https://www.reddit.com/r/mkvtoolnix/comments/132deer",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "split-ass-sbv-mp4-search.json",
+      "result": 8,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ass-burn": {
+      "title": ".ass subtitles not displaying properly when being burnt in",
+      "url": "https://www.reddit.com/r/handbrake/comments/1rag95j/ass_subtitles_not_displaying_properly_when_being/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "split-ass-sbv-mp4-search.json",
+      "result": 9,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ass-extension": {
+      "title": "Bazarr not convert ASS to SRT",
+      "url": "https://www.reddit.com/r/bazarr/comments/1p215sl/bazarr_not_convert_ass_to_srt/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "split-ass-sbv-mp4-search.json",
+      "result": 11,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "format-options": {
+      "title": "Why are there so many subtitles options?",
+      "url": "https://www.reddit.com/r/Stremio/comments/1tnkhxf/why_are_there_so_many_subtitles_options/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "split-ass-sbv-mp4-search.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "text-clean": {
+      "title": "Convert SRT file to clean, presentable Text?",
+      "url": "https://www.reddit.com/r/videoproduction/comments/1e1jqar/convert_srt_file_to_clean_presentable_text/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "syntax-split-data-search.json",
+      "result": 6,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "text-zoom": {
+      "title": "I made a free Zoom transcript converter: .vtt to plain text, SRT, or Word (no upload)",
+      "url": "https://www.reddit.com/r/Zoom/comments/1x3qfco/i_made_a_free_zoom_transcript_converter_vtt_to/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "syntax-split-data-search.json",
+      "result": 8,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "text-sdh": {
+      "title": "Built a free subtitle tool because I was tired of uploading my export files to sketchy sites just to convert SRT to VTT",
+      "url": "https://www.reddit.com/r/SideProject/comments/1v52z7n/built_a_free_subtitle_tool_because_i_was_tired_of/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "formats-files-search.json",
+      "result": 10,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "json-player": {
+      "title": "How to use JSON subtitles",
+      "url": "https://www.reddit.com/r/youtubedl/comments/1hyoreb",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "syntax-split-data-search.json",
+      "result": 9,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "json-streaming": {
+      "title": "How to pull subtitles off streaming with the Network tab — the real per-platform gotchas",
+      "url": "https://www.reddit.com/r/subtitles/comments/1uy714b/how_to_pull_subtitles_off_streaming_with_the/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "syntax-split-data-search.json",
+      "result": 4,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-transcript-text": {
+      "title": "Is it possible to export TEXT (not captions) from premier pro into an srt file (with time codes)?",
+      "url": "https://www.reddit.com/r/premiere/comments/13xioe1",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "syntax-split-data-search.json",
+      "result": 10,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "pod-timestamps": {
+      "title": "Formatting transcript timings",
+      "url": "https://www.reddit.com/r/podcasting/comments/1aut88x",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "syntax-split-data-search.json",
+      "result": 11,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "line-offscreen": {
+      "title": "Help with subs going off screen limits",
+      "url": "https://www.reddit.com/r/aegisub/comments/1gxe7iy",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "craft-readability.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "line-three": {
+      "title": "How to change subtitles that have 3 lines to 1 or 2 ?",
+      "url": "https://www.reddit.com/r/editors/comments/10ukill",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "craft-readability.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "fps-drift": {
+      "title": "Subtitels going offsync",
+      "url": "https://www.reddit.com/r/PleX/comments/1u31kj3/subtitels_going_offsync/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "craft-fps.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "fps-speed": {
+      "title": "subtitle timestamps drift out of sync on long YouTube videos",
+      "url": "https://www.reddit.com/r/youtubedl/comments/1segduw/subtitle_timestamps_drift_out_of_sync_on_long/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "craft-fps.json",
+      "result": 5,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "fps-aegisub": {
+      "title": "Problems with audio and video",
+      "url": "https://www.reddit.com/r/aegisub/comments/1wa2lug/problems_with_audio_and_video/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "craft-fps.json",
+      "result": 6,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "fps-vlc": {
+      "title": "Synchronization subtitle speed fps option?",
+      "url": "https://www.reddit.com/r/VLC/comments/1s0ic53/synchronization_subtitle_speed_fps_option/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "craft-fps.json",
+      "result": 7,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "deaf-customization": {
+      "title": "A better idea for closed captions in tv and movies.",
+      "url": "https://www.reddit.com/r/hardofhearing/comments/1ama8ln",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "craft-accessibility.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "deaf-feedback": {
+      "title": "I'm a hearing person who edits closed captions: what are your closed caption pet peeves or things you wished were included?",
+      "url": "https://www.reddit.com/r/deaf/comments/1inwhur",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "craft-accessibility.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "caption-terms": {
+      "title": "People who can hear just fine, do you use closed captions anyway?",
+      "url": "https://www.reddit.com/r/polls/comments/194fr8s",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster. Direct page open failed with cache miss; indexed excerpt only.",
+      "capture": "craft-accessibility.json",
+      "result": 5,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "transcript-names": {
+      "title": "How Important Is It To Correct Names and Spelling In Your Transcript?",
+      "url": "https://www.reddit.com/r/podcasting/comments/1jr3ie6",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-review.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "transcript-alignment": {
+      "title": "Important: Issues with Filler words, shorten word gaps, and other transcript editing tools",
+      "url": "https://www.reddit.com/r/Descript/comments/1tw4n2a/important_issues_with_filler_words_shorten_word/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-review.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "transcript-cleanup": {
+      "title": "Transcribing Poorly Worded Interview Answers",
+      "url": "https://www.reddit.com/r/podcasting/comments/15gbsww",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster. Direct page open failed with cache miss; indexed excerpt only.",
+      "capture": "audio-review.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "noise-cantonese": {
+      "title": "faster.whisper STT sometime returned very strange result with cantonese",
+      "url": "https://www.reddit.com/r/homeassistant/comments/1wdigzt/fasterwhisper_stt_sometime_returned_very_strange/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-noise.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "noise-hallucinations": {
+      "title": "We collected 135 phrases Whisper hallucinates during silence — here's what it says when nobody's talking and how we stopped it",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1rlqfd7/we_collected_135_phrases_whisper_hallucinates/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-noise.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "noise-multilingual": {
+      "title": "Why does Whisper v3 still hallucinate repetitive loops on non-English silence/noise, and how do we fix word-level timestamps?",
+      "url": "https://www.reddit.com/r/finevoice/comments/1tigd07/why_does_whisper_v3_still_hallucinate_repetitive/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-noise.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "audio-format-opus": {
+      "title": "Support for Opus codec for smaller files and superior quality of audio and transcription",
+      "url": "https://www.reddit.com/r/MacWhisper/comments/1ul8z6o/support_for_opus_codec_for_smaller_files_and/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-format.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "audio-format-quality": {
+      "title": "I made MacWhisper to run Whisper locally on your Mac without having to install any dependencies. It’s available for free and I would love some feedback!",
+      "url": "https://www.reddit.com/r/LanguageTechnology/comments/10d7dl6",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "discussion-follow-up-opens.json",
+      "result": 7,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "audio-segments": {
+      "title": "Whisper wrong Timestamps",
+      "url": "https://www.reddit.com/r/OpenAI/comments/1al0xip",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-long.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "audio-long-chunks": {
+      "title": "[P] Transform your raw audio into a text-audio dataset automatically with OpenAI's Whisper",
+      "url": "https://www.reddit.com/r/MachineLearning/comments/zd6xlv",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-long.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "m4a-renamed": {
+      "title": "Voice Memos not playing uploaded recording",
+      "url": "https://www.reddit.com/r/applehelp/comments/1vltqin/voice_memos_not_playing_uploaded_recording/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-import.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "m4a-unplayable": {
+      "title": "HELP: Voice Memos - no file, no play but can see the sound waves",
+      "url": "https://www.reddit.com/r/MacOS/comments/1iu60no/help_voice_memos_no_file_no_play_but_can_see_the/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-import.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "m4a-recovery": {
+      "title": "I found a fix for corrupted* Voice Memos",
+      "url": "https://www.reddit.com/r/iphone/comments/1tcq9xt/i_found_a_fix_for_corrupted_voice_memos/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-import.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "extract-wav": {
+      "title": "MP4 to WAV conversions.",
+      "url": "https://www.reddit.com/r/VLC/comments/104y1ll/mp4_to_wav_conversions/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-extraction.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "no-audio-container": {
+      "title": "Video plays fine but no sound? Here are the common causes and fixes",
+      "url": "https://www.reddit.com/r/WonderFox/comments/1ryrhwp/video_plays_fine_but_no_sound_here_are_the_common/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-extraction.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "no-audio-clip": {
+      "title": "No audio from clip?",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/1ie593i",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "audio-extraction.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-greyed": {
+      "title": "Create Captions option greyed out",
+      "url": "https://www.reddit.com/r/premiere/comments/1r1lite/create_captions_option_greyed_out/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-caption-create.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-voiceover": {
+      "title": "Transcribing suddenly not working for voiceover?",
+      "url": "https://www.reddit.com/r/premiere/comments/1ljlefm",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-caption-create.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-regenerate": {
+      "title": "How do I generate captions from transcript again?",
+      "url": "https://www.reddit.com/r/premiere/comments/16fw8dj",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-caption-create.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-export-missing": {
+      "title": "Missing .srt export/import option",
+      "url": "https://www.reddit.com/r/premiere/comments/1qmvwke/missing_srt_exportimport_option/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-caption-export.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-export-tracks": {
+      "title": "How to export each caption track as an individual srt file please?",
+      "url": "https://www.reddit.com/r/premiere/comments/1wdylsl/how_to_export_each_caption_track_as_an_individual/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-caption-export.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-batch": {
+      "title": "Batch export separate SRT files for each clip",
+      "url": "https://www.reddit.com/r/premiere/comments/1rman2g/batch_export_separate_srt_files_for_each_clip/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-caption-export.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-import-picker": {
+      "title": "No option to import .srt files into the import transcript file selector",
+      "url": "https://www.reddit.com/r/premiere/comments/1vsmjid/no_option_to_import_srt_files_into_the_import/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-import.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-sync": {
+      "title": "Text Transcription / Captions Out of Sync?",
+      "url": "https://www.reddit.com/r/premiere/comments/1vpfzrx/text_transcription_captions_out_of_sync/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-import.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-style-copy": {
+      "title": "How to apply motion graphics style to all text clips/subtitles in my timeline?",
+      "url": "https://www.reddit.com/r/premiere/comments/1av38pm",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-style.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-style-new-ui": {
+      "title": "How to make captions like this?",
+      "url": "https://www.reddit.com/r/premiere/comments/1l25tvc",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-style.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "premiere-motion": {
+      "title": "How To - Subtitle",
+      "url": "https://www.reddit.com/r/premiere/comments/1fs1u06",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "premiere-style.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ae-import": {
+      "title": "How do you import SRT subtitle files into After Effects as editable text layers?",
+      "url": "https://www.reddit.com/r/AfterEffects/comments/1r1e7vi/how_do_you_import_srt_subtitle_files_into_after/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "after-effects-import.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ae-handoff": {
+      "title": "Subtitles from Premiere into After Effects???",
+      "url": "https://www.reddit.com/r/AfterEffects/comments/19eu47z/subtitles_from_premiere_into_after_effects/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "after-effects-import.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ae-word-timing": {
+      "title": "Is this caption design achievable in AE or did the editor that made this video use something else?",
+      "url": "https://www.reddit.com/r/AfterEffects/comments/1u6sqlv/is_this_caption_design_achievable_in_ae_or_did/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "after-effects-animation.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ae-word-scale": {
+      "title": "Made a free AE script to import and animate captions",
+      "url": "https://www.reddit.com/r/AfterEffects/comments/1l2j0wd/made_a_free_ae_script_to_import_and_animate/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "after-effects-animation.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "ae-animation-controls": {
+      "title": "Am I dumb? I don't understand text animation.",
+      "url": "https://www.reddit.com/r/AfterEffects/comments/1wwggo7/am_i_dumb_i_dont_understand_text_animation/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "after-effects-animation.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "resolve-timecode": {
+      "title": "Resolve: SRT import to timeline doesn't respect timecode/durations",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/1u6u5rs/resolve_srt_import_to_timeline_doesnt_respect/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "resolve-import.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "resolve-transcription-target": {
+      "title": "Resolve transcription window confusion: imported translated SRT sometimes applies to SOURCE transcription and sometimes TIMELINE transcription",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/1tecmgr/resolve_transcription_window_confusion_imported/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "resolve-import.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "resolve-invisible": {
+      "title": "My subtitles are not appearing in the video even tho they are active in the timeline",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/1ibyqtc",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "resolve-export.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "resolve-export-missing": {
+      "title": "If I generate subtitles, I obviously want to export them",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/1vngfra/if_i_generate_subtitles_i_obviously_want_to/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "resolve-export.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "resolve-export-offset": {
+      "title": "Subtitle file not showing up (.srt, .ttml, .vtt)",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/16igh2d",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "resolve-export.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "resolve-style-global": {
+      "title": "help with subtitles please!",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/1uy3pcg/help_with_subtitles_please/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "resolve-style.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "resolve-manual-captions": {
+      "title": "Is there a way to make manmade subtitles?",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/1vhr5l1/is_there_a_way_to_make_manmade_subtitles/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "resolve-style.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "resolve-animation20": {
+      "title": "Is It Possible To Do These Subtitle Animations in Davinci Resolve Studio?",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/1wqo1dk/is_it_possible_to_do_these_subtitle_animations_in/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "resolve-style.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "capcut-import-where": {
+      "title": "Is There A Way To Import .SRT Files Into CapCut?",
+      "url": "https://www.reddit.com/r/CapCut/comments/1aq3ppu",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "capcut-import.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "capcut-export-json": {
+      "title": "Export Subtitles to SRT file",
+      "url": "https://www.reddit.com/r/CapCut/comments/zpazgp/export_subtitles_to_srt_file/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "capcut-import.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "capcut-missing-middle": {
+      "title": "PC auto captions not working properly.",
+      "url": "https://www.reddit.com/r/CapCut/comments/1u920ox/pc_auto_captions_not_working_properly/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "capcut-generate.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "capcut-arabic": {
+      "title": "Auto caption problems",
+      "url": "https://www.reddit.com/r/CapCut/comments/1dqu1yn",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "capcut-generate.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "capcut-hidden-words": {
+      "title": "Capcut autocaptions are useless crap",
+      "url": "https://www.reddit.com/r/CapCut/comments/1tsmrzw/capcut_autocaptions_are_useless_crap/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "capcut-generate.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "capcut-export-update": {
+      "title": "CapCut used to export my captions now it doesn't since update?",
+      "url": "https://www.reddit.com/r/CapCut/comments/1buhyu3/capcut_used_to_export_my_captions_now_it_doesnt/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "capcut-export.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "capcut-export-empty": {
+      "title": "How to save subtitles generated by capcut as SRT files| export srt subtitles from capcut windows",
+      "url": "https://www.reddit.com/r/CapCut/comments/znkdwk/how_to_save_subtitles_generated_by_capcut_as_srt/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "capcut-export.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "capcut-casing": {
+      "title": "Am I missing some with captions",
+      "url": "https://www.reddit.com/r/CapCut/comments/1uq3dky/am_i_missing_some_with_captions/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "capcut-export.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-upload-changed": {
+      "title": "Is something wrong with subtitles?",
+      "url": "https://www.reddit.com/r/PartneredYoutube/comments/1s51t7p/is_something_wrong_with_subtitles/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-upload.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-timing": {
+      "title": "SRT file timing on YT, subtitles are way off correct timing",
+      "url": "https://www.reddit.com/r/davinciresolve/comments/1kgfd51",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-upload.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-disappeared": {
+      "title": "Subtitles' gone",
+      "url": "https://www.reddit.com/r/youtube/comments/1wjwun9/subtitles_gone/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-upload.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-arabic": {
+      "title": "Arabic subtitles now the default for auto-generated captions on YouTube?",
+      "url": "https://www.reddit.com/r/youtube/comments/1w97kxn/arabic_subtitles_now_the_default_for/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-automatic.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-arabic-app": {
+      "title": "Arabic Caption Glitch",
+      "url": "https://www.reddit.com/r/youtube/comments/1w91mn1/arabic_caption_glitch/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-automatic.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-transcript-download": {
+      "title": "I can no longer download the automatically generated CC transcripts.",
+      "url": "https://www.reddit.com/r/youtube/comments/185h6se",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-transcript.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-transcript-moved": {
+      "title": "YouTube transcript is missing when clicking the 3 dots",
+      "url": "https://www.reddit.com/r/youtube/comments/1gvbnds",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-transcript.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-transcript-missing": {
+      "title": "\"Show Transcript\" Button MISSING! | Desktop Version",
+      "url": "https://www.reddit.com/r/youtube/comments/18yqd6r",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-transcript.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-translation-fail": {
+      "title": "Automatic subtitle translation isn't working",
+      "url": "https://www.reddit.com/r/youtube/comments/1u41vcb/automatic_subtitle_translation_isnt_working/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-translation.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-translation-error": {
+      "title": "YouTube auto-translate captions not working",
+      "url": "https://www.reddit.com/r/youtube/comments/1tln0u8/youtube_autotranslate_captions_not_working/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-translation.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "youtube-translation-mixed": {
+      "title": "Automatically Translated Subtitles not working, how do I fix?",
+      "url": "https://www.reddit.com/r/youtube/comments/1u8exz5/automatically_translated_subtitles_not_working/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "youtube-translation.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "pod-speakers": {
+      "title": "I created an AI transcription tool for podcasters, and it’s a bit different!",
+      "url": "https://www.reddit.com/r/podcasting/comments/186fo7g",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "podcast-speakers.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "pod-transcription": {
+      "title": "Transcription options",
+      "url": "https://www.reddit.com/r/podcasting/comments/1nr2f21/transcription_options/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "podcast-speakers.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "pod-clips": {
+      "title": "I've tested a pile of \"AI\" clipping tools and they all kind of suck. Am I the problem, or are they?",
+      "url": "https://www.reddit.com/r/podcasting/comments/1u10gdn/ive_tested_a_pile_of_ai_clipping_tools_and_they/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "podcast-clips.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "pod-production-time": {
+      "title": "Podcasting producers, how long does it take you to do make and publish clips?",
+      "url": "https://www.reddit.com/r/podcasting/comments/1wa6wu8/podcasting_producers_how_long_does_it_take_you_to/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "podcast-clips.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "notes-workflow": {
+      "title": "How do you handle show notes? What’s your biggest",
+      "url": "https://www.reddit.com/r/podcast/comments/1jf2m2c/how_do_you_handle_show_notes_whats_your_biggest/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "podcast-notes.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "notes-ai": {
+      "title": "Anyone using ChatGPT to create shownotes?",
+      "url": "https://www.reddit.com/r/podcasting/comments/114jkh7",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster. Direct page open failed with cache miss; indexed excerpt only.",
+      "capture": "podcast-notes.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "translation-guardrails": {
+      "title": "Subtitle translation with an LLM: what broke, and the guardrails I added (open-source Gemini desktop app)",
+      "url": "https://www.reddit.com/r/machinetranslation/comments/1xauq2u/subtitle_translation_with_an_llm_what_broke_and/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "subtitle-translation.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "translation-context": {
+      "title": "I made a free tool to translate any srt to any language",
+      "url": "https://www.reddit.com/r/PleX/comments/1qhyk29/i_made_a_free_tool_to_translate_any_srt_to_any/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "subtitle-translation.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "translation-shift": {
+      "title": "I made a free tool to translate any srt to any language",
+      "url": "https://www.reddit.com/r/PleX/comments/1qhyk29/i_made_a_free_tool_to_translate_any_srt_to_any/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "subtitle-translation.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "translation-batch": {
+      "title": "I created a website to AI machine translate subtitles for free.",
+      "url": "https://www.reddit.com/r/subtitles/comments/1nfr32b/i_created_a_website_to_ai_machine_translate/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "subtitle-translation.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "cps-translation": {
+      "title": "Free tool to check subtitle translations against Netflix's English reading-speed and line limits",
+      "url": "https://www.reddit.com/r/TranslationStudies/comments/1x5srpe/free_tool_to_check_subtitle_translations_against/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "subtitle-long-translation.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "translation-dub": {
+      "title": "Why are Netflix translations so bad?",
+      "url": "https://www.reddit.com/r/netflix/comments/1rz13du/why_are_netflix_translations_so_bad/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "subtitle-long-translation.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "translation-long": {
+      "title": "anyone having struggle reading the subtitles while watching TTT?",
+      "url": "https://www.reddit.com/r/twice/comments/1ianh82",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "subtitle-long-translation.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "vtt-firefox": {
+      "title": "html - Firefox not displaying WebVTT captions on video - Stack Overflow",
+      "url": "https://stackoverflow.com/questions/71109922/firefox-not-displaying-webvtt-captions-on-video",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "webvtt-debug.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "vtt-cors": {
+      "title": "html5 audio - Crossorigin errors when loading VTT file - Stack Overflow",
+      "url": "https://stackoverflow.com/questions/23256830/crossorigin-errors-when-loading-vtt-file/48216640",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "webvtt-debug.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "vtt-request": {
+      "title": "html5 audio - Crossorigin errors when loading VTT file - Stack Overflow",
+      "url": "https://stackoverflow.com/questions/23256830/crossorigin-errors-when-loading-vtt-file/48216640",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "webvtt-debug.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "compression-blur": {
+      "title": "Burn-in subtitles are in low quality",
+      "url": "https://www.reddit.com/r/handbrake/comments/1abmmmc",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "compression.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "compression-crop": {
+      "title": "Subtitle out of place after encoding",
+      "url": "https://www.reddit.com/r/handbrake/comments/1wkxfcf/subtitle_out_of_place_after_encoding/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "compression.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "compression-streams": {
+      "title": "What setting to use to retain subtitles in compressed MKV",
+      "url": "https://www.reddit.com/r/handbrake/comments/1w75jws/what_setting_to_use_to_retain_subtitles_in/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "compression.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "delivery-team": {
+      "title": "Subtitles",
+      "url": "https://www.reddit.com/r/editors/comments/1s5gosy/subtitles/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "delivery.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "vertical-fcpx": {
+      "title": "Captions (subtitles) position on portrait videos FCXP",
+      "url": "https://www.reddit.com/r/editors/comments/16jnh8m",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "delivery.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "vertical-pixels": {
+      "title": "I finally mapped out the exact safe zones for TikTok & Reels (because I kept ruining my text hooks)",
+      "url": "https://www.reddit.com/r/CreatorServices/comments/1rfgsgz/i_finally_mapped_out_the_exact_safe_zones_for/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "vertical.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "vertical-overlays": {
+      "title": "I made a FREE safe zone overlay plugin for Premiere Pro, TikTok, Reels & Shorts",
+      "url": "https://www.reddit.com/r/premiere/comments/1rq39gu/i_made_a_free_safe_zone_overlay_plugin_for/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "vertical.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "vertical-layout": {
+      "title": "How do you edit TikTok videos more professionally with the safe zone in mind?",
+      "url": "https://www.reddit.com/r/SocialMediaMarketing/comments/1tctz6v/how_do_you_edit_tiktok_videos_more_professionally/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "vertical.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "software-bilingual": {
+      "title": "I built a caption editor with bilingual subtitles, free SRT export, and video rendering in your browser",
+      "url": "https://www.reddit.com/r/SideProject/comments/1ww3p1s/i_built_a_caption_editor_with_bilingual_subtitles/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "caption-software.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "software-free": {
+      "title": "are there any free caption generator apps/websites that i can actually use?",
+      "url": "https://www.reddit.com/r/VideoEditingTips/comments/1xdp5me/are_there_any_free_caption_generator_appswebsites/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "caption-software.json",
+      "result": 12,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "software-control": {
+      "title": "I built a free tool to generate video captions - would love to hear your feedback",
+      "url": "https://www.reddit.com/r/contentcreation/comments/1wlstei/i_built_a_free_tool_to_generate_video_captions/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "caption-software.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "sbv-filename": {
+      "title": "Post-Production : I need help with srt files by Jennifer…",
+      "url": "https://www.stage32.com/lounge/post_production/I-need-help-with-srt-files",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "sbv-direct.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "cps-fast": {
+      "title": "is the extremely fast subtitles ruining the new anime for anyone else?",
+      "url": "https://www.reddit.com/r/Ghost_in_the_Shell/comments/1vreldl/is_the_extremely_fast_subtitles_ruining_the_new/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "cps-direct.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "cps-discussion": {
+      "title": "Recent subtitle issues in many anime. Am I alone here?",
+      "url": "https://www.reddit.com/r/anime/comments/1x0hci9/recent_subtitle_issues_in_many_anime_am_i_alone/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "cps-direct.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "cps-spoilers": {
+      "title": "Why do Subtitle of most kdramas nowadays are like this?",
+      "url": "https://www.reddit.com/r/kdramas/comments/1tjh5t5/why_do_subtitle_of_most_kdramas_nowadays_are_like/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "cps-direct.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "mp4-toggle": {
+      "title": "[Help] I want to embed an SRT file into an MP4 file but I don't want it burned on screen.",
+      "url": "https://www.reddit.com/r/ffmpeg/comments/1wo3v4g/help_i_want_to_embed_an_srt_file_into_an_mp4_file/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "clip-youtube-delivery.json",
+      "result": 1,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "mp4-stuck": {
+      "title": "Getting Issues With FFMPEG Subtitles Burning on Video file.",
+      "url": "https://www.reddit.com/r/ffmpeg/comments/1kgdh8e",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "clip-youtube-delivery.json",
+      "result": 2,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "mp4-double": {
+      "title": "How to embed subtitles without burning them in?",
+      "url": "https://www.reddit.com/r/kdenlive/comments/1uv262o/how_to_embed_subtitles_without_burning_them_in/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "clip-youtube-delivery.json",
+      "result": 3,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "mp4-lossless": {
+      "title": "Burn subs into MP4 BUT lossless",
+      "url": "https://www.reddit.com/r/VideoEditing/comments/1l4sfnp",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "clip-youtube-delivery.json",
+      "result": 6,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "delivery-languages": {
+      "title": "Managing SRT/VTT files across multiple languages — what does your actual pipeline look like?",
+      "url": "https://www.reddit.com/r/editors/comments/1s2mgg1/managing_srtvtt_files_across_multiple_languages/",
+      "accessedAt": "2026-11-10",
+      "access": "Search-provider indexed discussion text/excerpt; not an interaction or an independently authenticated poster.",
+      "capture": "clip-youtube-delivery.json",
+      "result": 11,
+      "authority": "Question discovery only. Comment replies and promotional claims are not factual verification."
+    },
+    "merge-intermission": {
+      "title": "Inserting a delay after an intermission",
+      "url": "https://www.reddit.com/r/SubtitleEdit/comments/1kefqgu/",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    },
+    "merge-relative": {
+      "title": "Copying timed song captions while retaining relative timing",
+      "url": "https://www.reddit.com/r/SubtitleEdit/comments/1l4xr6b/",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    },
+    "overlap-simultaneous": {
+      "title": "Simultaneous dialogue overlaps at the same screen coordinates",
+      "url": "https://www.reddit.com/r/Debrid_Stream_App/comments/1tozwg8/",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    },
+    "overlap-order": {
+      "title": "Subtitle lines with the same timecodes displayed in reverse order",
+      "url": "https://www.reddit.com/r/mpv/comments/1e5gwj9/",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    },
+    "overlap-plex": {
+      "title": "One simultaneous subtitle line overwrites another",
+      "url": "https://www.reddit.com/r/bazarr/comments/1ndow4u/",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    },
+    "overlap-aegisub": {
+      "title": "Overlapping SRT lines merge after saving and reopening",
+      "url": "https://www.reddit.com/r/aegisub/comments/1dsg8wk/",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    },
+    "overlap-piling": {
+      "title": "Subtitle lines accumulate despite apparently normal cue durations",
+      "url": "https://www.reddit.com/r/VLC/comments/11m99e4/",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    },
+    "overlap-firecore": {
+      "title": "Longer subtitle disappears when a simultaneous event begins",
+      "url": "https://community.firecore.com/t/display-two-subtitles-with-the-same-timestamp/42066",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    },
+    "seek-truncated": {
+      "title": "Apparent seek desynchronization resolved as truncated subtitle files",
+      "url": "https://www.reddit.com/r/PleX/comments/1v2b1ni/",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    },
+    "compression-colors": {
+      "title": "Subtitle colors change during compression",
+      "url": "https://www.reddit.com/r/handbrake/comments/17tab48/",
+      "accessedAt": "2026-11-10",
+      "access": "Public discussion text returned and read during search; no posting or interaction.",
+      "authority": "Question discovery only; verify answers separately."
+    }
+  }
+}

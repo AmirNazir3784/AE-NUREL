@@ -1,0 +1,438 @@
+{
+  "method": "Answer references are distinct from discussion discovery. Dates preserve earlier readings instead of relabeling them fresh. Primary references support facts, project sources support AENural controls/limits, and editorial recommendations remain recommendations.",
+  "sources": {
+    "loc-srt": {
+      "kind": "external-reference",
+      "scope": "SubRip structure and limitations",
+      "url": "https://loc.gov/preservation/digital/formats/fdd/fdd000569.shtml",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "mdn-track": {
+      "kind": "external-reference",
+      "scope": "HTML track attributes and selection",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/track",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "mdn-webvtt": {
+      "kind": "external-reference",
+      "scope": "WebVTT syntax",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API/Web_Video_Text_Tracks_Format",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "youtube-formats": {
+      "kind": "external-reference",
+      "scope": "YouTube accepted caption formats",
+      "url": "https://support.google.com/youtube/answer/2734698?hl=en",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "youtube-upload": {
+      "kind": "external-reference",
+      "scope": "YouTube timed-file upload",
+      "url": "https://support.google.com/youtube/answer/2734796?hl=en",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "youtube-edit": {
+      "kind": "external-reference",
+      "scope": "YouTube caption correction/download",
+      "url": "https://support.google.com/youtube/answer/2734705?hl=en",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "youtube-auto": {
+      "kind": "external-reference",
+      "scope": "YouTube automatic caption limitations",
+      "url": "https://support.google.com/youtube/answer/6373554?hl=en",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "youtube-transcript-view": {
+      "kind": "external-reference",
+      "scope": "YouTube transcript viewing",
+      "url": "https://support.google.com/youtube/answer/15930243?hl=en",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "w3c-captions": {
+      "kind": "external-reference",
+      "scope": "Speech and meaningful non-speech information",
+      "url": "https://www.w3.org/WAI/media/av/captions/",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "w3c-transcribing": {
+      "kind": "external-reference",
+      "scope": "Accurate transcription and editorial treatment",
+      "url": "https://www.w3.org/WAI/media/av/transcribing/",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "w3c-transcripts": {
+      "kind": "external-reference",
+      "scope": "Reading copies and descriptive transcripts",
+      "url": "https://www.w3.org/WAI/media/av/transcripts/",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "w3c-player": {
+      "kind": "external-reference",
+      "scope": "Caption presentation and viewer preferences",
+      "url": "https://www.w3.org/WAI/media/av/player/",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "dcmp-speakers": {
+      "kind": "external-reference",
+      "scope": "Verified speaker identification",
+      "url": "https://dcmp.org/learn/captioningkey/603",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "dcmp-captioning": {
+      "kind": "external-reference",
+      "scope": "Caption text and meaningful line breaks",
+      "url": "https://dcmp.org/learn/captioningkey/597",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "netflix-english": {
+      "kind": "external-reference",
+      "scope": "English delivery-specific style requirements",
+      "url": "https://partnerhelp.netflixstudios.com/hc/en-us/articles/217350977-English-USA-Timed-Text-Style-Guide",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "aegisub-tags": {
+      "kind": "external-reference",
+      "scope": "ASS wrapping and override behavior",
+      "url": "https://aegisub.org/docs/latest/ass_tags/",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "aegisub-fonts": {
+      "kind": "external-reference",
+      "scope": "ASS font availability and collection",
+      "url": "https://aegisub.org/docs/latest/fonts_collector/",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "aegisub-overview": {
+      "kind": "external-reference",
+      "scope": "Timing and typesetting workflow",
+      "url": "https://aegisub.org/docs/latest/overview/",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "aegisub-vfr": {
+      "kind": "external-reference",
+      "scope": "Video time/frame mapping",
+      "url": "https://aegisub.org/docs/latest/video/",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "subtitle-edit-docs": {
+      "kind": "external-reference",
+      "scope": "Existing-file subtitle editing",
+      "url": "https://subtitleedit.github.io/subtitleedit/",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "handbrake-subtitles": {
+      "kind": "external-reference",
+      "scope": "Burned versus selectable subtitles",
+      "url": "https://handbrake.fr/docs/en/1.11.0/advanced/subtitles.html",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "aws-frame-rate": {
+      "kind": "external-reference",
+      "scope": "Conversion of frames versus change of media speed",
+      "url": "https://docs.aws.amazon.com/mediaconvert/latest/ug/working-with-video-frame-rates.html",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "audacity-noise": {
+      "kind": "external-reference",
+      "scope": "Steady noise, profile and speech-damage limitations",
+      "url": "https://manual.audacityteam.org/man/noise_reduction.html",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "audacity-formats": {
+      "kind": "external-reference",
+      "scope": "Audio export containers/encodings",
+      "url": "https://manual.audacityteam.org/man/export_formats_supported_by_audacity.html",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "audacity-multiple": {
+      "kind": "external-reference",
+      "scope": "Multiple-file audio export",
+      "url": "https://manual.audacityteam.org/man/export_multiple.html",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "whisper-model-card": {
+      "kind": "external-reference",
+      "scope": "Unspoken text/repetition and language limitations",
+      "url": "https://github.com/openai/whisper/blob/main/model-card.md",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "descript-correction": {
+      "kind": "external-reference",
+      "scope": "Text correction versus underlying media edits",
+      "url": "https://help.descript.com/hc/en-us/articles/10119613609229-Correct-your-transcript",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-create-captions": {
+      "kind": "external-reference",
+      "scope": "Create captions from a transcript",
+      "url": "https://helpx.adobe.com/premiere/desktop/add-text-images/insert-captions/create-captions.html",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-caption-style": {
+      "kind": "external-reference",
+      "scope": "Properties and reusable caption styles",
+      "url": "https://helpx.adobe.com/premiere/desktop/add-text-images/insert-captions/create-styles-for-captions.html",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-caption-export": {
+      "kind": "external-reference",
+      "scope": "Explicit track selection and one SRT stream",
+      "url": "https://helpx.adobe.com/premiere/desktop/render-and-export/export-files/export-caption-tracks.html",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-export-settings": {
+      "kind": "external-reference",
+      "scope": "Sidecar, burn-in and embedded export settings",
+      "url": "https://helpx.adobe.com/premiere/desktop/render-and-export/export-files/overview-of-export-settings.html",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-caption-formats": {
+      "kind": "external-reference",
+      "scope": "Caption input/output support",
+      "url": "https://helpx.adobe.com/premiere/desktop/add-text-images/insert-captions/supported-file-formats-for-captions.html",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-caption-overview": {
+      "kind": "external-reference",
+      "scope": "Caption and transcript workflows",
+      "url": "https://helpx.adobe.com/premiere/desktop/add-text-images/insert-captions/about-captions.html",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-speech": {
+      "kind": "external-reference",
+      "scope": "Source and sequence transcription",
+      "url": "https://helpx.adobe.com/premiere/desktop/add-text-images/insert-captions/auto-transcribe-video-using-speech-to-text.html",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-upgrade-graphics": {
+      "kind": "external-reference",
+      "scope": "Adobe Community graphics handoff discussion; version-specific, not a tested current UI",
+      "url": "https://community.adobe.com/questions-729/faq-workaround-nesting-to-apply-effect-controls-to-caption-track-1377120",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-ae-text": {
+      "kind": "external-reference",
+      "scope": "Text animators, range selectors and Source Text",
+      "url": "https://helpx.adobe.com/after-effects/desktop/animating-text/text-animation/animating-text.html",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-ae-formats": {
+      "kind": "external-reference",
+      "scope": "AE input support: consult installed version; not a claim of testing native SRT import",
+      "url": "https://helpx.adobe.com/after-effects/using/supported-file-formats.html",
+      "reviewedAt": "2026-11-04 (earlier article research; not re-fetched in this FAQ pass)",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "adobe-audio-export": {
+      "kind": "external-reference",
+      "scope": "Premiere audio export controls",
+      "url": "https://helpx.adobe.com/premiere/desktop/render-and-export/export-files/overview-of-export-settings.html",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "resolve-manual": {
+      "kind": "external-reference",
+      "scope": "Blackmagic Edit-page subtitle overview (not a full manual or native application test)",
+      "url": "https://www.blackmagicdesign.com/products/davinciresolve/edit",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "resolve20-animated": {
+      "kind": "external-reference",
+      "scope": "Resolve 20 Studio AI Animated Subtitles; introduced in 20, not a current-version ceiling",
+      "url": "https://documents.blackmagicdesign.com/SupportNotes/DaVinci_Resolve_20_New_Features_Guide.pdf",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "capcut-import-help": {
+      "kind": "external-reference",
+      "scope": "Surface-specific SRT import and mobile limitations",
+      "url": "https://www.capcut.com/help/how-to-import-subtitles",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "capcut-export-help": {
+      "kind": "external-reference",
+      "scope": "Caption type, export mode, paths and encoding",
+      "url": "https://www.capcut.com/help/captions-fail-to-export",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "capcut-recognition": {
+      "kind": "external-reference",
+      "scope": "Speech recognition controls and version/platform limitations",
+      "url": "https://www.capcut.com/help/how-to-recognise-subtitles",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "podcast-namespace": {
+      "kind": "external-reference",
+      "scope": "Podcast feed feature interoperability; app support differs",
+      "url": "https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/element-support.md",
+      "reviewedAt": "2026-11-10",
+      "qualification": "Documentation/source verification only; no native software use, benchmarks, certification or pricing guarantee."
+    },
+    "aenural-asr": {
+      "kind": "project-source",
+      "paths": [
+        "src/features/local-asr/subtitle-workspace.tsx",
+        "src/features/local-asr/subtitle-job.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-capabilities": {
+      "kind": "project-source",
+      "paths": [
+        "src/features/local-asr/subtitle-capabilities.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-editor": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/subtitle-editor.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-converters": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/srt-to-vtt.ts",
+        "src/lib/vtt-to-srt.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-merger": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/srt-merge.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-splitter": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/srt-split.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-overlaps": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/subtitle-overlap.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-text": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/srt-to-txt.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-json": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/srt-to-json.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-ass": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/srt-to-ass.ts",
+        "src/lib/ass-to-srt.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-sbv": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/sbv-to-srt.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-subtitle-video": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/subtitle-video.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-sync": {
+      "kind": "project-source",
+      "paths": [
+        "src/lib/subtitle-sync.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-cropper": {
+      "kind": "project-source",
+      "paths": [
+        "src/features/video-cropper/crop-media.ts",
+        "src/features/video-cropper/crop-core.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    },
+    "aenural-compressor": {
+      "kind": "project-source",
+      "paths": [
+        "src/features/video-compressor/compressor-profiles.ts",
+        "src/features/video-compressor/compression-core.ts"
+      ],
+      "reviewedAt": "2026-11-10",
+      "qualification": "Current implementation/source plus existing targeted fixture tests. Not a new media-export/browser test."
+    }
+  }
+}

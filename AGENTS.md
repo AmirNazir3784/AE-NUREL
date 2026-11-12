@@ -48,3 +48,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - The owner explicitly requested fixing the blog's spacing and publishing all current local changes to both repositories. This supersedes the local push hold for this checked synchronization. Preserve private credentials, databases, recordings and generated QA artifacts outside Git.
 - Publish the current implementation state, retaining existing preview/access restrictions; a repository synchronization is not evidence that every preview is a completed public product. Do not remove feature guards as an incidental consequence of pushing code.
 - The blog autopilot is authorized for one original article per eligible Asia/Karachi day/run. Read `docs/blog/autopilot-workflow.md` and the four saved blog references. Reconcile the current private manifest and live article before starting another post. The owner requested actual screenshots with numbered instructions and consistent spacing.
+
+## Owner-authorized 50-article publication (12 November 2026)
+
+- The owner explicitly requested publishing all 50 prepared blog articles and waived browser/visual review for this release. This supersedes the batch's local-review publication hold. Mark browser interaction/responsive checks as waived/not performed, never passed.
+- Preserve natural, useful keyword wording; do not force every workbook variant or make unsupported free/unlimited claims. Read the current blog workflow and coverage/release reports.
+- Release the checked blog changes to both authorized repositories using the existing Hostinger-connected workflow; verify all public article responses and discovery metadata before reporting publication.
+- The closed approved slug list is `src/content/blog/releases/2026-11-12.ts`; future articles remain drafts until authorized. Preserve existing publication dates, unrelated local tool work, credentials and runtime databases. Do not release unfinished tools as an incidental part of this blog batch.

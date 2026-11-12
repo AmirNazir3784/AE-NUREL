@@ -33,15 +33,16 @@ export function ArticleLayout({ post, introduction, visual, children }: { post: 
           </div>
         </div>
       </article>
-      {related.length > 0 && <section className={styles.related}><h2>Related reading</h2><div className={styles.cardGrid}>{related.map(item => <PostCard key={item.id} post={item} />)}</div></section>}
+      {related.length > 0 && <section className={styles.related}><h2>Related reading</h2><div className={styles.cardGrid}>{related.map(item => <PostCard key={item.id} post={item} headingLevel={3} />)}</div></section>}
     </div>
   </main>;
 }
 
-export function PostCard({ post, featured = false }: { post: BlogPost; featured?: boolean }) {
+export function PostCard({ post, featured = false, headingLevel = 2 }: { post: BlogPost; featured?: boolean; headingLevel?: 2 | 3 }) {
+  const Heading = headingLevel === 3 ? "h3" : "h2";
   return <article className={featured ? styles.featured : styles.card}>
     <span className={styles.eyebrow}>{post.category}{post.status === "draft" ? " · Local draft" : ""}</span>
-    <h2><Link href={`/blog/${post.slug}`}>{post.title}</Link></h2>
+    <Heading><Link href={`/blog/${post.slug}`}>{post.title}</Link></Heading>
     <p>{post.description}</p>
     {post.publishedAt && <time className={styles.meta} dateTime={post.publishedAt}>{new Intl.DateTimeFormat("en", { dateStyle: "long", timeZone: "UTC" }).format(new Date(post.publishedAt))}</time>}
     <span className={styles.readLabel} aria-hidden="true">Read the guide <span>↗</span></span>

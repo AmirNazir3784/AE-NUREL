@@ -1,0 +1,40 @@
+.article { min-width: 0; }
+.article code { font-family: var(--font-code); font-size: .82em; overflow-wrap: anywhere; }
+.choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 28px 0; }
+.choices a { display: flex; flex-direction: column; gap: 12px; padding: 22px; border: 1px solid var(--border-strong); border-top: 3px solid var(--accent); border-radius: 12px; background: var(--surface); text-decoration: none !important; }
+.choices a:hover { border-color: var(--accent); }
+.choices span { color: var(--muted); font-size: 13px; line-height: 1.5; }
+.choices strong { color: var(--foreground); font-size: 20px; line-height: 1.35; }
+.choices small { color: var(--muted); font-size: 13px; line-height: 1.6; }
+.samples { display: grid; gap: 20px; margin: 28px 0; }
+.samples figure { margin: 0; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.samples figcaption { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid var(--border); font-size: 14px; }
+.samples figcaption strong { color: var(--accent); font-size: 17px; }
+.samples figcaption span { color: var(--muted); font-size: 13px; }
+.samples pre, .code { margin: 0; padding: 24px; overflow-x: auto; line-height: 1.8; background: var(--surface-soft); font-size: 15px; }
+.samples pre code, .code code { overflow-wrap: normal; font-size: inherit; }
+.samples figure > a { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 22px; font-size: 14px; font-weight: 600; }
+.tableScroll { overflow-x: auto; border: 1px solid var(--border-strong); border-radius: 12px; margin: 28px 0; }
+.tableScroll table { width: 100%; border-collapse: collapse; min-width: 580px; font-size: 15px; line-height: 1.65; }
+.tableScroll caption { text-align: left; padding: 20px; color: var(--muted); font-size: 13px; background: var(--surface); }
+.tableScroll th, .tableScroll td { text-align: left; vertical-align: top; padding: 18px 20px; border-top: 1px solid var(--border); }
+.tableScroll thead th { background: var(--accent-soft); font-weight: 700; }
+.tableScroll tbody th { width: 24%; font-weight: 600; }
+.tableScroll td { width: 38%; }
+.article h3 { margin-top: 30px; }
+.code { border: 1px solid var(--border-strong); border-radius: 12px; margin: 24px 0; }
+.lossExample { border: 1px solid var(--border-strong); border-left: 3px solid var(--accent); border-radius: 10px; padding: 24px 28px; margin: 28px 0; background: var(--surface); }
+.lossExample h3 { margin-top: 0; }
+.lossExample p { margin: 0; font-size: 16px; }
+.checklist { margin: 24px 0; padding-left: 26px; }
+.checklist li { padding-left: 8px; margin: 0 0 18px; }
+.checklist li::marker { color: var(--accent); font-weight: 700; }
+.article summary h3 { margin: 0; }
+.article :is(pre, [role="region"]):focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+@media (max-width: 699px) {
+  .choices { grid-template-columns: 1fr; }
+  .choices a { padding: 20px; gap: 8px; }
+  .samples figcaption { align-items: flex-start; flex-direction: column; gap: 4px; padding: 16px 20px; }
+  .samples pre, .code { padding: 20px; font-size: 13px; }
+  .lossExample { padding: 22px; }
+}

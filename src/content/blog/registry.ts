@@ -1,3 +1,22 @@
+import { batchDrafts } from "./batch-drafts.ts";
+import { questionsForSlug } from "./faqs/index.ts";
+import { blogReleaseDateForSlug } from "./releases/2026-11-12.ts";
+
+const fixedIds: Record<string, string> = {
+  "convert-audio-to-text-online-free": "audio-to-text-guide",
+  "fix-subtitles-out-of-sync": "subtitle-sync-guide",
+  "srt-vs-vtt-subtitle-formats": "subtitle-formats-guide",
+};
+
+// Prefer next steps the writer already chose in the article. This does not
+// manufacture links to satisfy a numeric quota or expose drafts in production.
+function contextualRelatedIds(article: (typeof batchDrafts)[number]) {
+  const matches = JSON.stringify(article.sections).matchAll(/\]\(\/blog\/([a-z0-9-]+)\)/g);
+  return [...new Set([...matches].map(match => match[1]))]
+    .filter(slug => slug !== article.slug)
+    .map(slug => fixedIds[slug] ?? `draft-${slug}`);
+}
+
 export type BlogCategory = "Audio Transcription" | "Video to Text" | "Auto Captions" | "Subtitle Tutorials" | "Video & Audio Conversion";
 export type BlogPost = {
   id: string;
@@ -53,7 +72,42 @@ export const blogPosts: readonly BlogPost[] = [{
     { id: "subtitle-sync-questions", title: "Subtitle sync questions" },
   ],
   relatedIds: [],
-}];
+}, {
+  id: "subtitle-formats-guide",
+  slug: "srt-vs-vtt-subtitle-formats",
+  title: "SRT vs VTT: Which Subtitle Format Should You Use?",
+  seoTitle: "SRT vs VTT: Choose the Right Subtitle Format",
+  description: "Compare SRT and VTT with matching sample downloads. Choose for YouTube, web video or an editor, understand conversion losses, and check your subtitle delivery.",
+  category: "Subtitle Tutorials",
+  status: "published",
+  publishedAt: blogReleaseDateForSlug("srt-vs-vtt-subtitle-formats"),
+  author: { name: "AENural", type: "Organization", url: "https://aenural.com/about" },
+  sections: [
+    { id: "choose-for-the-destination", title: "Choose for the destination" },
+    { id: "compare-the-files", title: "Compare real sample files" },
+    { id: "practical-differences", title: "Practical differences" },
+    { id: "youtube-and-web-video", title: "YouTube & web video" },
+    { id: "convert-without-surprises", title: "Conversion losses" },
+    { id: "check-your-delivery", title: "Delivery checklist" },
+    { id: "format-questions", title: "Format questions" },
+  ],
+  relatedIds: ["subtitle-sync-guide"],
+}, ...batchDrafts.map(article => ({
+  id: `draft-${article.slug}`,
+  slug: article.slug,
+  title: article.title,
+  seoTitle: article.seoTitle,
+  description: article.description,
+  category: article.category,
+  status: blogReleaseDateForSlug(article.slug) ? "published" as const : "draft" as const,
+  publishedAt: blogReleaseDateForSlug(article.slug),
+  author: { name: "AENural", type: "Organization" as const, url: "https://aenural.com/about" },
+  sections: [
+    ...article.sections.map(({ id, title }) => ({ id, title })),
+    ...(questionsForSlug(article.slug) ? [{ id: "reader-questions", title: "Reader questions" }] : []),
+  ],
+  relatedIds: contextualRelatedIds(article),
+}))];
 
 export function publishedPosts(posts: readonly BlogPost[] = blogPosts): BlogPost[] {
   return posts.filter(post => post.status === "published" && post.publishedAt)

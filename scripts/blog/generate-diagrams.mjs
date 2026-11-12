@@ -1,0 +1,63 @@
+// Original AENural educational artwork. No screenshots, borrowed assets or UI replicas.
+import fs from 'node:fs/promises';
+const dir='public/blog/visual-guides';
+const ink='#f1f7f4',muted='#b1c0bb',teal='#80d2c0',orange='#ffb46d',panel='#1b2d29',edge='#45645b';
+const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+let words=[];
+const text=(x,y,s,{size=18,color=ink,weight=400,anchor='start',mono=false}={})=>{words.push(s);return `<text x="${x}" y="${y}" fill="${color}" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" font-family="${mono?'monospace':'Arial, sans-serif'}">${esc(s)}</text>`;};
+const rect=(x,y,w,h,fill=panel,stroke=edge,rx=12)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${fill}" stroke="${stroke}"/>`;
+const line=(x,y,x2,y2,color=teal,dash=false)=>`<path d="M${x} ${y}L${x2} ${y2}" fill="none" stroke="${color}" stroke-width="2" ${dash?'stroke-dasharray="5 6"':''}/>`;
+const arrow=(x,y,x2,y2)=>line(x,y,x2,y2)+`<path d="M${x2-6} ${y2-5}L${x2} ${y2}L${x2-6} ${y2+5}" fill="none" stroke="${teal}" stroke-width="2"/>`;
+const title=s=>text(28,40,s,{size:14,color:teal,weight:700});
+const box=(x,y,w,heading,detail)=>rect(x,y,w,88)+text(x+18,y+32,heading,{weight:700})+text(x+18,y+62,detail,{size:15,color:muted});
+const specs=[
+ ['srt-cue', 'A valid SRT cue, annotated', 'The number identifies the cue; comma milliseconds define its display interval; a blank line separates it from the next cue.',()=>title('ANATOMY OF ONE SRT CUE')+rect(28,66,704,220)+text(52,105,'1',{mono:true,color:orange})+text(52,150,'00:00:02,000 --> 00:00:04,500',{mono:true,size:22})+text(52,197,'This is a subtitle.',{mono:true,size:22})+line(52,246,710,246,edge,true)+text(80,105,'Cue number',{size:15,color:muted})+text(52,270,'Blank line before the next cue',{size:15,color:muted}),320],
+ ['split-origins','One cue, three time origins','The same 65–68-second cue retains its duration. Interval reset subtracts 60 seconds; count reset starts this part at its first cue.',()=>title('SAME CUE · THREE ALTERNATIVES')+box(28,72,212,'Original time','65 → 68 seconds')+box(274,72,212,'1-minute reset','5 → 8 seconds')+box(520,72,212,'Count reset','0 → 3 seconds')+text(28,205,'Subtract the interval boundary',{size:17,color:teal})+text(28,235,'or the part’s first cue — these are different origins.',{size:17,color:muted}),270],
+ ['merge-offset','Build the merged offset from real boundaries','116 seconds of subtitle timeline, four seconds of remaining chapter video and a two-second leading pause place the next cue at 122 seconds.',()=>title('WHY THE VIDEO BOUNDARY MATTERS')+box(28,72,212,'Subtitle end','116 seconds')+box(274,72,212,'Remaining video','+ 4 seconds')+box(520,72,212,'Next leading pause','+ 2 seconds')+text(28,205,'Video join: 120 seconds',{size:18,color:orange})+text(28,252,'116 + 4 + 2 = 122 seconds',{size:27,weight:700,color:teal}),290],
+ ['cue-overlap','Where two caption intervals collide','Cue one ends at 12.4 seconds but cue two begins at 12.1 seconds, leaving 0.3 seconds of simultaneous display.',()=>title('TWO CUES · ONE SHARED INTERVAL')+text(28,95,'Cue 1',{weight:700})+rect(140,68,355,48,'#294a41',teal)+text(154,98,'10.000 → 12.400s',{size:18})+text(28,174,'Cue 2',{weight:700})+rect(451,147,281,48,'#503c29',orange)+text(471,177,'12.100 → 14.000s',{size:18})+line(451,116,451,147,orange,true)+line(495,116,495,147,orange,true)+text(28,258,'Shared display: 0.300 seconds',{size:24,color:orange,weight:700}),300],
+ ['reading-load','More display time changes reading load','72 characters displayed for three seconds require 24 characters per second; four seconds reduces that to 18. Extra time must fit the actual scene.',()=>title('72 CHARACTERS · TWO DISPLAY DURATIONS')+box(28,76,330,'3 seconds','72 ÷ 3 = 24 CPS')+box(402,76,330,'4 seconds','72 ÷ 4 = 18 CPS')+rect(28,188,330,10,orange,orange,5)+rect(402,188,248,10,teal,teal,5)+text(28,240,'Check speech, cuts and neighboring cues before extending.',{size:18,color:muted}),280],
+ ['pcm-size','A PCM WAV size calculation','48,000 samples per second at 16 bits in one channel require 96,000 bytes per second: 57.6 decimal MB for ten minutes, excluding headers.',()=>title('ONE PCM CONFIGURATION · NOT EVERY WAV')+box(28,72,212,'48,000 Hz','Samples / second')+box(274,72,212,'16 bits','Per sample')+box(520,72,212,'1 channel','Mono audio')+text(28,212,'48,000 × 16 × 1 ÷ 8 = 96,000 bytes/s',{size:23,color:teal,weight:700})+text(28,254,'10 minutes ≈ 57.6 MB, excluding headers',{size:20,color:muted}),290],
+ ['delivery-branches','Keep the editable master before styling','A reviewed subtitle master can produce a timed sidecar or a graphics version. A rendered graphics version does not replace the editable subtitle file.',()=>title('KEEP THE MASTER · CHOOSE THE DELIVERABLE')+box(28,108,230,'Reviewed captions','Words + timed cues')+line(258,152,288,152)+line(288,104,288,220)+arrow(288,104,328,104)+arrow(288,220,328,220)+box(338,60,394,'SRT / VTT sidecar','Test the receiving player')+box(338,176,394,'Designed graphics / video','Test the rendered picture'),300],
+ ['resolve-origin','Place a clip-relative cue on the programme timeline','A cue three seconds into a clip placed at programme time 90 seconds belongs at programme time 93 seconds. Apply the offset once.',()=>title('CLIP TIME + PLACEMENT = PROGRAMME TIME')+box(28,72,212,'Clip placement','90 seconds')+box(274,72,212,'Cue within clip','+ 3 seconds')+box(520,72,212,'Programme cue','93 seconds')+arrow(242,116,266,116)+arrow(488,116,512,116)+text(28,218,'Apply the placement offset once.',{size:24,color:orange,weight:700}),260],
+ ['capcut-surfaces','CapCut subtitle import differs by platform','Desktop uses Captions, Add Captions. Web uses Captions, Upload caption file. The current official help does not support direct mobile subtitle-file import.',()=>title('CHECK THE PLATFORM BEFORE CHANGING THE FILE')+box(28,72,330,'Desktop','Captions → Add Captions')+box(402,72,330,'Web','Captions → Upload caption file')+rect(28,190,704,70,'#503c29',orange)+text(48,232,'Mobile: no direct SRT import in current Help',{color:orange,weight:700}),290],
+ ['caption-stages','Transcription and captioning need separate reviews','Review the recognized words before creating a caption track, then review segmentation and timing before choosing the output.',()=>title('TWO REVIEWS BEFORE DELIVERY')+box(28,72,212,'Transcript','Correct the words')+box(274,72,212,'Caption track','Check breaks + timing')+box(520,72,212,'Export','Test the actual file')+arrow(242,116,266,116)+arrow(488,116,512,116),200],
+ ['vtt-diagnosis','Find the failing layer of a WebVTT track','Check the VTT response and content type, then syntax, selection and cue timing. Converting a file cannot fix a missing network response.',()=>title('WEBVTT · DIAGNOSE IN ORDER')+box(28,72,330,'1 · Response','200 · text/vtt · real caption text')+box(402,72,330,'2 · Syntax','WEBVTT header · valid cue times')+box(28,188,330,'3 · Selection','Correct language track selected')+box(402,188,330,'4 · Playback','Current time falls inside a cue'),310],
+ ['text-origin','A navigation timestamp is not a cue interval','A transcript reference identifies a point. A subtitle cue has both a start and an end, so the player knows when to remove it.',()=>title('A POINT AND AN INTERVAL DO DIFFERENT JOBS')+box(28,72,704,'Transcript: [05:12]','Jump to the explanation')+box(28,188,704,'Subtitle: 05:12.000 → 05:15.200','Show the words, then remove them'),310],
+ ['mp4-audio','Separate playback, decoding and recognition','First confirm the recording contains speech. Next check that the tool can open it. Only then diagnose wrong recognized words.',()=>title('FIX THE FAILING STAGE')+box(28,72,212,'No audible speech','Source / export')+box(274,72,212,'File will not open','Codec / input limit')+box(520,72,212,'Wrong words','Language / clarity'),200],
+ ['encoding','Wrong decoding is different from missing glyphs','UTF-8 bytes C3 A9 represent é. Reading those bytes as Windows-1252 produces Ã©. A missing-font box is a separate display issue.',()=>title('SAME BYTES · DIFFERENT DECODING')+box(28,106,212,'Bytes: C3 A9','Untouched source')+arrow(240,150,286,150)+box(304,58,428,'UTF-8 → é','Expected character')+box(304,174,428,'Windows-1252 → Ã©','Wrong decoding'),300],
+ ['clip-time','Rebase an unchanged excerpt once','A cue at episode time 12:32.500 becomes 2.500 seconds into a clip whose in-point is 12:30.000. Later edits need another timing review.',()=>title('EPISODE TIME − CLIP IN-POINT = CLIP TIME')+box(28,72,212,'Episode cue','12:32.500')+box(274,72,212,'Clip in-point','− 12:30.000')+box(520,72,212,'Clip cue','00:02.500')+arrow(242,116,266,116)+arrow(488,116,512,116)+text(28,218,'For a continuous excerpt at unchanged speed.',{size:20,color:muted}),260],
+ ['translation-checks','Translation review has three independent checks','Correct meaning, usable timing and the right exported file are separate requirements. Preserving timestamps alone does not establish a good translation.',()=>title('A TRANSLATION IS MORE THAN UNCHANGED TIMESTAMPS')+box(28,72,212,'Meaning','Names · numbers · tone')+box(274,72,212,'Reading time','Length · cue boundaries')+box(520,72,212,'Delivery','Language · format · revision'),200],
+ ['text-selector','A word selector does not listen to speech','A selector can affect words one at a time. The animation keyframes still need to be aligned with the spoken words.',()=>title('WORD SELECTION IS NOT SPEECH ALIGNMENT')+rect(28,72,704,112)+rect(267,91,180,74,'#294a41',teal)+text(130,139,'Review',{size:31,weight:700})+text(299,139,'the',{size:31,weight:700,color:teal})+text(489,139,'words',{size:31,weight:700})+line(356,184,356,215,teal)+text(356,249,'Selected word · keyframes set its time',{anchor:'middle',size:20,color:muted}),285],
+ ['delivery-record','Three matching assets in a delivery handoff','The video, timed captions and review record should identify the same approved edit and language. Matching names do not prove correct playback.',()=>title('KEEP THE APPROVED EDIT TRACEABLE')+box(28,72,704,'Video · episode-07-r05.mp4','Approved picture and audio')+box(28,184,704,'Captions · episode-07-r05.en.srt','Reviewed English timed text')+box(28,296,704,'Review record · source r03 / picture r05','Text, timing and destination checks'),420],
+];
+const placements={
+ 'fix-garbled-subtitle-characters':['encoding','recognize-the-damage'],
+ 'fix-invalid-srt-file':['srt-cue','a-valid-cue'],
+ 'merge-srt-files-correct-offsets':['merge-offset','set-gap'],
+ 'split-srt-files-keep-reset-timestamps':['split-origins','choose-timestamps'],
+ 'fix-overlapping-subtitles':['cue-overlap','identify-collision'],
+ 'wav-vs-mp3-transcription':['pcm-size','size-check'],
+ 'premiere-pro-transcript-to-captions':['caption-stages','create-caption-track'],
+ 'premiere-caption-styles-vs-animation':['delivery-branches','protect-the-master'],
+ 'after-effects-subtitles-srt-workflow':['delivery-branches','choose-the-handoff'],
+ 'after-effects-caption-text-animators':['text-selector','selector-workflow'],
+ 'davinci-resolve-import-srt':['resolve-origin','import-check'],
+ 'davinci-resolve-subtitle-export':['delivery-branches','choose-output'],
+ 'import-srt-capcut-desktop-web':['capcut-surfaces','platform-choice'],
+ 'capcut-auto-captions-review':['caption-stages','generate-caption-draft'],
+ 'mp4-transcription-no-audio-track':['mp4-audio','classify-the-symptom'],
+ 'transcript-vs-subtitles-timestamps':['text-origin','timing-example'],
+ 'translated-subtitles-too-long':['reading-load','worked-example'],
+ 'webvtt-captions-not-showing-html-video':['vtt-diagnosis','network-before-css'],
+ 'subtitle-delivery-quality-checklist':['delivery-record','handoff-record'],
+};
+await fs.mkdir(dir,{recursive:true});
+const catalog={};
+for(const [name,label,alt,draw,height] of specs){
+ words=[];const body=draw();
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="760" height="${height}" viewBox="0 0 760 ${height}" role="img" aria-label="${esc(alt)}"><rect width="760" height="${height}" rx="16" fill="#10221d"/>${body}</svg>\n`;
+ await fs.writeFile(`${dir}/${name}.svg`,svg);
+ catalog[name]={src:`/blog/visual-guides/${name}.svg`,width:760,height,label,alt,text:words.join(' ')};
+}
+await fs.writeFile('src/content/blog/diagram-catalog.ts',`// Generated by scripts/blog/generate-diagrams.mjs. Original educational artwork.\nexport const diagramCatalog = ${JSON.stringify(catalog,null,2)} as const;\nexport const articleDiagrams = ${JSON.stringify(placements,null,2)} as const;\n`);
+console.log(`Generated ${specs.length} original diagrams; ${Object.keys(placements).length} article placements.`);

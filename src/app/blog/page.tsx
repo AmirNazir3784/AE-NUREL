@@ -9,13 +9,29 @@ export const metadata = {
 };
 
 export default function BlogPage() {
-  const [featured, ...remaining] = readablePosts();
+  const posts = readablePosts();
+  const featured = posts.find(post => post.slug === "srt-vs-vtt-subtitle-formats") ?? posts[0];
+  const remaining = posts.filter(post => post.id !== featured?.id);
+  const groups = [...new Set(remaining.map(post => post.category))].map(category => ({
+    category,
+    id: `topic-${category.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
+    posts: remaining.filter(post => post.category === category),
+  }));
   return <main id="main-content" className={styles.page}><div className={styles.wrap}>
     <header className={styles.directoryHero}>
       <span className={styles.eyebrow}>The AENural journal</span>
       <h1>AENural Blog</h1>
       <p>Practical guides to audio transcription, captions, and subtitle workflows.</p>
     </header>
-    {featured ? <><PostCard post={featured} featured />{remaining.length > 0 && <section aria-label="More articles" className={styles.cardGrid}>{remaining.map(post => <PostCard key={post.id} post={post} />)}</section>}</> : <p className={styles.empty}>New guides will appear here when they are published.</p>}
+    {featured ? <>
+      <PostCard post={featured} featured />
+      {groups.length > 1 && <nav className={styles.directoryNav} aria-label="Browse articles by topic">
+        {groups.map(group => <a key={group.id} href={`#${group.id}`}>{group.category} <span>({group.posts.length})</span></a>)}
+      </nav>}
+      {groups.map(group => <section key={group.id} aria-labelledby={group.id} className={styles.directorySection}>
+        <h2 id={group.id}>{group.category}</h2>
+        <div className={styles.cardGrid}>{group.posts.map(post => <PostCard key={post.id} post={post} headingLevel={3} />)}</div>
+      </section>)}
+    </> : <p className={styles.empty}>New guides will appear here when they are published.</p>}
   </div></main>;
 }

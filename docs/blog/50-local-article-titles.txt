@@ -1,0 +1,202 @@
+AENURAL — 50 LOCAL DRAFT ARTICLES
+Updated 12 November 2026. Owner review required; no publication or ranking claims.
+
+01. SRT vs VTT: Which Subtitle Format Should You Use?
+Primary keyword: SRT vs VTT
+Local page: /blog/srt-vs-vtt-subtitle-formats
+
+02. How to Fix Garbled Subtitle Characters Without Losing Text
+Primary keyword: fix subtitle encoding
+Local page: /blog/fix-garbled-subtitle-characters
+
+03. SRT File Not Working? Check These Syntax Errors First
+Primary keyword: SRT file not working
+Local page: /blog/fix-invalid-srt-file
+
+04. How to Merge SRT Files With the Correct Video Offsets
+Primary keyword: merge SRT files
+Local page: /blog/merge-srt-files-correct-offsets
+
+05. How to Split an SRT File: Keep or Reset the Timestamps?
+Primary keyword: split SRT file
+Local page: /blog/split-srt-files-keep-reset-timestamps
+
+06. How to Fix Overlapping Subtitles Without Cutting Off Speech
+Primary keyword: fix overlapping subtitles
+Local page: /blog/fix-overlapping-subtitles
+
+07. Convert SRT to Text Without Turning Every Caption Into a Paragraph
+Primary keyword: SRT to text
+Local page: /blog/srt-to-text-readable-transcript
+
+08. SRT to JSON: Understand Timestamp Fields Before Using the Data
+Primary keyword: SRT to JSON
+Local page: /blog/srt-to-json-timestamps-data
+
+09. SRT to ASS and Back: What Happens to Styling and Timing?
+Primary keyword: SRT to ASS
+Local page: /blog/srt-ass-conversion-styling-loss
+
+10. SBV to SRT: Convert YouTube Caption Files Without Shifting Them
+Primary keyword: SBV to SRT
+Local page: /blog/sbv-to-srt-youtube-caption-files
+
+11. SRT to MP4 Explained: A Subtitle Video Is Not Your Captioned Footage
+Primary keyword: SRT to MP4
+Local page: /blog/srt-to-mp4-subtitle-video-explained
+
+12. Subtitle Line Breaks: Make Captions Easier to Read Without Rewriting Them
+Primary keyword: subtitle line breaks
+Local page: /blog/subtitle-line-breaks-readable-captions
+
+13. Subtitle Timestamps and Frame Rate: When Does FPS Actually Matter?
+Primary keyword: subtitle frame rate
+Local page: /blog/subtitle-timestamps-frame-rate-explained
+
+14. Open Captions, Closed Captions and Subtitles: Choose the Right Delivery
+Primary keyword: open vs closed captions
+Local page: /blog/open-closed-captions-subtitles-difference
+
+15. Speaker Labels and Sound Cues: What Belongs in Useful Captions?
+Primary keyword: caption speaker labels
+Local page: /blog/speaker-labels-sound-cues-captions
+
+16. Subtitle Reading Speed: Calculate CPS Before Shortening Your Captions
+Primary keyword: subtitle reading speed
+Local page: /blog/subtitle-reading-speed-cps
+
+17. Where to Place Captions in Vertical Video Without Hiding the Action
+Primary keyword: vertical video caption placement
+Local page: /blog/vertical-video-caption-placement
+
+18. Free Auto Caption Generator: Check Exports Before Editing
+Primary keyword: free auto caption generator
+Local page: /blog/choose-free-caption-software
+
+19. How to Clean Up an AI Transcript Without Changing What Was Said
+Primary keyword: clean up AI transcript
+Local page: /blog/clean-up-ai-transcript
+
+20. WAV vs MP3 for Transcription: What Actually Changes?
+Primary keyword: WAV vs MP3 transcription
+Local page: /blog/wav-vs-mp3-transcription
+
+21. Noisy Audio Transcription: Improve the Input Without Inventing the Words
+Primary keyword: transcribe noisy audio
+Local page: /blog/transcribe-noisy-audio-accurately
+
+22. How to Transcribe Long Audio in Sections Without Losing the Timeline
+Primary keyword: transcribe long audio files
+Local page: /blog/transcribe-long-audio-in-sections
+
+23. M4A Voice Recording Won't Transcribe? Check the File Before Converting
+Primary keyword: M4A transcription not working
+Local page: /blog/m4a-voice-recording-transcription-import
+
+24. How to Extract Audio From Video: Choose MP3 or WAV for the Next Task
+Primary keyword: extract audio from video
+Local page: /blog/extract-audio-video-mp3-wav
+
+25. MP4 Transcription Not Working? Check the Audio Track First
+Primary keyword: MP4 transcription not working
+Local page: /blog/mp4-transcription-no-audio-track
+
+26. Transcript vs Subtitles: Which Text Export Do You Need?
+Primary keyword: transcript vs subtitles
+Local page: /blog/transcript-vs-subtitles-timestamps
+
+27. Premiere Pro Transcript to Captions: Review the Words Before Creating the Track
+Primary keyword: Premiere Pro transcript to captions
+Local page: /blog/premiere-pro-transcript-to-captions
+
+28. How to Export SRT From Premiere Pro—and Find the Right Caption Track
+Primary keyword: export SRT Premiere Pro
+Local page: /blog/export-srt-premiere-pro
+
+29. How to Import SRT Into Premiere Pro Without Confusing It With a Transcript
+Primary keyword: import SRT Premiere Pro
+Local page: /blog/import-srt-premiere-pro
+
+30. Premiere Caption Styles vs Animation: Preserve a Subtitle Master
+Primary keyword: animated captions Premiere Pro
+Local page: /blog/premiere-caption-styles-vs-animation
+
+31. Subtitles in After Effects: Plan the SRT-to-Text-Layer Handoff
+Primary keyword: After Effects subtitles SRT
+Local page: /blog/after-effects-subtitles-srt-workflow
+
+32. After Effects Caption Animation: Use Text Animators Without Rushing the Words
+Primary keyword: After Effects caption animation
+Local page: /blog/after-effects-caption-text-animators
+
+33. DaVinci Resolve SRT Import: Check the Timeline Before Styling
+Primary keyword: DaVinci Resolve import SRT
+Local page: /blog/davinci-resolve-import-srt
+
+34. DaVinci Resolve Subtitle Export: Sidecar File or Burned-In Video?
+Primary keyword: DaVinci Resolve export subtitles
+Local page: /blog/davinci-resolve-subtitle-export
+
+35. DaVinci Resolve Subtitle Track Styles: Keep a Consistent Look Without Hiding Exceptions
+Primary keyword: DaVinci Resolve subtitle style
+Local page: /blog/davinci-resolve-subtitle-track-style
+
+36. How to Import SRT Into CapCut: Desktop, Web and Mobile Differences
+Primary keyword: import SRT CapCut
+Local page: /blog/import-srt-capcut-desktop-web
+
+37. CapCut Auto Captions: Generate a Draft, Then Review the Parts That Matter
+Primary keyword: CapCut auto captions
+Local page: /blog/capcut-auto-captions-review
+
+38. CapCut SRT Export Missing? Check Caption Type, Platform and Export Mode
+Primary keyword: CapCut export SRT missing
+Local page: /blog/capcut-srt-export-missing
+
+39. How to Upload SRT Captions to YouTube and Check the Published Track
+Primary keyword: upload SRT YouTube
+Local page: /blog/upload-srt-youtube-captions
+
+40. YouTube Automatic Captions Not Available? A Practical Diagnostic Guide
+Primary keyword: YouTube automatic captions not available
+Local page: /blog/youtube-auto-captions-not-available
+
+41. How to Get a Transcript of Your Own YouTube Video
+Primary keyword: download YouTube transcript own video
+Local page: /blog/youtube-transcript-own-video-download
+
+42. YouTube Translated Subtitles: Keep Source Captions and Language Tracks in Sync
+Primary keyword: YouTube translated subtitles
+Local page: /blog/youtube-translated-subtitle-tracks
+
+43. Podcast Captions With Multiple Speakers: Build a Reliable Episode Master
+Primary keyword: podcast captions multiple speakers
+Local page: /blog/podcast-captions-multiple-speakers
+
+44. Podcast Clip Captions: Reset Timing and Keep the Speaker's Meaning
+Primary keyword: podcast clip captions
+Local page: /blog/podcast-clips-caption-timing
+
+45. Turn a Podcast Transcript Into Show Notes Without Inventing Claims
+Primary keyword: podcast transcript to show notes
+Local page: /blog/podcast-transcript-to-show-notes
+
+46. SRT Translator Problems: Check Meaning, Timing and Export
+Primary keyword: SRT translator problems
+Local page: /blog/choose-subtitle-translator
+
+47. Translated Subtitles Too Long? Fix Reading Load Without Changing Meaning
+Primary keyword: translated subtitles too long
+Local page: /blog/translated-subtitles-too-long
+
+48. WebVTT Captions Not Showing in HTML Video? Follow the Request to the Cue
+Primary keyword: WebVTT captions not showing
+Local page: /blog/webvtt-captions-not-showing-html-video
+
+49. Compress Captioned Video Without Losing Readable Text or Subtitle Files
+Primary keyword: compress captioned video
+Local page: /blog/compress-captioned-video-readable-text
+
+50. Subtitle Delivery Checklist: Check the File, the Video and the Handoff
+Primary keyword: subtitle delivery checklist
+Local page: /blog/subtitle-delivery-quality-checklist

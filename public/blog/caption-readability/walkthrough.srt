@@ -1,0 +1,8 @@
+1
+00:00:10,000 --> 00:00:13,000
+Please save the subtitle master before exporting this video.
+
+2
+00:00:15,000 --> 00:00:20,000
+We spoke to Dr.
+Maya Chen after the recording.

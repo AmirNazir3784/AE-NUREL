@@ -28,11 +28,24 @@ export function inspectArticle(html) {
   const h1=document.querySelector('main article h1');
   const intro=document.querySelector('main article header p');
   const readingCopy=body.cloneNode(true);
+  // Original SVG files contain visible instructional words. Include those words
+  // in the reading copy/hash so graphics cannot silently evade the word target.
+  for(const figure of readingCopy.querySelectorAll('[data-blog-diagram-text]')) {
+    const image=figure.querySelector('img');
+    image?.replaceWith(document.createTextNode(` ${figure.getAttribute('data-blog-diagram-text')} `));
+  }
   // Preserve visible block/label boundaries without splitting inline link words.
-  for(const block of readingCopy.querySelectorAll('p,h2,h3,li,td,th,figcaption,div,section,aside,details,summary,span,strong'))block.append(document.createTextNode(' '));
+  for(const block of readingCopy.querySelectorAll('p,h2,h3,li,td,th,figcaption,div,section,aside,details,summary,span,strong,svg text'))block.append(document.createTextNode(' '));
   const text=normalize([h1?.textContent,intro?.textContent,readingCopy.textContent].join(' '));
+  const faqSections=[...readingCopy.querySelectorAll('[data-blog-faq]')];
+  const faqText=normalize(faqSections.map(section=>section.textContent).join(' '));
+  const faqCount=faqSections.reduce((sum,section)=>sum+section.querySelectorAll('details').length,0);
+  for(const section of faqSections)section.remove();
+  const mainText=normalize([h1?.textContent,intro?.textContent,readingCopy.textContent].join(' '));
   const schema=[...document.querySelectorAll('script[type="application/ld+json"]')].flatMap(n=>{const j=JSON.parse(n.textContent);return j['@graph']??[j];});
-  return {document,text,wordCount:text.split(/\s+/u).length,contentHash:hash(text),
+  return {document,text,wordCount:text.split(/\s+/u).length,
+    mainText,mainWordCount:mainText.split(/\s+/u).length,
+    faqWordCount:faqText?faqText.split(/\s+/u).length:0,faqCount,contentHash:hash(text),
     title:document.title,description:document.querySelector('meta[name="description"]')?.content,
     canonical:document.querySelector('link[rel="canonical"]')?.href,
     robots:document.querySelector('meta[name="robots"]')?.content,
@@ -41,12 +54,12 @@ export function inspectArticle(html) {
     links:[...body.querySelectorAll('a[href]')].map(a=>a.getAttribute('href'))};
 }
 
-async function get(url) {
+export async function get(url) {
   const response=await fetch(url,{signal:AbortSignal.timeout(30000),redirect:'follow'});
   if(response.status!==200||response.url!==url)throw Error(`Expected direct HTTP 200 at ${url}; got ${response.status} at ${response.url}`);
   return {html:await response.text(),type:response.headers.get('content-type')};
 }
-async function liveInventory() {
+export async function liveInventory() {
   const [{html:index},{html:xml,type}]=await Promise.all([get(`${SITE_URL}/blog`),get(`${SITE_URL}/sitemap.xml`)]);
   if(!/^(application|text)\/xml/.test(type??''))throw Error('Live sitemap has the wrong content type');
   const sitemap=new JSDOM(xml,{contentType:'application/xml'}).window.document;
