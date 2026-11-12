@@ -68,12 +68,25 @@ const articles=await parallel(release,async post=>{
 });
 const resourceChecks=await parallel([...assets].sort(),async route=>{
  const response=await read(route),original=await fs.readFile(path.join('public',route.slice(1))),fail=[];
- if(response.status!==200||!response.bytes.equals(original))fail.push('Resource response/bytes');
+ const bytesMatch=response.bytes.equals(original);
+ let decodedPixelsMatch=false;
+ // A host may losslessly re-encode the existing social PNG. Accept that only
+ // after comparing dimensions, color space and every decoded RGBA pixel.
+ // The new instructional SVGs and sample files still require identical bytes.
+ if(!bytesMatch&&route==='/social-card.png'&&response.status===200&&response.type==='image/png'){
+  const {default:sharp}=await import('sharp');
+  const [actualMeta,originalMeta,actualPixels,originalPixels]=await Promise.all([
+   sharp(response.bytes).metadata(),sharp(original).metadata(),
+   sharp(response.bytes).ensureAlpha().raw().toBuffer(),sharp(original).ensureAlpha().raw().toBuffer(),
+  ]);
+  decodedPixelsMatch=actualMeta.width===originalMeta.width&&actualMeta.height===originalMeta.height&&actualMeta.space===originalMeta.space&&actualPixels.equals(originalPixels);
+ }
+ if(response.status!==200||(!bytesMatch&&!decodedPixelsMatch))fail.push('Resource response/content');
  if(route.endsWith('.svg')){
   const d=new JSDOM(response.bytes.toString(),{contentType:'image/svg+xml'}).window.document;
   if(d.querySelector('parsererror,script,image,foreignObject')||!response.type.includes('svg'))fail.push('SVG XML/MIME');
  }
- return {route,status:response.status,type:response.type,sha256:digest(response.bytes),errors:fail};
+ return {route,status:response.status,type:response.type,sha256:digest(response.bytes),bytesMatch,decodedPixelsMatch,errors:fail};
 });
 const toolChecks=await parallel([...routes].sort(),async route=>{
  const response=await read(route);return {route,status:response.status,errors:response.status===200?[]:['Internal tool HTTP']};
