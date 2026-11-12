@@ -31,6 +31,12 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
   const encoder = quality === "accurate" ? "encoder_model_quantized.onnx" : "encoder_model.onnx";
   const decoder = "decoder_model_merged_quantized.onnx";
   const preparation = modelPreparation({ [encoder]: ACCURATE_FILE_BYTES[weightRoot + encoder], [decoder]: ACCURATE_FILE_BYTES[weightRoot + decoder] });
+  // A retained pipeline already owns these weights; do not reset their byte
+  // preparation to zero when processing another clip with the same model.
+  if (transcriber) for (const file of [encoder, decoder]) {
+    const size = ACCURATE_FILE_BYTES[weightRoot + file];
+    if (size) preparation.update(file, size, size);
+  }
   const progress = (value: AsrProgress) => send({ type: "progress", progress: preparation.progress(value) });
   let detector: InferenceSession | undefined;
   const requests: { method: string; url: string }[] = [];
@@ -91,12 +97,12 @@ scope.onmessage = async (event: MessageEvent<{ id: number; samples: Float32Array
     // Both models must use the very same runtime instance and pinned WASM assets.
     if (ort.env.wasm !== wasm) throw new Error("Local speech runtime versions do not match. Reload and retry.");
     const [binary, factory, model] = await Promise.all([
-      cachedAsset(runtimeBase + "ort-wasm-simd-threaded.asyncify.wasm", assetCache, scope.fetch),
-      cachedAsset(runtimeBase + "ort-wasm-simd-threaded.asyncify.mjs", assetCache, scope.fetch),
+      factoryUrl ? undefined : cachedAsset(runtimeBase + "ort-wasm-simd-threaded.asyncify.wasm", assetCache, scope.fetch),
+      factoryUrl ? undefined : cachedAsset(runtimeBase + "ort-wasm-simd-threaded.asyncify.mjs", assetCache, scope.fetch),
       audioKind === "music" ? undefined : cachedAsset(VAD_URL, assetCache, scope.fetch, VAD_SHA256)
     ]);
-    wasm.wasmBinary = binary.buffer;
-    if (!factoryUrl) factoryUrl = URL.createObjectURL(new Blob([factory], { type: "text/javascript" }));
+    if (binary) wasm.wasmBinary = binary.buffer;
+    if (!factoryUrl && factory) factoryUrl = URL.createObjectURL(new Blob([factory], { type: "text/javascript" }));
     wasm.wasmPaths = { mjs: factoryUrl, wasm: runtimeBase + "ort-wasm-simd-threaded.asyncify.wasm" };
     // Speech VAD rejected most sung vocals in the approved song regression.
     // Music mode preserves full real sections for Whisper; it does not invent
