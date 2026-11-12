@@ -9,3 +9,8 @@ export function captionAccess(premium: boolean, signedIn: boolean, used = 0, now
   const reset = new Date(now); reset.setUTCHours(24,0,0,0);
   return { enabled: true, signedIn, premium, dailyLimit: premium ? null : 3, used, remaining: premium ? null : Math.max(0,3-used), resetsAt: reset.toISOString(), maxSeconds: premium ? 120 : 60, watermark: !premium, accurate: premium, advanced: premium, presets: premium ? null : FREE_CAPTION_PRESETS };
 }
+
+// Feature capabilities for this free tool, independent of account entitlements.
+export function freeCaptionAccess(signedIn = false): CaptionAccess {
+  return { ...captionAccess(true, signedIn), enabled: false };
+}

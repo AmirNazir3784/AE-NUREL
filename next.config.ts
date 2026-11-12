@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   serverExternalPackages: ["better-auth", "mysql2", "nodemailer", "kysely"],
   outputFileTracingExcludes: { "/*": ["./.aenural-local/**/*", "./artifacts/**/*", "./references/Audio/**/*", "./references/audio/**/*"] },
   // Avoid repeated multi-second cache compactions on the owner's Windows disk.
@@ -13,6 +14,18 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          // Limit embedding and document injection without restricting the
+          // speech/video workers, WASM, model downloads or caption exports.
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'; base-uri 'self'; object-src 'none'" + (process.env.NODE_ENV === "production" ? "; upgrade-insecure-requests" : "") },
+          ...(process.env.NODE_ENV === "production" ? [{ key: "Strict-Transport-Security", value: "max-age=31536000" }] : []),
+        ],
+      },
+      {
         source: "/videos/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=2592000, s-maxage=31536000, stale-while-revalidate=86400" },
@@ -22,6 +35,7 @@ const nextConfig: NextConfig = {
       { source: "/api/membership/:path*", headers: [{ key: "Cache-Control", value: "private, no-store" }] },
       { source: "/api/auth/:path*", headers: [{ key: "Cache-Control", value: "private, no-store" },{key:"Referrer-Policy",value:"no-referrer"}] },
       { source: "/reset-password", headers: [{ key: "Referrer-Policy", value: "no-referrer" },{key:"Cache-Control",value:"private, no-store"}] },
+      ...["/account/:path*", "/sign-in", "/sign-up", "/verify-email", "/forgot-password"].map(source => ({ source, headers: [{ key: "Cache-Control", value: "private, no-store" }] })),
     ];
   },
 };

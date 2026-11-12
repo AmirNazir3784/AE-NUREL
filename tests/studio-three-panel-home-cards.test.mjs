@@ -33,26 +33,3 @@ describe("simultaneous three-panel Caption Studio",()=>{
    assert.match(css,/prefers-reduced-motion:reduce/);
  });
 });
-describe("non-generic AENural homepage cards",()=>{
- const home=read("src/app/page.tsx");
- const toolcard=read("src/components/home/tool-card.tsx");
- const css=read("src/app/aenural.css");
- it("adds step-specific icons and progress marks",()=>{
-   assert.match(home,/aen-step-glyph/);
-   assert.match(home,/number === "01" \? "subtitle"/);
-   assert.match(home,/aen-step-dash/);
-   assert.match(css,/\.aen-step:hover .aen-step-glyph/);
- });
- it("adds clear affordances to tool cards",()=>{
-   assert.match(toolcard,/aen-card-open/);
-   assert.match(css,/\.aen-home \.aen-tool-card:is\(:hover,:focus-visible\)/);
-   assert.match(css,/var\(--accent\)/);
-   assert.match(css,/var\(--action\)/);
- });
- it("supports light/dark themes, reduced motion and fine hover/focus treatment",()=>{
-   assert.match(css,/\.aen-home \.aen-step:nth-child\(2\)/);
-   assert.match(css,/color-mix\(in srgb,var\(--accent\)/);
-   assert.match(css,/prefers-reduced-motion:reduce/);
-   assert.match(css,/@supports\(animation-timeline:view\(\)\)/);
- });
-});

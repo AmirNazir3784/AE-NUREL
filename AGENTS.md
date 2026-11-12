@@ -55,3 +55,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Preserve natural, useful keyword wording; do not force every workbook variant or make unsupported free/unlimited claims. Read the current blog workflow and coverage/release reports.
 - Release the checked blog changes to both authorized repositories using the existing Hostinger-connected workflow; verify all public article responses and discovery metadata before reporting publication.
 - The closed approved slug list is `src/content/blog/releases/2026-11-12.ts`; future articles remain drafts until authorized. Preserve existing publication dates, unrelated local tool work, credentials and runtime databases. Do not release unfinished tools as an incidental part of this blog batch.
+
+## Homepage, free captions and security release (12 November 2026)
+
+- The owner authorized updating both repositories with the reviewed lower-homepage refinements, free Auto Caption Generator capabilities and verified security fixes. Preserve everything through the second homepage video and all unrelated unfinished tools.
+- Auto Caption Generator's free capabilities are controlled by `src/lib/auto-caption-features.ts`. Read `docs/auto-caption-free-features.md` before modifying or reverting them; exact pre-unlock copies and an incremental rollback patch are saved in the ignored `.aenural-local/caption-free-features-2026-11-12/` checkpoint. Do not grant paid account roles or Source Window licenses to implement free tool capabilities.
+- The owner cancelled public signup/email-code work because no sending mailbox is configured. Do not enable public registration, change storage, or claim live email delivery as part of this release. Existing authentication and private owner configuration remain unchanged.
+- Read `docs/security-review-2026-11-12.md` for the targeted review, tests and limitations. A clean audit is not a guarantee against hacking; verify actual production headers after the connected deployment.

@@ -2,7 +2,8 @@ import { parseStudioStyle, studioIssues, type StudioStyle } from "../caption-stu
 import type { EditorDocument, EditorCue } from "@/lib/subtitle-editor";
 import { currentStudioAlignment, type StudioAlignment } from "../caption-studio/studio-alignment";
 import { FREE_CAPTION_PRESETS } from "./caption-policy";
-import { STUDIO_PRESETS } from "../caption-studio/studio-core";
+import { STUDIO_PRESETS, STUDIO_LIMITS } from "../caption-studio/studio-core";
+import { AUTO_CAPTION_FREE_FEATURES } from "@/lib/auto-caption-features";
 
 export function accessibleStyle(style: StudioStyle, premium: boolean): StudioStyle {
   if (premium) return style;
@@ -13,8 +14,10 @@ export function validateProject(input: unknown,premium:boolean) {
   const fail=():never=>{throw new Error("This project data is invalid. Reopen your video and save again.");};
   if(!input||typeof input!=="object")return fail();
   const raw=input as Record<string,unknown>,source=raw.source as Record<string,unknown>,captions=raw.captions as EditorDocument;
+  const freeCaptionProject=AUTO_CAPTION_FREE_FEATURES&&raw.tool==='auto-caption-generator';
   if(raw.schemaVersion!==1||typeof raw.title!=="string"||!raw.title.trim()||raw.title.length>100||!source||typeof source.filename!=="string"||source.filename.length>240)return fail();
-  if(typeof source.durationSeconds!=="number"||!Number.isFinite(source.durationSeconds)||source.durationSeconds<=0||source.durationSeconds>120||typeof source.width!=="number"||typeof source.height!=="number"||!Number.isInteger(source.width)||!Number.isInteger(source.height)||source.width<1||source.height<1||source.width*source.height>1920*1080)return fail();
+  if(typeof source.durationSeconds!=="number"||!Number.isFinite(source.durationSeconds)||source.durationSeconds<=0||source.durationSeconds>120||typeof source.width!=="number"||typeof source.height!=="number"||!Number.isInteger(source.width)||!Number.isInteger(source.height)||source.width<1||source.height<1||source.width*source.height>(freeCaptionProject?STUDIO_LIMITS.pixels:1920*1080))return fail();
+  if(freeCaptionProject&&Math.max(source.width,source.height)>4096)return fail();
   if(!captions||!Array.isArray(captions.cues)||captions.cues.length>500||!['srt','vtt'].includes(captions.format))return fail();
   const ids=new Set<string>();
   const cues=captions.cues.map((cue):EditorCue=>{
@@ -23,13 +26,13 @@ export function validateProject(input: unknown,premium:boolean) {
   });
   const document:EditorDocument={filename:typeof captions.filename==='string'?captions.filename.slice(0,240):'captions.srt',format:captions.format,cues,lineEnding:'\n',vttHeader:'WEBVTT',vttBlocks:[]};
   if(studioIssues(document,source.durationSeconds).length)return fail();
-  const style=accessibleStyle(parseStudioStyle(JSON.stringify({version:1,style:raw.style})),premium);
+  const style=accessibleStyle(parseStudioStyle(JSON.stringify({version:1,style:raw.style})),premium||freeCaptionProject);
   let alignment:StudioAlignment=[];
   if(Array.isArray(raw.alignment)&&raw.alignment.length<=500){
     const valid=raw.alignment.every(entry=>entry&&typeof entry.id==='string'&&typeof entry.text==='string'&&entry.text.length<=2000&&Number.isSafeInteger(entry.start)&&Number.isSafeInteger(entry.end)&&Array.isArray(entry.words)&&entry.words.length<=2000&&entry.words.every((word:Record<string,number>)=>['from','to','start','end'].every(key=>Number.isSafeInteger(word[key]))&&word.from>=0&&word.to>word.from&&word.to<=entry.text.length&&word.start>=entry.start&&word.end>word.start&&word.end<=entry.end));
     if(valid)alignment=currentStudioAlignment(document,raw.alignment);
   }
   const fingerprint=typeof source.fingerprint==='string'&&/^[a-f0-9]{64}$/.test(source.fingerprint)?source.fingerprint:undefined;
-  return {schemaVersion:1 as const,title:raw.title.trim(),source:{filename:source.filename.replace(/[\\/\x00-\x1f]/g,'_'),durationSeconds:source.durationSeconds,width:source.width,height:source.height,...fingerprint?{fingerprint}:{}},captions:document,style,alignment};
+  return {schemaVersion:1 as const,...freeCaptionProject?{tool:'auto-caption-generator' as const}:{},title:raw.title.trim(),source:{filename:source.filename.replace(/[\\/\x00-\x1f]/g,'_'),durationSeconds:source.durationSeconds,width:source.width,height:source.height,...fingerprint?{fingerprint}:{}},captions:document,style,alignment};
 }
 export type CaptionProjectData = ReturnType<typeof validateProject>;
