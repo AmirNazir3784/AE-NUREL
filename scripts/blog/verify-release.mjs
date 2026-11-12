@@ -41,7 +41,7 @@ const articles=await parallel(release,async post=>{
  const canonical=`https://aenural.com${route}`;
  if(response.status!==200||!response.type.startsWith('text/html'))fail.push('HTTP/MIME');
  if(a.h1Count!==1||d.querySelector('main article h1')?.textContent!==post.title)fail.push('Visible H1');
- if(a.canonical!==canonical||a.title!==`${post.seoTitle} | AENural`||a.description!==post.description)fail.push('Title/description/canonical');
+ if(a.canonical!==canonical||a.title!==`AENural | ${post.seoTitle}`||a.description!==post.description)fail.push('Title/description/canonical');
  if(a.robots!=='index, follow'||/noindex|none/i.test(response.robots))fail.push('Indexability');
  if(a.articleSchema?.url!==canonical||a.articleSchema?.datePublished!==post.publishedAt||a.articleSchema?.headline!==post.title||a.articleSchema?.author?.name!=='AENural')fail.push('Article schema');
  const graphs=[...d.querySelectorAll('script[type="application/ld+json"]')].flatMap(n=>{const j=JSON.parse(n.textContent);return j['@graph']??[j]});

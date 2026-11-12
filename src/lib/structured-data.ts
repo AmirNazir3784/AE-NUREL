@@ -1,16 +1,14 @@
-import { validatedSiteOrigin } from "./site-origin";
+import { PRODUCTION_SITE_ORIGIN, validatedSiteOrigin } from "./site-origin";
 import type { Tool } from "./tools";
 
 export type FaqItem = { q: string; a: string };
 
 // JSON-LD structured data (schema.org) so search engines can identify the site,
 // the publisher and each free tool without guessing from page text alone.
-// Absolute URLs need the confirmed production origin, exactly like the sitemap
-// and canonical URLs: when SITE_URL is not set these return null and no
-// structured data is emitted.
+// Site identity uses the same confirmed origin fallback as canonical metadata
+// and the sitemap. Tool/FAQ helpers retain their existing configured-origin gate.
 export function siteJsonLd() {
-  const origin = validatedSiteOrigin(process.env.SITE_URL);
-  if (!origin) return null;
+  const origin = validatedSiteOrigin(process.env.SITE_URL) ?? PRODUCTION_SITE_ORIGIN;
   return {
     "@context": "https://schema.org",
     "@graph": [

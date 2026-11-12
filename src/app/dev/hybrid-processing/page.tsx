@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { configuration } from "../../../../server/hybrid/config.mjs";
 import { HybridWorkspace } from "@/features/hybrid-processing/hybrid-workspace";
 import { ToolLayout, ToolHeader, ToolWorkspace } from "@/components/tools/tool-layout";
-export const metadata = { title: "Server processing verification | AENural", robots: { index: false, follow: false } };
+export const metadata = { title: "Server processing verification", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 export default function HybridProcessingPage() {
   if (process.env.NODE_ENV !== "development") notFound();
