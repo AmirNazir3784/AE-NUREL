@@ -6,11 +6,11 @@ import { pageMetadata } from "@/lib/site-metadata";
 import { tools } from "@/lib/tools";
 import "@/features/audio-to-text/audio-page.css";
 
-export const metadata = pageMetadata(
-  "Free Audio to Text Converter Online",
+export const metadata = { ...pageMetadata(
+  "Free Audio to Text Converter Online | AI Transcription",
   "Convert MP3 recordings and spoken audio into editable text online. Explore free AI transcription, video-to-text options, language support, and easy downloads.",
   "/tools/free-audio-to-text-converter-online",
-);
+), title: { absolute: "Free Audio to Text Converter Online | AI Transcription" } };
 
 export default function AudioToTextPage() {
   return <main id="main-content" className="aen-audio-page">
