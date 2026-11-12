@@ -1,4 +1,6 @@
 "use client";
+import { PricingLink } from "@/components/site/pricing-link";
+
 import { useRef, useState } from "react";
 import { DownloadButton } from "@/components/tools/download-button";
 import { STUDIO_FONTS, STUDIO_PRESETS, parseStudioStyle, type StudioStyle } from "./studio-core";
@@ -22,7 +24,7 @@ export function StyleControls({ style, disabled, access, wordTimingAvailable = f
     <div className={styles.styleSwitch} role="group" aria-label="Style panel"><button type="button" aria-pressed={panel === "templates"} onClick={() => setPanel("templates")}>Templates</button><button type="button" aria-pressed={panel === "customize"} onClick={() => setPanel("customize")}>Customize</button></div>
     <div hidden={panel !== "templates"}>
     <h2 className={styles.styleHeading}>All caption styles <span>{STUDIO_PRESETS.length}</span></h2>
-    {access&&!access.premium&&<p id="style-package" className={styles.note}>Five starter styles are included free. <a href="/pricing#plans">Unlock all styles and advanced controls with the Source Window package.</a></p>}<div className={styles.presets}>{STUDIO_PRESETS.map(presetButton)}</div>
+    {access&&!access.premium&&<p id="style-package" className={styles.note}>Five starter styles are included free. <PricingLink href="/pricing#plans">Unlock all styles and advanced controls with the Source Window package.</PricingLink></p>}<div className={styles.presets}>{STUDIO_PRESETS.map(presetButton)}</div>
     </div>
     <div hidden={panel !== "customize"}>
     <fieldset className={styles.quickControls} disabled={disabled}>
