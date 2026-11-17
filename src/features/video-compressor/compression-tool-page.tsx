@@ -15,16 +15,17 @@ export function CompressionMark({ label, image = false }: { label: string; image
   </svg></div>;
 }
 
-export function CompressionToolPage({ name, description, label, image = false, ticks, questions, children }: {
+export function MediaToolPage({ name, description, label, image = false, ticks, questions, children, visual, steps }: {
   name: string; description: string; label: string; image?: boolean; ticks: readonly string[];
-  questions: readonly (readonly [string, string])[]; children: ReactNode;
+  questions: readonly (readonly [string, string])[]; children: ReactNode; visual?: ReactNode;
+  steps?: readonly { title: string; text: string }[];
 }) {
   const tool = tools.find(tool => tool.title === name)!;
   const related = (relevantRoutes[tool.href] ?? []).map(href => tools.find(tool => tool.href === href)!);
   return <ToolLayout title={name} category={image ? "Image Tools" : "Video Tools"} categoryHref={image ? "/tools#image-tools" : "/tools#video-tools"}>
-    <ToolHero title={name} description={description} ticks={ticks} chipA={null} chipB={null} chipC={null} art="plain" visual={<CompressionMark label={label} image={image} />} />
+    <ToolHero title={name} description={description} ticks={ticks} chipA={null} chipB={null} chipC={null} art="plain" visual={visual ?? <CompressionMark label={label} image={image} />} />
     {children}
-    <div className={styles.support}><ToolBenefits items={[
+    <div className={styles.support}><ToolBenefits items={steps ? steps.map((step, index) => ({ ...step, icon: <Icon name={index === 0 ? "upload" : index === 1 ? "srt-editor" : "download"} /> })) : [
       { icon: <Icon name="upload" />, title: image ? "Add your image" : "Add your video", text: "Choose a file or drop it into the tool." },
       { icon: <Icon name="srt-editor" />, title: "Choose your settings", text: image ? "Set the size, format and dimensions." : "Choose the quality, size and sound." },
       { icon: <Icon name="download" />, title: "Preview and download", text: "Check the result. Keep your original." },
@@ -33,3 +34,5 @@ export function CompressionToolPage({ name, description, label, image = false, t
     <RelatedTools title={image ? "More media tools" : "More video tools"} tools={related} />
   </ToolLayout>;
 }
+
+export { MediaToolPage as CompressionToolPage };

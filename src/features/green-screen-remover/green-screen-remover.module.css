@@ -15,3 +15,8 @@
 @media(max-width:720px) { .previewToolbar,.stage { margin-inline:18px; }.transport { padding-inline:18px; }.transport button,.previewActions button,.frameDownload button,.frameDownload a,.keyPresets button,.backgroundTabs button { min-height:44px; }.previewActions { margin-inline:18px; align-items:flex-start; }.frameDownload { margin-inline:18px; }.range input { height:28px; }.colorField > div { min-height:44px; }.swatches button { min-height:38px; } }
 @media(max-width:380px) { .previewToolbar { flex-wrap:wrap; }.previewToolbar > div { flex:1; justify-content:space-between; }.previewToolbar button { padding-inline:8px; }.transport { flex-wrap:wrap; }.transport input { flex-basis:55%; }.transport > span { margin-left:auto; }.previewActions { flex-direction:column; gap:7px; } }
 .animate { display:flex; align-items:center; gap:7px; font-size:10px; color:var(--muted); margin-top:10px; min-height:30px; cursor:pointer; }.animate input { accent-color:var(--accent); }
+
+.sampleActions { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:7px; }
+.sampleActions button { min-height:32px; margin:0; }
+:global(#green-screen-workspace) .colorField input { min-height:28px; padding:0; border:0; border-radius:0; background:transparent; }
+:global(#green-screen-workspace) .range input { min-height:28px; padding:0; border:0; background:transparent; }

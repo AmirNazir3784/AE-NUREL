@@ -15,6 +15,7 @@
 .workspace { display:grid; grid-template-columns:minmax(0,1fr) 350px; border:1px solid var(--border-strong); border-radius:18px; box-shadow:0 12px 40px var(--glow-support); background:var(--surface); overflow:hidden; }
 .compact[data-empty] { display:block; max-width:760px; margin-inline:auto; box-shadow:none; border-radius:16px; }
 .compact[data-empty] .panelHead { display:none; }
+.compact[data-empty] .settingsPanel { display:none; }
 .compact[data-empty] .dropzone { min-height:220px; padding:24px; margin:20px; }
 .compact[data-empty] .uploadIcon { width:44px; height:44px; border-radius:10px; transform:none; margin:0 auto 12px; background:var(--accent-soft); border:0; box-shadow:none; }
 .compact .dropzone h2 { font-size:19px; font-weight:650; }

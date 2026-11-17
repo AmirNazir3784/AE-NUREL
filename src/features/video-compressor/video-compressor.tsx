@@ -22,8 +22,8 @@ function durationLabel(seconds: number) {
   return `${Math.floor(seconds / 60)}:${Math.floor(seconds % 60).toString().padStart(2, "0")}`;
 }
 
-export function VideoCompressor({ tenMB = false, profile }: { tenMB?: boolean; profile?: CompressorProfile }) {
-  const compact = tenMB || !!profile;
+export function VideoCompressor({ tenMB = false, profile, minimal = false }: { tenMB?: boolean; profile?: CompressorProfile; minimal?: boolean }) {
+  const compact = minimal || tenMB || !!profile;
   const preset = profile ? compressorProfiles[profile] : undefined;
   const fileInput = useRef<HTMLInputElement>(null);
   const sequence = useRef(0);
