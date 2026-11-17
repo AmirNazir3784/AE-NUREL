@@ -8,5 +8,5 @@ export function ToolDirectory({ catalog }: { catalog: readonly Tool[] }) {
     ...(catalog.some(tool => tool.group === "Caption Generation") ? ["Caption Generation"] : []),
     ...toolGroups,
   ];
-  return <div className="v1-directory" id="free-tools">{groups.map((group,i) => { const members = catalog.filter((t) => t.group === group); return members.length ? <section key={group} id={group === "Video Tools" ? "video-tools" : "directory-group-"+i} className="v1-directory-group"><h2>{group}<span>{members.length}</span></h2><div className="v1-tool-grid">{members.map((tool) => <ToolCard key={tool.href} tool={tool} />)}</div></section> : null; })}</div>;
+  return <div className="v1-directory" id="free-tools">{groups.map((group,i) => { const members = catalog.filter((t) => t.group === group); return members.length ? <section key={group} id={group === "Video Tools" ? "video-tools" : group === "Image Tools" ? "image-tools" : "directory-group-"+i} className="v1-directory-group"><h2>{group}<span>{members.length}</span></h2><div className="v1-tool-grid">{members.map((tool) => <ToolCard key={tool.href} tool={tool} />)}</div></section> : null; })}</div>;
 }

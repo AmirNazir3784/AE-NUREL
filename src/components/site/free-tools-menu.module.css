@@ -8,7 +8,7 @@
 .intro strong { display:block; color:var(--foreground); font:650 18px/1.3 var(--font-heading); letter-spacing:-.035em; }
 .intro p { margin:6px 0 0; font:400 12px/1.5 var(--font-platform); color:var(--muted); }
 .intro > span { flex-shrink:0; font:500 12px/1.5 var(--font-platform); color:var(--muted); }
-.groups { display:grid; grid-template-columns:.95fr 1fr 1.55fr; padding:24px 18px; gap:0; }
+.groups { display:grid; grid-template-columns:1.3fr 1fr 1.4fr; padding:24px 18px; gap:0; }
 .group { min-width:0; padding:0 15px; }
 .group + .group { border-left:1px solid var(--border); }
 .groupHeading { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 5px; }
@@ -25,11 +25,12 @@
 .linkArrow { flex-shrink:0; opacity:0; color:var(--orange-ink); transition:opacity .15s,transform .15s; }
 .menu .links a:hover .linkArrow, .menu .links a:focus-visible .linkArrow, .menu .links a[aria-current="page"] .linkArrow { opacity:1; transform:translateX(1px); }
 .menu .links :global(.icon-tile) { width:27px; height:27px; border-radius:7px; }
-.menu .video .links { gap:9px; }
-.menu .video a { min-height:63px; padding:12px 9px; border-color:var(--border); background:var(--surface-soft); align-items:flex-start; }
+.menu .video > section:first-child .links { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+.menu .video a { min-height:54px; padding:9px 7px; border-color:var(--border); background:var(--surface-soft); }
 .menu .video a:hover, .menu .video a:focus-visible { border-color:var(--accent-border); background:var(--accent-soft); }
-.video .linkArrow { margin-top:5px; }
-.menu .video :global(.icon-tile) { margin-top:1px; }
+.video .linkArrow { display:none; }
+.images { margin-top:17px; padding-top:15px; border-top:1px solid var(--border); }
+.images .links { margin-top:10px; }
 .conversion .links { grid-template-columns:repeat(2,minmax(0,1fr)); gap:3px 7px; }
 .menu .footer { margin:0; padding:0; border-top:1px solid var(--border); background:var(--surface-soft); }
 .menu .footer a { justify-content:space-between; min-height:53px; padding:15px 26px; border-radius:0 0 16px 16px; color:var(--orange-ink); font:600 12px/1.5 var(--font-platform); }

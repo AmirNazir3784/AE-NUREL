@@ -22,7 +22,7 @@ describe('combined product and AI navigation alongside free tools',()=>{
   root=createRoot(q('#root'));await act(()=>root.render(React.createElement(Header)));
  });
  afterEach(async()=>{await act(()=>root.unmount());dom.window.close();});
- it('groups products and available AI tools in one menu, alongside nineteen free utilities',()=>{
+ it('groups products and available AI tools alongside all released free utilities',()=>{
   const product=q('.aen-product-menu'),free=q('.aen-free-menu');
   assert.equal(product.querySelector('summary').textContent,'Tools');assert.equal(free.querySelector('summary').textContent,'Free Tools');
   assert.deepEqual([...product.querySelectorAll('a')].map(a=>a.getAttribute('href')),['/source-window','/tools/free-audio-to-text-converter-online',...(autoCaptionVisible()?['/tools/auto-caption-generator']:[]),'/tools/ai-tools','/premium-tools']);
@@ -30,7 +30,7 @@ describe('combined product and AI navigation alongside free tools',()=>{
   assert.deepEqual([...product.querySelectorAll('h2')].map(h=>h.textContent),['AENural products','AI tools']);
   assert.deepEqual([...free.querySelectorAll('section a')].map(a=>a.getAttribute('href')).sort(),tools.map(t=>t.href).sort());
   assert.equal(free.querySelector('.aen-mega-footer a').getAttribute('href'),'/tools');
-  assert.equal(free.querySelectorAll('section a').length,19);
+  assert.equal(free.querySelectorAll('section a').length,25);
   assert.doesNotMatch(document.body.textContent,/Speech to Captions|Podcast to Captions/);
  });
  it('pins click, closes the other menu, supports outside click and restores Escape focus',async()=>{

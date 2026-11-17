@@ -8,12 +8,13 @@ import {readFileSync} from 'node:fs';
 const {CaptionEditorial}=await import('../src/features/caption-page/caption-editorial.tsx');
 const {captionCopy}=await import('../src/features/caption-page/caption-copy.ts');
 describe('caption website content',()=>{
- it('renders one approved FAQ and all revised editorial copy',()=>{
+ it('renders one approved FAQ and the editorial copy applicable to free captions',()=>{
   const dom=new JSDOM(renderToStaticMarkup(React.createElement(CaptionEditorial)));
   const d=dom.window.document,normalize=s=>s.replace(/\*\*/g,'').replace(/\s+/g,' ').trim(),text=normalize(d.body.textContent);
   assert.equal([...d.querySelectorAll('h2')].filter(e=>/frequently asked questions/i.test(e.textContent)).length,1);
   assert.deepEqual([...d.querySelectorAll('#caption-faq summary')].map(e=>e.textContent.replace(/\+$/,'').trim()),captionCopy[7].children.map(c=>c.heading));
-  for(const section of captionCopy){assert.ok(text.includes(normalize(section.heading)));for(const p of section.paragraphs)assert.ok(text.includes(normalize(p)));for(const child of section.children){assert.ok(text.includes(normalize(child.heading)));for(const p of child.paragraphs)assert.ok(text.includes(normalize(p)));}}
+  assert.ok(!text.includes(normalize(captionCopy[6].heading)),'Free captions must not advertise a paid plan');
+  for(const section of captionCopy.filter((_,index)=>index!==6)){assert.ok(text.includes(normalize(section.heading)));for(const p of section.paragraphs)assert.ok(text.includes(normalize(p)));for(const child of section.children){assert.ok(text.includes(normalize(child.heading)));for(const p of child.paragraphs)assert.ok(text.includes(normalize(p)));}}
   assert.equal(d.querySelector('.cap-index'),null);
   const route=readFileSync(new URL('../src/app/tools/auto-caption-generator/page.tsx',import.meta.url),'utf8');
   assert.ok(!route.includes('StudioGuidance'),'Do not add a second FAQ through the editor guide');

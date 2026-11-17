@@ -1,5 +1,11 @@
 # Compression tools: local review handoff
 
+Update, 17 November 2026: the six-tool route/discovery completion is prepared
+locally. See [the current checkpoint](compression-release-readiness-2026-11-17.md).
+The historical development-only behavior below describes the earlier baseline.
+The owner subsequently authorized releasing these six reviewed tools to both
+repositories; the other development previews retain their release restrictions.
+
 Completed local implementation and functional checks: 2 November 2026.
 Branch: dev/tools-completion; baseline ecbb757. No push or deployment.
 The owner's local review hold remains in force.

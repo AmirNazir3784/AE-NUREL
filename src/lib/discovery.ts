@@ -1,12 +1,18 @@
 import { tools } from "./tools";
 export const toolGroups = ["Timing & Editing", "Format Conversion"] as const;
-export const allToolGroups = ["Video Tools", ...toolGroups] as const;
+export const allToolGroups = ["Video Tools", "Image Tools", ...toolGroups] as const;
 export const curatedToolRoutes = ["/tools/srt-editor", "/tools/srt-timing-adjuster", "/tools/srt-to-vtt", "/tools/srt-merger"] as const;
 export const curatedTools = curatedToolRoutes.map((href) => tools.find((tool) => tool.href === href)!);
 export const menuNames: Record<string, string> = {
   "/tools/video-compressor": "Video Compressor",
   "/tools/video-cropper": "Video Cropper",
   "/tools/free-green-screen-remover": "Green Screen Remover",
+  "/tools/compress-video-to-10mb": "Compress to 10MB",
+  "/tools/compress-mp4": "Compress MP4",
+  "/tools/reduce-video-file-size": "Reduce Video File Size",
+  "/tools/compress-video-for-whatsapp": "WhatsApp Compressor",
+  "/tools/mov-compressor": "MOV Compressor",
+  "/tools/compress-image-to-20kb": "Compress Image to 20KB",
   "/tools/srt-to-mp4": "SRT to MP4",
   "/tools/srt-to-sbv": "SRT to SBV",
   "/tools/sbv-to-srt": "SBV to SRT",
@@ -36,6 +42,12 @@ export const subtitleTasks = [
   { label: "Get structured JSON cues", href: "/tools/srt-to-json" },
 ] as const;
 export const relevantRoutes: Record<string, readonly string[]> = {
+  "/tools/compress-video-to-10mb": ["/tools/video-compressor", "/tools/compress-video-for-whatsapp"],
+  "/tools/compress-mp4": ["/tools/reduce-video-file-size", "/tools/compress-video-to-10mb"],
+  "/tools/reduce-video-file-size": ["/tools/compress-mp4", "/tools/compress-video-to-10mb"],
+  "/tools/compress-video-for-whatsapp": ["/tools/compress-video-to-10mb", "/tools/video-cropper"],
+  "/tools/mov-compressor": ["/tools/compress-mp4", "/tools/video-compressor"],
+  "/tools/compress-image-to-20kb": ["/tools/video-cropper", "/tools/video-compressor"],
   "/tools/video-compressor": ["/tools/video-cropper", "/tools/free-green-screen-remover"],
   "/tools/video-cropper": ["/tools/video-compressor", "/tools/free-green-screen-remover"],
   "/tools/free-green-screen-remover": ["/tools/video-cropper", "/tools/video-compressor"],

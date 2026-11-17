@@ -9,7 +9,8 @@ describe("released tool discovery", () => {
   });
   it("derives category availability from released tools", () => {
     assert.equal(toolsInCategory("subtitle-tools").length, 16);
-    assert.equal(toolsInCategory("video-tools").length, 3);
+    assert.equal(toolsInCategory("video-tools").length, 8);
+    assert.equal(toolsInCategory("image-tools").length, 1);
     assert.equal(categories.reduce((count, category) => count + toolsInCategory(category.id).length, 0), tools.length);
   });
   it("handles case, whitespace, and multiple search terms", () => {

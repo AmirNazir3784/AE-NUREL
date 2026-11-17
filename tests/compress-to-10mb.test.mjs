@@ -7,13 +7,14 @@ import {JSDOM} from 'jsdom';
 const {VideoCompressor} = await import('../src/features/video-compressor/video-compressor.tsx');
 import {compressionPlan,DEFAULT_COMPRESSION_SETTINGS} from '../src/features/video-compressor/compression-core.ts';
 
-it('locks the dedicated workspace to 10 MB without exposing alternate budgets or presets',()=>{
+it('starts the dedicated workspace with a focused upload before exposing settings',()=>{
   const doc=new JSDOM(renderToStaticMarkup(React.createElement(VideoCompressor,{tenMB:true}))).window.document;
   assert.equal(doc.querySelector('[aria-label="Compression mode"]'),null);
   assert.equal(doc.querySelector('#compression-target'),null);
-  assert.match(doc.body.textContent,/10,000,000 bytes/);
-  assert.equal([...doc.querySelectorAll('button')].find(b=>b.textContent.includes('Compress to 10 MB')).disabled,true);
-  assert.equal(doc.querySelector('[aria-label="Resolution"]').value,'720');
+  assert.equal(doc.querySelector('[aria-label="Compression settings"]'),null);
+  assert.ok(doc.querySelector('[data-empty="true"]'));
+  assert.ok(doc.querySelector('input[type="file"]'));
+  assert.match(doc.body.textContent,/Add your video/);
 });
 it('preserves the general compressor modes and editable target input',()=>{
   const doc=new JSDOM(renderToStaticMarkup(React.createElement(VideoCompressor))).window.document;

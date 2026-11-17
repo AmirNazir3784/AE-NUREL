@@ -1,10 +1,12 @@
 import type { ProductIconName } from "./icons";
 import { autoCaptionReleased } from "./caption-release.ts";
 import { autoCaptionTool } from "./ai-tools.ts";
+import { compressionTools } from "./compression-tools.ts";
 
 export const categories = [
   { id: "subtitle-tools", title: "Subtitle Tools", icon: "subtitle", description: "Get your words in sync and ready to watch." },
   { id: "video-tools", title: "Video Tools", icon: "video", description: "Compress, crop and change your video's background." },
+  { id: "image-tools", title: "Image Tools", icon: "image", description: "Prepare smaller images for sharing and upload forms." },
 ] as const;
 
 export type CategoryId = (typeof categories)[number]["id"] | "caption-generation" | "ai-tools" | "video-tools" | "image-tools";
@@ -104,6 +106,7 @@ export const tools: readonly Tool[] = [
   { title: "Video Compressor", description: "Set a size target, compress your video and preview the result.", href: "/tools/video-compressor", category: "Video Tools", categoryId: "video-tools", group: "Video Tools", icon: "video", processing: "local" },
   { title: "Video Cropper", description: "Frame precisely with social presets, pixel controls and a live crop preview.", href: "/tools/video-cropper", category: "Video Tools", categoryId: "video-tools", group: "Video Tools", icon: "video", processing: "local" },
   { title: "Free Green Screen Remover", description: "Refine your cutout, replace the background and export a fresh scene.", href: "/tools/free-green-screen-remover", category: "Video Tools", categoryId: "video-tools", group: "Video Tools", icon: "video", processing: "local" },
+  ...compressionTools,
 ];
 
 export function relatedTools(href: string): readonly Tool[] {

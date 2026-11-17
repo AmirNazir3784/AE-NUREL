@@ -1,5 +1,11 @@
 # Compress to 10MB — local review
 
+Update, 17 November 2026: local production-route/discovery preparation and new
+Chrome acceptance results are recorded in
+[the six-tool checkpoint](compression-release-readiness-2026-11-17.md).
+The owner subsequently authorized the six-tool release to both repositories.
+The old production 404 below is historical.
+
 Implemented 2 November 2026. Local route: `/tools/compress-video-to-10mb`.
 Listed in the development tool directory only. No push or deployment authorized
 under the current review hold; production route remains 404/noindex and absent

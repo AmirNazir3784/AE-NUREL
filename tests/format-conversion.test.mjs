@@ -8,10 +8,10 @@ import { publishedPosts } from "../src/content/blog/registry.ts";
 const expected = ["srt-to-vtt", "vtt-to-srt", "srt-to-ass", "srt-to-txt", "srt-to-json", "vtt-to-txt", "srt-to-mp4", "sbv-to-srt", "srt-to-sbv", "ass-to-srt"];
 const added = ["vtt-to-txt", "sbv-to-srt", "srt-to-sbv", "srt-to-mp4"];
 describe("completed Format Conversion discovery", () => {
-  it("publishes exactly the ten approved format tools and nineteen free tools", () => {
+  it("preserves ten format tools alongside twenty-five released free tools", () => {
     assert.deepEqual(tools.filter(t => t.group === "Format Conversion").map(t => t.href.split("/").at(-1)).sort(), [...expected].sort());
-    assert.equal(tools.length, 19);
-    assert.equal(new Set(tools.map(t => t.href)).size, 19);
+    assert.equal(tools.length, 25);
+    assert.equal(new Set(tools.map(t => t.href)).size, 25);
   });
   it("gives the four new pages unique metadata, H1s, breadcrumbs and related tools", async () => {
     const titles = new Set();
@@ -37,10 +37,10 @@ describe("completed Format Conversion discovery", () => {
     try {
       process.env.SITE_URL = "https://tools.example";
       const urls = sitemap().map(entry => entry.url);
-      assert.equal(urls.length, 29 + (publishedPosts().length ? 1 : 0) + publishedPosts().length);
+      assert.equal(urls.length, 35 + (publishedPosts().length ? 1 : 0) + publishedPosts().length);
       for (const route of expected) assert.ok(urls.includes("https://tools.example/tools/" + route));
       delete process.env.SITE_URL;
-      assert.equal(sitemap().length, 29 + (publishedPosts().length ? 1 : 0) + publishedPosts().length);
+      assert.equal(sitemap().length, 35 + (publishedPosts().length ? 1 : 0) + publishedPosts().length);
       for (const route of expected) assert.ok(sitemap().some(entry => entry.url === "https://aenural.com/tools/" + route));
     } finally { if (previous === undefined) delete process.env.SITE_URL; else process.env.SITE_URL = previous; }
   });

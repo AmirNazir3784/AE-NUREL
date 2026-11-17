@@ -25,7 +25,7 @@ it('the line-break walkthrough preserves the dialogue and both cue boundaries in
   const edited=updateEditorCue(document,cue.id,'text',revised);
   assert.equal(edited.cues[1].text.replace(/\s+/g,' '),cue.text.replace(/\s+/g,' '));
   assert.equal(edited.cues[1].start,15000);assert.equal(edited.cues[1].end,20000);
-  assert.match(exportEditor(edited,'srt'),/00:00:15,000 --> 00:00:20,000\nWe spoke to Dr\. Maya Chen\nafter the recording\./);
+  assert.match(exportEditor(edited,'srt').replace(/\r\n/g,'\n'),/00:00:15,000 --> 00:00:20,000\nWe spoke to Dr\. Maya Chen\nafter the recording\./);
 });
 
 it('the SRT-to-MP4 article sample has the stated opening gap and 6.5-second timeline',()=>{

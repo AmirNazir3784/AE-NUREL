@@ -1,0 +1,9 @@
+.mark { width:320px; max-width:100%; margin:0 auto 18px; }
+.mark svg { display:block; width:100%; height:auto; overflow:visible; }
+.arrow { animation:compress-arrow 3s ease-in-out infinite; }
+.output { transform-origin:245px 68px; animation:compress-settle 1s ease-out both; }
+.support :global(.aen-benefits-grid) { grid-template-columns:repeat(3,minmax(0,1fr)); }
+@keyframes compress-arrow { 0%,100% { transform:translateX(-3px); opacity:.5; } 50% { transform:translateX(3px); opacity:1; } }
+@keyframes compress-settle { from { transform:scale(.92); opacity:.3; } to { transform:scale(1); opacity:1; } }
+@media(max-width:600px) { .support :global(.aen-benefits-grid) { grid-template-columns:1fr; } }
+@media(prefers-reduced-motion:reduce) { .arrow,.output { animation:none; } }
