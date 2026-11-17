@@ -32,6 +32,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${sora.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
+        <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-PH4NV7RZ" />
+        <script id="aenural-google-tag-init" dangerouslySetInnerHTML={{ __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());` }} />
         <script id="aenural-history-init" dangerouslySetInnerHTML={{ __html: historyInitializationScript }} />
       </head>
       <body className="min-h-full flex flex-col"><a href="#main-content" className="skip-link">Skip to content</a><JsonLd data={siteJsonLd()} /><Header membershipPreview={accountPreviewAvailable()} accountsEnabled={membershipEnabled()} />{children}<Footer /></body>
