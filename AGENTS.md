@@ -63,3 +63,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - The owner cancelled public signup/email-code work because no sending mailbox is configured. Do not enable public registration, change storage, or claim live email delivery as part of this release. Existing authentication and private owner configuration remain unchanged.
 - Read `docs/security-review-2026-11-12.md` for the targeted review, tests and limitations. A clean audit is not a guarantee against hacking; verify actual production headers after the connected deployment.
 - The owner subsequently requested hiding pricing from the live site. `pricingAvailable()` in `src/lib/pricing-visibility.ts` allows development only; production `/pricing` must return 404 and pricing links must stay hidden even when account/public-preview flags are enabled. Keep the pricing implementation available for local work without changing authentication or sales configuration.
+
+## Eye Contact and Lyrics release (18 November 2026)
+
+- The owner explicitly authorized finishing production work and making AI Eye Contact and Lyrics to Captions live. Release the checked implementation to both repositories using the existing Hostinger-connected `main` workflow. This supersedes the local-only hold for these two tools; preserve all unrelated preview/access restrictions.
+- Both tools use browser GPU processing with bounded CPU recovery. Do not restore automatic public Hostinger inference or upload media as an incidental fallback. No paid processing services are authorized.
+- Read `docs/lyrics-hostinger-decision.md` and `docs/media-tools-release-checkpoint.md` for actual capabilities, model delivery, browser results and limitations. Do not promise perfect singing recognition, universal device support or thousand-user load capacity.

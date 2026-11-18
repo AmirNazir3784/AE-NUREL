@@ -2,18 +2,21 @@ import { DEFAULT_GAZE, EYES, alignedAngle, anchorTensor, vectorCorrection, eyeGe
 import { createGazeEstimator } from "./gaze-estimator";
 import type { FaceLandmarker } from "@mediapipe/tasks-vision";
 import type { InferenceSession } from "onnxruntime-web";
+import { hardwareGpu } from "../local-asr/browser-capability";
+import { resilientSession, type ResilientSession } from "./inference-session";
 
 const RUNTIME = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.0-dev.20260914-8d85527a0/dist/";
 export type GazeFrame = { faces: number; eyes: number; reason: string };
 export async function createGazeEngine(signal: AbortSignal) {
-  const [vision, ort] = await Promise.all([import("@mediapipe/tasks-vision"), import("onnxruntime-web/wasm")]);
+  const [vision, ort] = await Promise.all([import("@mediapipe/tasks-vision"), import("onnxruntime-web/webgpu")]);
   signal.throwIfAborted();
   ort.env.wasm.numThreads = 1;
   ort.env.wasm.proxy = false;
-  ort.env.wasm.wasmPaths = { mjs: RUNTIME + "ort-wasm-simd-threaded.mjs", wasm: RUNTIME + "ort-wasm-simd-threaded.wasm" };
+  ort.env.wasm.wasmPaths = { mjs: RUNTIME + "ort-wasm-simd-threaded.asyncify.mjs", wasm: RUNTIME + "ort-wasm-simd-threaded.asyncify.wasm" };
+  const accelerate = await hardwareGpu(navigator);
   let detector: FaceLandmarker | undefined;
   let estimator: Awaited<ReturnType<typeof createGazeEstimator>> | undefined;
-  const sessions: Partial<Record<"L" | "R", InferenceSession>> = {};
+  const sessions: Partial<Record<"L" | "R", ResilientSession>> = {};
   const dispose = async () => { detector?.close(); detector = undefined; for (const eye of EYES) { await sessions[eye.name]?.release(); delete sessions[eye.name]; } await estimator?.dispose(); estimator = undefined; };
   try {
     const files = await vision.FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.0/wasm");
@@ -23,9 +26,9 @@ export async function createGazeEngine(signal: AbortSignal) {
       signal.throwIfAborted();
       const response = await fetch(`/models/eye-contact/${eye.name}.onnx`, { signal });
       if (!response.ok) throw new Error("The correction model could not load. Please retry.");
-      sessions[eye.name] = await ort.InferenceSession.create(await response.arrayBuffer(), { executionProviders: ["wasm"], graphOptimizationLevel: "all" });
+      sessions[eye.name] = await resilientSession(ort, await response.arrayBuffer(), signal, accelerate);
     }
-    estimator = await createGazeEstimator(ort, signal);
+    estimator = await createGazeEstimator(ort, signal, accelerate);
     signal.throwIfAborted();
     const analysis = document.createElement("canvas"), patch = document.createElement("canvas"), detail = document.createElement("canvas");
     patch.width = 64; patch.height = 48;
@@ -33,8 +36,7 @@ export async function createGazeEngine(signal: AbortSignal) {
     if (!pc || !ac || !dc) throw new Error("Video rendering is unavailable.");
     const history: Partial<Record<"L" | "R", AngleHistory>> = {};
     let disposed = false;
-    return {
-      async render(context: CanvasRenderingContext2D, settings: GazeSettings = DEFAULT_GAZE, time = NaN): Promise<GazeFrame> {
+    const renderFrame = async (context: CanvasRenderingContext2D, settings: GazeSettings = DEFAULT_GAZE, time = NaN): Promise<GazeFrame> => {
         if (disposed || !detector) throw new Error("Correction was stopped. Choose the video again.");
         validateGaze(settings); signal.throwIfAborted();
         if (!settings.strength) return { faces: 0, eyes: 0, reason: "Correction off" };
@@ -62,9 +64,10 @@ export async function createGazeEngine(signal: AbortSignal) {
           pc.drawImage(context.canvas, 0, 0); pc.resetTransform();
           const pixels = pc.getImageData(0, 0, 64, 48).data, bgr = new Float32Array(9216);
           for (let i = 0; i < 3072; i++) for (let c = 0; c < 3; c++) bgr[c * 3072 + i] = pixels[i * 4 + 2 - c] / 255;
-          const imageInput = new ort.Tensor("float32", bgr, [1, 3, 48, 64]), anchorsInput = new ort.Tensor("float32", anchorTensor(geometry.anchors), [1, 12, 48, 64]);
-          const output = await sessions[eye.name]!.run({ image: imageInput, anchors: anchorsInput, angle: new ort.Tensor("float32", Float32Array.from(angle), [1, 2]) });
+          const imageInput = new ort.Tensor("float32", bgr, [1, 3, 48, 64]), anchorsInput = new ort.Tensor("float32", anchorTensor(geometry.anchors), [1, 12, 48, 64]), angleInput = new ort.Tensor("float32", Float32Array.from(angle), [1, 2]);
+          let output: Awaited<ReturnType<InferenceSession["run"]>> | undefined;
           try {
+            output = await sessions[eye.name]!.run({ image: imageInput, anchors: anchorsInput, angle: angleInput });
             signal.throwIfAborted();
             const flow = output.flow.data;
             if (!(flow instanceof Float32Array)) throw new Error("Unexpected correction output.");
@@ -75,11 +78,20 @@ export async function createGazeEngine(signal: AbortSignal) {
             dc.putImageData(new ImageData(warpEyeDetail(original.data, geometry.width, geometry.height, flow), geometry.width, geometry.height), 0, 0);
             context.save(); context.translate(geometry.cx, geometry.cy); context.rotate(geometry.rotation); context.drawImage(detail, -geometry.width / 2, -geometry.height * 7 / 12); context.restore();
             corrected++;
-          } finally { for (const value of Object.values(output)) value.dispose(); imageInput.dispose(); anchorsInput.dispose(); }
+          } finally { if (output) for (const value of Object.values(output)) value.dispose(); imageInput.dispose(); anchorsInput.dispose(); angleInput.dispose(); }
         }
         return { faces: 1, eyes: corrected, reason: corrected ? "Correction preview ready" : "Blink, small adjustment or unsupported eye position — original kept" };
+    };
+    // Preview and export share the same canvases and inference sessions. Queue
+    // their frames rather than running mutable model state concurrently.
+    let pending: Promise<void> = Promise.resolve();
+    return {
+      get accelerated() { return EYES.every(eye => sessions[eye.name]?.accelerated) && !!estimator?.accelerated; },
+      render(context: CanvasRenderingContext2D, settings: GazeSettings = DEFAULT_GAZE, time = NaN) {
+        const next = pending.then(() => renderFrame(context, settings, time));
+        pending = next.then(() => {}, () => {}); return next;
       },
-      async dispose() { disposed = true; await dispose(); },
+      async dispose() { if (disposed) return; disposed = true; await pending; await dispose(); },
     };
   } catch (error) { await dispose(); throw error; }
 }

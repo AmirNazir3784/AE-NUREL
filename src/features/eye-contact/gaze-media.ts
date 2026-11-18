@@ -1,8 +1,10 @@
 import { COMPRESSION_LIMITS, validateCompressionFile, validateCompressionMedia, type CompressionMedia } from "../video-compressor/compression-core";
 import { outputSize, type KeyExport } from "../green-screen-remover/key-core";
 import { validateGaze, type GazeSettings } from "./gaze-core";
+import { eyeClipLimit } from "../local-asr/browser-capability";
+import type { GazeEngine } from "./gaze-engine";
 
-export async function exportGazeVideo(file: File, media: CompressionMedia, gaze: GazeSettings, settings: KeyExport, signal: AbortSignal, progress: (value: number | null) => void) {
+export async function exportGazeVideo(file: File, media: CompressionMedia, gaze: GazeSettings, settings: KeyExport, signal: AbortSignal, progress: (value: number | null) => void, existingEngine?: GazeEngine) {
   validateCompressionFile(file); validateCompressionMedia(media); validateGaze(gaze);
   if (!gaze.strength) throw new Error("Increase correction strength before exporting.");
   if (!["mp4", "webm"].includes(settings.format) || typeof settings.keepAudio !== "boolean") throw new Error("Choose valid export settings.");
@@ -16,10 +18,12 @@ export async function exportGazeVideo(file: File, media: CompressionMedia, gaze:
     else throw new Error("The selected output cannot be encoded. Choose a smaller size or the other format.");
   }
   signal.throwIfAborted();
-  const engine = await createGazeEngine(signal), canvas = document.createElement("canvas");
+  const engine = existingEngine ?? await createGazeEngine(signal), canvas = document.createElement("canvas");
+  const releaseEngine = async () => { if (!existingEngine) await engine.dispose(); };
+  if (media.duration > eyeClipLimit(engine.accelerated) + .05) { await releaseEngine(); throw new Error("Correction support changed. Try a clip up to 30 seconds."); }
   canvas.width = size.width; canvas.height = size.height;
   const context = canvas.getContext("2d");
-  if (!context) { await engine.dispose(); throw new Error("Video rendering is unavailable."); }
+  if (!context) { await releaseEngine(); throw new Error("Video rendering is unavailable."); }
   const input = new Input({ source: new BlobSource(file), formats: ALL_FORMATS }), target = new BufferTarget();
   const output = new Output({ target, format: settings.format === "mp4" ? new Mp4OutputFormat({ fastStart: "in-memory" }) : new WebMOutputFormat() });
   let conversion: Awaited<ReturnType<typeof Conversion.init>> | undefined, correctedFrames = 0, totalFrames = 0;
@@ -34,6 +38,7 @@ export async function exportGazeVideo(file: File, media: CompressionMedia, gaze:
       video: { codec, quality, ...size, fit: "contain", forceTranscode: true, allowTransformationMetadata: false, alpha: "discard", process: async sample => {
         signal.throwIfAborted(); context.clearRect(0, 0, size.width, size.height); sample.drawWithFit(context, { fit: "fill" });
         const frame = await engine.render(context, gaze, sample.timestamp); totalFrames++; if (frame.eyes) correctedFrames++;
+        if (media.duration > eyeClipLimit(engine.accelerated) + .05) throw new Error("Accelerated correction stopped. Try a clip up to 30 seconds.");
         // Give progress rendering and the Cancel action a task boundary even
         // when consecutive WASM inference promises resolve synchronously.
         await new Promise(resolve => setTimeout(resolve, 0));
@@ -54,5 +59,5 @@ export async function exportGazeVideo(file: File, media: CompressionMedia, gaze:
     } finally { check.dispose(); }
     return { blob: new Blob([target.buffer], { type: settings.format === "mp4" ? "video/mp4" : "video/webm" }), ...size, correctedFrames, totalFrames };
   } catch (error) { await stop().catch(() => {}); signal.throwIfAborted(); throw error; }
-  finally { signal.removeEventListener("abort", cancel); input.dispose(); await engine.dispose(); }
+  finally { signal.removeEventListener("abort", cancel); input.dispose(); await releaseEngine(); }
 }

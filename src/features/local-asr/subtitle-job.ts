@@ -9,13 +9,13 @@ import { CHECKPOINT_TTL, type CheckpointStore, type SubtitleCheckpoint } from ".
 import { semanticUnits, localizeUnit, localizedDocument, LOCALIZATION_VERSION, type UnitTranslation, type LocalizationDiagnostic } from "./semantic-localization.ts";
 
 type Decoder = { duration: number; read(start: number, end: number): Promise<Float32Array>; dispose(): void };
-type JobOptions = { filename: string; fileKey: string; spoken: string; target: string; quality?: TranscriptionQuality; audioKind?: "speech" | "music"; backend: Backend; signal: AbortSignal; progress(value: AsrProgress): void; diagnostics?(value: LocalizationDiagnostic): void };
+type JobOptions = { filename: string; fileKey: string; spoken: string; target: string; quality?: TranscriptionQuality; audioKind?: "speech" | "music"; recognizerId?: string; backend: Backend; signal: AbortSignal; progress(value: AsrProgress): void; diagnostics?(value: LocalizationDiagnostic): void };
 type Dependencies = { decoder: Decoder; asr: Pick<AsrClient, "run" | "cancel">; translator: Pick<TranslationClient, "translate" | "cancel">; store: CheckpointStore };
-export async function retrySection<T>(operation: () => Promise<T>, signal: AbortSignal, onRetry: (attempt: number, error: unknown) => void): Promise<T> {
+export async function retrySection<T>(operation: () => Promise<T>, signal: AbortSignal, onRetry: (attempt: number, error: unknown) => void, retries = 2): Promise<T> {
   for (let attempt = 0; ; attempt++) {
     signal.throwIfAborted();
     try { return await operation(); }
-    catch (error) { signal.throwIfAborted(); if (attempt >= 2) throw error; onRetry(attempt + 1, error); }
+    catch (error) { signal.throwIfAborted(); if (attempt >= retries) throw error; onRetry(attempt + 1, error); }
   }
 }
 export async function runSubtitleJob(options: JobOptions, dependencies: Dependencies) {
@@ -23,10 +23,11 @@ export async function runSubtitleJob(options: JobOptions, dependencies: Dependen
   const { decoder, asr, translator, store } = dependencies;
   validateSpokenLanguage(spoken);
   validateTranscriptionQuality(quality);
+  if (options.recognizerId && !/^[a-z0-9-]{1,100}$/.test(options.recognizerId)) throw new Error("Invalid recognition configuration.");
   const sections = audioSections(decoder.duration);
   // Bump this schema when timing/model behavior changes; target language is
   // deliberately excluded so another output can reuse source transcription.
-  const key = `v3/${fileKey}/${spoken}` + (quality === "accurate" ? `/small-${spoken === "en" ? ACCURATE_ENGLISH_REVISION : ACCURATE_MULTILINGUAL_REVISION}` : "") + (audioKind === "music" ? "/music-v1" : "");
+  const key = `v3/${fileKey}/${spoken}` + (quality === "accurate" ? `/small-${spoken === "en" ? ACCURATE_ENGLISH_REVISION : ACCURATE_MULTILINGUAL_REVISION}` : "") + (audioKind === "music" ? "/music-v1" : "") + (options.recognizerId ? `/source-${options.recognizerId}` : "");
   let storageAvailable = true;
   // Mirrored checkpoints also cover browsers with disabled/evicted IndexedDB.
   const memory = sessionCheckpoints.get(key);
@@ -51,7 +52,7 @@ export async function runSubtitleJob(options: JobOptions, dependencies: Dependen
         if (result.language) language = result.language;
         if (result.text.trim() && !result.chunks.length) throw new Error("Speech was recognized without usable timing. Retry this section.");
         return mergeSection(words, result.chunks, section);
-      }, signal, (attempt, error) => progress({ stage: "transcribing", completed: index, sections: sections.length, warning: `Retrying section ${index + 1} (retry ${attempt} of 2): ${error instanceof Error ? error.message : "Processing failed."} Completed sections are kept.` }));
+      }, signal, (attempt, error) => progress({ stage: "transcribing", completed: index, sections: sections.length, warning: `Retrying section ${index + 1} (retry ${attempt} of 2): ${error instanceof Error ? error.message : "Processing failed."} Completed sections are kept.` }), options.recognizerId ? 0 : 2);
       words = merged;
       const next: SubtitleCheckpoint = { key, expires: Date.now() + CHECKPOINT_TTL, completed: index + 1, duration: decoder.duration, words, language };
       sessionCheckpoints.set(key, next);

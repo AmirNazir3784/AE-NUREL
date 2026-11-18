@@ -2,6 +2,7 @@ import type { ProductIconName } from "./icons";
 import { autoCaptionReleased } from "./caption-release.ts";
 import { autoCaptionTool } from "./ai-tools.ts";
 import { compressionTools } from "./compression-tools.ts";
+import { mediaTools } from "./media-tools.ts";
 
 export const categories = [
   { id: "subtitle-tools", title: "Subtitle Tools", icon: "subtitle", description: "Get your words in sync and ready to watch." },
@@ -107,6 +108,7 @@ export const tools: readonly Tool[] = [
   { title: "Video Cropper", description: "Frame precisely with social presets, pixel controls and a live crop preview.", href: "/tools/video-cropper", category: "Video Tools", categoryId: "video-tools", group: "Video Tools", icon: "video", processing: "local" },
   { title: "Free Green Screen Remover", description: "Refine your cutout, replace the background and export a fresh scene.", href: "/tools/free-green-screen-remover", category: "Video Tools", categoryId: "video-tools", group: "Video Tools", icon: "video", processing: "local" },
   ...compressionTools,
+  ...mediaTools,
 ];
 
 export function relatedTools(href: string): readonly Tool[] {

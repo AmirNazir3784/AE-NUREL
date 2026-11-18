@@ -1,4 +1,6 @@
-# AI Eye Contact: local review handoff
+# AI Eye Contact: historical local review handoff
+
+This 2 November record is historical. The owner's 18 November release authorization and current implementation/results are recorded in `docs/media-tools-release-checkpoint.md`. The old development-only hold below no longer governs these two completed tool routes.
 
 Updated: 2 November 2026. Branch: dev/tools-completion. Baseline: ecbb757.
 

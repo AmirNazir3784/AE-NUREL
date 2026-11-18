@@ -25,12 +25,12 @@ describe('combined product and AI navigation alongside free tools',()=>{
  it('groups products and available AI tools alongside all released free utilities',()=>{
   const product=q('.aen-product-menu'),free=q('.aen-free-menu');
   assert.equal(product.querySelector('summary').textContent,'Tools');assert.equal(free.querySelector('summary').textContent,'Free Tools');
-  assert.deepEqual([...product.querySelectorAll('a')].map(a=>a.getAttribute('href')),['/source-window','/tools/free-audio-to-text-converter-online',...(autoCaptionVisible()?['/tools/auto-caption-generator']:[]),'/tools/ai-tools','/premium-tools']);
+  assert.deepEqual([...product.querySelectorAll('a')].map(a=>a.getAttribute('href')),['/source-window','/tools/free-audio-to-text-converter-online',...(autoCaptionVisible()?['/tools/auto-caption-generator']:[]),'/tools/ai-eye-contact','/tools/lyrics-to-captions','/tools/ai-tools','/premium-tools']);
   assert.equal(document.querySelectorAll('.aen-nav-links > a[href="/tools/ai-tools"]').length,0);
   assert.deepEqual([...product.querySelectorAll('h2')].map(h=>h.textContent),['AENural products','AI tools']);
   assert.deepEqual([...free.querySelectorAll('section a')].map(a=>a.getAttribute('href')).sort(),tools.map(t=>t.href).sort());
   assert.equal(free.querySelector('.aen-mega-footer a').getAttribute('href'),'/tools');
-  assert.equal(free.querySelectorAll('section a').length,25);
+  assert.equal(free.querySelectorAll('section a').length,27);
   assert.doesNotMatch(document.body.textContent,/Speech to Captions|Podcast to Captions/);
  });
  it('pins click, closes the other menu, supports outside click and restores Escape focus',async()=>{

@@ -13,7 +13,8 @@ const groups = [
 ] as const;
 export function FreeToolsMenu({ pathname, onNavigate }: { pathname: string; onNavigate: () => void }) {
   const imageTools = tools.filter(tool => tool.group === "Image Tools");
-  const count = tools.filter(tool => groups.some(group => group.name === tool.group) || tool.group === "Image Tools").length;
+  const captionTools = tools.filter(tool => tool.group === "Caption Generation");
+  const count = tools.filter(tool => groups.some(group => group.name === tool.group) || tool.group === "Image Tools" || tool.group === "Caption Generation").length;
   return <NavigationMenu label="Free Tools" className={`aen-free-menu ${styles.menu}`}>
     <div className={styles.intro}><div><strong>Free tools</strong><p>A little help for every part of your edit.</p></div><span>{count} tools</span></div>
     <div className={styles.groups}>
@@ -27,7 +28,7 @@ export function FreeToolsMenu({ pathname, onNavigate }: { pathname: string; onNa
             <span className={styles.toolText}><b>{menuNames[tool.href] ?? tool.title}</b></span>
             <Icon name="arrow" size={13} className={styles.linkArrow} />
           </Link>)}</div>
-        </section>{group.id === "video" && imageTools.length > 0 && <section className={styles.images} aria-labelledby="free-tools-images"><div className={styles.groupHeading}><h2 id="free-tools-images">Image tools</h2><span aria-label={`${imageTools.length} tools`}>{String(imageTools.length).padStart(2, "0")}</span></div><div className={styles.links}>{imageTools.map(tool => <Link key={tool.href} href={tool.href} title={tool.title} aria-label={tool.title} aria-current={pathname === tool.href ? "page" : undefined} onClick={onNavigate}><ToolIcon name={tool.icon} compact /><span className={styles.toolText}><b>{menuNames[tool.href] ?? tool.title}</b></span><Icon name="arrow" size={13} className={styles.linkArrow} /></Link>)}</div></section>}</div>;
+        </section>{group.id === "video" && imageTools.length > 0 && <section className={styles.images} aria-labelledby="free-tools-images"><div className={styles.groupHeading}><h2 id="free-tools-images">Image tools</h2><span aria-label={`${imageTools.length} tools`}>{String(imageTools.length).padStart(2, "0")}</span></div><div className={styles.links}>{imageTools.map(tool => <Link key={tool.href} href={tool.href} title={tool.title} aria-label={tool.title} aria-current={pathname === tool.href ? "page" : undefined} onClick={onNavigate}><ToolIcon name={tool.icon} compact /><span className={styles.toolText}><b>{menuNames[tool.href] ?? tool.title}</b></span><Icon name="arrow" size={13} className={styles.linkArrow} /></Link>)}</div></section>}{group.id === "editing" && captionTools.length > 0 && <section className={styles.images} aria-labelledby="free-tools-captions"><div className={styles.groupHeading}><h2 id="free-tools-captions">Caption generation</h2><span aria-label={`${captionTools.length} tools`}>{String(captionTools.length).padStart(2, "0")}</span></div><div className={styles.links}>{captionTools.map(tool => <Link key={tool.href} href={tool.href} title={tool.title} aria-label={tool.title} aria-current={pathname === tool.href ? "page" : undefined} onClick={onNavigate}><ToolIcon name={tool.icon} compact /><span className={styles.toolText}><b>{tool.title}</b></span><Icon name="arrow" size={13} className={styles.linkArrow} /></Link>)}</div></section>}</div>;
       })}
     </div>
     <div className={`aen-mega-footer ${styles.footer}`}><Link href="/tools" onClick={onNavigate}>Browse all free tools<Icon name="arrow" size={17} /></Link></div>

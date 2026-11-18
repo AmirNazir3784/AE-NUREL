@@ -10,6 +10,28 @@ export function lyricLines(text: string) {
   return lines;
 }
 
+export function untimedLyricDocument(text: string, filename: string): EditorDocument {
+  return { ...emptyEditor(), filename: filename.replace(/\.[^.]+$/u, "") + "-lyrics.srt", cues: lyricLines(text).map((line, index) => ({ id: `lyric-${index + 1}`, text: line, start: null, end: null, srtSettings: "", vttSettings: "", identifier: "" })) };
+}
+
+export function measuredWordDocument(words: readonly TimedText[], duration: number, filename: string): EditorDocument {
+  if (!Number.isFinite(duration) || duration <= 0 || words.length > 2500) throw new Error("Use a shorter recording for per-word captions (up to 2,500 words).");
+  let previous = 0;
+  const cues = words.filter(word => word.text.trim()).map((word, index) => {
+    const [start, end] = word.timestamp;
+    if (start === null || end === null || !Number.isFinite(start) || !Number.isFinite(end) || start < previous || end <= start || end > duration + .001) throw new Error("The recording did not return valid measured word timing.");
+    previous = end;
+    if (Math.round(end * 1000) <= Math.round(start * 1000)) throw new Error("The word timing is too short for subtitle export. Choose per phrase instead.");
+    return { id: `word-${index + 1}`, text: word.text.trim(), start: Math.round(start * 1000), end: Math.round(end * 1000), srtSettings: "", vttSettings: "", identifier: "" };
+  });
+  return { ...emptyEditor(), filename: filename.replace(/\.[^.]+$/u, "") + "-lyrics.srt", cues };
+}
+
+export function stampPlaybackTime(document: EditorDocument, id: string, field: "start" | "end", seconds: number, duration: number): EditorDocument {
+  if (!Number.isFinite(duration) || duration <= 0 || !Number.isFinite(seconds) || seconds < 0 || seconds > duration || !document.cues.some(cue => cue.id === id)) throw new Error("Choose a position inside the recording.");
+  return { ...document, cues: document.cues.map(cue => cue.id === id ? { ...cue, [field]: Math.round(seconds * 1000), [`${field}Draft`]: undefined } : cue) };
+}
+
 /** Conservative ASR-assisted correspondence, not a singing forced aligner.
  * Every timed line must exactly match a chronological sequence of acoustically
  * measured model spans. Missing words/line boundaries remain explicitly untimed.

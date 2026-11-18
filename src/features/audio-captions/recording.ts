@@ -4,6 +4,7 @@ import { browserCheckpoints, subtitleFileKey } from "../local-asr/subtitle-check
 import type { AsrClient } from "../local-asr/asr-client.ts";
 import type { AsrProgress } from "../local-asr/asr-core.ts";
 import { accurateDeviceReason, type TranscriptionQuality } from "../local-asr/subtitle-capabilities.ts";
+import { hardwareGpu, lyricCapacity } from "../local-asr/browser-capability.ts";
 
 export const RECORDING_LIMITS = { seconds: 300, bytes: 30 * 1024 ** 2 };
 export function validateRecording(file: Pick<File, "name" | "type" | "size">) {
@@ -28,20 +29,27 @@ export async function prepareRecording(file: File, signal: AbortSignal) {
     return { duration: decoder.duration, peaks };
   } finally { decoder.dispose(); }
 }
-export async function transcribeRecording(file: File, quality: TranscriptionQuality, asr: AsrClient, signal: AbortSignal, progress: (value: AsrProgress) => void, memoryGiB?: number, audioKind: "speech" | "music" = "speech") {
+export async function transcribeRecording(file: File, quality: TranscriptionQuality, asr: Pick<AsrClient, "run" | "cancel">, signal: AbortSignal, progress: (value: AsrProgress) => void, memoryGiB?: number, audioKind: "speech" | "music" = "speech", spoken = "en", recognizerId?: string) {
   validateRecording(file);
-  const reason = quality === "accurate" && accurateDeviceReason(memoryGiB); if (reason) throw new Error(reason);
+  const reason = quality === "accurate" && !recognizerId && accurateDeviceReason(memoryGiB); if (reason) throw new Error(reason);
   progress({ stage: "preparing" });
   const key = await subtitleFileKey(file, signal), decoder = await openSectionDecoder(file, signal);
-  try { recordingDuration(decoder.duration); }
+  try {
+    recordingDuration(decoder.duration);
+    if (recognizerId) {
+      const capacity = lyricCapacity(memoryGiB, await hardwareGpu(navigator)); signal.throwIfAborted();
+      if (!capacity.seconds) throw new Error(capacity.reason);
+      if (decoder.duration > capacity.seconds + .05) throw new Error(`Use a clip up to ${capacity.seconds} seconds, or import captions.`);
+    }
+  }
   catch (error) { decoder.dispose(); throw error; }
   // The existing shared job owns section retries, stitching, checkpoints and
-  // model lifecycle. Translation is not part of this English-only workflow.
-  const result = await runSubtitleJob({ filename: file.name, fileKey: key, spoken: "en", target: "same", quality, audioKind, backend: "auto", signal, progress }, {
+  // model lifecycle. The selected language is recognized without translation.
+  const result = await runSubtitleJob({ filename: file.name, fileKey: key, spoken, target: "same", quality, audioKind, recognizerId, backend: "auto", signal, progress }, {
     decoder, asr, store: browserCheckpoints,
     translator: { cancel() {}, async translate() { throw new Error("Translation is unavailable in this workflow."); } },
   });
-  if (!result.document.cues.length) throw new Error("No timed speech was found. Try a clearer recording, or import captions.");
+  if (!result.document.cues.length) throw new Error(audioKind === "music" ? "No timed vocals were recognized. Try a clearer vocal passage, time written lyrics manually, or import captions." : "No timed speech was found. Try a clearer recording, or import captions.");
   return result;
 }
 export function recordingStage(progress: AsrProgress | null) {

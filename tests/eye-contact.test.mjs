@@ -70,9 +70,9 @@ describe('eye-contact correction safeguards', () => {
     assert.equal(vectorCorrection([0,0,-1],settings),null);assert.equal(vectorCorrection([NaN,0,1],settings),null);assert.equal(vectorCorrection([1,0,.1],settings),null);
     assert.deepEqual(vectorCorrection([0,0,1],{...settings,vertical:5,horizontal:-3}),[5,-3]);
   });
-  it('keeps the unfinished route out of production and public sitemap discovery', () => {
+  it('publishes the completed route without opening other preview tools', () => {
     const route=readFileSync(new URL('../src/app/tools/ai-eye-contact/page.tsx',import.meta.url),'utf8');
-    assert.match(route,/process\.env\.NODE_ENV !== "development"\) notFound\(\)/); assert.match(route,/index: false/);
-    const registry=readFileSync(new URL('../src/lib/tools.ts',import.meta.url),'utf8'); assert.ok(!registry.includes('/tools/ai-eye-contact'));
+    assert.doesNotMatch(route,/notFound\(|index: false/);
+    const registry=readFileSync(new URL('../src/lib/media-tools.ts',import.meta.url),'utf8'); assert.ok(registry.includes('/tools/ai-eye-contact'));assert.ok(!registry.includes('podcast'));
   });
 });

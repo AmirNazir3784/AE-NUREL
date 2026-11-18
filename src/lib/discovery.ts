@@ -1,9 +1,11 @@
 import { tools } from "./tools";
 export const toolGroups = ["Timing & Editing", "Format Conversion"] as const;
-export const allToolGroups = ["Video Tools", "Image Tools", ...toolGroups] as const;
+export const allToolGroups = ["Video Tools", "Image Tools", "Caption Generation", ...toolGroups] as const;
 export const curatedToolRoutes = ["/tools/srt-editor", "/tools/srt-timing-adjuster", "/tools/srt-to-vtt", "/tools/srt-merger"] as const;
 export const curatedTools = curatedToolRoutes.map((href) => tools.find((tool) => tool.href === href)!);
 export const menuNames: Record<string, string> = {
+  "/tools/ai-eye-contact": "AI Eye Contact",
+  "/tools/lyrics-to-captions": "Lyrics to Captions",
   "/tools/video-compressor": "Video Compressor",
   "/tools/video-cropper": "Video Cropper",
   "/tools/free-green-screen-remover": "Green Screen Remover",
@@ -42,6 +44,8 @@ export const subtitleTasks = [
   { label: "Get structured JSON cues", href: "/tools/srt-to-json" },
 ] as const;
 export const relevantRoutes: Record<string, readonly string[]> = {
+  "/tools/ai-eye-contact": ["/tools/video-cropper", "/tools/video-compressor"],
+  "/tools/lyrics-to-captions": ["/tools/srt-editor", "/tools/srt-to-vtt"],
   "/tools/compress-video-to-10mb": ["/tools/video-compressor", "/tools/compress-video-for-whatsapp"],
   "/tools/compress-mp4": ["/tools/reduce-video-file-size", "/tools/compress-video-to-10mb"],
   "/tools/reduce-video-file-size": ["/tools/compress-mp4", "/tools/compress-video-to-10mb"],

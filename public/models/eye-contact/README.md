@@ -1,4 +1,4 @@
-# Eye-contact model assets (unreleased prototype)
+# Eye-contact model assets
 
 Prepared 30 October 2026. No paid API or processing service is used.
 

@@ -77,7 +77,7 @@ describe("public sitemap and robots discovery", () => {
       const paths = sitemap().map(entry => new URL(entry.url).pathname);
       assert.deepEqual(paths.toSorted(), expected.toSorted());
       for (const path of paths) {
-        assert.doesNotMatch(path, /^\/(?:api|dev|admin|account)(?:\/|$)|^\/(?:pricing|checkout|sign-in|sign-up|forgot-password|reset-password|verify-email)$|^\/tools\/(?:free-subtitle-generator|podcast-to-captions|lyrics-to-captions)$/);
+        assert.doesNotMatch(path, /^\/(?:api|dev|admin|account)(?:\/|$)|^\/(?:pricing|checkout|sign-in|sign-up|forgot-password|reset-password|verify-email)$|^\/tools\/(?:free-subtitle-generator|podcast-to-captions)$/);
       }
     });
   });

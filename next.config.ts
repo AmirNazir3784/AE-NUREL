@@ -32,6 +32,7 @@ const nextConfig: NextConfig = {
         ],
       },
       { source: "/images/caption-studio/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
+      { source: "/models/eye-contact/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }] },
       { source: "/api/membership/:path*", headers: [{ key: "Cache-Control", value: "private, no-store" }] },
       { source: "/api/auth/:path*", headers: [{ key: "Cache-Control", value: "private, no-store" },{key:"Referrer-Policy",value:"no-referrer"}] },
       { source: "/reset-password", headers: [{ key: "Referrer-Policy", value: "no-referrer" },{key:"Cache-Control",value:"private, no-store"}] },

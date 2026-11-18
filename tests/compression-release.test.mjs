@@ -17,7 +17,7 @@ it('makes the six approved workflows discoverable once without promoting other p
   assert.equal(urls.filter(url=>url===tool.href).length,1);
   assert.ok(searchTools(tool.title).some(t=>t.href===tool.href));
  }
- for(const route of ['/tools/ai-eye-contact','/tools/lyrics-to-captions','/tools/podcast-to-captions']){
+ for(const route of ['/tools/podcast-to-captions']){
   assert.ok(!tools.some(t=>t.href===route));assert.ok(!urls.includes(route));
  }
 });

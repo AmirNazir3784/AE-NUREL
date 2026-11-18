@@ -4,11 +4,12 @@ import { ToolIcon } from "@/components/ui/icon-tile";
 import { audioToTextTool, autoCaptionTool } from "@/lib/ai-tools";
 import { autoCaptionVisible } from "@/lib/caption-release";
 import { products } from "@/lib/products";
+import { mediaTools } from "@/lib/media-tools";
 import { NavigationMenu } from "./navigation-menu";
 import styles from "./tools-menu.module.css";
 
 export function ToolsMenu({ pathname, onNavigate }: { pathname: string; onNavigate: () => void }) {
-  const aiTools = autoCaptionVisible() ? [audioToTextTool, autoCaptionTool] : [audioToTextTool];
+  const aiTools = [...(autoCaptionVisible() ? [audioToTextTool, autoCaptionTool] : [audioToTextTool]), ...mediaTools];
   return <NavigationMenu label="Tools" className={`aen-product-menu ${styles.menu}`}>
     <div className={styles.intro}><strong>Made for your next edit.</strong><span>The AENural toolkit</span></div>
     <div className={styles.groups}>
@@ -22,7 +23,7 @@ export function ToolsMenu({ pathname, onNavigate }: { pathname: string; onNaviga
       <section className={styles.ai} aria-labelledby="tools-ai-heading">
         <h2 id="tools-ai-heading">AI tools</h2>
         {aiTools.map(tool => <Link key={tool.href} href={tool.href} className={styles.aiTool} onClick={onNavigate} aria-current={pathname === tool.href ? "page" : undefined}>
-          <ToolIcon name={tool.icon} compact /><span><b>{tool.title}</b><small>{tool.href === audioToTextTool.href ? "Speech to text, ready to edit and export." : "Generate, edit and style video captions."}</small></span><Icon name="arrow" size={15} className={styles.arrow} />
+          <ToolIcon name={tool.icon} compact /><span><b>{tool.title}</b><small>{tool.href === audioToTextTool.href ? "Speech to text, ready to edit and export." : tool.href === autoCaptionTool.href ? "Generate, edit and style video captions." : tool.description}</small></span><Icon name="arrow" size={15} className={styles.arrow} />
         </Link>)}
         <Link href="/tools/ai-tools" className={styles.category} onClick={onNavigate}>Explore AI tools<Icon name="arrow" size={15} /></Link>
       </section>

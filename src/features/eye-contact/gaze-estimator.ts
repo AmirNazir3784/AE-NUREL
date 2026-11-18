@@ -1,17 +1,17 @@
 import { EYES, type Point } from "./gaze-core";
-type Runtime = typeof import("onnxruntime-web/wasm");
-type Session = import("onnxruntime-web").InferenceSession;
+import { resilientSession, type ResilientSession as Session } from "./inference-session";
+type Runtime = typeof import("onnxruntime-web/webgpu");
 
 // Intel Open Model Zoo inputs are BGR pixels in [0,255], not normalized RGB.
 // Use the documented unaligned-eye mode: pass the actual roll angle and keep
 // both eye crops unrotated. The output vector is already in camera coordinates.
-export async function createGazeEstimator(ort: Runtime, signal: AbortSignal) {
+export async function createGazeEstimator(ort: Runtime, signal: AbortSignal, accelerate = false) {
   let head: Session | undefined, gaze: Session | undefined;
   const dispose = async () => { await head?.release(); await gaze?.release(); head = gaze = undefined; };
   const load = async (name: string) => {
     const response = await fetch(`/models/eye-contact/${name}.onnx`, { signal });
     if (!response.ok) throw new Error("The gaze model could not load. Please retry.");
-    return ort.InferenceSession.create(await response.arrayBuffer(), { executionProviders: ["wasm"], graphOptimizationLevel: "all" });
+    return resilientSession(ort, await response.arrayBuffer(), signal, accelerate);
   };
   try {
     head = await load("head-pose"); signal.throwIfAborted();
@@ -26,6 +26,7 @@ export async function createGazeEstimator(ort: Runtime, signal: AbortSignal) {
       return new ort.Tensor("float32", bgr, [1, 3, 60, 60]);
     }
     return {
+      get accelerated() { return !!head?.accelerated && !!gaze?.accelerated; },
       async estimate(source: HTMLCanvasElement, points: readonly Point[]) {
         if (!head || !gaze) throw new Error("Eye analysis was stopped.");
         signal.throwIfAborted();
@@ -36,7 +37,8 @@ export async function createGazeEstimator(ort: Runtime, signal: AbortSignal) {
         const x = Math.max(0, left - margin), y = Math.max(0, top - margin), w = Math.min(width - x, right - left + margin * 2), h = Math.min(height - y, bottom - top + margin * 2);
         if (![x, y, w, h].every(Number.isFinite) || w < 40 || h < 40) return null;
         const face = tensor(source, x, y, w, h);
-        const pose = await head.run({ data: face }); face.dispose();
+        let pose;
+        try { pose = await head.run({ data: face }); } finally { face.dispose(); }
         let yaw: number, pitch: number, roll: number;
         try { yaw = Number(pose.fc_y.data[0]); pitch = Number(pose.fc_p.data[0]); roll = Number(pose.fc_r.data[0]); }
         finally { for (const output of Object.values(pose)) output.dispose(); }
@@ -51,7 +53,8 @@ export async function createGazeEstimator(ort: Runtime, signal: AbortSignal) {
             eyes[eye.name] = tensor(source, ex, ey, size, size);
           }
           const angles = new ort.Tensor("float32", Float32Array.of(yaw, pitch, roll), [1, 3]);
-          const output = await gaze.run({ left_eye_image: eyes.L!, right_eye_image: eyes.R!, head_pose_angles: angles }); angles.dispose();
+          let output;
+          try { output = await gaze.run({ left_eye_image: eyes.L!, right_eye_image: eyes.R!, head_pose_angles: angles }); } finally { angles.dispose(); }
           try {
             signal.throwIfAborted();
             const vector = Array.from(output[gaze.outputNames[0]].data, Number);

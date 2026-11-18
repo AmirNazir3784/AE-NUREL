@@ -3,18 +3,18 @@ import assert from "node:assert/strict";
 import { categories, tools, toolsInCategory, searchTools, relatedTools } from "../src/lib/tools.ts";
 
 describe("released tool discovery", () => {
-  it("lists the sixteen released subtitle tools, without invented future tools", () => {
-    assert.deepEqual(tools.filter(tool => tool.categoryId === "subtitle-tools").map((tool) => tool.href), ["/tools/srt-timing-adjuster", "/tools/srt-merger", "/tools/srt-splitter", "/tools/srt-editor", "/tools/subtitle-sync-fixer", "/tools/subtitle-overlap-fixer", "/tools/srt-to-vtt", "/tools/vtt-to-srt", "/tools/srt-to-txt", "/tools/ass-to-srt", "/tools/srt-to-ass", "/tools/srt-to-json", "/tools/vtt-to-txt", "/tools/sbv-to-srt", "/tools/srt-to-sbv", "/tools/srt-to-mp4"]);
+  it("lists released subtitle tools including Lyrics, without other previews", () => {
+    assert.deepEqual(tools.filter(tool => tool.categoryId === "subtitle-tools").map((tool) => tool.href), ["/tools/srt-timing-adjuster", "/tools/srt-merger", "/tools/srt-splitter", "/tools/srt-editor", "/tools/subtitle-sync-fixer", "/tools/subtitle-overlap-fixer", "/tools/srt-to-vtt", "/tools/vtt-to-srt", "/tools/srt-to-txt", "/tools/ass-to-srt", "/tools/srt-to-ass", "/tools/srt-to-json", "/tools/vtt-to-txt", "/tools/sbv-to-srt", "/tools/srt-to-sbv", "/tools/srt-to-mp4", "/tools/lyrics-to-captions"]);
     assert.ok(tools.every((tool) => tool.processing === "local"));
   });
   it("derives category availability from released tools", () => {
-    assert.equal(toolsInCategory("subtitle-tools").length, 16);
-    assert.equal(toolsInCategory("video-tools").length, 8);
+    assert.equal(toolsInCategory("subtitle-tools").length, 17);
+    assert.equal(toolsInCategory("video-tools").length, 9);
     assert.equal(toolsInCategory("image-tools").length, 1);
     assert.equal(categories.reduce((count, category) => count + toolsInCategory(category.id).length, 0), tools.length);
   });
   it("handles case, whitespace, and multiple search terms", () => {
-    assert.deepEqual(searchTools("  SRT   TIMING  "), [tools[0], tools[1], tools[3], tools[5], tools[6]]);
+    assert.deepEqual(searchTools("  SRT   TIMING  "), [tools[0], tools[1], tools[3], tools[5], tools[6], tools.find(t=>t.href==='/tools/lyrics-to-captions')]);
     assert.deepEqual(searchTools("earlier subtitle"), [tools[0]]);
     assert.deepEqual(searchTools("merger subtitle"), [tools[1]]);
     assert.deepEqual(searchTools("splitter subtitle"), [tools[2]]);
