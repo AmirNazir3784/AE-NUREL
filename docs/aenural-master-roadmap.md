@@ -1,17 +1,17 @@
 # AENural master roadmap
-Updated: 2026-10-21 | Owner: AENural | Status: Phase 0 in progress
-**Development only:** `faisalhere-afk/aenural-website` / `dev/aenural-hybrid`.
+Updated: 2026-11-18 (Phase 3: free-quota decision applied — 3 videos per day, UTC reset) | Owner: AENural | Status: Phase 0 in progress
+**Development only:** `faisalhere-afk/aenural-website` / `main` (auth work on `feature/hostinger-authentication`). The `dev/aenural-hybrid` branch is stale — do not base work on it.
 **Do not modify or deploy production:** `AmirNazir3784/AE-NUREL` (Hostinger remote).
 
 ## Product decisions — approved
 - AENural is a Pakistan-operated business serving international subscribers. Prioritize Visa/Mastercard and other globally supported cards; payment provider, onboarding, payout eligibility and prices remain undecided. Evaluate hosted merchant-of-record options; do not collect card details.
-- Product A — **Auto Caption Generator**, freemium subscription product. **Free: exactly 3 videos TOTAL per free account** (lifetime account allowance; **not** 3/day or 3/month), **up to 60 seconds each**, **watermarked exported videos**, **5 free presets**. Proposed free presets: Clean, Bold, Outline, Highlight, Minimal; confirm before enforcement. Premium: remaining 25 of 30 styles, advanced animation, word highlighting, watermark-free export and extended duration subject to technical benchmarks. Authenticated, verified server-side accounting required.
+- Product A — **Auto Caption Generator**, freemium subscription product. **Free: 3 videos per day per free account** (UTC daily reset at 00:00 UTC; **not** a lifetime allowance), **up to 60 seconds each**, **watermarked exported videos**, **5 free presets**. (Owner decision, 2026-11-18, Phase 3 — matches the implemented daily counter.) Proposed free presets: Clean, Bold, Outline, Highlight, Minimal; confirm before enforcement. Premium: remaining 25 of 30 styles, advanced animation, word highlighting, watermark-free export and extended duration subject to technical benchmarks. Authenticated, verified server-side accounting required.
 - Product B — **Audio to SRT/VTT/TXT**, separate transcription-focused freemium product using shared subscription entitlements. Reference inspiration: TurboScribe three-mode UI (Fast/Balanced/Accurate), **not** a claim that three distinct models exist in AENural. Benchmark model quality, memory, speed and costs before a mode is shipped or called premium.
 - One Premium subscription is intended to unlock eligible features across both products. Source Window is a separate product in Coming Soon state. Remaining released subtitle utilities remain free and anonymous.
 - No artificial delay for free processing. Do not promise unlimited media, faster paid speed, worldwide coverage or secure browser-only paywalls without verified implementation.
 
 ### Before implementing the quota — clarify these specifications
-The confirmed rule is **3 free videos total per account**. Still to resolve: what consumes a credit (successful generation, distinct upload, or completed watermark export); whether failed jobs/retries consume one; server reconciliation/idempotency; whether changing/transcoding the same video counts again; account verification; cancellations/refunds; and limits against multi-account abuse. Never assume or silently charge a credit.
+The confirmed rule is **3 free videos per day per account (UTC daily reset)**. Implemented behaviour (`server/membership/service.mjs`, `docs/hostinger-membership-launch.md`): a slot is consumed when a new caption job starts; retrying the same uploaded video in the open editor reuses its slot, and a new upload/reload creates a new slot. Still to resolve: whether failed jobs consume a slot; server reconciliation/idempotency; whether changing/transcoding the same video counts again; account verification; cancellations/refunds; and limits against multi-account abuse. Never assume or silently charge a credit.
 
 ## Work phases
 | Phase | Work | Exit requirement | State |

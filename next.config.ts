@@ -21,8 +21,20 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           // Limit embedding and document injection without restricting the
           // speech/video workers, WASM, model downloads or caption exports.
-          { key: "Content-Security-Policy", value: "frame-ancestors 'self'; base-uri 'self'; object-src 'none'" + (process.env.NODE_ENV === "production" ? "; upgrade-insecure-requests" : "") },
-          ...(process.env.NODE_ENV === "production" ? [{ key: "Strict-Transport-Security", value: "max-age=31536000" }] : []),
+          // Step 5 (S5-18): style-src is tightened to same-origin plus the
+          // inline styles the app already uses ('unsafe-inline' preserves
+          // every current style= attribute and styled-jsx block; no
+          // external stylesheet exists in the tree). script-src /
+          // default-src are deliberately NOT set here yet: Next.js App
+          // Router streams inline RSC scripts and the caption studio
+          // compiles WASM, so a script-src without a per-request nonce
+          // (or 'wasm-unsafe-eval') would break the app. Tightening
+          // script-src needs nonce-based CSP via middleware plus a full
+          // `next build` and a caption-studio regression pass — tracked
+          // as follow-up, not silently dropped (see
+          // tests/security-hardening.test.mjs).
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'; base-uri 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'" + (process.env.NODE_ENV === "production" ? "; upgrade-insecure-requests" : "") },
+          ...(process.env.NODE_ENV === "production" ? [{ key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" }] : []),
         ],
       },
       {

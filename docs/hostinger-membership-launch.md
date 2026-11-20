@@ -1,5 +1,13 @@
 ﻿# Account and caption launch handoff — 28 October 2026
 
+> **⚠️ Note (2026-11-20):** the temporary owner-SQLite setup described
+> below is **no longer the live plan** — owner login is PAUSED and the
+> go-live path is normal signup/login via MySQL (see
+> `docs/authentication/controlled-activation.md`). Account pages are
+> **NOT visible by default in production** since Step 5 (S5-19): preview
+> is opt-in only (`NEXT_PUBLIC_AENURAL_SITE_PREVIEW=0` by default). Read
+> this document as a historical handoff, not as the current launch plan.
+
 **Latest owner instruction:** unrestricted public caption access is superseded by the [private owner / Free visitor setup](private-owner-access.md). A temporary private SQLite database supports the sole owner login and browser-specific Free usage before MySQL is configured. Public visitors receive locked premium controls and Free limits; only the authenticated owner receives full access. The MySQL/payment setup below remains the later permanent-account handoff.
 
 The owner authorized real application implementation, while retaining responsibility for creating the Hostinger database and external accounts. This replaces the previous design-only restriction. No hosted database, merchant account, live payment, push or deployment was performed.

@@ -1,6 +1,6 @@
-// Temporary public preview authorized for live testing. Set to "0" at build
-// and runtime to restore the release hold. This never enables backend services.
+// Temporary public preview, OPT-IN ONLY since Step 5 (S5-19). Visible
+// only when the flag is explicitly "1" — production no longer defaults
+// the preview open. This never enables backend services.
 export function sitePreviewEnabled() {
-  return process.env.NEXT_PUBLIC_AENURAL_SITE_PREVIEW === "1" ||
-    process.env.NODE_ENV === "production" && process.env.NEXT_PUBLIC_AENURAL_SITE_PREVIEW !== "0";
+  return process.env.NEXT_PUBLIC_AENURAL_SITE_PREVIEW === "1";
 }

@@ -16,10 +16,12 @@ let directory,auth,db,service,alice,bob,cookie;
 const origin='http://localhost:3000',password='QA-Sample-Creator-123456';
 const call=(endpoint,body,session='',requestOrigin=origin)=>auth.handler(new Request(origin+'/api/auth/'+endpoint,{method:'POST',headers:{origin:requestOrigin,'content-type':'application/json','x-forwarded-for':'127.0.0.1',...session?{cookie:session}:{}},body:JSON.stringify(body)}));
 async function mail(email,subject){const all=await Promise.all((await readdir(directory)).filter(n=>n.startsWith('mail-')).map(async n=>JSON.parse(await readFile(path.join(directory,n),'utf8'))));return all.filter(m=>m.to===email&&m.subject.includes(subject)).sort((a,b)=>b.createdAt.localeCompare(a.createdAt))[0];}
-async function register(email){const response=await call('sign-up/email',{name:'QA Creator',email,password,callbackURL:origin+'/sign-in'});assert.equal(response.status,200);const body=await response.json();assert.equal(body.token,null);const message=await mail(email,'Verify');assert.ok(message);return body.user;}
+async function register(email){const response=await call('sign-up/email',{name:'QA Creator',email,password,callbackURL:origin+'/sign-in'});assert.equal(response.status,200);const body=await response.json();assert.equal(body.token,null);const message=await mail(email,'verification code');assert.ok(message);return body.user;}
+async function otpCode(email){const message=await mail(email,'verification code');assert.ok(message);const code=message.text.match(/\b(\d{6})\b/)?.[1];assert.ok(code);return code;}
+async function verifyEmail(email){const response=await call('email-otp/verify-email',{email,otp:await otpCode(email)});assert.equal(response.status,200);const body=await response.json();assert.equal(body.status,true);assert.equal(body.user.emailVerified,true);return body;}
 function sessionCookie(response){return response.headers.getSetCookie().map(value=>value.split(';')[0]).join('; ');}
 before(async()=>{
- directory=await mkdtemp(path.join(os.tmpdir(),'aenural-membership-'));process.env.NODE_ENV='test';process.env.AENURAL_MEMBERSHIP_ENABLED='1';process.env.AENURAL_LOCAL_DATA_DIR=directory;process.env.BETTER_AUTH_URL=origin;
+ directory=await mkdtemp(path.join(os.tmpdir(),'aenural-membership-'));process.env.NODE_ENV='test';process.env.AENURAL_MEMBERSHIP_ENABLED='1';process.env.AENURAL_LOCAL_DATA_DIR=directory;process.env.AENURAL_EMAIL_TRANSPORT='local-outbox';process.env.BETTER_AUTH_URL=origin;
  auth=await membershipAuth();({db}=await membershipDatabase());service=createMemberService(db,{local:true});
  alice=await register('alice@example.test');bob=await register('bob@example.test');
 });
@@ -28,7 +30,7 @@ after(async()=>{await db?.destroy();const resolved=path.resolve(directory||'');c
 it('uses real password hashing and requires verification before a session is issued',async()=>{
  const blocked=await call('sign-in/email',{email:alice.email,password});assert.equal(blocked.status,403);
  const stored=await db.selectFrom('account').select('password').where('userId','=',alice.id).executeTakeFirst();assert.ok(stored.password&&!stored.password.includes(password));
- const verified=await auth.handler(new Request((await mail(alice.email,'Verify')).url));assert.equal(verified.status,302);
+ const verified=await verifyEmail(alice.email);assert.ok(verified.token,'a session token is issued only after successful OTP verification');
  const login=await call('sign-in/email',{email:alice.email,password});assert.equal(login.status,200);cookie=sessionCookie(login);assert.ok(cookie.includes('session_token='));
  const session=await auth.api.getSession({headers:new Headers({cookie})});assert.equal(session.user.id,alice.id);assert.equal(session.user.emailVerified,true);
 });

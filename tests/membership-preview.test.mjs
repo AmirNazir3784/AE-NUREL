@@ -17,10 +17,10 @@ it('offers exactly Free and the $20 Source Window package with premium captions 
  const paid=purchaseProduct('source-window');assert.equal(paid.amount,'$20');assert.equal(paid.period,'one-time package');
  assert.ok(paid.features.includes('Premium caption features included with your purchase'));
 });
-it('shows public testing pages and restores the production hold when explicitly disabled',()=>{
+it('keeps public testing pages closed in production unless explicitly enabled',()=>{
  const original={AENURAL_OWNER_TEST_MODE:process.env.AENURAL_OWNER_TEST_MODE,NODE_ENV:process.env.NODE_ENV,AENURAL_ACCOUNT_QA:process.env.AENURAL_ACCOUNT_QA,NEXT_PUBLIC_AENURAL_SITE_PREVIEW:process.env.NEXT_PUBLIC_AENURAL_SITE_PREVIEW};
  try{
-  process.env.NODE_ENV='production';process.env.AENURAL_OWNER_TEST_MODE='0';delete process.env.AENURAL_ACCOUNT_QA;delete process.env.NEXT_PUBLIC_AENURAL_SITE_PREVIEW;assert.equal(accountPreviewAvailable(),true);
+  process.env.NODE_ENV='production';process.env.AENURAL_OWNER_TEST_MODE='0';delete process.env.AENURAL_ACCOUNT_QA;delete process.env.NEXT_PUBLIC_AENURAL_SITE_PREVIEW;assert.equal(accountPreviewAvailable(),false);
   process.env.NEXT_PUBLIC_AENURAL_SITE_PREVIEW='0';assert.equal(accountPreviewAvailable(),false);
   process.env.AENURAL_ACCOUNT_QA='true';assert.equal(accountPreviewAvailable(),false);
   process.env.AENURAL_ACCOUNT_QA='1';assert.equal(accountPreviewAvailable(),true);

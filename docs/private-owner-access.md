@@ -1,5 +1,22 @@
 # Private owner access
 
+> **⚠️ SUPERSEDED — do not follow this document for Step 10 or the normal signup/login go-live.**
+> This document describes the **pre–Phase 4 world** and is no longer current:
+> it says owner mode is active by default in production when MySQL membership
+> is not enabled, that the owner token's SHA-256 verifier lives in source, and
+> that activation returns 410 once an owner exists. All three are superseded:
+> since Phase 4, production with membership off is **fully disabled** (auth
+> routes 404 — there is no implied owner fallback); since Step 5 (S5-04) the
+> token hash is **not in source** (`server/membership/owner-bootstrap.json` is
+> inert — the hash lives only in env as a scrypt hash); and since Step 5
+> (S5-11) activation failures return **one generic 403**, not 410.
+> Owner login is **PAUSED** (2026-11-20) — do not follow this document for
+> Step 10. For the current rules see
+> `docs/authentication/controlled-activation.md` and
+> `docs/authentication/owner-activation-rotation.md` (the latter is also
+> paused for the normal go-live; use it only if/when owner activation is
+> resumed). The old owner token is compromised and must never be reused.
+
 The owner requested a working login on the live AmirNazir/AE-NUREL deployment before creating MySQL. The temporary server database is Node's built-in SQLite, kept in `.aenural-local/owner/` outside public assets, Git and deployment tracing. It stores actual hashed credentials, sessions, anonymous usage totals and the owner's caption projects. This is not a simulated login.
 
 In production, when full MySQL membership is not enabled, the private owner mode is active by default. `AENURAL_OWNER_TEST_MODE=0` disables that fallback. Existing development accounts are unchanged unless owner mode is explicitly selected. This setup requires Node 22.13+ or 24 and a writable private directory. Use `AENURAL_OWNER_DATA_DIR` for a persistent Hostinger directory outside the deployment checkout if application redeployments replace the checkout. A single writable SQLite database is intended for this temporary, single-instance setup; migrate to the prepared MySQL integration for durable public accounts or multiple app instances.

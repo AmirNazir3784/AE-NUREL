@@ -1,0 +1,121 @@
+/* Email verification (6-digit code) — AENural membership.
+   New in Phase 2. Uses only the existing theme tokens, so light and dark
+   themes follow the site automatically. No hardcoded page colours. */
+
+.cm-verify-form {
+  display: grid;
+  gap: 18px;
+}
+
+.cm-verify-icon {
+  display: grid;
+  place-items: center;
+  height: 52px;
+  width: 52px;
+  border: 1px solid var(--accent-border);
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.cm-verify-text {
+  font-size: 13px;
+  margin: 0;
+}
+
+.cm-verify-email {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+}
+
+.cm-otp-group {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.cm-otp-box {
+  width: 48px;
+  height: 56px;
+  min-width: 0;
+  flex: 1 1 0;
+  padding: 0;
+  text-align: center;
+  font: 650 24px/1 var(--font-heading);
+  letter-spacing: 0;
+  color: var(--foreground);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  caret-color: var(--accent);
+}
+
+.cm-otp-box:focus {
+  border-color: var(--accent);
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.cm-otp-box[aria-invalid="true"] {
+  border-color: var(--error);
+}
+
+.cm-otp-box:disabled {
+  opacity: 0.55;
+}
+
+.cm-form-notice--error {
+  border-color: var(--error);
+  background: var(--surface-soft);
+  color: var(--foreground);
+}
+
+.cm-verify-resend {
+  margin: 0;
+  font-size: 12px;
+  text-align: center;
+}
+
+.cm-verify-resend > span {
+  color: var(--muted);
+}
+
+.cm-verify-resend-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.cm-verify-resend-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.cm-verify-hint {
+  margin: 0;
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 540px) {
+  .cm-otp-group {
+    gap: 8px;
+  }
+
+  .cm-otp-box {
+    height: 52px;
+    font-size: 22px;
+    border-radius: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cm-otp-box {
+    transition: border-color 0.15s ease;
+  }
+}

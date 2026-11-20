@@ -1,4 +1,11 @@
 # AENural release checkpoint — resume here
+
+> **⚠️ HISTORICAL — do not use as a go-live document.** Last updated
+> 2026-10-22; this is a **Phase 0 baseline** record. Its "3 free videos
+> TOTAL per account" is superseded by the decided **3 free videos per
+> day (UTC reset)**, and its `dev/aenural-hybrid` branch is dead for
+> this release (`feature/hostinger-authentication` / `main` are the
+> lines, PR #21, head `9abce77`). Kept for history only.
 Last updated: 2026-10-22
 **Status:** Phase 0 baseline COMPLETE. Phase 1A header/search fixes merged (PRs #2-#4). Local/GitHub reconciliation COMPLETE — one verified tree on `dev/aenural-hybrid` (`d9d9a10`). CI active via GitHub Actions. Batch C performance fixes merged (PRs #6-#7). Batch D SEO COMPLETE on dev (audit, structured data PR #9, owner-approved wording PRs #12-#13) — see docs/aenural-release-checklist.md for what only lands at release (SITE_URL). Live site still runs the older build; no production changes or deployment.
 

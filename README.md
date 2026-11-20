@@ -4,8 +4,8 @@ AENural is a Next.js 16 / React 19 / TypeScript site with browser-based subtitle
 
 ## Development branch and release safety
 
-- Current tool-completion development: work locally on `dev/tools-completion`; publish completed work only to `faisalhere-afk/aenural-website` (`origin`). Complete and browser-test each tool's design, content and functionality before moving to the next.
-- The synchronized AmirNazir `main` baseline is the starting point. During this development phase, do not copy unfinished development work back into production.
+- Current development: work on `main` in `faisalhere-afk/aenural-website` (`origin`). (`dev/tools-completion` is stale and fully merged into `main`; do not base new work on it.) Complete and browser-test each tool's design, content and functionality before moving to the next.
+- `main` is the current baseline. During this development phase, do not copy unfinished development work back into production.
 - Separate production Hostinger repository: `AmirNazir3784/AE-NUREL`. **Do not push, merge, deploy or synchronize it without explicit approval and verified release checks.**
 - Existing local Codex changes might not be pushed. Before syncing, always inspect the local branch, remotes and working-tree diffs; avoid reset/forced checkout/automatic overwrite.
 
@@ -49,9 +49,9 @@ Run and report these against the *actual local or CI checkout*, including commit
 
 - Released free utilities come from `src/lib/tools.ts`.
 - Auto Caption Generator (`/tools/auto-caption-generator`) and Audio to SRT/VTT (`/tools/free-subtitle-generator`) are currently development-only routes/previews and must not be falsely promoted as public subscription products.
-- `src/components/site/auth-preview-modal.tsx` demonstrates sign-in form UI only. **No real accounts, sessions, billing, per-account quotas or paid access controls are implemented yet.** Do not accept real customer credentials into the preview.
-- **Approved future free-plan policy:** Auto Caption Generator allows **3 videos total per free account** with a 60-second limit and watermarked exports. Its processing/billing semantics and secure server-side enforcement remain to be specified and implemented. Premium features must not be protected only by UI.
-- Existing `docs/aenural-auth-architecture.md` proposes Hostinger-managed MySQL + Better Auth for AENural; feasibility and database access are not confirmed. No schema change without explicit approval.
+- `src/components/site/auth-preview-modal.tsx` demonstrates sign-in form UI only (development preview). **Real accounts, sessions, billing, per-account quotas and paid access controls are implemented in Better Auth/MySQL behind the membership switches** (`AENURAL_MEMBERSHIP_ENABLED`, `NEXT_PUBLIC_AENURAL_SITE_PREVIEW`); see `docs/aenural-auth-architecture.md` and `docs/hostinger-membership-launch.md`. Do not accept real customer credentials into the preview modal.
+- **Approved free-plan policy (owner decision, 2026-11-18, Phase 3):** Auto Caption Generator allows **3 videos per day per free account** (UTC daily reset at 00:00 UTC), up to 60 seconds each, watermarked exports, 5 free presets. This matches the implementation (`server/membership/service.mjs` atomic daily counter in `aenural_daily_usage`, `src/features/membership/caption-policy.ts` `dailyLimit: 3`). There is no lifetime allowance. Launch messaging must use the per-day wording.
+- `docs/aenural-auth-architecture.md` describes the Hostinger-managed MySQL + Better Auth implementation (now implemented in `server/membership/`); Hostinger database/SMTP setup and staging verification are still pending. No schema change without explicit approval. Canonical env settings: `config/membership.env.example` (see also the pointer file `.env.example`).
 - For public release check indexing/canonicals/metadata, customer messaging, privacy, server headers and performance on real hosting.
 
 ## Maintenance and progress

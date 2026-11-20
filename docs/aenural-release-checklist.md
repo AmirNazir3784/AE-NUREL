@@ -1,5 +1,11 @@
 # AENural Release Checklist
 
+> **⚠️ Note (2026-11-20):** the `dev/aenural-hybrid` branch is **dead
+> for this release** — `feature/hostinger-authentication` / `main` are
+> the lines (PR #21, head `9abce77`, CI run #232 green). Any step below
+> that names `dev/aenural-hybrid` should be read as referring to the
+> current release branch instead.
+
 Read this BEFORE every production release. These are the things that only
 matter (or can only be checked) at release time. Development and localhost
 cannot show them, because localhost has no network distance and no

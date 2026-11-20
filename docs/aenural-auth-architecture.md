@@ -2,7 +2,7 @@
 
 **28 October 2026 update:** The owner authorized account/database integration code, saved projects, allowances, watermarks and purchase unlocking. Application implementation and local acceptance are now complete; actual Hostinger/SMTP/merchant setup is still pending. The older blocked/design-only instructions below are historical and superseded. See [current handoff](./hostinger-membership-launch.md).
 
-Revised 12 October 2026. **Phase 2 design only; real Phase 3 authentication blocked.** Hostinger-managed MySQL + Better Auth supersedes the earlier Supabase/PostgreSQL decision at the user's request. On 13 October the user separately authorized a development-only frontend preview: the modal/validation are now implemented without auth dependencies, database, migration, credentials or deployment. Public tools and local-media processing stay independent of accounts. See the pre-launch progress checkpoint for test evidence and browser QA limitations; remaining backend flows below are still planned.
+Revised 12 October 2026; implementation completed 28 October 2026 (see the update note above). **Phase 3 authentication is implemented** in `server/membership/` (Better Auth + MySQL/SQLite) — the "blocked" status below is historical. Hostinger-managed MySQL + Better Auth supersedes the earlier Supabase/PostgreSQL decision at the user's request. On 13 October the user separately authorized a development-only frontend preview: the modal/validation are implemented without auth dependencies, database, migration, credentials or deployment. Public tools and local-media processing stay independent of accounts. Hostinger/SMTP/merchant setup and live staging verification are still pending; see [current handoff](./hostinger-membership-launch.md).
 
 ## Decision and inspected baseline
 
@@ -10,7 +10,7 @@ Prefer the user's existing **Hostinger-managed MySQL**, with **Better Auth** run
 
 Inspected: Next.js 16.3.8 / React 19.2.8, Node 24.21.0, App Router, package/lockfile, empty Next configuration, current homepage, header, shared design styles and account sections in `references/AENural-design-reference.html`. There is no existing auth library, MySQL driver, account route, database config or mail transport. No `.env*` files or matching database/Better Auth/SMTP settings exist in this workspace/process. `SITE_URL` already supplies the optional canonical origin. No Hostinger management connector or account-specific plan/database evidence is available here.
 
-Better Auth documentation currently identifies 1.7.7 as latest. At implementation, verify/pin compatible versions of `better-auth`, `mysql2` and a small SMTP transport such as `nodemailer`; retain the lockfile. Do not install or migrate during this blocked architecture phase. Do not use custom hashing, password tables, token cryptography or fake sessions.
+Better Auth is pinned at 1.7.14 (`package.json`), with `mysql2` 3.24.6 and `nodemailer` 10.2.1; retain the lockfile. Do not use custom hashing, password tables, token cryptography or fake sessions.
 
 ## Required customer experience
 
@@ -19,7 +19,7 @@ The reference's account design is a **page/card**, not an accessible modal: `.au
 The development-only preview may be tested with sample details now; enable the real customer experience only once auth prerequisites are verified:
 
 - Add one clean **Sign in** button at the top right, alongside the existing search/tools navigation. Keep it reachable on narrow screens rather than inheriting the reference's mobile-hidden login rule. Do not redesign the header, homepage or Source Window.
-- Open a native `<dialog>` with an accessible name, visible close button and **Sign in / Sign up** tabs. Reuse the existing header search-dialog approach, while keeping only one modal open. Native modal focus containment/inert background, initial focus, Escape close and focus return to the trigger are mandatory.
+- As built, sign-in is page-based (`/sign-in`, `/sign-up`) using the shared accessible forms, not a header modal; the header links to `/sign-in` (or `/account` when signed in). The development-only preview modal is a separate demo and is not the real flow.
 - Implement semantic tablist/tab/tabpanel relationships, selected state, roving focus and arrow/Home/End navigation. Closing clears passwords; switching tabs does not submit. Preserve deliberate input except passwords where needed. Explain that closing a dialog does not cancel an already submitted server request.
 - Sign in: email/password plus Forgot password. Sign up: compact Name field as in the reference (Better Auth requires a name), email/password and concise password guidance. No extra profile information. Client hints plus server/library validation; do not trim or rewrite passwords. Proposed password limits: 12-128 characters, enforced through supported library options and tested with Unicode/password managers.
 - Plain messages: “Check your email”, “Email or password is incorrect”, “Try again in a moment”. Inline field errors with `aria-describedby`, `aria-invalid`, status announcements and pending duplicate-submit protection. No oversized warning panels or model/DB diagnostics.
@@ -35,9 +35,9 @@ The development-only preview may be tested with sample details now; enable the r
 | `/sign-in` | Direct-link/email-flow entry using the shared accessible forms; no redirect loop if the header opens the modal. Fixed return destination `/account`, not arbitrary external `next`. |
 | `/api/auth/[...all]` | Better Auth's `toNextJsHandler` GET/POST adapter, explicitly Node runtime; no handcrafted credential endpoint. |
 | Signup | `signUp.email`; email/password enabled, require verification and disable automatic signup sign-in. Generic check-email response for duplicate/existing-account cases; test actual pinned-library behavior and public response/timing before acceptance. |
-| `/check-email` | Small instruction/resend page; does not claim delivery or verification from a query flag. Resend is rate limited. |
-| Verification link | Send Better Auth's generated link via `sendVerificationEmail`; library validates token, with fixed trusted callback `/email-verified`. Configure documented expiry. No custom token generation or Supabase-style callback. |
-| `/email-verified` | Full-page verified/expired/error result using actual verification outcome; a success message alone is never identity proof. Offer Sign in; no automatic verified session assumption. |
+| `/verify-email` (as built; no `/check-email` route exists) | Six-digit code entry page; the pending email is retained server-side (httpOnly cookie) and shown masked. Never asks for the email in the normal flow. Resend is rate limited (60s server cooldown). |
+| Verification code (Email OTP) | Better Auth `emailOTP` plugin (`overrideDefaultEmailVerification: true`); 6-digit code, 5-minute expiry, 5 attempts, hashed storage in the existing `verification` table, previous code invalidated on resend. No custom token generation. Links issued before this change still verify until their 1-hour expiry (transition window). |
+| `/account` (as built; no `/email-verified` route exists) | Post-verification destination. A session is created only when the OTP is verified (`autoSignInAfterVerification: true`); sign-in afterwards still requires the verified session. No automatic verified session assumption. |
 | `/forgot-password` | Full-page email form calling `requestPasswordReset`; generic response whether account exists or not. Modal's Forgot password link opens this real page. |
 | `/reset-password` | Email link goes through the library handler to this page. Validate token via `resetPassword`; handle malformed, expired and reused tokens. No existing login required to reset using a valid recovery token. Enable `revokeSessionsOnPasswordReset`, then offer sign-in. |
 | `/account` | Server-verified, nonexpired session and verified email required before returning minimal profile. Updates derive identity from the session, never a client-supplied user ID. |
@@ -47,7 +47,7 @@ Only allow configured same-origin callbacks. Recovery/verification pages must wo
 
 ## Server sessions and access control
 
-- Server-only `src/lib/auth.ts` owns Better Auth, MySQL pool and email callbacks; client-only `auth-client.ts` uses `better-auth/react` on the same origin. Database/mail credentials and auth secret must never enter client imports or `NEXT_PUBLIC_` variables.
+- As built: server-only `server/membership/auth.mjs` owns Better Auth, the MySQL pool and email callbacks; the client uses raw `fetch` in `src/features/membership/member-client.ts` (`authRequest` to `/api/auth/*`) and session state from `GET /api/membership/access` — there is no `src/lib/auth.ts` and no `better-auth/react` client. Database/mail credentials and auth secret must never enter client imports or `NEXT_PUBLIC_` variables.
 - Follow documented Next.js APIs: asynchronous `headers()` for `auth.api.getSession`. A supported `nextCookies()` plugin belongs last if Server Actions are used for cookie-setting auth calls. Route-handler client calls already return cookies through the library adapter.
 - Keep auth cookies library-managed: HttpOnly, Secure in HTTPS production and appropriate SameSite; no custom localStorage JWTs. Use fixed `BETTER_AUTH_URL` and exact trusted origins, not arbitrary incoming Host/forwarded headers. Preserve library origin/CSRF checks.
 - Proposed initial policy: database-backed 7-day session, refreshed at most daily (rolling lifetime), explicit sign-out and password-reset revocation. This is a rolling expiry, not a 7-day absolute maximum. No paid service is required to configure library session lifetime. Disable cookie session caching initially so protected operations consult stored session state and revocation is not masked by a cache.
@@ -65,7 +65,7 @@ Use a dedicated AENural database with `utf8mb4`, supported MySQL engine/version,
 
 Runtime DB user gets only needed SELECT/INSERT/UPDATE/DELETE on AENural auth tables. Separate schema privileges from routine runtime access if hPanel permits; if Hostinger cannot supply restricted grants, record that limitation before approval. No database exposure to the browser. Backups and recovery responsibilities must be established before live migration.
 
-**No live creation, schema generation against a live target, migration or alteration without explicit authorization for the named database and reviewed changes.** Once configured, use the pinned library CLI's help/generate workflow to prepare a reviewable schema, test it on an explicitly authorized disposable development database, and request approval before applying to live. Do not run automatic startup migrations or `auth@latest migrate` as an experiment.
+**No live creation, schema generation against a live target, migration or alteration without explicit authorization for the named database and reviewed changes.** Once configured, use the pinned library CLI's help/generate workflow to prepare a reviewable schema, test it on an explicitly authorized disposable development database, and request approval before applying to live. Do not run automatic startup migrations or `auth@latest migrate` as an experiment. The app never auto-migrates MySQL on boot; import `server/membership/migrations/001-initial-mysql.sql` manually, then prove readiness with `npm run membership:verify-mysql` (checks connection, TLS where required, and that all 13 tables exist).
 
 ## Hostinger compatibility and required settings
 
@@ -78,11 +78,11 @@ Required application environment variable **names only** (architecture choices, 
 | Names | Purpose |
 | --- | --- |
 | `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` | MySQL server-side connection, using Hostinger's documented naming. |
-| `DB_SSL_CA` | Conditional: trusted CA material when the selected remote connection requires it; must be mapped to driver TLS options, never a flag to disable checks. |
+| `DB_SSL_CA_FILE`, `DB_TLS_ALLOW_PUBLIC_CA` | Remote MySQL TLS (see `server/membership/mysql-tls.mjs`). `DB_SSL_CA_FILE` is a path to a PEM CA bundle on disk (never PEM contents in env). `DB_TLS_ALLOW_PUBLIC_CA=1` opts in to Node's public-CA trust store, still with `rejectUnauthorized: true`. A non-loopback `DB_HOST` requires one of the two; otherwise the app refuses to start. Production on Hostinger uses `DB_HOST=127.0.0.1` loopback with no TLS. There is no flag that disables verification. |
 | `BETTER_AUTH_SECRET` | Locally generated high-entropy secret meeting pinned-library requirements; never print or commit. |
 | `BETTER_AUTH_URL` | Fixed absolute local/production auth origin. |
 | `SITE_URL` | Existing canonical origin; must agree with production auth origin. |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Proposed server-side SMTP transport settings. Validate booleans/ports and supported TLS modes in the eventual implementation. |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `MAIL_FROM` | Server-side SMTP transport settings as implemented (`server/membership/auth.mjs`). Port 465 = implicit TLS (`SMTP_SECURE=true`); 587 = STARTTLS (`SMTP_SECURE=false`). Nodemailer TLS is verified (`tls: { rejectUnauthorized: true, minVersion: 'TLSv1.2', servername: SMTP_HOST }`). |
 
 Keep local values in ignored `.env.local` and production secrets in Hostinger's environment settings. No Supabase variables or public database/auth-secret variables are required. Client calls use same-origin `/api/auth`; no public secret configuration.
 
@@ -103,7 +103,7 @@ Then verify:
 5. Provider CSRF/origin protection, safe callbacks, shared rate limits/restart behavior, secure cookie attributes, no token logs and no shared auth response cache. Hostinger DB/SMTP outages fail account actions clearly without breaking public file processing.
 6. All 16 free public tools remain anonymous; preview tools remain development-only and absent from production search/sitemap. No media/transcript is sent to auth/database/email endpoints.
 
-Phase 3 cannot pass without real backend/email evidence. Phase 4 hardening and Phase 5 final integration QA remain not started. Existing production AI release hold is unchanged.
+Phase 3 implementation is done; it cannot be called passed until real backend/email evidence exists (staging verification against MySQL/SMTP). Phase 4 hardening and Phase 5 final integration QA remain not started. Existing production AI release hold is unchanged.
 
 ## Official sources checked
 

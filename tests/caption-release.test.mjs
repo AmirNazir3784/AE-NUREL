@@ -8,6 +8,6 @@ function inspect(release='',qa='',preview='0') {
  assert.equal(result.status,0,result.stderr);return JSON.parse(result.stdout);
 }
 it('restores the route hold when the public testing preview is disabled',()=>{const r=inspect();assert.equal(r.available,false);assert.equal(r.released,false);assert.equal(r.routes.length,27);});
-it('opens the production testing preview without declaring a released tool',()=>{for(const preview of ['','1']){const r=inspect('','',preview);assert.equal(r.available,true);assert.equal(r.released,false);assert.equal(r.routes.length,27);}});
+it('opens the production testing preview without declaring a released tool',()=>{for(const [preview,expected] of [['',false],['1',true]]){const r=inspect('','',preview);assert.equal(r.available,expected);assert.equal(r.released,false);assert.equal(r.routes.length,27);}});
 it('loopback production QA opens only the route, without publishing it in the catalog',()=>{const r=inspect('','1');assert.equal(r.available,true);assert.equal(r.released,false);assert.equal(r.routes.length,27);});
 it('the explicit release switch adds Auto Caption without exposing remaining previews',()=>{const r=inspect('1');assert.equal(r.available,true);assert.equal(r.released,true);assert.equal(r.routes.length,28);assert.ok(r.routes.includes('/tools/auto-caption-generator'));assert.ok(!r.routes.some(p=>/podcast|account|hybrid/.test(p)));});
